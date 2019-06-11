@@ -43,6 +43,8 @@ Amazon's trademarks and trade dress may not be used in
    + [Working with Amazon S3](s3_resources.md)
    + [AWS Identity and Access Management Roles in AWS ParallelCluster](iam.md)
    + [AWS ParallelCluster Batch CLI Commands](awsbatchcli.md)
+      + [awsbsub](awsbatchcli.awsbsub.md)
+      + [awsbstat](awsbatchcli.awsbstat.md)
       + [awsbout](awsbatchcli_awsbout.md)
       + [awsbkill](awsbatchcli_awsbkill.md)
       + [awsbqueues](awsbatchcli_awsbqueues.md)

@@ -6,12 +6,12 @@ Cancels or terminates jobs submitted in the cluster\.
 awsbkill [ - h ] [ - c CLUSTER ] [ - r REASON ] job_ids [ job_ids ... ]
 ```
 
-## Positional Arguments<a name="pcluster.awsbkill.arguments"></a>
+## Positional Arguments<a name="awsbatchcli.awsbkill.arguments"></a>
 
 `job_ids`  
 Specifies the space\-separated list of job IDs to cancel or terminate\.
 
-## Named Arguments<a name="pcluster.awsbkill.namedarguments"></a>
+## Named Arguments<a name="awsbatchcli.awsbkill.namedarguments"></a>
 
 `-c CLUSTER, --cluster CLUSTER`  
 Indicates the name of the cluster to use\.

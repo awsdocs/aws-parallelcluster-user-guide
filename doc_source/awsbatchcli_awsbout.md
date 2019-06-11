@@ -6,12 +6,12 @@ Shows the output of a given job\.
 awsbout [ - h ] [ - c CLUSTER ] [ - hd HEAD ] [ - t TAIL ] [ - s ] [ - sp STREAM_PERIOD ] job_id
 ```
 
-## Positional Arguments<a name="pcluster.awsbout.arguments"></a>
+## Positional Arguments<a name="awsbatchcli.awsbout.arguments"></a>
 
 `job_id`  
 Specifies the job ID\.
 
-## Named Arguments<a name="pcluster.awsbout.namedarguments"></a>
+## Named Arguments<a name="awsbatchcli.awsbout.namedarguments"></a>
 
 `-c CLUSTER, --cluster CLUSTER`  
 Indicates the cluster to use\.
