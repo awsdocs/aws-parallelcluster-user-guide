@@ -395,6 +395,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Action": [
                 "efs:DescribeMountTargets",
                 "efs:DescribeMountTargetSecurityGroups",
+                "ec2:DescribeNetworkInterfaceAttribute"
             ],
             "Effect": "Allow",
             "Resource": "*"
