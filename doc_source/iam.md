@@ -232,6 +232,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
                 "ec2:DeleteSecurityGroup",
                 "ec2:DisassociateAddress",
                 "ec2:RevokeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupEgress",
                 "ec2:ReleaseAddress",
                 "ec2:CreatePlacementGroup",
                 "ec2:DeletePlacementGroup"
