@@ -2,7 +2,7 @@
 
 After you install AWS ParallelCluster, complete the following configuration steps\.
 
-First, set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure) in the *AWS CLI user guide*\. 
+First, set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI user guide*\. 
 
 ```
 $ aws configure
