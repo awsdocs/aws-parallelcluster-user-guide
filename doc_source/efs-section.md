@@ -106,6 +106,7 @@ The sanity check for validating `efs_fs_id` requires the IAM role to have the fo
 + `efs:DescribeMountTargetSecurityGroups`
 + `ec2:DescribeSubnets`
 + `ec2:DescribeSecurityGroups`
++ `ec2:DescribeNetworkInterfaceAttribute`
 
 To avoid errors, you must add these permissions to your IAM role, or set `sanity_check = false`\.
 
