@@ -19,9 +19,9 @@ When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. F
 **Note**  
 Amazon FSx for Lustre is not currently supported when using `awsbatch` as a scheduler\.
 
-If using an existing file system, it must be associated to a security group that allows inbound and outbound TCP traffic from `0.0.0.0/0` through port `988`\. This is done automatically when not using `vpc_security_group_id`\.
+If using an existing file system, it must be associated to a security group that allows inbound TCP traffic to port `988`\. Setting the source to `0.0.0.0/0` on a security group rule provides client access from all IP ranges within your VPC security group for the protocol and port range for that rule\. To further limit access to your file systems we recommend using more restrictive sources for your security group rules, for example more specific CIDR ranges, IP addresses, or security group IDs\. This is done automatically when not using `[`vpc_security_group_id`](vpc-section.md#vpc-security-group-id)`\.
 
-To use an existing Amazon FSx file system, specify `fsx_fs_id`\.
+To use an existing Amazon FSx file system, specify `[`fsx_fs_id`](#fsx-fs-id)`\.
 
 ```
 [fsx fs]
@@ -55,9 +55,9 @@ shared_dir = /fsx
 
 ## `fsx_fs_id`<a name="fsx-fs-id"></a>
 
- **\(Optional\)** Attaches an existing Amazon FSx file system\.
+**\(Optional\)** Attaches an existing Amazon FSx file system\.
 
-If this option is specified, all of the following Amazon FSx parameters, such as `storage_capacity`, are ignored\.
+If this option is specified, only the [`shared_dir`](#id15) and [`fsx_fs_id`](#fsx-fs-id) settings in the [[fsx] section](#fsx-section) are used and any other settings in the [[fsx] section](#fsx-section) are ignored\.
 
 ```
 fsx_fs_id = fs-073c3803dca3e28a6
@@ -65,7 +65,7 @@ fsx_fs_id = fs-073c3803dca3e28a6
 
 ## `storage_capacity`<a name="storage-capacity"></a>
 
- **\(Optional\)** Specifies the storage capacity of the file system, in GiB\.
+**\(Optional\)** Specifies the storage capacity of the file system, in GiB\.
 
 The storage capacity has a minimum of 3,600 GiB and is provisioned in increments of 3,600 GiB\.
 
@@ -77,7 +77,7 @@ storage_capacity = 3600
 
 ## `fsx_kms_key_id`<a name="fsx-kms-key-id"></a>
 
- **\(Optional\)** Specifies the ID of your AWS Key Management Service \(AWS KMS\) key\.
+**\(Optional\)** Specifies the ID of your AWS Key Management Service \(AWS KMS\) key\.
 
 This ID is used to encrypt the data in your file system at rest\.
 
@@ -91,7 +91,7 @@ fsx_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 ## `imported_file_chunk_size`<a name="imported-file-chunk-size"></a>
 
- **\(Optional\)** Determines the stripe count and the maximum amount of data per file \(in MiB\) stored on a single physical disk, for files that are imported from a data repository \(using `import_path`\)\. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system\.
+**\(Optional\)** Determines the stripe count and the maximum amount of data per file \(in MiB\) stored on a single physical disk, for files that are imported from a data repository \(using `import_path`\)\. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system\.
 
 The chunk size default is `1024` \(1 GiB\), and it can go as high as 512,000 MiB \(500 GiB\)\. Amazon S3 objects have a maximum size of 5 TB\.
 
@@ -101,7 +101,7 @@ imported_file_chunk_size = 1024
 
 ## `export_path`<a name="export-path"></a>
 
- **\(Optional\)** Specifies the Amazon S3 path where the root of your file system is exported\. The path **must** be in the same Amazon S3 bucket as the `import_path` parameter\.
+**\(Optional\)** Specifies the Amazon S3 path where the root of your file system is exported\. The path **must** be in the same Amazon S3 bucket as the `import_path` parameter\.
 
 The default value is `s3://import-bucket/FSxLustre[creation-timestamp]`, where `import-bucket` is the bucket provided in the `[`import_path`](#import-path)` parameter\.
 
@@ -111,7 +111,7 @@ export_path = s3://bucket/folder
 
 ## `import_path`<a name="import-path"></a>
 
- **\*\(Optional\)** Specifies the S3 bucket to load data from into the file system\. Also serves as the export bucket\. For more information, see `[`export_path`](#export-path)`\.
+**\(Optional\)** Specifies the S3 bucket to load data from into the file system\. Also serves as the export bucket\. For more information, see `[`export_path`](#export-path)`\.
 
 Import occurs on cluster creation\. For more information, see [Importing Data from your Amazon S3 Bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/fsx-data-repositories.html#import-data-repository) in the *Amazon FSx for Lustre User Guide*\.
 
@@ -123,9 +123,9 @@ import_path =  s3://bucket
 
 ## `weekly_maintenance_start_time`<a name="weekly-maintenance-start-time"></a>
 
- **\*\(Optional\)** Specifies a preferred time to perform weekly maintenance, in the UTC time zone\.
+**\(Optional\)** Specifies a preferred time to perform weekly maintenance, in the UTC time zone\.
 
-The format is `[day of week]:[hour of day]:[minute of hour]`\. For example, Monday at Midnight is:
+The format is \[day of week\]:\[hour of day\]:\[minute of hour\]\. For example, Monday at Midnight is:
 
 ```
 weekly_maintenance_start_time = 1:00:00

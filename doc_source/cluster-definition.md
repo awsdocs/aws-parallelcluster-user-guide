@@ -85,12 +85,12 @@ Supported operating systems by Region are listed in the following table\. Note t
 | GovCloud \(us\-gov\-east\-1\) | True | False | False | True | True | 
 | GovCloud \(us\-gov\-west\-1\) | True | False | False | True | True | 
 | China \(cn\-north\-1\) | True | False | False | True | True | 
-| China \(cn\-northwest\-1\) | True | False | False | False | False | 
+| China \(cn\-northwest\-1\) | True | False | False | True | True | 
 
 Note: The `base_os` parameter also determines the user name that is used to log into the cluster\.
-+ CentOS 6 and 7: `centos` 
-+ Ubuntu 14\.04 LTS and 16\.04 LTS: `ubuntu` 
-+ Amazon Linux: `ec2-user` 
++ `centos6` and `centos7`: `centos` 
++ `ubuntu1404` and `ubuntu1604`: `ubuntu` 
++ `alinux`: `ec2-user` 
 
 The default value is `alinux`\.
 
