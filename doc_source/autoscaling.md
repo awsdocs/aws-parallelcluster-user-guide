@@ -8,7 +8,7 @@ Clusters deployed with AWS ParallelCluster are elastic in several ways\. Setting
 
 ## Scaling Up<a name="scaling-up"></a>
 
-Every minute, a process called [https://github.com/aws/aws-parallelcluster-node/tree/develop/jobwatcher](https://github.com/aws/aws-parallelcluster-node/tree/develop/jobwatcher) runs on the master instance\. It evaluates the current number of instances required by the pending jobs in the queue\. If the total number of busy nodes and requested nodes is greater than the current desired value in the ASG, it adds more instances\. If you submit more jobs, the queue is re\-evaluated and the ASG is updated, up to the specified `max_queue_size`\.
+Every minute, a process called [https://github.com/aws/aws-parallelcluster-node/tree/develop/src/jobwatcher](https://github.com/aws/aws-parallelcluster-node/tree/develop/src/jobwatcher) runs on the master instance\. It evaluates the current number of instances required by the pending jobs in the queue\. If the total number of busy nodes and requested nodes is greater than the current desired value in the ASG, it adds more instances\. If you submit more jobs, the queue is re\-evaluated and the ASG is updated, up to the specified `max_queue_size`\.
 
 With an SGE scheduler, each job requires a number of slots to run \(one slot corresponds to one processing unit, for example, a vCPU\)\. To evaluate the number of instances that are required to serve the currently pending jobs, the `jobwatcher` divides the total number of requested slots by the capacity of a single compute node\. The capacity of a compute node that corresponds to the number of available vCPUs depends on the Amazon EC2 instance type that is specified in the cluster configuration\.
 
@@ -23,7 +23,7 @@ In this example, the `jobwatcher` requires three new compute instances in the AS
 
 ## Scaling Down<a name="scaling-down"></a>
 
-On each compute node, a process called [https://github.com/aws/aws-parallelcluster-node/tree/develop/nodewatcher](https://github.com/aws/aws-parallelcluster-node/tree/develop/nodewatcher) runs and evaluates the idle time of the node\. An instance is terminated when both of the following conditions are met: 
+On each compute node, a process called [https://github.com/aws/aws-parallelcluster-node/tree/develop/src/nodewatcher](https://github.com/aws/aws-parallelcluster-node/tree/develop/src/nodewatcher) runs and evaluates the idle time of the node\. An instance is terminated when both of the following conditions are met: 
 + An instance has no jobs for a period of time longer than the `scaledown_idletime` \(the default setting is 10 minutes\)
 + There are no pending jobs in the cluster
 
