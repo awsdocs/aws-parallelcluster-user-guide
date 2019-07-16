@@ -99,12 +99,13 @@ The following example sets the ParallelClusterInstancePolicy, using SGE, Slurm, 
             "Effect": "Allow"
         },
         {
-            "Resource": [
-                "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/parallelcluster-*"
-            ],
-            "Action": [
-                "cloudformation:DescribeStacks"
-            ],
+              "Resource": [
+                  "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/parallelcluster-*/*"
+              ],
+              "Action": [
+                  "cloudformation:DescribeStacks",
+                  "cloudformation:DescribeStackResource"
+              ],
             "Sid": "CloudFormationDescribe",
             "Effect": "Allow"
         },
