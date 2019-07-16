@@ -16,7 +16,7 @@ Displays the cluster status in color\.
 Defaults to `False`\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
-Specifies the alternative configuration file to use\.  
+Specifies the full path of the alternative configuration file to use\.  
 Defaults to `c`\.
 
 `-r REGION, --region REGION`  

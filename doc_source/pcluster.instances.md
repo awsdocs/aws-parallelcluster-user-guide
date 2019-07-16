@@ -17,7 +17,7 @@ Displays the instances for the cluster with the provided name\.
 Shows the help text for the specified command\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
-Specifies the alternative configuration file to use\.  
+Specifies the full path of the alternative configuration file to use\.  
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
