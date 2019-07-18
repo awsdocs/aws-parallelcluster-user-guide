@@ -26,7 +26,7 @@ Defaults to `custom-ami-`\.
 Specifies the cookbook to use to build the AWS ParallelCluster AMI\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
-Specifies the full path of the alternative configuration file to use\.  
+Specifies the alternative configuration file to use\.  
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
