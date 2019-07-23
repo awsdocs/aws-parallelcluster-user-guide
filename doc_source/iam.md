@@ -245,7 +245,6 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Sid": "AutoScalingDescribe",
             "Action": [
                 "autoscaling:DescribeAutoScalingGroups",
-                "autoscaling:DescribeLaunchConfigurations",
                 "autoscaling:DescribeAutoScalingInstances"
             ],
             "Effect": "Allow",
@@ -255,7 +254,6 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Sid": "AutoScalingModify",
             "Action": [
                 "autoscaling:CreateAutoScalingGroup",
-                "autoscaling:CreateLaunchConfiguration",
                 "ec2:CreateLaunchTemplate",
                 "ec2:ModifyLaunchTemplate",
                 "ec2:DeleteLaunchTemplate",
@@ -264,7 +262,6 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
                 "autoscaling:PutNotificationConfiguration",
                 "autoscaling:UpdateAutoScalingGroup",
                 "autoscaling:PutScalingPolicy",
-                "autoscaling:DeleteLaunchConfiguration",
                 "autoscaling:DescribeScalingActivities",
                 "autoscaling:DeleteAutoScalingGroup",
                 "autoscaling:DeletePolicy"
