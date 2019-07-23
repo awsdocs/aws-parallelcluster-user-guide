@@ -6,12 +6,12 @@
 pcluster createami [ -h ] - ai BASE_AMI_ID - os BASE_AMI_OS [ -ap CUSTOM_AMI_NAME_PREFIX ]
                    [ -cc CUSTOM_AMI_COOKBOOK ] [ -c CONFIG_FILE ] [ -r REGION ]
 ```
-## Required Dependencies
 
-In addition to the AWS ParallelCluster CLI, the following dependencies are also required to run `pcluster createami`:
+## Required Dependencies<a name="pcluster.createami.required-dependencies"></a>
 
-* Packer: find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it.
-* ChefDK: find the latest version for your OS from the [ChefDK website](https://downloads.chef.io/chefdk/), and install it.
+In addition to the AWS ParallelCluster CLI, the following dependencies are required to run `pcluster createami`:
++ **Packer**: Download the latest version from [https://www.packer.io/downloads.html](https://www.packer.io/downloads.html)\.
++ **ChefDK**: Download the latest version from [https://downloads.chef.io/chefdk/](https://downloads.chef.io/chefdk/)\.
 
 ## Named Arguments<a name="pcluster.createami.namedarg"></a>
 
