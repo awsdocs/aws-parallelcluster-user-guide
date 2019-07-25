@@ -62,7 +62,7 @@ additional_sg = sg-xxxxxx
 
 Specifies the ID of an existing subnet in which to provision the compute nodes\.
 
-This cannot be the same as `master_subnet_id`, if you'd like both the master and compute instances to be in the same subnet, only specify `master_subnet_id`.
+This cannot be the same as `master_subnet_id`, if you'd like both the master and compute instances to be in the same subnet, only specify `master_subnet_id`\.
 
 If the subnet is private, you must set up NAT for web access\.
 
