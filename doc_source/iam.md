@@ -264,7 +264,8 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
                 "autoscaling:PutScalingPolicy",
                 "autoscaling:DescribeScalingActivities",
                 "autoscaling:DeleteAutoScalingGroup",
-                "autoscaling:DeletePolicy"
+                "autoscaling:DeletePolicy",
+                "autoscaling:EnableMetricsCollection"
             ],
             "Effect": "Allow",
             "Resource": "*"
