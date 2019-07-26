@@ -47,7 +47,7 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
 
    ```
    C:\>pcluster version
-   2.4.0
+   2.4.1
    ```
 
 To upgrade to the latest version, run the installation command again\.
