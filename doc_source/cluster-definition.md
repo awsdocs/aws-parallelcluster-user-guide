@@ -126,10 +126,10 @@ compute_instance_type = t2.micro
 
 Specifies the ComputeFleet root volume size in GB\. The AMI must support growroot\.
 
-The default value is `15`\.
+The default value is `20`\.
 
 ```
-compute_root_volume_size = 15
+compute_root_volume_size = 20
 ```
 
 ## `custom_ami`<a name="custom-ami-section"></a>
@@ -296,10 +296,10 @@ master_instance_type = t2.micro
 
 Specifies the MasterServer root volume size in GB\. The AMI must support growroot\.
 
-The default value is `15`\.
+The default value is `20`\.
 
 ```
-master_root_volume_size = 15
+master_root_volume_size = 20
 ```
 
 ## `max_queue_size`<a name="configuration-max-queue-size"></a>
