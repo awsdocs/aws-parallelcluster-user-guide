@@ -282,7 +282,8 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Sid": "DynamoDBModify",
             "Action": [
               "dynamodb:CreateTable",
-              "dynamodb:DeleteTable"
+              "dynamodb:DeleteTable",
+              "dynamodb:TagResource"
             ],
             "Effect": "Allow",
             "Resource": "*"
@@ -300,7 +301,8 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Action": [
                 "sqs:CreateQueue",
                 "sqs:SetQueueAttributes",
-                "sqs:DeleteQueue"
+                "sqs:DeleteQueue",
+                "sqs:TagQueue"
             ],
             "Effect": "Allow",
             "Resource": "*"
@@ -365,6 +367,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
                 "iam:CreateRole",
                 "iam:DeleteRole",
                 "iam:GetRole",
+                "iam:TagRole",
                 "iam:SimulatePrincipalPolicy"
             ],
             "Effect": "Allow",
@@ -384,6 +387,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Action": [
                 "iam:AddRoleToInstanceProfile",
                 "iam:RemoveRoleFromInstanceProfile",
+                "iam:GetRolePolicy",
                 "iam:PutRolePolicy",
                 "iam:DeleteRolePolicy"
             ],
@@ -471,7 +475,8 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
       "Action": [
         "dynamodb:DescribeTable",
         "dynamodb:CreateTable",
-        "dynamodb:DeleteTable"
+        "dynamodb:DeleteTable",
+        "dynamodb:TagResource"
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*"
@@ -498,7 +503,8 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
         "sqs:GetQueueAttributes",
         "sqs:CreateQueue",
         "sqs:SetQueueAttributes",
-        "sqs:DeleteQueue"
+        "sqs:DeleteQueue",
+        "sqs:TagQueue"
       ],
       "Effect": "Allow",
       "Resource": "*"
@@ -533,6 +539,7 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
         "iam:CreateRole",
         "iam:DeleteRole",
         "iam:GetRole",
+        "iam:TagRole",
         "iam:SimulatePrincipalPolicy"
       ],
       "Effect": "Allow",
@@ -554,6 +561,7 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
       "Action": [
         "iam:AddRoleToInstanceProfile",
         "iam:RemoveRoleFromInstanceProfile",
+        "iam:GetRolePolicy",
         "iam:PutRolePolicy",
         "iam:DeleteRolePolicy",
         "iam:AttachRolePolicy",
