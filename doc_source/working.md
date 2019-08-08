@@ -8,3 +8,4 @@
 + [AWS Identity and Access Management Roles in AWS ParallelCluster](iam.md)
 + [AWS ParallelCluster Batch CLI Commands](awsbatchcli.md)
 + [Elastic Fabric Adapter](efa.md)
++ [Enable Intel MPI](intelmpi.md)

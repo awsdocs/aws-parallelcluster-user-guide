@@ -82,10 +82,10 @@ Supported operating systems by Region are listed in the following table\. Note t
 | Partition \(Regions\) | `alinux` | `centos6` | `centos7` | `ubuntu1404` | `ubuntu1604` | 
 | --- | --- | --- | --- | --- | --- | 
 | Commercial \(All Regions not mentioned below\) | True | True | True | True | True | 
-| GovCloud \(us\-gov\-east\-1\) | True | False | False | True | True | 
-| GovCloud \(us\-gov\-west\-1\) | True | False | False | True | True | 
-| China \(cn\-north\-1\) | True | False | False | True | True | 
-| China \(cn\-northwest\-1\) | True | False | False | True | True | 
+| AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | False | True | True | 
+| AWS GovCloud \(US\-West\) \(us\-gov\-west\-1\) | True | False | False | True | True | 
+| China \(Beijing\) China \(cn\-north\-1\) | True | False | False | True | True | 
+| China \(Ningxia\) \(cn\-northwest\-1\) | True | False | False | True | True | 
 
 Note: The `base_os` parameter also determines the user name that is used to log into the cluster\.
 + `centos6` and `centos7`: `centos` 

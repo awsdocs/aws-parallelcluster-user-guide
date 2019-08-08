@@ -53,7 +53,7 @@ pcluster ssh hello-world -i /path/to/keyfile.pem
 After you log in, run the command `qhost` to verify that your compute nodes are set up and configured\.
 
 ```
-[ec2-user@ip-192-168-1-86 ~]$ qhost
+$ qhost
 HOSTNAME                ARCH         NCPU NSOC NCOR NTHR  LOAD  MEMTOT  MEMUSE  SWAPTO  SWAPUS
 ----------------------------------------------------------------------------------------------
 global                  -               -    -    -    -     -       -       -       -       -

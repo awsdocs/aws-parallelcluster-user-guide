@@ -50,6 +50,7 @@ Amazon's trademarks and trade dress may not be used in
       + [awsbqueues](awsbatchcli_awsbqueues.md)
       + [awsbhosts](awsbatchcli_awsbhosts.md)
    + [Elastic Fabric Adapter](efa.md)
+   + [Enable Intel MPI](intelmpi.md)
 + [Configuration](configuration.md)
    + [[global] Section](global.md)
    + [[aws] Section](aws.md)
