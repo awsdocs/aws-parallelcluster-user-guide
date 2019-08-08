@@ -75,3 +75,4 @@ Amazon's trademarks and trade dress may not be used in
 + [Development](development.md)
    + [Setting Up a Custom AWS ParallelCluster Cookbook](custom_cookbook.md)
    + [Setting Up a Custom AWS ParallelCluster Node Package](custom_node_package.md)
++ [Document History](document_history.md)
