@@ -5,7 +5,7 @@
 
 Specifies settings that define how the compute nodes scale\.
 
-The format is `[scaling <clustername>]`\.
+The format is `[scaling <scalingname>]`\.
 
 ```
 [scaling custom]

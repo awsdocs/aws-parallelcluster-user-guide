@@ -10,6 +10,8 @@
 
 Defines configuration settings for the Amazon EFS that is mounted on the master and compute instances\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the Amazon EFS documentation\.
 
+The format is `[efs <efsname>]`\.
+
 ```
 [efs customfs]
 shared_dir = efs

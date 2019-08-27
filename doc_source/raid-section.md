@@ -12,6 +12,8 @@
 
 Defines configuration settings for a RAID array that is built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the master node and is exported to compute nodes via NFS\.
 
+The format is `[raid <raidname>]`\.
+
 ```
 [raid rs]
 shared_dir = raid

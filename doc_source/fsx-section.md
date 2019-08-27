@@ -23,6 +23,8 @@ If using an existing file system, it must be associated to a security group that
 
 To use an existing Amazon FSx file system, specify `[`fsx_fs_id`](#fsx-fs-id)`\.
 
+The format is `[fsx <fsxname>]`\.
+
 ```
 [fsx fs]
 shared_dir = /fsx
