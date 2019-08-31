@@ -190,7 +190,7 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. For more information, see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `p3dn.24xlarge`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
 
 ```
 enable_efa = compute
