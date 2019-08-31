@@ -391,6 +391,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
                 "iam:GetRolePolicy",
                 "iam:GetPolicy",
                 "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
                 "iam:PutRolePolicy",
                 "iam:DeleteRolePolicy"
             ],
