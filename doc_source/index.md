@@ -24,6 +24,7 @@ Amazon's trademarks and trade dress may not be used in
       + [Install AWS ParallelCluster on Windows](install-windows.md)
    + [Configuring AWS ParallelCluster](getting-started-configuring-parallelcluster.md)
    + [Moving from CfnCluster to AWS ParallelCluster](moving-from-cfncluster-to-aws-parallelcluster.md)
+   + [Supported Regions](supported-regions.md)
 + [Using AWS ParallelCluster](working.md)
    + [AWS ParallelCluster CLI Commands](commands.md)
       + [pcluster configure](pcluster.configure.md)
