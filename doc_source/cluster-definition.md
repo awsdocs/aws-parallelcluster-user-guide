@@ -106,6 +106,8 @@ Valid options are: `ondemand`, and `spot`\.
 
 The default value is `ondemand`\.
 
+For more information about Spot Instances, see [Working with Spot Instances](spot.md)\.
+
 ```
 cluster_type = ondemand
 ```

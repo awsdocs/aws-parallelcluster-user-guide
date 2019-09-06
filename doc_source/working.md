@@ -5,6 +5,7 @@
 + [Network Configurations](networking.md)
 + [Custom Bootstrap Actions](pre_post_install.md)
 + [Working with Amazon S3](s3_resources.md)
++ [Working with Spot Instances](spot.md)
 + [AWS Identity and Access Management Roles in AWS ParallelCluster](iam.md)
 + [AWS ParallelCluster Batch CLI Commands](awsbatchcli.md)
 + [Elastic Fabric Adapter](efa.md)
