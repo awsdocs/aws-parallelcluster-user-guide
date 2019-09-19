@@ -195,6 +195,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Sid": "EC2Describe",
             "Action": [
                 "ec2:DescribeKeyPairs",
+                "ec2:DescribeRegions",
                 "ec2:DescribeVpcs",
                 "ec2:DescribeSubnets",
                 "ec2:DescribeSecurityGroups",
