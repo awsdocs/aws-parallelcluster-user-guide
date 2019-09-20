@@ -235,6 +235,25 @@ The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or
             "Resource": "*"
         },
         {
+            "Sid": "NetworkingEasyConfig",
+            "Action": [
+                "ec2:CreateVpc",
+                "ec2:ModifyVpcAttribute",
+                "ec2:DescribeNatGateways",
+                "ec2:CreateNatGateway",
+                "ec2:DescribeInternetGateways",
+                "ec2:CreateInternetGateway",
+                "ec2:AttachInternetGateway",
+                "ec2:DescribeRouteTables",
+                "ec2:CreateRouteTable",
+                "ec2:AssociateRouteTable",
+                "ec2:CreateSubnet",
+                "ec2:ModifySubnetAttribute"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
             "Sid": "EC2Modify",
             "Action": [
                 "ec2:CreateVolume",
@@ -469,6 +488,25 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
       ],
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+        "Sid": "NetworkingEasyConfig",
+        "Action": [
+            "ec2:CreateVpc",
+            "ec2:ModifyVpcAttribute",
+            "ec2:DescribeNatGateways",
+            "ec2:CreateNatGateway",
+            "ec2:DescribeInternetGateways",
+            "ec2:CreateInternetGateway",
+            "ec2:AttachInternetGateway",
+            "ec2:DescribeRouteTables",
+            "ec2:CreateRouteTable",
+            "ec2:AssociateRouteTable",
+            "ec2:CreateSubnet",
+            "ec2:ModifySubnetAttribute"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
     },
     {
       "Sid": "EC2Modify",
