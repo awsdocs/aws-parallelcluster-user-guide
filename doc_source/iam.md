@@ -195,6 +195,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Sid": "EC2Describe",
             "Action": [
                 "ec2:DescribeKeyPairs",
+                "ec2:DescribeRegions",
                 "ec2:DescribeVpcs",
                 "ec2:DescribeSubnets",
                 "ec2:DescribeSecurityGroups",
@@ -209,6 +210,25 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
                 "ec2:CreateTags",
                 "ec2:DescribeNetworkInterfaces",
                 "ec2:DescribeAvailabilityZones"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "NetworkingEasyConfig",
+            "Action": [
+                "ec2:CreateVpc",
+                "ec2:ModifyVpcAttribute",
+                "ec2:DescribeNatGateways",
+                "ec2:CreateNatGateway",
+                "ec2:DescribeInternetGateways",
+                "ec2:CreateInternetGateway",
+                "ec2:AttachInternetGateway",
+                "ec2:DescribeRouteTables",
+                "ec2:CreateRouteTable",
+                "ec2:AssociateRouteTable",
+                "ec2:CreateSubnet",
+                "ec2:ModifySubnetAttribute"
             ],
             "Effect": "Allow",
             "Resource": "*"
@@ -430,6 +450,7 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
       "Sid": "EC2Describe",
       "Action": [
         "ec2:DescribeKeyPairs",
+        "ec2:DescribeRegions",
         "ec2:DescribeVpcs",
         "ec2:DescribeSubnets",
         "ec2:DescribeSecurityGroups",
@@ -447,6 +468,25 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
       ],
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+        "Sid": "NetworkingEasyConfig",
+        "Action": [
+            "ec2:CreateVpc",
+            "ec2:ModifyVpcAttribute",
+            "ec2:DescribeNatGateways",
+            "ec2:CreateNatGateway",
+            "ec2:DescribeInternetGateways",
+            "ec2:CreateInternetGateway",
+            "ec2:AttachInternetGateway",
+            "ec2:DescribeRouteTables",
+            "ec2:CreateRouteTable",
+            "ec2:AssociateRouteTable",
+            "ec2:CreateSubnet",
+            "ec2:ModifySubnetAttribute"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
     },
     {
       "Sid": "EC2Modify",
