@@ -274,7 +274,7 @@ Maintains the initial size of the Auto Scaling group for traditional schedulers 
 
 If the scheduler is `awsbatch`, use `[`desired_vcpus`](#desired-vcpus)` instead\.
 
-This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of `[`initial_queue_size`](#configuration-initial-queue-size)`\. The cluster can still scale up to the value of `[`max_queue_size`](#configuration-max-queue-size)`\.
+This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of `[`initial_queue_size`](#configuration-initial-queue-size)`\. The cluster can still scale up to the value of `[`max_queue_size`](#configuration-max-queue-size)`\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below `initial_queue_size`\.
 
 If set to `false`, the Auto Scaling group can scale down to zero \(0\) members to prevent resources from sitting idle when they are not needed\.
 
@@ -296,7 +296,7 @@ master_instance_type = t2.micro
 
 ## `master_root_volume_size`<a name="master-root-volume-size"></a>
 
-Specifies the MasterServer root volume size in GB\. The AMI must support growroot\.
+Specifies the MasterServer root volume size in GB\. The AMI must support `growroot`\.
 
 The default value is `20`\.
 

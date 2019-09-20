@@ -14,16 +14,13 @@ When you use the default settings for cluster creation, an IAM role for Amazon E
 
 ## ParallelClusterInstancePolicy<a name="parallelclusterinstancepolicy"></a>
 
-The following example sets the ParallelClusterInstancePolicy, using SGE, Slurm, or Torque as the scheduler:
+The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm, or Torque as the scheduler:
 
 ```
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Resource": [
-                "*"
-            ],
             "Action": [
                 "ec2:DescribeVolumes",
                 "ec2:AttachVolume",
@@ -32,23 +29,23 @@ The following example sets the ParallelClusterInstancePolicy, using SGE, Slurm, 
                 "ec2:DescribeInstances",
                 "ec2:DescribeRegions"
             ],
-            "Sid": "EC2",
-            "Effect": "Allow"
-        },
-        {
             "Resource": [
                 "*"
             ],
+            "Effect": "Allow",
+            "Sid": "EC2"
+        },
+        {
             "Action": [
                 "dynamodb:ListTables"
             ],
-            "Sid": "DynamoDBList",
-            "Effect": "Allow"
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "DynamoDBList"
         },
         {
-            "Resource": [
-                "arn:aws:sqs:<REGION>:<AWS ACCOUNT ID>:parallelcluster-*"
-            ],
             "Action": [
                 "sqs:SendMessage",
                 "sqs:ReceiveMessage",
@@ -56,28 +53,39 @@ The following example sets the ParallelClusterInstancePolicy, using SGE, Slurm, 
                 "sqs:DeleteMessage",
                 "sqs:GetQueueUrl"
             ],
-            "Sid": "SQSQueue",
-            "Effect": "Allow"
+            "Resource": [
+                "arn:aws:sqs:<REGION>:<AWS ACCOUNT ID>:parallelcluster-*"
+            ],
+            "Effect": "Allow",
+            "Sid": "SQSQueue"
         },
         {
-            "Resource": [
-                "*"
-            ],
             "Action": [
                 "autoscaling:DescribeAutoScalingGroups",
                 "autoscaling:TerminateInstanceInAutoScalingGroup",
                 "autoscaling:SetDesiredCapacity",
-                "autoscaling:DescribeTags",
                 "autoScaling:UpdateAutoScalingGroup",
+                "autoscaling:DescribeTags",
                 "autoScaling:SetInstanceHealth"
             ],
-            "Sid": "Autoscaling",
-            "Effect": "Allow"
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "Autoscaling"
         },
         {
-            "Resource": [
-                "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*"
+            "Action": [
+                "cloudformation:DescribeStacks",
+                "cloudformation:DescribeStackResource"
             ],
+            "Resource": [
+                "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/parallelcluster-*/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "CloudFormation"
+        },
+        {
             "Action": [
                 "dynamodb:PutItem",
                 "dynamodb:Query",
@@ -85,29 +93,31 @@ The following example sets the ParallelClusterInstancePolicy, using SGE, Slurm, 
                 "dynamodb:DeleteItem",
                 "dynamodb:DescribeTable"
             ],
-            "Sid": "DynamoDBTable",
-            "Effect": "Allow"
+            "Resource": [
+                "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*"
+            ],
+            "Effect": "Allow",
+            "Sid": "DynamoDBTable"
         },
         {
-            "Resource": [
-                "arn:aws:s3:::<REGION>-aws-parallelcluster/*"
-            ],
             "Action": [
                 "s3:GetObject"
             ],
-            "Sid": "S3GetObj",
-            "Effect": "Allow"
+            "Resource": [
+                "arn:aws:s3:::<REGION>-aws-parallelcluster/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "S3GetObj"
         },
         {
-            "Resource": [
-                "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/parallelcluster-*/*"
-            ],
             "Action": [
-                "cloudformation:DescribeStacks",
-                "cloudformation:DescribeStackResource"
+                "s3:PutObject"
             ],
-            "Sid": "CloudFormationDescribe",
-            "Effect": "Allow"
+            "Resource": [
+                "arn:aws:s3:::NONE/batch/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "S3PutObj"
         },
         {
             "Resource": [
@@ -116,14 +126,24 @@ The following example sets the ParallelClusterInstancePolicy, using SGE, Slurm, 
             "Action": [
                 "sqs:ListQueues"
             ],
-            "Sid": "SQSList",
-            "Effect": "Allow"
+            "Effect": "Allow",
+            "Sid": "SQSList"
+        },
+        {
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster-*"
+            ],
+            "Effect": "Allow",
+            "Sid": "BatchJobPassRole"
         }
     ]
 }
 ```
 
-The following example sets the ParallelClusterInstancePolicy, using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the BatchUserRole that is defined in the AWS Batch AWS CloudFormation nested stack\. The BatchUserRole ARN is provided as a stack output\. Here is an overview of the required permissions:
+The following example sets the `ParallelClusterInstancePolicy`, using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\. Here is an overview of the required permissions:
 
 ```
 {
@@ -185,7 +205,7 @@ The following example sets the ParallelClusterInstancePolicy, using `awsbatch` a
 
 ## ParallelClusterUserPolicy<a name="parallelclusteruserpolicy"></a>
 
-The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or Torque as the scheduler:
+The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or Torque as the scheduler:
 
 ```
 {
@@ -195,6 +215,7 @@ The following example sets the ParallelClusterUserPolicy, using SGE, Slurm, or T
             "Sid": "EC2Describe",
             "Action": [
                 "ec2:DescribeKeyPairs",
+                "ec2:DescribeRegions",
                 "ec2:DescribeVpcs",
                 "ec2:DescribeSubnets",
                 "ec2:DescribeSecurityGroups",
@@ -430,6 +451,7 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
       "Sid": "EC2Describe",
       "Action": [
         "ec2:DescribeKeyPairs",
+        "ec2:DescribeRegions",
         "ec2:DescribeVpcs",
         "ec2:DescribeSubnets",
         "ec2:DescribeSecurityGroups",

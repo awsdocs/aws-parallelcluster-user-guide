@@ -46,8 +46,8 @@ When the cluster is created, you see output similar to the following:
 
 ```
 Beginning cluster creation for cluster: awsbatch-tutorial
-Creating stack named: parallelcluster-awsbatch-tutorial
-Status: parallelcluster-awsbatch-tutorial - CREATE_COMPLETE
+Creating stack named: parallelcluster-awsbatch
+Status: parallelcluster-awsbatch - CREATE_COMPLETE
 MasterPublicIP: 54.160.xxx.xxx
 ClusterUser: ec2-user
 MasterPrivateIP: 10.0.0.15
