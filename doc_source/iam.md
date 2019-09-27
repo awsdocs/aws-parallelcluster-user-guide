@@ -406,6 +406,7 @@ The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or
             "Action": [
                 "iam:PassRole",
                 "iam:CreateRole",
+                "iam:CreateServiceLinkedRole",
                 "iam:DeleteRole",
                 "iam:GetRole",
                 "iam:TagRole",
@@ -441,8 +442,8 @@ The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or
         {
             "Sid": "EFSDescribe",
             "Action": [
-                "efs:DescribeMountTargets",
-                "efs:DescribeMountTargetSecurityGroups",
+                "elasticfilesystem:DescribeMountTargets",
+                "elasticfilesystem:DescribeMountTargetSecurityGroups",
                 "ec2:DescribeNetworkInterfaceAttribute"
             ],
             "Effect": "Allow",
@@ -454,6 +455,14 @@ The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or
                 "ssm:GetParametersByPath"
             ],
             "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "FSx",
+            "Effect": "Allow",
+            "Action": [
+                "fsx:*"
+            ],
             "Resource": "*"
         }
     ]
