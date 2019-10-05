@@ -67,13 +67,19 @@ The following steps create a simple post\-install script that installs the R pac
    ```
    #!/bin/bash
    
-   yum -y install --enablerepo=epel R
+   echo "post-install script has $# arguments"
+   for arg in "$@"
+   do
+       echo "arg: ${arg}"
+   done
+   
+   yum -y install "${@:2}"
    ```
 
 1. Upload the script with the correct permissions to Amazon S3\.
 
    ```
-   aws s3 cp --acl public-read /path/to/myscript.sh s3://<bucket-name>/myscript.sh
+   $ aws s3 cp --acl public-read /path/to/myscript.sh s3://<bucket-name>/myscript.sh
    ```
 
 1. Update the AWS ParallelCluster configuration to include the new post\-install action\.
@@ -82,6 +88,7 @@ The following steps create a simple post\-install script that installs the R pac
    [cluster default]
    ...
    post_install = https://<bucket-name>.s3.amazonaws.com/myscript.sh
+   post_install_args = "R curl wget"
    ```
 
    If the bucket does not have public\-read permission, use `s3` as the URL protocol\.
@@ -90,10 +97,27 @@ The following steps create a simple post\-install script that installs the R pac
    [cluster default]
    ...
    post_install = s3://<bucket-name>/myscript.sh
+   post_install_args = "R curl wget"
    ```
 
 1. Launch the cluster\.
 
    ```
-   pcluster create mycluster
+   $ pcluster create mycluster
+   ```
+
+1. Verify the output\.
+
+   ```
+   $ less /var/log/cfn-init.log
+   2019-04-11 10:43:54,588 [DEBUG] Command runpostinstall output: post-install script has 4 arguments
+   arg: s3://eu-eu-west-1/test.sh
+   arg: R
+   arg: curl
+   arg: wget
+   Loaded plugins: dkms-build-requires, priorities, update-motd, upgrade-helper
+   Package R-3.4.1-1.52.amzn1.x86_64 already installed and latest version
+   Package curl-7.61.1-7.91.amzn1.x86_64 already installed and latest version
+   Package wget-1.18-4.29.amzn1.x86_64 already installed and latest version
+   Nothing to do
    ```

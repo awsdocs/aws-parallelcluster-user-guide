@@ -124,6 +124,8 @@ Defaults to `t2.micro`, `optimal` when the scheduler is `awsbatch`\.
 compute_instance_type = t2.micro
 ```
 
+A1 instances are not supported\.
+
 ## `compute_root_volume_size`<a name="compute-root-volume-size"></a>
 
 Specifies the ComputeFleet root volume size in GB\. The AMI must support growroot\.
@@ -240,7 +242,7 @@ For more information, see the [[fsx] section](fsx-section.md)\.
 fsx_settings = fs
 ```
 
-For example, the following setting specifies that the section that starts `[fsx fs]` is used for the Amazon EFS filesystem configuration\.
+For example, the following setting specifies that the section that starts `[fsx fs]` is used for the Amazon FSx for Lustre configuration\.
 
 ```
 fsx_settings = fs
@@ -293,6 +295,8 @@ Defaults to `t2.micro`\.
 ```
 master_instance_type = t2.micro
 ```
+
+A1 instances are not supported\.
 
 ## `master_root_volume_size`<a name="master-root-volume-size"></a>
 
@@ -373,6 +377,8 @@ For more information about placement groups, see [Placement Groups](https://docs
 
 The default value is `NONE`\.
 
+Not all instance types support cluster placement groups\. For example the default instance type of `t2.micro` does not support cluster placement groups\. For the list of instance types that support cluster placement groups, see [Cluster Placement Group Rules and Limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-cluster) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 ```
 placement_group = NONE
 ```
@@ -393,12 +399,12 @@ post_install = NONE
 
 ## `post_install_args`<a name="post-install-args"></a>
 
-Specifies a list of arguments to pass to the postinstall script\.
+Specifies a quoted list of arguments to pass to the postinstall script\.
 
 The default value is `NONE`\.
 
 ```
-post_install_args = NONE
+post_install_args = "NONE"
 ```
 
 ## `pre_install`<a name="pre-install"></a>
@@ -422,7 +428,7 @@ Specifies a quoted list of arguments to pass to the preinstall script\.
 The default value is `NONE`\.
 
 ```
-pre_install_args = NONE
+pre_install_args = "NONE"
 ```
 
 ## `proxy_server`<a name="proxy-server"></a>
