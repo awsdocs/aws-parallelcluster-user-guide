@@ -441,8 +441,8 @@ The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or
         {
             "Sid": "EFSDescribe",
             "Action": [
-                "efs:DescribeMountTargets",
-                "efs:DescribeMountTargetSecurityGroups",
+                "elasticfilesystem:DescribeMountTargets",
+                "elasticfilesystem:DescribeMountTargetSecurityGroups",
                 "ec2:DescribeNetworkInterfaceAttribute"
             ],
             "Effect": "Allow",
