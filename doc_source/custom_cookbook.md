@@ -5,7 +5,7 @@ The following are instructions for using a custom version of the AWS ParallelClu
 
 ## Steps<a name="steps"></a>
 
-1. Identify the AWS ParallelCluster Cookbook working directory where you have cloned the AWS ParallelCluster Cookbook code\.
+1. Identify the AWS ParallelCluster Cookbook working directory where you have cloned the [AWS ParallelCluster Cookbook](https://github.com/aws/aws-parallelcluster-cookbook) code\.
 
    ```
    _cookbookDir=<path to cookbook>
