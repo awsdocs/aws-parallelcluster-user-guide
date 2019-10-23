@@ -7,6 +7,7 @@
 + [`compute_instance_type`](#compute-instance-type)
 + [`compute_root_volume_size`](#compute-root-volume-size)
 + [`custom_ami`](#custom-ami-section)
++ [`dcv_settings`](#dcv-settings)
 + [`desired_vcpus`](#desired-vcpus)
 + [`ebs_settings`](#ebs-settings)
 + [`ec2_iam_role`](#ec2-iam-role)
@@ -155,6 +156,19 @@ The default value is `4`\.
 ```
 desired_vcpus = 4
 ```
+
+## `dcv_settings`<a name="dcv-settings"></a>
+
+Specifies the section that defines the NICE DCV configuration\.
+
+For more information, see the [[dcv] section](dcv-section.md)\.
+
+For example, the following setting specifies that the section that starts `[dcv custom-dcv]` is used for the NICE DCV configuration\.
+
+```
+dcv_settings = custom-dcv
+```
+
 
 ## `ebs_settings`<a name="ebs-settings"></a>
 

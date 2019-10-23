@@ -138,6 +138,14 @@ The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm
             ],
             "Effect": "Allow",
             "Sid": "BatchJobPassRole"
+        },
+        {
+            "Action": "s3:GetObject",
+            "Resource": [
+                "arn:aws:s3:::dcv-license.<REGION>/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "DcvLicense",
         }
     ]
 }

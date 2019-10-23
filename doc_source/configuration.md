@@ -6,6 +6,7 @@
 + [[aws] section](aws.md)
 + [[aliases] section](aliases.md)
 + [[cluster] section](cluster-definition.md)
++ [[dcv] section](dcv-section.md)
 + [[ebs] section](ebs-section.md)
 + [[efs] section](efs-section.md)
 + [[fsx] section](fsx-section.md)

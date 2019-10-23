@@ -4,13 +4,13 @@
 
 ```
 pcluster [ -h ] ( create | update | delete | start | stop | status | list |
-                  instances | ssh | createami | configure | version ) ...
+                  instances | ssh | dcv | createami | configure | version ) ...
 ```
 
 ## Arguments<a name="pcluster.arguments"></a>
 
 `command`  
-Possible choices: `[configure](pcluster.configure.md)`, `[create](pluster.create.md)`, `[createami](pcluster.createami.md)`, `[delete](pcluster.delete.md)`, `[instances](pcluster.instances.md)`, `[list](pcluster.list.md)`, `[ssh](pcluster.ssh.md)`, `[start](pcluster.start.md)`, `[status](pcluster.status.md)`, `[stop](pcluster.stop.md)`, `[update](pcluster.update.md)`, `[version](pcluster.version.md)`
+Possible choices: `[configure](pcluster.configure.md)`, `[create](pluster.create.md)`, `[createami](pcluster.createami.md)`, `[dcv](pluster.dcv.md)`, `[delete](pcluster.delete.md)`, `[instances](pcluster.instances.md)`, `[list](pcluster.list.md)`, `[ssh](pcluster.ssh.md)`, `[start](pcluster.start.md)`, `[status](pcluster.status.md)`, `[stop](pcluster.stop.md)`, `[update](pcluster.update.md)`, `[version](pcluster.version.md)`
 
 ## Sub\-commands:<a name="pcluster.subcommands"></a>
 
@@ -20,6 +20,7 @@ Possible choices: `[configure](pcluster.configure.md)`, `[create](pluster.create
 + [`pcluster configure`](pcluster.configure.md)
 + [`pcluster create`](pluster.create.md)
 + [`pcluster createami`](pcluster.createami.md)
++ [`pcluster dcv`](pcluster.dcv.md)
 + [`pcluster delete`](pcluster.delete.md)
 + [`pcluster instances`](pcluster.instances.md)
 + [`pcluster list`](pcluster.list.md)
