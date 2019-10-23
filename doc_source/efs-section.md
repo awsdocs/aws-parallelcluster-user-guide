@@ -104,8 +104,8 @@ If you set this option to `config_sanity`, it only supports file systems:
 + That do have an existing mount target in the stack's Availability Zone, with inbound and outbound NFS traffic allowed from `0.0.0.0/0`\.
 
 The sanity check for validating `efs_fs_id` requires the IAM role to have the following permissions:
-+ `efs:DescribeMountTargets`
-+ `efs:DescribeMountTargetSecurityGroups`
++ `elasticfilesystem:DescribeMountTargets`
++ `elasticfilesystem:DescribeMountTargetSecurityGroups`
 + `ec2:DescribeSubnets`
 + `ec2:DescribeSecurityGroups`
 + `ec2:DescribeNetworkInterfaceAttribute`
