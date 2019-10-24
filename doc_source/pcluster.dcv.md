@@ -1,31 +1,19 @@
-# `pcluster dcv`<a name="pcluster.dcv"></a>
+# AWS ParallelCluster CLI Commands<a name="commands"></a>
 
-Open a browser and connect to the NICE DCV session running in the master instance\.
-For more information about the NICE DCV integration, see [Connect to the master instance through NICE DCV](dcv.md)\.
-
-```
-pcluster dcv [ -h ] [ -k SSH_KEY_PATH ] cluster_name
-```
-
-## Positional Arguments<a name="pcluster.dcv.arg"></a>
-
-`cluster_name`  
-Specifies the name of the cluster to connect to\.
-
-## Named Arguments<a name="pcluster.dcv.namedarg"></a>
-
-`-h, --help`  
-Shows the help text for the specified command\.
-
-`-k, --key-path`  
-Key path of the SSH key to use for the connection\.
-It must be the one specified at cluster creation time in the `key_name` configuration parameter\.
-
-Example:
+`pcluster dcv` permits to use NICE DCV related features\.
 
 ```
-$ pcluster dcv mycluster -k ~/.ssh/id_rsa
+pcluster dcv [ -h ] ( connect ) ...
 ```
 
-Opens the default browser and connect to the NICE DCV session running in the master instance\.
-A new session is created if there is no one\.
+## Arguments<a name="pcluster.dcv.arguments"></a>
+
+`subcommand`  
+Possible choices: `[connect](pcluster.dcv.connect.md)`
+
+## Sub\-commands:<a name="pcluster.dcv.subcommands"></a>
+
+**Topics**
++ [Arguments](#pcluster.dcv.arguments)
++ [Sub\-commands:](#pcluster.dcv.subcommands)
++ [`pcluster dcv connect`](pcluster.dcv.connect.md)
