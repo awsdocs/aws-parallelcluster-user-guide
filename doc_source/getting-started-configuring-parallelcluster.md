@@ -91,7 +91,7 @@ Master Subnet ID []:
 
 When you have completed the preceding steps, a simple cluster launches into a VPC, using an existing subnet that supports public IP's \(the route table for the subnet is `0.0.0.0/0 => igw-xxxxxx`\)\. Note the following:
 + The VPC must have `DNS Resolution = yes` and `DNS Hostnames = yes`\.
-+ The VPC should also have DHCP options with the correct `domain-name` for the Region\. For more information, see [DHCP Options Sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
++ The VPC should also have DHCP options with the correct `domain-name` for the region\. The default DHCP Option Set already specifies the required *AmazonProvidedDNS*\. If specifying more than one domain name server, see [DHCP Options Sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
 
 When all settings contain valid values, you can launch the cluster by running the create command\.
 
