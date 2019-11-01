@@ -1,6 +1,10 @@
 # Network Configurations<a name="networking"></a>
 
-AWS ParallelCluster uses Amazon Virtual Private Cloud \(VPC\) for networking\. VPC provides a flexible and configurable networking platform in which to deploy clusters\. AWS ParallelCluster supports the following high\-level configurations:
+AWS ParallelCluster uses Amazon Virtual Private Cloud \(VPC\) for networking\. VPC provides a flexible and configurable networking platform in which to deploy clusters\. 
+
+The VPC must have `DNS Resolution = yes`, `DNS Hostnames = yes` and DHCP options with the correct domain-name for the region\. The default DHCP Option Set already specifies the required *AmazonProvidedDNS*\. If specifying more than one domain name server, see [DHCP Options Sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
+
+AWS ParallelCluster supports the following high\-level configurations:
 + Single subnet for both master and compute instances
 + Two subnets, with master in one public subnet and compute instances in a private subnet \(new or already existing\)
 
