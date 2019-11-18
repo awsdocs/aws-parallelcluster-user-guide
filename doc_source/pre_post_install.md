@@ -10,7 +10,7 @@ Arguments can be passed to scripts by specifying them in the configuration\. The
 
 If a pre\-install or post\-install action fails, the instance bootstrap fails\. Success is signaled with an exit code of 0\. Any other exit code is considered a failure\.
 
-It is possible to differentiate between master and compute nodes execution by sourcing the `/etc/parallelcluster/cfnconfig` file and evaluating the `cfn_node_type` environment variable, whose possible values are "MasterServer" and "ComputeFleet" for the master and compute nodes respectively\.
+You can differentiate between master and compute nodes execution\. Source the `/etc/parallelcluster/cfnconfig` file and evaluate the `cfn_node_type` environment variable, whose possible values are "MasterServer" and "ComputeFleet" for the master and compute nodes respectively\.
 
 ```
 #!/bin/bash

@@ -10,3 +10,5 @@
 + [AWS ParallelCluster Batch CLI Commands](awsbatchcli.md)
 + [Elastic Fabric Adapter](efa.md)
 + [Enable Intel MPI](intelmpi.md)
++ [Intel HPC Platform Specification](intel-hpc-platform-specification.md)
++ [Connect to the master instance through NICE DCV](dcv.md)

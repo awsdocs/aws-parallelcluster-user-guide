@@ -2,16 +2,20 @@
 
 **Topics**
 + [`additional_cfn_template`](#additional-cfn-template)
++ [`additional_iam_policies`](#additional-iam-policies)
 + [`base_os`](#base-os)
 + [`cluster_type`](#cluster-type)
 + [`compute_instance_type`](#compute-instance-type)
 + [`compute_root_volume_size`](#compute-root-volume-size)
 + [`custom_ami`](#custom-ami-section)
++ [`dcv_settings`](#dcv-settings)
 + [`desired_vcpus`](#desired-vcpus)
++ [`disable_hyperthreading`](#disable-hyperthreading)
 + [`ebs_settings`](#ebs-settings)
 + [`ec2_iam_role`](#ec2-iam-role)
 + [`efs_settings`](#efs-settings)
 + [`enable_efa`](#enable-efa)
++ [`enable_intel_hpc_platform`](#enable-intel-hpc-platform)
 + [`encrypted_ephemeral`](#encrypted-ephemeral)
 + [`ephemeral_dir`](#ephemeral-dir)
 + [`extra_json`](#extra-json)
@@ -65,6 +69,19 @@ The default value is `NONE`\.
 additional_cfn_template = NONE
 ```
 
+## `additional_iam_policies`<a name="additional-iam-policies"></a>
+
+Specifies a comma\-separated list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used in the cluster, in addition to the permissions required by AWS ParallelCluster\. An IAM policy name and its ARN are different\. Names cannot be used as an argument to `additional_iam_policies`\. `additional_iam_policies` should be used instead of the `ec2_iam_role`\. This is because `additional_iam_policies` are added to the permissions that AWS ParallelCluster requires, and the `ec2_iam_role` must include all permissions required\. The permissions required often change from release to release as features are added\.
+
+The default value is `NONE`\.
+
+```
+additional_iam_policies = arn:aws:iam::aws:policy/AdministratorAccess
+```
+
+**Note**  
+Support for `additional_iam_policies` was added in AWS ParallelCluster 2\.5\.0\.
+
 ## `base_os`<a name="base-os"></a>
 
 Specifies which OS type is used in the cluster\.
@@ -73,23 +90,26 @@ Available options are:
 + `alinux`
 + `centos6`
 + `centos7`
-+ `ubuntu1404`
 + `ubuntu1604`
++ `ubuntu1804`
 
-Supported operating systems by Region are listed in the following table\. Note that "commercial" entails all other supported Regions including us\-east\-1, us\-west\-2, and so on\.
+**Note**  
+Support for `ubuntu1804` was added and support for `ubuntu1404` was removed in AWS ParallelCluster 2\.5\.0\.
+
+Supported operating systems by Region are listed in the following table\. Note that "commercial" entails all other supported Regions including `us-east-1`, `us-west-2`, and so on\.
 
 
-| Partition \(Regions\) | `alinux` | `centos6` | `centos7` | `ubuntu1404` | `ubuntu1604` | 
+| Partition \(Regions\) | `alinux` | `centos6` | `centos7` | `ubuntu1604` | `ubuntu1804` | 
 | --- | --- | --- | --- | --- | --- | 
 | Commercial \(All Regions not mentioned below\) | True | True | True | True | True | 
 | AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | False | True | True | 
 | AWS GovCloud \(US\-West\) \(us\-gov\-west\-1\) | True | False | False | True | True | 
-| China \(Beijing\) China \(cn\-north\-1\) | True | False | False | True | True | 
+| China \(Beijing\) \(cn\-north\-1\) | True | False | False | True | True | 
 | China \(Ningxia\) \(cn\-northwest\-1\) | True | False | False | True | True | 
 
 Note: The `base_os` parameter also determines the user name that is used to log into the cluster\.
 + `centos6` and `centos7`: `centos` 
-+ `ubuntu1404` and `ubuntu1604`: `ubuntu` 
++ `ubuntu1604`, and `ubuntu1804`: `ubuntu` 
 + `alinux`: `ec2-user` 
 
 The default value is `alinux`\.
@@ -146,6 +166,21 @@ The default value is `NONE`\.
 custom_ami = NONE
 ```
 
+## `dcv_settings`<a name="dcv-settings"></a>
+
+Identifies the `[dcv]` section with the NICE DCV configuration\.
+
+For more information, see the [[dcv] section](dcv-section.md)\.
+
+For example, the following setting specifies that the section that starts `[dcv custom-dcv]` is used for the NICE DCV configuration\.
+
+```
+dcv_settings = custom-dcv
+```
+
+**Note**  
+Support for `dcv_settings` was added in AWS ParallelCluster 2\.5\.0\.
+
 ## `desired_vcpus`<a name="desired-vcpus"></a>
 
 Specifies the desired number of vCPUs in the compute environment\. Used only if the scheduler is `awsbatch`\.
@@ -155,6 +190,17 @@ The default value is `4`\.
 ```
 desired_vcpus = 4
 ```
+
+## `disable_hyperthreading`<a name="disable-hyperthreading"></a>
+
+Disables hyperthreading on the master and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU Cores and Threads Per CPU Core Per Instance Type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+```
+disable_hyperthreading = true
+```
+
+**Note**  
+Support for `disable_hyperthreading` was added in AWS ParallelCluster 2\.5\.0\.
 
 ## `ebs_settings`<a name="ebs-settings"></a>
 
@@ -172,7 +218,7 @@ ebs_settings = custom1, custom2
 
 ## `ec2_iam_role`<a name="ec2-iam-role"></a>
 
-Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs cannot be used as an argument to `ec2_iam_role`\.
+Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs cannot be used as an argument to `ec2_iam_role`\. If this option is specified, the `additional_iam_policies` setting is ignored\. AWS recommends using `additional_iam_policies` rather than the `ec2_iam_role`, because features added to AWS ParallelCluster often require new permissions\.
 
 The default value is `NONE`\.
 
@@ -199,6 +245,17 @@ If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the com
 ```
 enable_efa = compute
 ```
+
+## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
+
+If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This will cause Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\.
+
+```
+enable_intel_hpc_platform = true
+```
+
+**Note**  
+Support for `enable_intel_hpc_platform` was added in AWS ParallelCluster 2\.5\.0\.
 
 ## `encrypted_ephemeral`<a name="encrypted-ephemeral"></a>
 
@@ -377,7 +434,7 @@ For more information about placement groups, see [Placement Groups](https://docs
 
 The default value is `NONE`\.
 
-Not all instance types support cluster placement groups\. For example the default instance type of `t2.micro` does not support cluster placement groups\. For the list of instance types that support cluster placement groups, see [Cluster Placement Group Rules and Limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-cluster) in the *Amazon EC2 User Guide for Linux Instances*\.
+Not all instance types support cluster placement groups\. For example, the default instance type of `t2.micro` does not support cluster placement groups\. For information about the list of instance types that support cluster placement groups, see [Cluster Placement Group Rules and Limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-cluster) in the *Amazon EC2 User Guide for Linux Instances*\. See [Placement Groups and Instance Launch Issues](troubleshooting.md#placement-groups-and-instance-launch-issues) for tips when working with placement groups\.
 
 ```
 placement_group = NONE

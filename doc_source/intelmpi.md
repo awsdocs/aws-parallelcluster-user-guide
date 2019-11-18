@@ -1,6 +1,6 @@
 # Enable Intel MPI<a name="intelmpi"></a>
 
-Intel MPI is available on the AWS ParallelCluster AMIs \(except in China \(Beijing\) and China \(Ningxia\)\) for `alinux`, `centos7`, and `ubuntu1604` [`base_os`](cluster-definition.md#base-os)\. Open MPI is placed on the path by default\. To enable Intel MPI instead of Open MPI, the Intel MPI module must be loaded\. The exact name of the module changes with every update\. To see which modules are available, run `module avail`\.
+Intel MPI is available on the AWS ParallelCluster AMIs for `alinux`, `centos7`, and `ubuntu1604` [`base_os`](cluster-definition.md#base-os)\. Open MPI is placed on the path by default\. To enable Intel MPI instead of Open MPI, the Intel MPI module must be loaded\. The exact name of the module changes with every update\. To see which modules are available, run `module avail`\.
 
 ```
 $ module avail
@@ -10,7 +10,7 @@ dot                 module-git          modules             use.own        openm
 intelmpi/2019.4.243 module-info         null
 ```
 
-To load a module, run `module load modulename`\.
+To load a module, run `module load modulename`\. You can add this to the script used to run `mpirun`\.
 
 ```
 $ module load intelmpi
@@ -33,3 +33,6 @@ Copyright 2003-2019, Intel Corporation.
 ```
 
 After the Intel MPI module has been loaded, multiple paths are changed to use the Intel MPI tools\. To run code that was compiled by the Intel MPI tools, the Intel MPI module must be loaded first\.
+
+**Note**  
+Prior to AWS ParallelCluster 2\.5\.0, Intel MPI is not available on the AWS ParallelCluster AMIs in China \(Beijing\) and China \(Ningxia\)\.

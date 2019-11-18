@@ -69,7 +69,7 @@ If you have a customized AMI and software already in place, you can apply the ch
    pcluster createami --ami-id <BASE AMI> --os <BASE OS AMI>
    ```
 **Important**  
-You cannot use a AWS ParallelCluster AMI as *<BASE AMI>* for the `createami` command or the command will fail\.
+You cannot use an AWS ParallelCluster AMI as *<BASE AMI>* for the `createami` command\. If you do, the command fails\.
 
    For other parameters, consult the command help:
 

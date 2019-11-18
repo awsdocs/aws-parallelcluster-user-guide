@@ -1,12 +1,12 @@
 # Network Configurations<a name="networking"></a>
 
-AWS ParallelCluster uses Amazon Virtual Private Cloud \(VPC\) for networking\. VPC provides a flexible and configurable networking platform in which to deploy clusters\. 
+AWS ParallelCluster uses Amazon Virtual Private Cloud \(VPC\) for networking\. VPC provides a flexible and configurable networking platform in which to deploy clusters\.
 
-The VPC must have `DNS Resolution = yes`, `DNS Hostnames = yes` and DHCP options with the correct domain-name for the region\. The default DHCP Option Set already specifies the required *AmazonProvidedDNS*\. If specifying more than one domain name server, see [DHCP Options Sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
+The VPC must have `DNS Resolution = yes`, `DNS Hostnames = yes` and DHCP options with the correct domain\-name for the Region\. The default DHCP Option Set already specifies the required *AmazonProvidedDNS*\. If specifying more than one domain name server, see [DHCP Options Sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
 
 AWS ParallelCluster supports the following high\-level configurations:
-+ Single subnet for both master and compute instances
-+ Two subnets, with master in one public subnet and compute instances in a private subnet \(new or already existing\)
++ One subnet for both master and compute instances\.
++ Two subnets, with the master in one public subnet, and compute instances in a private subnet\. The subnets can be new or existing\.
 
 All of these configurations can operate with or without public IP addressing\. AWS ParallelCluster can also be deployed to use an HTTP proxy for all AWS requests\. The combinations of these configurations result in many deployment scenarios\. For example, you can configure a single public subnet with all access over the internet\., Or you can configure a fully private network using AWS Direct Connect and HTTP proxy for all traffic\.
 
@@ -74,7 +74,7 @@ When you use `awsbatch` as the scheduler type, AWS ParallelCluster creates an AW
 
 Additionally, if you are interested in multi\-node parallel jobs \(from the [AWS Batch docs ](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html#mnp-ce)\):
 
-AWS Batch multi\-node parallel jobs use the Amazon ECS awsvpc network mode, which gives your multi\-node parallel job containers the same networking properties as Amazon EC2 instances\. Each multi\-node parallel job container gets its own elastic network interface, a primary private IP address, and an internal DNS hostname\. The network interface is created in the same Amazon VPC subnet as its host compute resource\. Any security groups that are applied to your compute resources are also applied to it\.
+AWS Batch multi\-node parallel jobs use the Amazon ECS `awsvpc` network mode, which gives your multi\-node parallel job containers the same networking properties as Amazon EC2 instances\. Each multi\-node parallel job container gets its own elastic network interface, a primary private IP address, and an internal DNS hostname\. The network interface is created in the same Amazon VPC subnet as its host compute resource\. Any security groups that are applied to your compute resources are also applied to it\.
 
 When using Amazon ECS Task Networking, the awsvpc network mode does not provide elastic network interfaces with public IP addresses for tasks that use the Amazon EC2 launch type\. To access the internet, tasks that use the Amazon EC2 launch type must be launched in a private subnet that is configured to use a NAT Gateway\.
 
