@@ -150,10 +150,10 @@ A1 instances are not supported\.
 
 Specifies the ComputeFleet root volume size in GB\. The AMI must support growroot\.
 
-The default value is `20`\.
+The default value is `25`\.
 
 ```
-compute_root_volume_size = 20
+compute_root_volume_size = 25
 ```
 
 ## `custom_ami`<a name="custom-ami-section"></a>
@@ -359,10 +359,10 @@ A1 instances are not supported\.
 
 Specifies the MasterServer root volume size in GB\. The AMI must support `growroot`\.
 
-The default value is `20`\.
+The default value is `25`\.
 
 ```
-master_root_volume_size = 20
+master_root_volume_size = 25
 ```
 
 ## `max_queue_size`<a name="configuration-max-queue-size"></a>
