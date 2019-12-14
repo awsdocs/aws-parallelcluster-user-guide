@@ -5,9 +5,13 @@ Intel MPI is available on the AWS ParallelCluster AMIs for `alinux`, `centos7`, 
 ```
 $ module avail
 
------------------------------------------------ /usr/share/Modules/modulefiles ------------------------------------------------
-dot                 module-git          modules             use.own        openmpi/3.1.4
-intelmpi/2019.4.243 module-info         null
+----------------------------------------- /usr/share/Modules/modulefiles ------------------------------------------
+dot                        module-git                 null
+intelmpi/2019.5            module-info                openmpi/4.0.2
+libfabric-aws/1.8.1amzn1.2 modules                    use.own
+
+------------------------------------------------ /etc/modulefiles -------------------------------------------------
+mpi/mpich-3.0-x86_64 mpi/mpich-x86_64
 ```
 
 To load a module, run `module load modulename`\. You can add this to the script used to run `mpirun`\.
@@ -21,14 +25,14 @@ To see what modules are loaded, run `module list`\.
 ```
 $ module list
 Currently Loaded Modulefiles:
-  1) intelmpi/2019.4.243
+  1) intelmpi/2019.5
 ```
 
 To verify that Intel MPI is enabled, run `mpirun --version`\.
 
 ```
 $ mpirun --version
-Intel(R) MPI Library for Linux* OS, Version 2019 Update 4 Build 20190430 (id: cbdd16069)
+Intel(R) MPI Library for Linux* OS, Version 2019 Update 5 Build 20190806 (id: 7e5a4f84c)
 Copyright 2003-2019, Intel Corporation.
 ```
 

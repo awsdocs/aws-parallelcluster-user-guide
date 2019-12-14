@@ -39,6 +39,10 @@ Shows the help text for the specified command\.
 Key path of the SSH key to use for the connection\.  
 It must be the one specified at cluster creation time in the `key_name` configuration parameter\.
 
+`-s, --show-url`  
+Displays a one\-time URL to use to connect to the NICE DCV session\. The default browser is not opened when this option is specified\.  
+Support for the `--show-url` option was added in AWS ParallelCluster 2\.5\.1\.
+
 Example:
 
 ```

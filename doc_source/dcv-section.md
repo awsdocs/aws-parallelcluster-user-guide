@@ -4,6 +4,8 @@ Defines configuration settings for the NICE DCV server running on the master ins
 
 To create and configure a NICE DCV server, specify a [`dcv_settings`](cluster-definition.md#dcv-settings) with the name of your section, with [`enable`](#dcv-section-enable) set to `master`, and a [`base_os`](cluster-definition.md#base-os) set to `centos7`\.
 
+The format is `[dcv <dcvname>]`\.
+
 ```
 [dcv custom-dcv]
 enable = master

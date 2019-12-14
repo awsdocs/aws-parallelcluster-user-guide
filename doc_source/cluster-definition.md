@@ -152,8 +152,11 @@ Specifies the ComputeFleet root volume size in GB\. The AMI must support growroo
 
 The default value is `25`\.
 
+**Note**  
+Prior to AWS ParallelCluster\. 2\.5\.0 the default was 20\.
+
 ```
-compute_root_volume_size = 25
+compute_root_volume_size = 20
 ```
 
 ## `custom_ami`<a name="custom-ami-section"></a>
@@ -360,6 +363,9 @@ A1 instances are not supported\.
 Specifies the MasterServer root volume size in GB\. The AMI must support `growroot`\.
 
 The default value is `25`\.
+
+**Note**  
+Prior to AWS ParallelCluster\. 2\.5\.0 the default was 20\.
 
 ```
 master_root_volume_size = 25

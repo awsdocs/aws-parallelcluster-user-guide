@@ -6,7 +6,7 @@ AWS ParallelCluster is distributed as a Python package and is installed using `p
 + [Using a virtual environment \(recommended\)](#install-tool-venv)
 + [Using `pip`](#install-tool-pip)
 
-You can find the version number of the most recent CLI at: [https://github.com/aws/aws-parallelcluster/blob/release/CHANGELOG.rst](https://github.com/aws/aws-parallelcluster/blob/release/CHANGELOG.rst)\.
+You can find the version number of the most recent CLI on the [releases page on GitHub](https://github.com/aws/aws-parallelcluster/releases)\.
 
 In this guide, the command examples assume that you have Python v3 installed\. The `pip` command examples use the `pip3` version\.
 
@@ -38,10 +38,10 @@ You can verify that AWS ParallelCluster installed correctly by running `pcluster
 
 ```
 $ pcluster version
-2.4.1
+2.5.1
 ```
 
-AWS ParallelCluster is updated regularly\. To update to the latest version of AWS ParallelCluster, run the installation command again\. For details about the latest version of AWS ParallelCluster, see the [ AWS ParallelCluster release notes](https://github.com/aws/aws-parallelcluster/blob/release/CHANGELOG.rst)\.
+AWS ParallelCluster is updated regularly\. To update to the latest version of AWS ParallelCluster, run the installation command again\. For details about the latest version of AWS ParallelCluster, see the [AWS ParallelCluster release notes](https://github.com/aws/aws-parallelcluster/blob/v2.5.1/CHANGELOG.rst)\.
 
 ```
 $ pip3 install aws-parallelcluster --upgrade --user
@@ -56,7 +56,7 @@ $ pip3 uninstall aws-parallelcluster
 If you don't have Python and `pip`, use the procedure for your environment\.
 
 ## Detailed Instructions for Each Environment<a name="install-sections"></a>
-+ [Install AWS ParallelCluster in a Virtual Environment](install-virtualenv.md)
++ [Install AWS ParallelCluster in a Virtual Environment \(Recommended\)](install-virtualenv.md)
 + [Install AWS ParallelCluster on Linux](install-linux.md)
 + [Install AWS ParallelCluster on macOS](install-macos.md)
 + [Install AWS ParallelCluster on Windows](install-windows.md)

@@ -1,6 +1,6 @@
-# Install AWS ParallelCluster in a Virtual Environment<a name="install-virtualenv"></a>
+# Install AWS ParallelCluster in a Virtual Environment \(Recommended\)<a name="install-virtualenv"></a>
 
-We recommend that you install AWS ParallelCluster in a virtual environment, to avoid requirement version conflicts with other `pip3` packages\.
+We recommend that you install AWS ParallelCluster in a virtual environment, to avoid requirement version conflicts with other `pip` packages\.
 
 **Prerequisites**
 + Verify that `pip` and Python are installed\. We recommend `pip3`, and Python 3 version 3\.6\. If you are using Python 2, use `pip` instead of `pip3` and `virtualenv` instead of `venv`\.
@@ -14,7 +14,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment, to a
 
    ```
    $ python3 -m pip install --upgrade pip
-   $ pip3 install --user --upgrade virtualenv
+   $ python3 -m pip --user --upgrade virtualenv
    ```
 
 ------
@@ -74,14 +74,14 @@ We recommend that you install AWS ParallelCluster in a virtual environment, to a
 #### [ Linux, macOS, or Unix ]
 
    ```
-   (apc-ve)~$ pip install --upgrade aws-parallelcluster
+   (apc-ve)~$ python3 -m pip install --upgrade aws-parallelcluster
    ```
 
 ------
 #### [ Windows ]
 
    ```
-   (apc-ve) C:\>pip install --upgrade aws-parallelcluster
+   (apc-ve) C:\>python3 -m pip install --upgrade aws-parallelcluster
    ```
 
 ------
@@ -93,7 +93,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment, to a
 
    ```
    $ pcluster version
-   2.4.1
+   2.5.1
    ```
 
 ------
@@ -101,7 +101,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment, to a
 
    ```
    (apc-ve) C:\>pcluster version
-   2.4.1
+   2.5.1
    ```
 
 ------
@@ -114,7 +114,7 @@ To upgrade to the latest version of AWS ParallelCluster, run the installation co
 #### [ Linux, macOS, or Unix ]
 
 ```
-(apc-ve)~$ pip3 install --upgrade aws-parallelcluster
+(apc-ve)~$ python3 -m pip install --upgrade aws-parallelcluster
 ```
 
 ------

@@ -1,0 +1,3 @@
+# Son of Grid Engine \(`sge`\)<a name="schedulers.sge"></a>
+
+AWS ParallelCluster uses Son of Grid Engine 8\.1\.9\. Information about this scheduler can be found at [https://arc.liv.ac.uk/trac/SGE](https://arc.liv.ac.uk/trac/SGE)\. Downloads can be found at [https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/](https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/)\. The source code can be found at [https://arc.liv.ac.uk/trac/SGE/browser/sge](https://arc.liv.ac.uk/trac/SGE/browser/sge)\.
