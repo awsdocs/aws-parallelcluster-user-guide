@@ -4,7 +4,6 @@
 + [`shared_dir`](#id15)
 + [`fsx_fs_id`](#fsx-fs-id)
 + [`storage_capacity`](#storage-capacity)
-+ [`fsx_kms_key_id`](#fsx-kms-key-id)
 + [`imported_file_chunk_size`](#imported-file-chunk-size)
 + [`export_path`](#export-path)
 + [`import_path`](#import-path)
@@ -69,7 +68,7 @@ fsx_fs_id = fs-073c3803dca3e28a6
 
 **\(Optional\)** Specifies the storage capacity of the file system, in GiB\.
 
-The storage capacity has a minimum of 3,600 GiB and is provisioned in increments of 3,600 GiB\.
+The storage capacity has possible values of 1200, 2400, and any multiple of 3600\.
 
 The default value is `3600`\.
 
@@ -77,19 +76,8 @@ The default value is `3600`\.
 storage_capacity = 3600
 ```
 
-## `fsx_kms_key_id`<a name="fsx-kms-key-id"></a>
-
-**\(Optional\)** Specifies the ID of your AWS Key Management Service \(AWS KMS\) key\.
-
-This ID is used to encrypt the data in your file system at rest\.
-
-This must be used with a custom `ec2_iam_role`\. For more information, see [Disk Encryption with a Custom KMS Key](tutorials_04_encrypted_kms_fs.md)\.
-
-\.
-
-```
-fsx_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-```
+**Note**  
+Prior to AWS ParallelCluster 2\.5\.0, `storage_capacity` had a minimum size of 3600\.
 
 ## `imported_file_chunk_size`<a name="imported-file-chunk-size"></a>
 

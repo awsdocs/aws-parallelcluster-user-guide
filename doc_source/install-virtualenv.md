@@ -14,7 +14,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment, to a
 
    ```
    $ python3 -m pip install --upgrade pip
-   $ python3 -m pip --user --upgrade virtualenv
+   $ python3 -m pip install --user --upgrade virtualenv
    ```
 
 ------
@@ -44,10 +44,10 @@ We recommend that you install AWS ParallelCluster in a virtual environment, to a
 
 ------
 
-   Alternatively, you can use the `-p` option to specify a version of Python other than the default\.
+   Alternatively, you can use the `-p` option to specify a specific version of Python\.
 
    ```
-   $ virtualenv -p /usr/bin/python3.6 ~/apc-ve
+   $ virtualenv -p $(which python3) ~/apc-ve
    ```
 
 1. <a name="activate-virtual-environment"></a>Activate your new virtual environment\.

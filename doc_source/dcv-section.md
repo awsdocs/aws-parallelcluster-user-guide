@@ -18,13 +18,18 @@ Support for the `[[dcv] section](#dcv-section)` was added in AWS ParallelCluster
 
 ## `enable`<a name="dcv-section-enable"></a>
 
- **\(Required\)** Indicates whether NICE DCV is enabled on the master node\. To enable NICE DCV on the master node, set `enable` to `master`\.
+ **\(Required\)** Indicates whether NICE DCV is enabled on the master node\. To enable NICE DCV on the master node and configure the required security group rule, set `enable` to `master`\.
 
 The default value is `NONE`\.
+
+The following example enables NICE DCV on the master node\.
 
 ```
 enable = master
 ```
+
+**Note**  
+NICE DCV automatically generates a self\-signed certificate that is used to secure traffic between the NICE DCV client and NICE DCV server running on the master instance\. To configure your own certificate, see [NICE DCV HTTPS Certificate](dcv.md#dcv-certificate)\.
 
 ## `port`<a name="dcv-section-port"></a>
 
@@ -38,7 +43,7 @@ port = 8443
 
 ## `access_from`<a name="dcv-section-access-from"></a>
 
- **\(Optional\)** Specifies the CIDR for connections to NICE DCV\.
+ **\(Optional\)** Specifies the CIDR\-formatted IP range for connections to NICE DCV\. This setting is used only when AWS ParallelCluster creates the security group\.
 
 The default value is `0.0.0.0/0`\.
 
