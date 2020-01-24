@@ -114,6 +114,9 @@ Note: The `base_os` parameter also determines the user name that is used to log 
 
 The default value is `alinux`\.
 
+**Note**
+If the scheduler is `awsbatch`, only `alinux` is supported\.
+
 ```
 base_os = alinux
 ```
