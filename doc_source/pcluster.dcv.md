@@ -25,6 +25,9 @@ Shows the help text for the specified command\.
 pcluster dcv connect [ -h ] [ -k SSH_KEY_PATH ] cluster_name
 ```
 
+**Important**  
+The URL expires 30 seconds after it is issued\. If the connection is not made before the URL expires, `pcluster dcv connect` will need to be run again to generate a new URL\.
+
 #### Positional Arguments<a name="pcluster.dcv.connect.arg"></a>
 
 `cluster_name`  
@@ -37,7 +40,7 @@ Shows the help text for the specified command\.
 
 `-k SSH_KEY_PATH, --key-path SSH_KEY_PATH`  
 Key path of the SSH key to use for the connection\.  
-It must be the one specified at cluster creation time in the `key_name` configuration parameter\.
+The key must be the one specified at cluster creation time in the `[`key_name`](cluster-definition.md#key-name)` configuration parameter\. This argument is optional but if it is not specified then the key must be available by default for the SSH client \(for example by adding it to the `ssh-agent` with `ssh-add`\.\)
 
 `-s, --show-url`  
 Displays a one\-time URL to use to connect to the NICE DCV session\. The default browser is not opened when this option is specified\.  

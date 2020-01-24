@@ -66,11 +66,9 @@ fsx_fs_id = fs-073c3803dca3e28a6
 
 ## `storage_capacity`<a name="storage-capacity"></a>
 
-**\(Optional\)** Specifies the storage capacity of the file system, in GiB\.
+**\(Required\)** Specifies the storage capacity of the file system, in GiB\.
 
 The storage capacity has possible values of 1200, 2400, and any multiple of 3600\.
-
-The default value is `3600`\.
 
 ```
 storage_capacity = 3600
