@@ -483,6 +483,14 @@ To:
                 "fsx:*"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "EFS",
+            "Effect": "Allow",
+            "Action": [
+                "elasticfilesystem:*"
+            ],
+            "Resource": "*"
         }
     ]
 }
