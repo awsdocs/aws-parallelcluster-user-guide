@@ -429,7 +429,10 @@ To:
                 "iam:SimulatePrincipalPolicy"
             ],
             "Effect": "Allow",
-            "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/<PARALLELCLUSTER EC2 ROLE NAME>"
+            "Resource": [
+                "arn:aws:iam::<AWS ACCOUNT ID>:role/<PARALLELCLUSTER EC2 ROLE NAME>",
+                "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/*"
+            ]
         },
         {
             "Sid": "IAMCreateInstanceProfile",
