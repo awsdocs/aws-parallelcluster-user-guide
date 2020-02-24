@@ -14,7 +14,7 @@ access_from = 0.0.0.0/0
 ```
 
 **Important**  
-By default the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses, however users can connect to a NICE DCV port only if they have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the [`access_from`](#dcv-section-access-from) setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the [`port`](#dcv-section-port) setting to set a non\-standard port\.
+By default, the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, users can connect to a NICE DCV port only if they have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the [`access_from`](#dcv-section-access-from) setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the [`port`](#dcv-section-port) setting to set a nonstandard port\.
 
 **Note**  
 Support for the `[[dcv] section](#dcv-section)` was added in AWS ParallelCluster 2\.5\.0\.
@@ -48,7 +48,7 @@ port = 8443
 
  **\(Optional, Recommended\)** Specifies the CIDR\-formatted IP range for connections to NICE DCV\. This setting is used only when AWS ParallelCluster creates the security group\.
 
-The default value is `0.0.0.0/0` which allows access from any internet address\.
+The default value is `0.0.0.0/0`, which allows access from any internet address\.
 
 ```
 access_from = 0.0.0.0/0

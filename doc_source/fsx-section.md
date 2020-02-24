@@ -75,7 +75,7 @@ storage_capacity = 3600
 ```
 
 **Note**  
-Prior to AWS ParallelCluster 2\.5\.0, `storage_capacity` had a minimum size of 3600\.
+Prior to AWS ParallelCluster 2\.5\.0,, `storage_capacity` had a minimum size of 3600\.
 
 ## `imported_file_chunk_size`<a name="imported-file-chunk-size"></a>
 

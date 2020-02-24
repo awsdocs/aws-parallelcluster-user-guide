@@ -42,4 +42,4 @@ sanity_check = true
 ```
 
 **Note**  
-Prior to AWS ParallelCluster 2\.5\.0, `sanity_check` defaults to `false`\.
+Prior to AWS ParallelCluster 2\.5\.0, `sanity_check` defaulted to `false`\.

@@ -156,7 +156,7 @@ Specifies the ComputeFleet root volume size in GB\. The AMI must support growroo
 The default value is `25`\.
 
 **Note**  
-Prior to AWS ParallelCluster\. 2\.5\.0 the default was 20\.
+Prior to AWS ParallelCluster 2\.5\.0, the default was 20\.
 
 ```
 compute_root_volume_size = 20
@@ -254,7 +254,7 @@ enable_efa = compute
 
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
-If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This will cause Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\.
+If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time that it takes the master node to bootstrap\.
 
 ```
 enable_intel_hpc_platform = true
@@ -368,7 +368,7 @@ Specifies the MasterServer root volume size in GB\. The AMI must support `growro
 The default value is `25`\.
 
 **Note**  
-Prior to AWS ParallelCluster\. 2\.5\.0 the default was 20\.
+Prior to AWS ParallelCluster 2\.5\.0, the default was 20\.
 
 ```
 master_root_volume_size = 25

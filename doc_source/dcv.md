@@ -18,7 +18,7 @@ enable = master
 For more information about NICE DCV configuration parameters, see [`dcv_settings`](cluster-definition.md#dcv-settings)\. To connect to the NICE DCV session, use the `[`pcluster dcv`](pcluster.dcv.md)` command\.
 
 **Note**  
-Support for NICE DCV was added in AWS ParallelCluster 2\.5\.0\.
+Support for NICE DCV on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
 
 ## NICE DCV HTTPS Certificate<a name="dcv-certificate"></a>
 
