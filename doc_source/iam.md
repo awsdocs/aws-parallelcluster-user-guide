@@ -491,6 +491,17 @@ To:
                 "elasticfilesystem:*"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "CloudWatchLogs",
+            "Effect": "Allow",
+            "Action": [
+                "logs:DeleteLogGroup",
+                "logs:PutRetentionPolicy",
+                "logs:DescribeLogGroups",
+                "logs:CreateLogGroup"
+            ],
+            "Resource": "*"
         }
     ]
 }
