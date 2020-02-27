@@ -8,6 +8,7 @@
 + [Working with Spot Instances](spot.md)
 + [AWS Identity and Access Management Roles in AWS ParallelCluster](iam.md)
 + [Schedulers supported by AWS ParallelCluster](schedulers.md)
++ [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)
 + [Elastic Fabric Adapter](efa.md)
 + [Enable Intel MPI](intelmpi.md)
 + [Intel HPC Platform Specification](intel-hpc-platform-specification.md)

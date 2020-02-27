@@ -2,7 +2,7 @@
 
 Defines configuration settings for the NICE DCV server running on the master instance\.
 
-To create and configure a NICE DCV server, specify a [`dcv_settings`](cluster-definition.md#dcv-settings) with the name of your section, with [`enable`](#dcv-section-enable) set to `master`, and a [`base_os`](cluster-definition.md#base-os) set to `centos7`\.
+To create and configure a NICE DCV server, specify a [`dcv_settings`](cluster-definition.md#dcv-settings) with the name of your section, with [`enable`](#dcv-section-enable) set to `master`, and a [`base_os`](cluster-definition.md#base-os) set to `alinux2`, `centos7` or `ubuntu1804`\.
 
 The format is `[dcv <dcvname>]`\.
 
@@ -14,10 +14,10 @@ access_from = 0.0.0.0/0
 ```
 
 **Important**  
-By default, the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, users can connect to a NICE DCV port only if they have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the [`access_from`](#dcv-section-access-from) setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the [`port`](#dcv-section-port) setting to set a nonstandard port\.
+By default the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, users can connect to a NICE DCV port only if they have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the [`access_from`](#dcv-section-access-from) setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the [`port`](#dcv-section-port) setting to set a nonstandard port\.
 
 **Note**  
-Support for the `[[dcv] section](#dcv-section)` was added in AWS ParallelCluster 2\.5\.0\.
+Support for the `[[dcv] section](#dcv-section)` on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster 2\.6\.0\. Support for the `[[dcv] section](#dcv-section)`on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
 
 ## `enable`<a name="dcv-section-enable"></a>
 

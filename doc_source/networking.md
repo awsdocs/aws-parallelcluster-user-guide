@@ -85,7 +85,7 @@ This leaves us with the only option, to configure a NAT Gateway in order to enab
 
 ![\[AWS ParallelCluster networking with awsbatch scheduler\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/networking_batch.jpg)
 
-Additional details can be found in the following AWS documents:
+For more information, see the following AWS documents:
 +  [AWS Batch Managed Compute Environments](https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html#managed_compute_environments) 
 +  [AWS Batch Multi\-node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html) 
 +  [Amazon ECS Task Networking with the `awsvpc` Network Mode](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html) 

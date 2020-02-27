@@ -1,7 +1,7 @@
 # `[raid]` Section<a name="raid-section"></a>
 
 **Topics**
-+ [`shared_dir`](#id8)
++ [`shared_dir`](#raid-shared-dir)
 + [`raid_type`](#raid-type)
 + [`num_of_raid_volumes`](#num-of-raid-volumes)
 + [`volume_type`](#id9)
@@ -22,7 +22,7 @@ num_of_raid_volumes = 2
 encrypted = true
 ```
 
-## `shared_dir`<a name="id8"></a>
+## `shared_dir`<a name="raid-shared-dir"></a>
 
 Defines the mount point for the RAID array on the master and compute nodes\.
 

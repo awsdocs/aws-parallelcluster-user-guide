@@ -62,12 +62,16 @@ Choose the operating system\.
 ```
 Allowed values for Operating System:
 1. alinux
-2. centos6
-3. centos7
-4. ubuntu1604
-5. ubuntu1804
+2. alinux2
+3. centos6
+4. centos7
+5. ubuntu1604
+6. ubuntu1804
 Operating System [alinux]:
 ```
+
+**Note**  
+Support for `alinux2` was added in AWS ParallelCluster 2\.6\.0\.
 
 The minimum and maximum size of the cluster of compute nodes is entered\. This is measured in number of instances\.
 
@@ -166,7 +170,7 @@ Allowed values for Scheduler:
 Scheduler [sge]:
 ```
 
-When `awsbatch` is selected as the scheduler, `alinux` is used as the operating system\.
+When `awsbatch` is selected as the scheduler, either `alinux` or `alinux2` can used as the operating system\.
 
 The minimum and maximum size of the cluster of compute nodes is entered\. This is measured in vCPUs\.
 

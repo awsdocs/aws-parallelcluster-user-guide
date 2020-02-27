@@ -8,6 +8,7 @@
 + [`compute_instance_type`](#compute-instance-type)
 + [`compute_root_volume_size`](#compute-root-volume-size)
 + [`custom_ami`](#custom-ami-section)
++ [`cw_log_settings`](#cw-log-settings)
 + [`dcv_settings`](#dcv-settings)
 + [`desired_vcpus`](#desired-vcpus)
 + [`disable_hyperthreading`](#disable-hyperthreading)
@@ -88,34 +89,35 @@ Specifies which OS type is used in the cluster\.
 
 Available options are:
 + `alinux`
++ `alinux2`
 + `centos6`
 + `centos7`
 + `ubuntu1604`
 + `ubuntu1804`
 
 **Note**  
-Support for `ubuntu1804` was added and support for `ubuntu1404` was removed in AWS ParallelCluster 2\.5\.0\.
+Support for `alinux2` was added in AWS ParallelCluster 2\.6\.0\. Support for `ubuntu1804` was added and support for `ubuntu1404` was removed in AWS ParallelCluster 2\.5\.0\.
 
 Supported operating systems by Region are listed in the following table\. Note that "commercial" entails all other supported Regions including `us-east-1`, `us-west-2`, and so on\.
 
 
-| Partition \(Regions\) | `alinux` | `centos6` | `centos7` | `ubuntu1604` | `ubuntu1804` | 
-| --- | --- | --- | --- | --- | --- | 
-| Commercial \(All Regions not mentioned below\) | True | True | True | True | True | 
-| AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | False | True | True | 
-| AWS GovCloud \(US\-West\) \(us\-gov\-west\-1\) | True | False | False | True | True | 
-| China \(Beijing\) \(cn\-north\-1\) | True | False | False | True | True | 
-| China \(Ningxia\) \(cn\-northwest\-1\) | True | False | False | True | True | 
+| Partition \(Regions\) | `alinux` and `alinux2` | `centos6` and `centos7` | `ubuntu1604` and `ubuntu1804` | 
+| --- | --- | --- | --- | 
+| Commercial \(All Regions not mentioned below\) | True | True | True | 
+| AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | True | 
+| AWS GovCloud \(US\-West\) \(us\-gov\-west\-1\) | True | False | True | 
+| China \(Beijing\) \(cn\-north\-1\) | True | False | True | 
+| China \(Ningxia\) \(cn\-northwest\-1\) | True | False | True | 
 
 Note: The `base_os` parameter also determines the user name that is used to log into the cluster\.
 + `centos6` and `centos7`: `centos` 
-+ `ubuntu1604`, and `ubuntu1804`: `ubuntu` 
-+ `alinux`: `ec2-user` 
++ `ubuntu1604` and `ubuntu1804`: `ubuntu` 
++ `alinux` and `alinux2`: `ec2-user` 
 
 The default value is `alinux`\.
 
 **Note**  
-If the [`scheduler`](#scheduler) parameter is `awsbatch`, only `alinux` is supported\.
+If the [`scheduler`](#scheduler) parameter is `awsbatch`, either `alinux` or `alinux2` is supported\.
 
 ```
 base_os = alinux
@@ -171,6 +173,21 @@ The default value is `NONE`\.
 ```
 custom_ami = NONE
 ```
+
+## `cw_log_settings`<a name="cw-log-settings"></a>
+
+Identifies the `[cw_log]` section with the CloudWatch Logs configuration\.
+
+For more information, see the [[cw_log] section](cw-log-section.md) and [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
+
+For example, the following setting specifies that the section that starts `[cw_log custom-cw]` is used for the CloudWatch Logs configuration\.
+
+```
+cw_log_settings = custom-cw
+```
+
+**Note**  
+Support for `cw_log_settings` was added in AWS ParallelCluster 2\.6\.0\.
 
 ## `dcv_settings`<a name="dcv-settings"></a>
 
@@ -246,7 +263,7 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `p3dn.24xlarge`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
+If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \(`[`base_os`](#base-os)` is `alinux`, `alinux2`, `centos7`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
 
 ```
 enable_efa = compute
@@ -254,7 +271,7 @@ enable_efa = compute
 
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
-If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time that it takes the master node to bootstrap\.
+If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The `enable_intel_hpc_platform` setting is only supported on CentOS 7 \(`[`base_os`](#base-os) = centos7`\)\.
 
 ```
 enable_intel_hpc_platform = true

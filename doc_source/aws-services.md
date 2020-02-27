@@ -7,6 +7,7 @@ The following Amazon Web Services \(AWS\) services are used in AWS ParallelClust
 + [AWS Batch](#aws-batch)
 + [AWS CloudFormation](#aws-services-cloudformation)
 + [Amazon CloudWatch](#amazon-cloudwatch)
++ [Amazon CloudWatch Logs](#amazon-cloudwatch-logs)
 + [AWS CodeBuild](#aws-codebuild)
 + [Amazon DynamoDB](#amazon-dynamodb)
 + [Amazon Elastic Block Store](#amazon-elastic-block-store-ebs)
@@ -47,6 +48,12 @@ Amazon CloudWatch \(CloudWatch\) is used to log Docker image build steps and the
 CloudWatch is used only with AWS Batch clusters\.
 
 For more details, see [https://aws\.amazon\.com/cloudwatch/](https://aws.amazon.com/cloudwatch/)\. 
+
+## Amazon CloudWatch Logs<a name="amazon-cloudwatch-logs"></a>
+
+Amazon CloudWatch Logs \(CloudWatch Logs\) is used to monitor, store, view, and search the log files for many components used by AWS ParallelCluster\.
+
+For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
 
 ## AWS CodeBuild<a name="aws-codebuild"></a>
 

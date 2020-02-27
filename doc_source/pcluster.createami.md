@@ -22,8 +22,8 @@ Shows the help text for the specified command\.
 Specifies the base AMI to use for building the AWS ParallelCluster AMI\.
 
 `-os BASE_AMI_OS, --os BASE_AMI_OS`  
-Specifies the OS of the base AMI\. Valid options are: `alinux`, `ubuntu1604`, `ubuntu1804`, `centos6`, and `centos7`\.  
-Support for the `ubuntu1804` was added in AWS ParallelCluster 2\.5\.0\.
+Specifies the OS of the base AMI\. Valid options are: `alinux`, `alinux2`, `ubuntu1604`, `ubuntu1804`, `centos6`, and `centos7`\.  
+Support for `alinux2` was added in AWS ParallelCluster 2\.6\.0\. Support for `ubuntu1804` was added in AWS ParallelCluster 2\.5\.0\.
 
 `-ap CUSTOM_AMI_NAME_PREFIX, --ami-name-prefix CUSTOM_AMI_NAME_PREFIX`  
 Specifies the prefix name of the resulting AWS ParallelCluster AMI\.  

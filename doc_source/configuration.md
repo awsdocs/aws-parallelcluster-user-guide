@@ -6,6 +6,7 @@
 + [[aws] section](aws.md)
 + [[aliases] section](aliases.md)
 + [[cluster] section](cluster-definition.md)
++ [[cw_log] section](cw-log-section.md)
 + [[dcv] section](dcv-section.md)
 + [[ebs] section](ebs-section.md)
 + [[efs] section](efs-section.md)
@@ -17,7 +18,7 @@
 
 By default, AWS ParallelCluster uses the file `~/.parallelcluster/config` for all configuration parameters\. Specify a custom configuration file by using the `-c` or `--config` command line option or the `AWS_PCLUSTER_CONFIG_FILE` environment variable\.
 
-An example configuration file is installed with AWS ParallelCluster in the Python directory at `site-packages/aws-parallelcluster/examples/config`\. The example configuration file is also available on GitHub, at [https://github.com/aws/aws-parallelcluster/blob/v2.5.1/cli/pcluster/examples/config](https://github.com/aws/aws-parallelcluster/blob/v2.5.1/cli/pcluster/examples/config)\.
+An example configuration file is installed with AWS ParallelCluster in the Python directory at `site-packages/aws-parallelcluster/examples/config`\. The example configuration file is also available on GitHub, at [https://github.com/aws/aws-parallelcluster/blob/v2.6.0/cli/pcluster/examples/config](https://github.com/aws/aws-parallelcluster/blob/v2.6.0/cli/pcluster/examples/config)\.
 
 ## Layout<a name="layout"></a>
 

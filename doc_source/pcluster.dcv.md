@@ -10,7 +10,7 @@ pcluster dcv [ -h ] ( connect )
 Possible choices: `[connect](#pcluster-dcv-connect)`
 
 **Note**  
-Support for the `pcluster dcv` command was added in AWS ParallelCluster 2\.5\.0\.
+Support for the `pcluster dcv` command on `ubuntu1804` was added in AWS ParallelCluster 2\.6\.0\. Support for the `pcluster dcv` command on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
 
 ## Named Arguments<a name="pcluster.dcv.namedarg"></a>
 
@@ -26,7 +26,7 @@ pcluster dcv connect [ -h ] [ -k SSH_KEY_PATH ] cluster_name
 ```
 
 **Important**  
-The URL expires 30 seconds after it is issued\. If the connection is not made before the URL expires, `pcluster dcv connect` will need to be run again to generate a new URL\.
+The URL expires 30 seconds after it is issued\. If the connection is not made before the URL expires, run `pcluster dcv connect` again to generate a new URL\.
 
 #### Positional Arguments<a name="pcluster.dcv.connect.arg"></a>
 
@@ -40,10 +40,10 @@ Shows the help text for the specified command\.
 
 `-k SSH_KEY_PATH, --key-path SSH_KEY_PATH`  
 Key path of the SSH key to use for the connection\.  
-The key must be the one specified at cluster creation time in the `[`key_name`](cluster-definition.md#key-name)` configuration parameter\. This argument is optional but if it is not specified then the key must be available by default for the SSH client \(for example by adding it to the `ssh-agent` with `ssh-add`\.\)
+The key must be the one specified at cluster creation time in the `[`key_name`](cluster-definition.md#key-name)` configuration parameter\. This argument is optional, but if it is not specified, then the key must be available by default for the SSH client\. For example, add it to the `ssh-agent` with `ssh-add`\.
 
 `-s, --show-url`  
-Displays a one\-time URL to use to connect to the NICE DCV session\. The default browser is not opened when this option is specified\.  
+Displays a one\-time URL for connecting to the NICE DCV session\. The default browser is not opened when this option is specified\.  
 Support for the `--show-url` option was added in AWS ParallelCluster 2\.5\.1\.
 
 Example:

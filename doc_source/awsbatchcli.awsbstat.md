@@ -9,7 +9,7 @@ awsbstat [-h] [-c CLUSTER] [-s STATUS] [-e] [-d] [job_ids [job_ids ...]]
 ## Positional Arguments<a name="awsbatchcli.awsbstat.arguments"></a>
 
 `job_ids`  
-Specifies the space\-separated list of job IDs to show in the output\. If the job is a job array, all of the children are displayed\. If a single job is requested, it is shown in a detailed version\.
+Specifies the space\-separated list of job IDs to show in the output\. If the job is a job array, all of the child jobs are displayed\. If a single job is requested, it is shown in a detailed version\.
 
 ## Named Arguments<a name="awsbatchcli.awsbstat.namedarguments"></a>
 
