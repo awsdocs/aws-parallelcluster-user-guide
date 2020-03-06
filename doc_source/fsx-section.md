@@ -7,7 +7,7 @@
 + [`fsx_kms_key_id`](#fsx-kms-key-id)
 + [`import_path`](#fsx-import-path)
 + [`imported_file_chunk_size`](#fsx-imported-file-chunk-size)
-+ [`per_storage_unit_throughput`](#fsx-per-storage-unit-throughput)
++ [`per_unit_storage_throughput`](#fsx-per_unit_storage_throughput)
 + [`shared_dir`](#fsx-shared-dir)
 + [`storage_capacity`](#fsx-storage-capacity)
 + [`weekly_maintenance_start_time`](#fsx-weekly-maintenance-start-time)
@@ -132,18 +132,18 @@ The chunk size default is `1024` \(1 GiB\), and it can go as high as 512,000 MiB
 imported_file_chunk_size = 1024
 ```
 
-## `per_storage_unit_throughput`<a name="fsx-per-storage-unit-throughput"></a>
+## `per_unit_storage_throughput`<a name="per_unit_storage_throughput"></a>
 
-**\(Required for `PERSISTENT_1` deployment types\)** For the `[`deployment_type`](#fsx-deployment-type) = PERSISTENT_1` deployment type, describes the amount of read and write throughput for each 1 tebibyte \(TiB\) of storage, in MB/s/TiB\. File system throughput capacity is calculated by multiplying ﬁle system storage capacity \(TiB\) by the `per_storage_unit_throughput` \(MB/s/TiB\)\. For a 2\.4 TiB ﬁle system, provisioning 50 MB/s/TiB of `per_storage_unit_throughput` yields 120 MB/s of ﬁle system throughput\. You pay for the amount of throughput that you provision\. This corresponds to the [PerUnitStorageThroughput](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-PerUnitStorageThroughput) parameter in the *Amazon FSx API Reference*\.
+**\(Required for `PERSISTENT_1` deployment types\)** For the `[`deployment_type`](#fsx-deployment-type) = PERSISTENT_1` deployment type, describes the amount of read and write throughput for each 1 tebibyte \(TiB\) of storage, in MB/s/TiB\. File system throughput capacity is calculated by multiplying ﬁle system storage capacity \(TiB\) by the `per_unit_storage_throughput` \(MB/s/TiB\)\. For a 2\.4 TiB ﬁle system, provisioning 50 MB/s/TiB of `per_unit_storage_throughput` yields 120 MB/s of ﬁle system throughput\. You pay for the amount of throughput that you provision\. This corresponds to the [PerUnitStorageThroughput](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-PerUnitStorageThroughput) parameter in the *Amazon FSx API Reference*\.
 
 The possible values are 50, 100, 200\.
 
 ```
-per_storage_unit_throughput = 200
+per_unit_storage_throughput = 200
 ```
 
 **Note**  
-Support for `per_storage_unit_throughput` was added in AWS ParallelCluster 2\.6\.0\.
+Support for `per_unit_storage_throughput` was added in AWS ParallelCluster 2\.6\.0\.
 
 ## `shared_dir`<a name="fsx-shared-dir"></a>
 
