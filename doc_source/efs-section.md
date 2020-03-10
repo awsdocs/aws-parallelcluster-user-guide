@@ -1,12 +1,13 @@
 # `[efs]` Section<a name="efs-section"></a>
 
 **Topics**
-+ [`shared_dir`](#id6)
-+ [`encrypted`](#id7)
-+ [`performance_mode`](#performance-mode)
-+ [`throughput_mode`](#throughput-mode)
-+ [`provisioned_throughput`](#provisioned-throughput)
-+ [`efs_fs_id`](#efs-fs-id)
++ [`shared_dir`](#efs-shared-dir)
++ [`encrypted`](#efs-encrypted)
++ [`efs_kms_key_id`](#efs-efs-kms-key-id)
++ [`performance_mode`](#efs-performance-mode)
++ [`throughput_mode`](#efs-throughput-mode)
++ [`provisioned_throughput`](#efs-provisioned-throughput)
++ [`efs_fs_id`](#efs-efs-fs-id)
 
 Defines configuration settings for the Amazon EFS that is mounted on the master and compute instances\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the Amazon EFS documentation\.
 
@@ -19,7 +20,7 @@ encrypted = false
 performance_mode = generalPurpose
 ```
 
-## `shared_dir`<a name="id6"></a>
+## `shared_dir`<a name="efs-shared-dir"></a>
 
 Defines the Amazon EFS mount point on the master and compute nodes\.
 
@@ -33,19 +34,29 @@ The following example mounts Amazon EFS at `/efs`\.
 shared_dir = efs
 ```
 
-## `encrypted`<a name="id7"></a>
+## `encrypted`<a name="efs-encrypted"></a>
 
-Indicates whether the file system is encrypted\.
+Indicates whether the file system is encrypted\. This corresponds to the [Encrypted](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-Encrypted) parameter in the *Amazon EFS API Reference*\.
 
 The default value is `false`\.
 
 ```
-encrypted = false
+encrypted = true
 ```
 
-## `performance_mode`<a name="performance-mode"></a>
+## `efs_kms_key_id`<a name="efs-efs-kms-key-id"></a>
 
-Defines the performance mode of the file system\.
+\(Optional\) Identifies the AWS Key Management Service \(AWS KMS\) customer managed key \(CMK\) to be used to protect the encrypted file system\. If this is set, the `[`encrypted`](#efs-encrypted)` setting must be set to `true`\. This corresponds to the [KmsKeyId](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-KmsKeyId) parameter in the *Amazon EFS API Reference*\.
+
+The default value is `NONE`\.
+
+```
+efs_kms_key_id = 1234abcd-12ab-34cd-56ef-1234567890ab
+```
+
+## `performance_mode`<a name="efs-performance-mode"></a>
+
+Defines the performance mode of the file system\. This corresponds to the [PerformanceMode](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-PerformanceMode) parameter in the *Amazon EFS API Reference*\.
 
 Valid choices are:
 + `generalPurpose`
@@ -65,9 +76,9 @@ The default value is `generalPurpose`\.
 performance_mode = generalPurpose
 ```
 
-## `throughput_mode`<a name="throughput-mode"></a>
+## `throughput_mode`<a name="efs-throughput-mode"></a>
 
-Defines the throughput mode of the file system\.
+Defines the throughput mode of the file system\. This corresponds to the [ThroughputMode](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-ThroughputMode) parameter in the *Amazon EFS API Reference*\.
 
 Valid options are:
 + `bursting`
@@ -77,21 +88,21 @@ Valid options are:
 throughput_mode = provisioned
 ```
 
-## `provisioned_throughput`<a name="provisioned-throughput"></a>
+## `provisioned_throughput`<a name="efs-provisioned-throughput"></a>
 
-Defines the provisioned throughput of the file system, measured in MiB/s\.
+Defines the provisioned throughput of the file system, measured in MiB/s\. This corresponds to the [ProvisionedThroughputInMibps](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-response-ProvisionedThroughputInMibps) parameter in the *Amazon EFS API Reference*\.
 
-If you use this parameter, you must set `[`throughput_mode`](#throughput-mode)` to `provisioned`\.
+If you use this parameter, you must set `[`throughput_mode`](#efs-throughput-mode)` to `provisioned`\.
 
 The limit on throughput is `1024` MiB/s\. To request a limit increase, contact AWS Support\.
 
-The minimum value is `0.0` MiB/s
+The minimum value is `0.0` MiB/s\.
 
 ```
 provisioned_throughput = 1024
 ```
 
-## `efs_fs_id`<a name="efs-fs-id"></a>
+## `efs_fs_id`<a name="efs-efs-fs-id"></a>
 
 Defines the Amazon EFS file system ID for an existing file system\.
 

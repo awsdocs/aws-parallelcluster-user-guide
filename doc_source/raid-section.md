@@ -4,11 +4,11 @@
 + [`shared_dir`](#raid-shared-dir)
 + [`raid_type`](#raid-type)
 + [`num_of_raid_volumes`](#num-of-raid-volumes)
-+ [`volume_type`](#id9)
-+ [`volume_size`](#id11)
-+ [`volume_iops`](#id12)
-+ [`encrypted`](#id13)
-+ [`ebs_kms_key_id`](#id14)
++ [`volume_type`](#raid-volume-type)
++ [`volume_size`](#raid-volume-size)
++ [`volume_iops`](#raid-volume-iops)
++ [`encrypted`](#raid-encrypted)
++ [`ebs_kms_key_id`](#raid-ebs_kms_key_id)
 
 Defines configuration settings for a RAID array that is built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the master node and is exported to compute nodes via NFS\.
 
@@ -68,7 +68,7 @@ The default value is `2`\.
 num_of_raid_volumes = 2
 ```
 
-## `volume_type`<a name="id9"></a>
+## `volume_type`<a name="raid-volume-type"></a>
 
 Defines the type of volume to build\.
 
@@ -86,7 +86,7 @@ The default value is `gp2`\.
 volume_type = io1
 ```
 
-## `volume_size`<a name="id11"></a>
+## `volume_size`<a name="raid-volume-size"></a>
 
 Defines the size of the volume to be created, in GiB\.
 
@@ -96,7 +96,7 @@ The default value is `20`\.
 volume_size = 20
 ```
 
-## `volume_iops`<a name="id12"></a>
+## `volume_iops`<a name="raid-volume-iops"></a>
 
 Defines the number of IOPS for `io1` type volumes\.
 
@@ -104,7 +104,7 @@ Defines the number of IOPS for `io1` type volumes\.
 volume_iops = 500
 ```
 
-## `encrypted`<a name="id13"></a>
+## `encrypted`<a name="raid-encrypted"></a>
 
 Specifies whether the file system is encrypted\.
 
@@ -114,7 +114,7 @@ The default value is `false`\.
 encrypted = false
 ```
 
-## `ebs_kms_key_id`<a name="id14"></a>
+## `ebs_kms_key_id`<a name="raid-ebs_kms_key_id"></a>
 
 Specifies a custom AWS KMS key to use for encryption\.
 
