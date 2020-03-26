@@ -21,15 +21,7 @@ There are three ways to use a custom AWS ParallelCluster AMI\. Two methods requi
 
 This is the safest method, because the base AWS ParallelCluster AMI is often updated with new releases\. This AMI has all of the components required for AWS ParallelCluster to function as installed and configured\. You can start with this as the base\.
 
-1. In the AMI list, find the AMI that corresponds to the Region you are using\. The AMI list to use must match the version of AWS ParallelCluster you are using\. Run `pcluster version` to verify the version\. For example:
-   + For AWS ParallelCluster 2\.5\.1 \-> [https://github.com/aws/aws-parallelcluster/blob/v2.5.1/amis.txt](https://github.com/aws/aws-parallelcluster/blob/v2.5.1/amis.txt) 
-   + For AWS ParallelCluster 2\.5\.0 \-> [https://github.com/aws/aws-parallelcluster/blob/v2.5.0/amis.txt](https://github.com/aws/aws-parallelcluster/blob/v2.5.0/amis.txt) 
-   + For AWS ParallelCluster 2\.4\.1 \-> [https://github.com/aws/aws-parallelcluster/blob/v2.4.1/amis.txt](https://github.com/aws/aws-parallelcluster/blob/v2.4.1/amis.txt) 
-   + For AWS ParallelCluster 2\.4\.0 \-> [https://github.com/aws/aws-parallelcluster/blob/v2.4.0/amis.txt](https://github.com/aws/aws-parallelcluster/blob/v2.4.0/amis.txt) 
-   + For AWS ParallelCluster 2\.3\.1 \-> [https://github.com/aws/aws-parallelcluster/blob/v2.3.1/amis.txt](https://github.com/aws/aws-parallelcluster/blob/v2.3.1/amis.txt) 
-   + For AWS ParallelCluster 2\.2\.1 \-> [https://github.com/aws/aws-parallelcluster/blob/v2.2.1/amis.txt](https://github.com/aws/aws-parallelcluster/blob/v2.2.1/amis.txt) 
-   + For AWS ParallelCluster 2\.1\.1 \-> [https://github.com/aws/aws-parallelcluster/blob/v2.1.1/amis.txt](https://github.com/aws/aws-parallelcluster/blob/v2.1.1/amis.txt) 
-   + For CfnCluster 1\.6\.1 \-> [https://github\.com/aws/aws\-parallelcluster/blob/v1\.6\.1/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v1.6.1/amis.txt) 
+1. In the AMI list, find the AMI that corresponds to the Region you are using\. The AMI list to use must match the version of AWS ParallelCluster you are using\. Run `pcluster version` to verify the version\. For AWS ParallelCluster 2\.6\.0 go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.6\.0/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.6.0/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.6\.0** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Within the Amazon EC2 console, choose **Launch Instance**\.
 
