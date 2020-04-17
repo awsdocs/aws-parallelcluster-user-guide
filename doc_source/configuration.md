@@ -18,7 +18,7 @@
 
 By default, AWS ParallelCluster uses the file `~/.parallelcluster/config` for all configuration parameters\. Specify a custom configuration file by using the `-c` or `--config` command line option or the `AWS_PCLUSTER_CONFIG_FILE` environment variable\.
 
-An example configuration file is installed with AWS ParallelCluster in the Python directory at `site-packages/aws-parallelcluster/examples/config`\. The example configuration file is also available on GitHub, at [https://github.com/aws/aws-parallelcluster/blob/v2.6.0/cli/pcluster/examples/config](https://github.com/aws/aws-parallelcluster/blob/v2.6.0/cli/pcluster/examples/config)\.
+An example configuration file is installed with AWS ParallelCluster in the Python directory at `site-packages/aws-parallelcluster/examples/config`\. The example configuration file is also available on GitHub, at [https://github.com/aws/aws-parallelcluster/blob/v2.6.1/cli/pcluster/examples/config](https://github.com/aws/aws-parallelcluster/blob/v2.6.1/cli/pcluster/examples/config)\.
 
 ## Layout<a name="layout"></a>
 

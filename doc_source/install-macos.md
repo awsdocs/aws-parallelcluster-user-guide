@@ -45,7 +45,7 @@ $ pip3 --version
 
    ```
    $ pcluster version
-   2.6.0
+   2.6.1
    ```
 
    If the program isn't found, [add it to your command line path](#install-macos-path)\.

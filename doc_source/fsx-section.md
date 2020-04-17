@@ -50,7 +50,7 @@ weekly_maintenance_start_time = 1:00:00
 
 ## `deployment_type`<a name="fsx-deployment-type"></a>
 
-**\(Optional\)** Specifies the Amazon FSx for Lustre deployment type\. This corresponds to the [DeploymentType](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-DeploymentType) parameter in the *Amazon FSx API Reference*\. For more information, see [Amazon FSx for Lustre Deployment Options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *Amazon FSx for Lustre User Guide*\.
+**\(Optional\)** Specifies the Amazon FSx for Lustre deployment type\. This corresponds to the [DeploymentType](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-DeploymentType) parameter in the *Amazon FSx API Reference*\. For more information, see [Amazon FSx for Lustre Deployment Options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *Amazon FSx for Lustre User Guide*\. Choose a scratch deployment type for temporary storage and shorter\-term processing of data\. `SCRATCH_2` is the latest generation of scratch file systems, and offers higher burst throughput over baseline throughput and also in\-transit encryption of data\.
 
 The valid values are `SCRATCH_1`, `SCRATCH_2`, and `PERSISTENT_1`\.
 
@@ -58,11 +58,10 @@ The valid values are `SCRATCH_1`, `SCRATCH_2`, and `PERSISTENT_1`\.
 The default deployment type for Amazon FSx for Lustre\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200, 2400, and any multiple of 3600\.
 
 `SCRATCH_2`  
-The latest generation of scratch file systems that supports up to six times the baseline throughput for spiky workloads, and supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\.
+The latest generation of scratch file systems that supports up to six times the baseline throughput for spiky workloads, and supports in\-transit encryption of data for supported instance types in supported regions\. For details, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\.
 
 `PERSISTENT_1`  
-Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone \(AZ\), and supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\.  
-`PERSISTENT_1` deployment types are available in a limited number of AWS Regions\. For the current list of AWS Regions, see [DeploymentType](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-DeploymentType) in the *Amazon FSx API Reference*\.
+Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone \(AZ\), and supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\.
 
 The default value is `SCRATCH_1`\.
 
