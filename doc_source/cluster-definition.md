@@ -166,7 +166,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-Specifies the ID of a custom AMI to use instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/master/amis.txt)\.
+Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.6.1/amis.txt)\.
 
 The default value is `NONE`\.
 
@@ -310,6 +310,13 @@ The default value is `{}`\.
 
 ```
 extra_json = {}
+```
+
+**Note**  
+Starting with AWS ParallelCluster 2\.6\.1, most of the install recipes are skipped by default when launching nodes to improve start up times\. To run all of the install recipes for better backwards compatibility at the expense of start up times, add `"skip_install_recipes" : "no"` to the `cluster` key in the [`extra_json`](#extra-json) setting\. For example:  
+
+```
+extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
 ```
 
 ## `fsx_settings`<a name="fsx-settings"></a>
@@ -622,7 +629,7 @@ spot_bid_percentage = 85
 
 ## `spot_price`<a name="spot-price"></a>
 
-Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the `cluster_type` is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\.
+Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the `[`cluster_type`](#cluster-type)` setting is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\.
 
 If the scheduler is `awsbatch`, use [spot\_bid\_percentage](#spot-bid-percentage) instead\.
 
@@ -631,6 +638,9 @@ For assistance finding a bid price that meets your needs, see the [Spot Bid Advi
 ```
 spot_price = 1.50
 ```
+
+**Note**  
+In AWS ParallelCluster 2\.5\.0, if `cluster_type = spot` but `spot_price` is not specified, the instance launches for the ComputeFleet will fail\. This was fixed in AWS ParallelCluster 2\.5\.1\.
 
 ## `tags`<a name="tags"></a>
 

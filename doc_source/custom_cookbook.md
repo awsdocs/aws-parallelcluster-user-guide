@@ -1,6 +1,6 @@
 # Setting Up a Custom AWS ParallelCluster Cookbook<a name="custom_cookbook"></a>
 
-**Warning**  
+**Important**  
 The following are instructions for using a custom version of the AWS ParallelCluster cookbook recipes\. This is an advanced method of customizing AWS ParallelCluster, with potential issues that can be hard to debug\. The AWS ParallelCluster team highly recommends using the scripts in [Custom Bootstrap Actions](pre_post_install.md) for customization, because post\-install hooks are generally easier to debug and more portable across releases of AWS ParallelCluster\.
 
 ## Steps<a name="steps"></a>
@@ -36,8 +36,11 @@ The following are instructions for using a custom version of the AWS ParallelClu
    aws s3 cp --acl public-read aws-parallelcluster-cookbook-${_version}.tgz.date s3://${_bucket}/cookbooks/aws-parallelcluster-cookbook-${_version}.tgz.date
    ```
 
-1. Add the following variable to the AWS ParallelCluster configuration file, under the [[cluster] section](cluster-definition.md)\.
+1. Add the following variables to the AWS ParallelCluster configuration file, under the [[cluster] section](cluster-definition.md)\.
 
    ```
    custom_chef_cookbook = https://${_bucket}.s3.<the bucket region>.amazonaws.com/cookbooks/aws-parallelcluster-cookbook-${_version}.tgz
+   extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
    ```
+**Note**  
+Starting with AWS ParallelCluster 2\.6\.1, most of the install recipes are skipped by default when launching nodes to improve start up times\. To skip most of the install recipes for better start up times at the expense of backwards compatibility, remove `"skip_install_recipes" : "no"` from the `cluster` key in the [`extra_json`](cluster-definition.md#extra-json) setting\.

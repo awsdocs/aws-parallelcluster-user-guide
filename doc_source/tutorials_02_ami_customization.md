@@ -8,6 +8,13 @@ Before reading any further, take a look at the [Custom Bootstrap Actions](pre_po
 
 While building a custom AMI is not ideal, there are scenarios in which building a custom AMI for AWS ParallelCluster is necessary\. This tutorial guides you through the process\.
 
+**Note**  
+Starting with AWS ParallelCluster 2\.6\.1, most of the install recipes are skipped by default when launching nodes to improve start up times\. To run all of the install recipes for better backwards compatibility at the expense of start up times, add `"skip_install_recipes" : "no"` to the `cluster` key in the [`extra_json`](cluster-definition.md#extra-json) setting\. For example:  
+
+```
+extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
+```
+
 ## How to Customize the AWS ParallelCluster AMI<a name="how-to-customize-the-aws-parallelcluster-ami"></a>
 
 There are three ways to use a custom AWS ParallelCluster AMI\. Two methods require you to build a new AMI that is available under your AWS account\. The third method—Use a Custom AMI at Runtime—does not require you to build anything in advance\. Select the appropriate method based on your needs\.
@@ -55,7 +62,7 @@ If you have a customized AMI and software already in place, you can apply the ch
 
 1. Verify that the `packer` and `berks` commands are available in your PATH after you have installed the tools in Step 1\.
 
-1. Configure your AWS account credentials so that Packer can make calls to AWS API operations on your behalf\. The minimal set of required permissions necessary for Packer to work are documented in the [Packer doc](https://www.packer.io/docs/builders/amazon.html#iam-task-or-instance-role)\.
+1. Configure your AWS account credentials so that Packer can make calls to AWS API operations on your behalf\. The minimal set of required permissions necessary for Packer to work are documented in the [IAM Task or Instance Role](https://www.packer.io/docs/builders/amazon.html#iam-task-or-instance-role) section of the *Amazon AMI Builder* topic in the Packer documentation\.
 
 1. Use the command `createami` in the AWS ParallelCluster CLI to build an AWS ParallelCluster AMI starting from the one that you provide as base:
 
