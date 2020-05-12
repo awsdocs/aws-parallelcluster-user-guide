@@ -7,9 +7,12 @@ $ module avail
 
 ----------------------------------------- /usr/share/Modules/modulefiles ------------------------------------------
 dot                        libfabric-aws/1.8.1amzn1.3 module-info                null                       use.own
-intelmpi/2019.6.166        module-git                 modules                    openmpi/4.0.2
+module-git                 modules                    openmpi/4.0.2
 
 ------------------------------------------------ /etc/modulefiles -------------------------------------------------
+
+--------------------------------- /opt/intel/impi/2019.7.217/intel64/modulefiles ----------------------------------
+intelmpi
 ```
 
 To load a module, run `module load modulename`\. You can add this to the script used to run `mpirun`\.
@@ -23,15 +26,15 @@ To see which modules are loaded, run `module list`\.
 ```
 $ module list
 Currently Loaded Modulefiles:
-  1) intelmpi/2019.6.166
+  1) intelmpi
 ```
 
 To verify that Intel MPI is enabled, run `mpirun --version`\.
 
 ```
 $ mpirun --version
-Intel(R) MPI Library for Linux* OS, Version 2019 Update 6 Build 20191024 (id: 082ae5608)
-Copyright 2003-2019, Intel Corporation.
+Intel(R) MPI Library for Linux* OS, Version 2019 Update 7 Build 20200312 (id: 5dc2dd3e9)
+Copyright 2003-2020, Intel Corporation.
 ```
 
 After the Intel MPI module has been loaded, multiple paths are changed to use the Intel MPI tools\. To run code that was compiled by the Intel MPI tools, load the Intel MPI module first\.
