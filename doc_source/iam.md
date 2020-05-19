@@ -110,16 +110,6 @@ The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm
             "Sid": "S3GetObj"
         },
         {
-            "Action": [
-                "s3:PutObject"
-            ],
-            "Resource": [
-                "arn:aws:s3:::NONE/batch/*"
-            ],
-            "Effect": "Allow",
-            "Sid": "S3PutObj"
-        },
-        {
             "Resource": [
                 "*"
             ],

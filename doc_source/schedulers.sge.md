@@ -1,3 +1,6 @@
 # Son of Grid Engine \(`sge`\)<a name="schedulers.sge"></a>
 
+**Warning**  
+A future release of AWS ParallelCluster will remove support for Son of Grid Engine\.
+
 AWS ParallelCluster uses Son of Grid Engine 8\.1\.9\. For information about this scheduler, see [https://arc.liv.ac.uk/trac/SGE](https://arc.liv.ac.uk/trac/SGE)\. For downloads, see [https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/](https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/)\. For the source code, see [https://arc.liv.ac.uk/trac/SGE/browser/sge](https://arc.liv.ac.uk/trac/SGE/browser/sge)\.

@@ -34,3 +34,9 @@ This includes Slurm Workload Manager and related files\. \(Conditional, only if 
 
 `/opt/torque`  
 This includes Torque Resource Manager and related files\. \(Conditional, only if `[`scheduler`](cluster-definition.md#scheduler) = torque`\.\)
+
+## NICE DCV troubleshooting<a name="nice-dcv-troubleshooting"></a>
+
+The logs for NICE DCV are written to files in the `/var/log/dcv/` directory\. Reviewing these logs can help to troubleshoot problems\.
+
+The instance type should have at least 1\.7 GiB of RAM to run NICE DCV\. Nano and micro instance types do not have enough memory to run NICE DCV\.

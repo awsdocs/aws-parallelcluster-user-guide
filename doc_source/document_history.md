@@ -5,6 +5,7 @@ The following table describes the major updates and new features for the *AWS Pa
 
 | Change | Description | Date | 
 | --- | --- | --- | 
+| AWS ParallelCluster 2\.7\.0 released\. |  AWS ParallelCluster 2\.7\.0 released\. Changes include: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/document_history.html)  | 19 May 2020 | 
 | AWS ParallelCluster 2\.6\.1 released\. |  AWS ParallelCluster 2\.6\.1 released\. Changes include: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/document_history.html)  | 17 April 2020 | 
 | AWS ParallelCluster 2\.6\.0 released\. |  AWS ParallelCluster 2\.6\.0 released\. New features include: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/document_history.html)  | 27 February 2020 | 
 | AWS ParallelCluster 2\.5\.1 released\. | AWS ParallelCluster 2\.5\.1 updates several drivers and fixes some issues\. For more details, see [AWS ParallelCluster 2\.5\.1](https://github.com/aws/aws-parallelcluster/releases/tag/v2.5.1)\. | 13 December 2019 | 

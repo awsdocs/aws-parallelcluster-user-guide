@@ -33,3 +33,5 @@ For more information, see [Changing the TLS Certificate](https://docs.aws.amazon
 The NICE DCV server does not require a license server when running on Amazon EC2 instances\. However, the NICE DCV server must periodically connect to an Amazon S3 bucket to determine whether a valid license is available\.
 
 AWS ParallelCluster automatically adds the required permissions to the [ParallelClusterInstancePolicy](iam.md#parallelclusterinstancepolicy)\. When using a custom IAM Instance Policy, use the permissions described in [NICE DCV on Amazon EC2](https://docs.aws.amazon.com/dcv/latest/adminguide/setting-up-license.html#setting-up-license-ec2) in the *NICE DCV Administrator Guide*\.
+
+For troubleshooting tips, see [NICE DCV troubleshooting](troubleshooting.md#nice-dcv-troubleshooting)\.

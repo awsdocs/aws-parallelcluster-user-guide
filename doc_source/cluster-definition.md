@@ -85,7 +85,7 @@ Support for `additional_iam_policies` was added in AWS ParallelCluster 2\.5\.0\.
 
 ## `base_os`<a name="base-os"></a>
 
-Specifies which OS type is used in the cluster\.
+**\(Required\)** Specifies which OS type is used in the cluster\.
 
 Available options are:
 + `alinux`
@@ -114,7 +114,8 @@ Note: The `base_os` parameter also determines the user name that is used to log 
 + `ubuntu1604` and `ubuntu1804`: `ubuntu` 
 + `alinux` and `alinux2`: `ec2-user` 
 
-The default value is `alinux`\.
+**Note**  
+Prior to AWS ParallelCluster 2\.7\.0, the `base_os` parameter was optional, and the default was `alinux`\. Starting with AWS ParallelCluster 2\.7\.0, the `base_os` parameter is required\.
 
 **Note**  
 If the [`scheduler`](#scheduler) parameter is `awsbatch`, either `alinux` or `alinux2` is supported\.
@@ -166,7 +167,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.6.1/amis.txt)\.
+Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.7/amis.txt)\.
 
 The default value is `NONE`\.
 
@@ -304,7 +305,7 @@ ephemeral_dir = /scratch
 
 ## `extra_json`<a name="extra-json"></a>
 
-Defines the extra JSON that is merged into the `dna.json` that is used by Chef\.
+Defines the extra JSON that is merged into the `dna.json` that is used by Berkshelf\. For more information, see [Building a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md)\.
 
 The default value is `{}`\.
 
@@ -585,7 +586,7 @@ scaling_settings = custom
 
 ## `scheduler`<a name="scheduler"></a>
 
-Defines the cluster scheduler\.
+**\(Required\)** Defines the cluster scheduler\.
 
 Valid options are:
 + `sge`
@@ -593,12 +594,18 @@ Valid options are:
 + `slurm`
 + `awsbatch`
 
+**Warning**  
+A future release of AWS ParallelCluster will remove support for `sge` and `torque`\.
+
 For more information about the `awsbatch` scheduler, see [networking setup](networking.md#awsbatch-networking)\.
 
 The default value is `sge`\.
 
+**Note**  
+Prior to AWS ParallelCluster 2\.7\.0, the `scheduler` parameter was optional, and the default was `sge`\. Starting with AWS ParallelCluster 2\.7\.0, the `scheduler` parameter is required\.
+
 ```
-scheduler = sge
+scheduler = slurm
 ```
 
 ## `shared_dir`<a name="cluster-shared-dir"></a>
