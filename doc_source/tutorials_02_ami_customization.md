@@ -28,7 +28,7 @@ There are three ways to use a custom AWS ParallelCluster AMI\. Two methods requi
 
 This is the safest method, because the base AWS ParallelCluster AMI is often updated with new releases\. This AMI has all of the components required for AWS ParallelCluster to function as installed and configured\. You can start with this as the base\.
 
-1. In the AMI list, find the AMI that corresponds to the Region you are using\. The AMI list to use must match the version of AWS ParallelCluster you are using\. Run `pcluster version` to verify the version\. For AWS ParallelCluster 2\.7 go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.7/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.7/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.7** button, select the **Tags** tab, and then select the appropriate version\.
+1. In the AMI list, find the AMI that corresponds to the Region you are using\. The AMI list to use must match the version of AWS ParallelCluster you are using\. Run `pcluster version` to verify the version\. For AWS ParallelCluster 2\.7\.0 go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.7\.0/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.7.0/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.7\.0** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Within the Amazon EC2 console, choose **Launch Instance**\.
 

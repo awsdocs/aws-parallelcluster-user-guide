@@ -167,7 +167,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.7/amis.txt)\.
+Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.7.0/amis.txt)\.
 
 The default value is `NONE`\.
 
