@@ -537,7 +537,7 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
        ],
        "Effect": "Allow",
        "Resource": "*"
-    },    
+    },
     {
         "Sid": "NetworkingEasyConfig",
         "Action": [
@@ -577,7 +577,6 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
         "ec2:DeleteSecurityGroup",
         "ec2:DisassociateAddress",
         "ec2:RevokeSecurityGroupIngress",
-        "ec2:RevokeSecurityGroupEgress",
         "ec2:ReleaseAddress",
         "ec2:CreatePlacementGroup",
         "ec2:DeletePlacementGroup"

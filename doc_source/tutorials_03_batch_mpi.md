@@ -304,7 +304,7 @@ download: s3://parallelcluster-awsbatch-tutorial-iwyl4458saiwgwvg/batch/job-subm
 2018-11-27 15:50:53: ip host: 10.0.0.227
 2018-11-27 15:50:53: Compiling...
 2018-11-27 15:50:53: Running...
-2018-11-27 15:50:53: Hello I'm a compute note! I let the main node orchestrate the mpi execution!
+2018-11-27 15:50:53: Hello I'm a compute node! I let the main node orchestrate the mpi execution!
 ```
 
 We can now confirm that the job completed successfully:

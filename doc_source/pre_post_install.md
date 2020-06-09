@@ -81,6 +81,8 @@ The following steps create a simple post\-install script that installs the R pac
    ```
    $ aws s3 cp --acl public-read /path/to/myscript.sh s3://<bucket-name>/myscript.sh
    ```
+**Important**  
+If the script was edited on Windows, line endings must be changed from CRLF to LF before the script is uploaded to Amazon S3\.
 
 1. Update the AWS ParallelCluster configuration to include the new post\-install action\.
 

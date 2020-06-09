@@ -626,7 +626,7 @@ shared_dir = myshared
 
 ## `spot_bid_percentage`<a name="spot-bid-percentage"></a>
 
-Optionally sets the on\-demand bid percentage used to calculate the maximum Spot price for the ComputeFleet, when `awsbatch` is the scheduler\.
+Optionally sets the on\-demand percentage used to calculate the maximum Spot price for the ComputeFleet, when `awsbatch` is the scheduler\.
 
 If unspecified, the current spot market price is selected, capped at the On\-Demand price\.
 
@@ -640,7 +640,7 @@ Optionally sets the maximum Spot price for the ComputeFleet on traditional sched
 
 If the scheduler is `awsbatch`, use [spot\_bid\_percentage](#spot-bid-percentage) instead\.
 
-For assistance finding a bid price that meets your needs, see the [Spot Bid Advisor](https://aws.amazon.com/ec2/spot/bid-advisor/)\.
+For assistance finding a spot instance that meets your needs, see the [Spot Instance Advisor](https://aws.amazon.com/ec2/spot/instance-advisor/)\.
 
 ```
 spot_price = 1.50
