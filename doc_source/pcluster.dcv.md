@@ -44,7 +44,7 @@ The key must be the one specified at cluster creation time in the `[`key_name`](
 
 `-s, --show-url`  
 Displays a one\-time URL for connecting to the NICE DCV session\. The default browser is not opened when this option is specified\.  
-Support for the `--show-url` option was added in AWS ParallelCluster 2\.5\.1\.
+Support for the `--show-url` argument was added in AWS ParallelCluster 2\.5\.1\.
 
 Example:
 

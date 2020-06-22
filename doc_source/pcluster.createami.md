@@ -3,8 +3,9 @@
 \(Linux/macOS\) Creates a custom AMI to use with AWS ParallelCluster\.
 
 ```
-pcluster createami [ -h ] - ai BASE_AMI_ID - os BASE_AMI_OS [ -ap CUSTOM_AMI_NAME_PREFIX ]
-                   [ -cc CUSTOM_AMI_COOKBOOK ] [ -c CONFIG_FILE ] [ -r REGION ]
+pcluster createami [ -h ] -ai BASE_AMI_ID -os BASE_AMI_OS [ -i INSTANCE_TYPE ]
+                   [ -ap CUSTOM_AMI_NAME_PREFIX ] [ -cc CUSTOM_AMI_COOKBOOK ]
+                   [ -c CONFIG_FILE ] [ -r REGION ]
 ```
 
 ## Required Dependencies<a name="pcluster.createami.required-dependencies"></a>
@@ -35,6 +36,11 @@ Specifies the cookbook to use to build the AWS ParallelCluster AMI\.
 `-c CONFIG_FILE, --config CONFIG_FILE`  
 Specifies the alternative configuration file to use\.  
 Defaults to `~/.parallelcluster/config`\.
+
+`-i INSTANCE_TYPE, --instance-type INSTANCE_TYPE`  
+Specifies the instance type to use to create the AMI\.  
+Defaults to `t2.xlarge`\.  
+Support for the `--instance-type` argument was added in AWS ParallelCluster 2\.4\.1\.
 
 `-r REGION, --region REGION`  
 Specifies the Region to connect to\.
