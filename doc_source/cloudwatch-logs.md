@@ -27,5 +27,7 @@ This list contains the path of the logs and the *logIdentifier* used for those l
 + `/var/spool/torque/client_logs/*` \(`torque-client`\)
 + `/var/spool/torque/server_logs/*` \(`torque-server`\)
 
+Jobs in clusters that use AWS Batch store the output of jobs that reached `RUNNING`, `SUCCEEDED`, or `FAILED` states in CloudWatch Logs; the log group is `/aws/batch/job`, and the log stream name format is `jobDefinitionName/default/ecs_task_id`\. By default, these logs are set to never expire, but you can modify the retention period\. For more information, see [Change Log Data Retention in CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/SettingLogRetention.html) in the *Amazon CloudWatch Logs User Guide*\.
+
 **Note**  
 For AWS ParallelCluster 2\.6\.0, `/var/log/cfn-init-cmd.log` \(`cfn-init-cmd`\) and `/var/log/cfn-wire.log` \(`cfn-wire`\) were also stored in CloudWatch Logs\.
