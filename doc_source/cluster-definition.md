@@ -305,7 +305,7 @@ ephemeral_dir = /scratch
 
 ## `extra_json`<a name="extra-json"></a>
 
-Defines the extra JSON that is merged into the `dna.json` that is used by Berkshelf\. For more information, see [Building a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md)\.
+Defines the extra JSON that is merged into the Chef `dna.json`\. For more information, see [Building a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md)\.
 
 The default value is `{}`\.
 
