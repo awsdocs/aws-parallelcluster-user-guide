@@ -229,6 +229,7 @@ To:
                 "ec2:DescribeImages",
                 "ec2:DescribeInstances",
                 "ec2:DescribeInstanceStatus",
+                "ec2:DescribeInstanceTypes",
                 "ec2:DescribeSnapshots",
                 "ec2:DescribeVolumes",
                 "ec2:DescribeVpcAttribute",
