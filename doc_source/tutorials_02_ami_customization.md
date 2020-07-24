@@ -56,11 +56,9 @@ This is the safest method, because the base AWS ParallelCluster AMI is often upd
 
 If you have a customized AMI and software already in place, you can apply the changes needed by AWS ParallelCluster on top of it\.
 
-1. Install the following tools in your local system, together with the AWS ParallelCluster CLI:
-   + Packer: find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it\.
-   + Berkshelf: Install using `gem install berkshelf`\. For more information, see the [Berkshelf website](https://github.com/berkshelf/berkshelf)\.
-
-1. Verify that the `packer` and `berks` commands are available in your PATH after you have installed the tools in Step 1\.
+1. Install the Packer tool in your local system, together with the AWS ParallelCluster CLI:
+   + find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it\.
+   + verify that the `packer` command is available in your PATH after you have installed it
 
 1. Configure your AWS account credentials so that Packer can make calls to AWS API operations on your behalf\. The minimal set of required permissions necessary for Packer to work are documented in the [IAM Task or Instance Role](https://www.packer.io/docs/builders/amazon.html#iam-task-or-instance-role) section of the *Amazon AMI Builder* topic in the Packer documentation\.
 
