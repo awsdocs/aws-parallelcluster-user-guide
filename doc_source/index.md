@@ -61,6 +61,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Enable Intel MPI](intelmpi.md)
    + [Intel HPC Platform Specification](intel-hpc-platform-specification.md)
    + [Connect to the master instance through NICE DCV](dcv.md)
+   + [Using pcluster update](using-pcluster-update.md)
 + [Configuration](configuration.md)
    + [[global] Section](global.md)
    + [[aws] Section](aws.md)

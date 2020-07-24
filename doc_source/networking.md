@@ -23,7 +23,7 @@ master_subnet_id = subnet-<public>
 use_public_ips = true
 ```
 
-The `[`use_public_ips`](vpc-section.md#use-public-ips)` setting cannot be set to `false`, because the internet gateway requires that all instances have a globally unique IP address\. For more information, see [Enabling Internet Access](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#vpc-igw-internet-access) in *Amazon VPC User Guide*\.
+The `` setting cannot be set to `false`, because the internet gateway requires that all instances have a globally unique IP address\. For more information, see [Enabling Internet Access](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#vpc-igw-internet-access) in *Amazon VPC User Guide*\.
 
 ## AWS ParallelCluster Using Two Subnets<a name="aws-parallelcluster-using-two-subnets"></a>
 

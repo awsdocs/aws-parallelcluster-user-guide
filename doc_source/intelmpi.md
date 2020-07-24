@@ -40,4 +40,7 @@ Copyright 2003-2020, Intel Corporation.
 After the Intel MPI module has been loaded, multiple paths are changed to use the Intel MPI tools\. To run code that was compiled by the Intel MPI tools, load the Intel MPI module first\.
 
 **Note**  
+Intel MPI is not compatible with AWS Graviton\-based instances\.
+
+**Note**  
 Prior to AWS ParallelCluster 2\.5\.0, Intel MPI is not available on the AWS ParallelCluster AMIs in China \(Beijing\) and China \(Ningxia\)\.

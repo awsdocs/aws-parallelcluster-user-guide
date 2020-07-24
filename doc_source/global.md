@@ -23,6 +23,8 @@ For example, the following setting specifies that the section that starts `[clus
 cluster_template = default
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `update_check`<a name="update-check"></a>
 
 Checks for updates to `pcluster`\.
@@ -30,6 +32,8 @@ Checks for updates to `pcluster`\.
 ```
 update_check = true
 ```
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
 ## `sanity_check`<a name="sanity-check"></a>
 
@@ -43,3 +47,5 @@ sanity_check = true
 
 **Note**  
 Prior to AWS ParallelCluster 2\.5\.0, `sanity_check` defaulted to `false`\.
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)

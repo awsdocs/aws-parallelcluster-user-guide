@@ -10,8 +10,11 @@ pcluster createami [ -h ] -ai BASE_AMI_ID -os BASE_AMI_OS [ -i INSTANCE_TYPE ]
 
 ## Required Dependencies<a name="pcluster.createami.required-dependencies"></a>
 
-In addition to the AWS ParallelCluster CLI, the following dependencies are required to run `pcluster createami`:
+In addition to the AWS ParallelCluster CLI, the following dependency is required to run `pcluster createami`:
 + **Packer**: Download the latest version from [https://www.packer.io/downloads.html](https://www.packer.io/downloads.html)\.
+
+**Note**  
+Prior to AWS ParallelCluster 2\.8\.0, [Berkshelf](https://github.com/berkshelf/berkshelf) \(installed using `gem install berkshelf`\) was required to use `pcluster createami`\.
 
 ## Named Arguments<a name="pcluster.createami.namedarg"></a>
 

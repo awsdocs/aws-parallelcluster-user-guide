@@ -7,7 +7,7 @@ pcluster dcv [ -h ] ( connect )
 ```
 
 `pcluster dcv command`  
-Possible choices: `[connect](#pcluster-dcv-connect)`
+Possible choices: `connect`
 
 **Note**  
 Support for the `pcluster dcv` command on `ubuntu1804` was added in AWS ParallelCluster 2\.6\.0\. Support for the `pcluster dcv` command on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
@@ -40,7 +40,7 @@ Shows the help text for the specified command\.
 
 `-k SSH_KEY_PATH, --key-path SSH_KEY_PATH`  
 Key path of the SSH key to use for the connection\.  
-The key must be the one specified at cluster creation time in the `[`key_name`](cluster-definition.md#key-name)` configuration parameter\. This argument is optional, but if it is not specified, then the key must be available by default for the SSH client\. For example, add it to the `ssh-agent` with `ssh-add`\.
+The key must be the one specified at cluster creation time in the `` configuration parameter\. This argument is optional, but if it is not specified, then the key must be available by default for the SSH client\. For example, add it to the `ssh-agent` with `ssh-add`\.
 
 `-s, --show-url`  
 Displays a one\-time URL for connecting to the NICE DCV session\. The default browser is not opened when this option is specified\.  

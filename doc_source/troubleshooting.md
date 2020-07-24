@@ -8,11 +8,11 @@ If you have problems submitting multi\-node parallel jobs when using AWS Batch a
 
 ## Placement Groups and Instance Launch Issues<a name="placement-groups-and-instance-launch-issues"></a>
 
-To get the lowest inter\-node latency, we recommend that you use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If not enough instances are available when the request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving an `InsufficientInstanceCapacity` error when using cluster placement groups, set the `[`placement_group`](cluster-definition.md#placement-group)` parameter to `DYNAMIC` and set the `[`placement`](cluster-definition.md#placement)` parameter to `compute`\.
+To get the lowest inter\-node latency, we recommend that you use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If not enough instances are available when the request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving an `InsufficientInstanceCapacity` error when using cluster placement groups, set the `` parameter to `DYNAMIC` and set the `` parameter to `compute`\.
 
 If a high performance shared filesystem is needed, consider using [Amazon FSx for Lustre](http://aws.amazon.com/fsx/lustre/)\.
 
-If the master node must be in the placement group, use the same instance type and subnet for both the master and compute nodes\. In other words, the `[`compute_instance_type`](cluster-definition.md#compute-instance-type)` parameter has the same value as the `[`master_instance_type`](cluster-definition.md#master-instance-type)` parameter, the `[`placement`](cluster-definition.md#placement)` parameter is set to `cluster`, and the `[`compute_subnet_id`](vpc-section.md#compute-subnet-id)` parameter is not specified\. This means that the value of the `[`master_subnet_id`](vpc-section.md#master-subnet-id)` parameter is used for the compute nodes\.
+If the master node must be in the placement group, use the same instance type and subnet for both the master and compute nodes\. In other words, the `` parameter has the same value as the `` parameter, the `` parameter is set to `cluster`, and the `` parameter is not specified\. This means that the value of the `` parameter is used for the compute nodes\.
 
 For more information, see [Troubleshooting Instance Launch issues](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshooting-launch.html) and [Placement Groups Roles and Limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#concepts-placement-groups) in the *Amazon EC2 User Guide for Linux Instances*
 
@@ -27,13 +27,13 @@ This includes the default user home folder \(`/home/ec2_user` on Amazon Linux, `
 This includes Intel MPI, Intel Parallel Studio, and related files\.
 
 `/opt/sge`  
-This includes Son of Grid Engine and related files\. \(Conditional, only if `[`scheduler`](cluster-definition.md#scheduler) = sge`\.\)
+This includes Son of Grid Engine and related files\. \(Conditional, only if ` = sge`\.\)
 
 `/opt/slurm`  
-This includes Slurm Workload Manager and related files\. \(Conditional, only if `[`scheduler`](cluster-definition.md#scheduler) = slurm`\.\)
+This includes Slurm Workload Manager and related files\. \(Conditional, only if ` = slurm`\.\)
 
 `/opt/torque`  
-This includes Torque Resource Manager and related files\. \(Conditional, only if `[`scheduler`](cluster-definition.md#scheduler) = torque`\.\)
+This includes Torque Resource Manager and related files\. \(Conditional, only if ` = torque`\.\)
 
 ## NICE DCV troubleshooting<a name="nice-dcv-troubleshooting"></a>
 

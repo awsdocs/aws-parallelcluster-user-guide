@@ -4,6 +4,9 @@ For information about AWS Batch, see [AWS Batch](http://aws.amazon.com/batch/)\.
 
 **AWS ParallelCluster CLI Commands for AWS Batch**
 
+**Important**  
+When using AWS Batch, GPU jobs are not supported\.
+
 When you use the `awsbatch` scheduler, the AWS ParallelCluster CLI commands for AWS Batch are automatically installed in the AWS ParallelCluster master node\. The CLI uses AWS Batch APIs and permits to:
 + Submit and manage jobs\.
 + Monitor jobs, queues, and hosts\.

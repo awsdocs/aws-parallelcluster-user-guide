@@ -27,6 +27,8 @@ The following example enables CloudWatch Logs\.
 enable = true
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `retention_days`<a name="cw-log-section-retention-days"></a>
 
  **\(Optional\)** Indicates how many days CloudWatch Logs retains individual log events\.
@@ -38,3 +40,5 @@ The following example configures CloudWatch Logs to retain log events for 30 day
 ```
 retention_days = 30
 ```
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)

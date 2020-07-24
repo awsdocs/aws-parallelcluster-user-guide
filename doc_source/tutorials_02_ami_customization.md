@@ -28,7 +28,7 @@ There are three ways to use a custom AWS ParallelCluster AMI\. Two methods requi
 
 This is the safest method, because the base AWS ParallelCluster AMI is often updated with new releases\. This AMI has all of the components required for AWS ParallelCluster to function as installed and configured\. You can start with this as the base\.
 
-1. In the AMI list, find the AMI that corresponds to the Region you are using\. The AMI list to use must match the version of AWS ParallelCluster you are using\. Run `pcluster version` to verify the version\. For AWS ParallelCluster 2\.7\.0 go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.7\.0/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.7.0/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.7\.0** button, select the **Tags** tab, and then select the appropriate version\.
+1. In the AMI list, find the AMI that corresponds to the Region you are using\. The AMI list to use must match the version of AWS ParallelCluster you are using\. Run `pcluster version` to verify the version\. For AWS ParallelCluster 2\.8\.0 go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.8\.0/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.8.0/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.8\.0** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Within the Amazon EC2 console, choose **Launch Instance**\.
 
@@ -56,9 +56,10 @@ This is the safest method, because the base AWS ParallelCluster AMI is often upd
 
 If you have a customized AMI and software already in place, you can apply the changes needed by AWS ParallelCluster on top of it\.
 
-1. Install the Packer tool in your local system, together with the AWS ParallelCluster CLI:
-   + find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it\.
-   + verify that the `packer` command is available in your PATH after you have installed it
+1. Install the following in your local system, together with the AWS ParallelCluster CLI:
+   + Packer: find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it\. Verify that the `packer` command is available in your PATH\.
+**Note**  
+Prior to AWS ParallelCluster 2\.8\.0, [Berkshelf](https://github.com/berkshelf/berkshelf) \(installed using `gem install berkshelf`\) was required to use `pcluster createami`\.
 
 1. Configure your AWS account credentials so that Packer can make calls to AWS API operations on your behalf\. The minimal set of required permissions necessary for Packer to work are documented in the [IAM Task or Instance Role](https://www.packer.io/docs/builders/amazon.html#iam-task-or-instance-role) section of the *Amazon AMI Builder* topic in the Packer documentation\.
 

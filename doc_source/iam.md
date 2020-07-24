@@ -12,7 +12,7 @@ When you use the default settings for cluster creation, an IAM role for Amazon E
 
  You can use an existing IAM role for Amazon EC2 when creating a cluster, but you must first define the IAM policy and role before attempting to launch the cluster\. Typically, you choose an existing IAM role for Amazon EC2 to reduce the permissions that are granted to users as they launch clusters\. The following example shows an IAM policy and role for both Amazon EC2 and the AWS ParallelCluster\. You must create both as individual policies in IAM and then attach to the appropriate resources\. In both policies, replace *<REGION>*, *<AWS ACCOUNT ID>*, and similar strings with the appropriate values\.
 
-## ParallelClusterInstancePolicy<a name="parallelclusterinstancepolicy"></a>
+## `ParallelClusterInstancePolicy`<a name="parallelclusterinstancepolicy"></a>
 
 The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm, or Torque as the scheduler:
 
@@ -203,12 +203,12 @@ The following example sets the `ParallelClusterInstancePolicy`, using `awsbatch`
 }
 ```
 
-## ParallelClusterUserPolicy<a name="parallelclusteruserpolicy"></a>
+## `ParallelClusterUserPolicy`<a name="parallelclusteruserpolicy"></a>
 
 The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or Torque as the scheduler\.
 
 **Note**  
-If you use a custom role, `[`ec2_iam_role`](cluster-definition.md#ec2-iam-role) = <role_name>`, you must change the IAM resource to include the name of that role from:  
+If you use a custom role, ` = <role_name>`, you must change the IAM resource to include the name of that role from:  
 `"Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster-*"`  
 To:  
 `"Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/<role_name>"`
@@ -498,7 +498,7 @@ To:
 }
 ```
 
-The following example sets the ParallelClusterUserPolicy, using `awsbatch` as the scheduler:
+The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as the scheduler:
 
 ```
 {
@@ -516,6 +516,7 @@ The following example sets the ParallelClusterUserPolicy, using `awsbatch` as th
         "ec2:DescribeImages",
         "ec2:DescribeInstances",
         "ec2:DescribeInstanceStatus",
+        "ec2:DescribeInstanceTypes",
         "ec2:DescribeSnapshots",
         "ec2:DescribeVolumes",
         "ec2:DescribeVpcAttribute",

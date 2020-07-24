@@ -23,3 +23,5 @@ The default value is `10`\.
 ```
 scaledown_idletime = 10
 ```
+
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)

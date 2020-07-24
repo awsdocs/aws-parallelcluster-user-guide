@@ -52,7 +52,7 @@ Defines one or more clusters for different job types or workloads\.
 
 Each cluster can have its own configuration\.
 
-The format is `[cluster <clustername>]`\. The `[[cluster] section](#cluster-definition)` named by the `[`cluster_template`](global.md#cluster-template)` setting in the `[[global] section](global.md)` is used\.
+The format is `[cluster <clustername>]`\. The `` named by the `` setting in the `` is used\.
 
 ```
 [cluster default]
@@ -70,6 +70,8 @@ The default value is `NONE`\.
 additional_cfn_template = NONE
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `additional_iam_policies`<a name="additional-iam-policies"></a>
 
 Specifies a comma\-separated list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used in the cluster, in addition to the permissions required by AWS ParallelCluster\. An IAM policy name and its ARN are different\. Names cannot be used as an argument to `additional_iam_policies`\. `additional_iam_policies` should be used instead of the `ec2_iam_role`\. This is because `additional_iam_policies` are added to the permissions that AWS ParallelCluster requires, and the `ec2_iam_role` must include all permissions required\. The permissions required often change from release to release as features are added\.
@@ -83,6 +85,8 @@ additional_iam_policies = arn:aws:iam::aws:policy/AdministratorAccess
 **Note**  
 Support for `additional_iam_policies` was added in AWS ParallelCluster 2\.5\.0\.
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `base_os`<a name="base-os"></a>
 
 **\(Required\)** Specifies which OS type is used in the cluster\.
@@ -94,6 +98,9 @@ Available options are:
 + `centos7`
 + `ubuntu1604`
 + `ubuntu1804`
+
+**Note**  
+When using an AWS Graviton\-based instance, only `alinux2` or `ubuntu1804` are supported\.
 
 **Note**  
 Support for `alinux2` was added in AWS ParallelCluster 2\.6\.0\. Support for `ubuntu1804` was added and support for `ubuntu1404` was removed in AWS ParallelCluster 2\.5\.0\.
@@ -124,6 +131,8 @@ If the [`scheduler`](#scheduler) parameter is `awsbatch`, either `alinux` or `al
 base_os = alinux
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `cluster_type`<a name="cluster-type"></a>
 
 Defines the type of cluster to launch\.
@@ -138,9 +147,11 @@ For more information about Spot Instances, see [Working with Spot Instances](spo
 cluster_type = ondemand
 ```
 
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
+
 ## `compute_instance_type`<a name="compute-instance-type"></a>
 
-Defines the Amazon EC2 instance type that is used for the cluster compute nodes\.
+Defines the Amazon EC2 instance type that is used for the cluster compute nodes\. The architecture of the instance type must be the same as the architecture used for the [`master_instance_type`](#master-instance-type) setting\.
 
 If you are using the `awsbatch` scheduler, see the Compute Environments creation in the AWS Batch UI for a list of supported instance types\.
 
@@ -150,7 +161,10 @@ Defaults to `t2.micro`, `optimal` when the scheduler is `awsbatch`\.
 compute_instance_type = t2.micro
 ```
 
-A1 instances are not supported\.
+**Note**  
+Support for AWS Graviton\-based instances \(like the `A1` and `C6g`\) was added in AWS ParallelCluster 2\.8\.0\.
+
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
 ## `compute_root_volume_size`<a name="compute-root-volume-size"></a>
 
@@ -165,15 +179,19 @@ Prior to AWS ParallelCluster 2\.5\.0, the default was 20\.
 compute_root_volume_size = 20
 ```
 
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
+
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.7.0/amis.txt)\.
+Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.8.0/amis.txt)\.
 
 The default value is `NONE`\.
 
 ```
 custom_ami = NONE
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `cw_log_settings`<a name="cw-log-settings"></a>
 
@@ -190,6 +208,8 @@ cw_log_settings = custom-cw
 **Note**  
 Support for `cw_log_settings` was added in AWS ParallelCluster 2\.6\.0\.
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `dcv_settings`<a name="dcv-settings"></a>
 
 Identifies the `[dcv]` section with the NICE DCV configuration\.
@@ -203,7 +223,12 @@ dcv_settings = custom-dcv
 ```
 
 **Note**  
+On AWS Graviton\-based instances, NICE DCV is only supported on `alinux2`\.
+
+**Note**  
 Support for `dcv_settings` was added in AWS ParallelCluster 2\.5\.0\.
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `desired_vcpus`<a name="desired-vcpus"></a>
 
@@ -215,6 +240,8 @@ The default value is `4`\.
 desired_vcpus = 4
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `disable_hyperthreading`<a name="disable-hyperthreading"></a>
 
 Disables hyperthreading on the master and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU Cores and Threads Per CPU Core Per Instance Type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -225,6 +252,8 @@ disable_hyperthreading = true
 
 **Note**  
 Support for `disable_hyperthreading` was added in AWS ParallelCluster 2\.5\.0\.
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `ebs_settings`<a name="ebs-settings"></a>
 
@@ -240,6 +269,8 @@ For example, the following setting specifies that the sections that start `[ebs 
 ebs_settings = custom1, custom2
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `ec2_iam_role`<a name="ec2-iam-role"></a>
 
 Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs cannot be used as an argument to `ec2_iam_role`\. If this option is specified, the `additional_iam_policies` setting is ignored\. AWS recommends using `additional_iam_policies` rather than the `ec2_iam_role`, because features added to AWS ParallelCluster often require new permissions\.
@@ -249,6 +280,8 @@ The default value is `NONE`\.
 ```
 ec2_iam_role = NONE
 ```
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
 ## `efs_settings`<a name="efs-settings"></a>
 
@@ -262,24 +295,33 @@ For example, the following setting specifies that the section that starts `[efs 
 efs_settings = customfs
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `enable_efa`<a name="enable-efa"></a>
 
-If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \(`[`base_os`](#base-os)` is `alinux`, `alinux2`, `centos7`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
+If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \(`` is `alinux`, `alinux2`, `centos7`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
 
 ```
 enable_efa = compute
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
-If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The `enable_intel_hpc_platform` setting is only supported on CentOS 7 \(`[`base_os`](#base-os) = centos7`\)\.
+If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The `enable_intel_hpc_platform` setting is only supported on CentOS 7 \(` = centos7`\)\.
 
 ```
 enable_intel_hpc_platform = true
 ```
 
 **Note**  
+The `enable_intel_hpc_platform` parameter is not compatible with AWS Graviton\-based instances\.
+
+**Note**  
 Support for `enable_intel_hpc_platform` was added in AWS ParallelCluster 2\.5\.0\.
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `encrypted_ephemeral`<a name="encrypted-ephemeral"></a>
 
@@ -293,6 +335,8 @@ The default value is `false`\.
 encrypted_ephemeral = false
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `ephemeral_dir`<a name="ephemeral-dir"></a>
 
 Defines the path where instance store volumes are mounted, if they are used\.
@@ -302,6 +346,8 @@ The default value is `/scratch`\.
 ```
 ephemeral_dir = /scratch
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `extra_json`<a name="extra-json"></a>
 
@@ -320,21 +366,21 @@ Starting with AWS ParallelCluster 2\.6\.1, most of the install recipes are skipp
 extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
 ```
 
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
+
 ## `fsx_settings`<a name="fsx-settings"></a>
 
 Specifies the section that defines the Amazon FSx for Lustre configuration\.
 
 For more information, see the [[fsx] section](fsx-section.md)\.
 
-```
-fsx_settings = fs
-```
-
 For example, the following setting specifies that the section that starts `[fsx fs]` is used for the Amazon FSx for Lustre configuration\.
 
 ```
 fsx_settings = fs
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `initial_queue_size`<a name="configuration-initial-queue-size"></a>
 
@@ -350,6 +396,8 @@ Defaults to `2`\.
 initial_queue_size = 2
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `key_name`<a name="key-name"></a>
 
 Names an existing Amazon EC2 key pair with which to enable SSH access to the instances\.
@@ -358,13 +406,15 @@ Names an existing Amazon EC2 key pair with which to enable SSH access to the ins
 key_name = mykey
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `maintain_initial_size`<a name="maintain-initial-size"></a>
 
 Maintains the initial size of the Auto Scaling group for traditional schedulers \(SGE, Slurm, and Torque\)\.
 
-If the scheduler is `awsbatch`, use `[`desired_vcpus`](#desired-vcpus)` instead\.
+If the scheduler is `awsbatch`, use `` instead\.
 
-This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of `[`initial_queue_size`](#configuration-initial-queue-size)`\. The cluster can still scale up to the value of `[`max_queue_size`](#configuration-max-queue-size)`\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below `initial_queue_size`\.
+This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of ``\. The cluster can still scale up to the value of ``\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below `initial_queue_size`\.
 
 If set to `false`, the Auto Scaling group can scale down to zero \(0\) members to prevent resources from sitting idle when they are not needed\.
 
@@ -374,9 +424,11 @@ Defaults to `false`\.
 maintain_initial_size = false
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `master_instance_type`<a name="master-instance-type"></a>
 
-Defines the Amazon EC2 instance type that is used for the master node\.
+Defines the Amazon EC2 instance type that is used for the master node\. The architecture of the instance type must be the same as the architecture used for the [`compute_instance_type`](#compute-instance-type) setting\.
 
 Defaults to `t2.micro`\.
 
@@ -384,7 +436,10 @@ Defaults to `t2.micro`\.
 master_instance_type = t2.micro
 ```
 
-A1 instances are not supported\.
+**Note**  
+Support for AWS Graviton\-based instances \(like the `A1` and `C6g`\) was added in AWS ParallelCluster 2\.8\.0\.
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `master_root_volume_size`<a name="master-root-volume-size"></a>
 
@@ -398,6 +453,8 @@ Prior to AWS ParallelCluster 2\.5\.0, the default was 20\.
 ```
 master_root_volume_size = 25
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `max_queue_size`<a name="configuration-max-queue-size"></a>
 
@@ -413,6 +470,8 @@ Defaults to `10`\.
 max_queue_size = 10
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `max_vcpus`<a name="max-vcpus"></a>
 
 Specifies the maximum number of vCPUs in the compute environment\. Used only if the scheduler is `awsbatch`\.
@@ -423,11 +482,13 @@ The default value is `20`\.
 max_vcpus = 20
 ```
 
+[Update policy: This setting can't be decreased during an update.](using-pcluster-update.md#update-policy-no-decrease)
+
 ## `min_vcpus`<a name="min-vcpus"></a>
 
 Maintains the initial size of the Auto Scaling group for the `awsbatch` scheduler\.
 
-If the scheduler is SGE, Slurm, or Torque, use `[`maintain_initial_size`](#maintain-initial-size)` instead\.
+If the scheduler is SGE, Slurm, or Torque, use `` instead\.
 
 The compute environment never has fewer members than the value of `min_vcpus`\.
 
@@ -436,6 +497,8 @@ Defaults to `0`\.
 ```
 min_vcpus = 0
 ```
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
 ## `placement`<a name="placement"></a>
 
@@ -450,6 +513,8 @@ The default value is `compute`\.
 ```
 placement = compute
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `placement_group`<a name="placement-group"></a>
 
@@ -474,6 +539,8 @@ Not all instance types support cluster placement groups\. For example, the defau
 placement_group = NONE
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `post_install`<a name="post-install"></a>
 
 Specifies the URL of a postinstall script that is executed after all of the `boot_as_*` scripts are run\.
@@ -488,6 +555,8 @@ The default value is `NONE`\.
 post_install = NONE
 ```
 
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
+
 ## `post_install_args`<a name="post-install-args"></a>
 
 Specifies a quoted list of arguments to pass to the postinstall script\.
@@ -497,6 +566,8 @@ The default value is `NONE`\.
 ```
 post_install_args = "NONE"
 ```
+
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
 ## `pre_install`<a name="pre-install"></a>
 
@@ -512,6 +583,8 @@ The default value is `NONE`\.
 pre_install = NONE
 ```
 
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
+
 ## `pre_install_args`<a name="pre-install-args"></a>
 
 Specifies a quoted list of arguments to pass to the preinstall script\.
@@ -522,6 +595,8 @@ The default value is `NONE`\.
 pre_install_args = "NONE"
 ```
 
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
+
 ## `proxy_server`<a name="proxy-server"></a>
 
 Defines an HTTP or HTTPS proxy server, typically `http://x.x.x.x:8080`\.
@@ -531,6 +606,8 @@ The default value is `NONE`\.
 ```
 proxy_server = NONE
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `raid_settings`<a name="raid-settings"></a>
 
@@ -543,6 +620,8 @@ For example, the following setting specifies that the section that starts `[raid
 ```
 raid_settings = rs
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `s3_read_resource`<a name="s3-read-resource"></a>
 
@@ -558,6 +637,8 @@ The default value is `NONE`\.
 s3_read_resource = NONE
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `s3_read_write_resource`<a name="s3-read-write-resource"></a>
 
 Specifies an Amazon S3 resource to which AWS ParallelCluster nodes are granted read/write access\.
@@ -572,6 +653,8 @@ The default value is `NONE`\.
 s3_read_write_resource = NONE
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `scaling_settings`<a name="scaling-settings"></a>
 
 Identifies the `[scaling]` section with the Auto Scaling configuration\.
@@ -584,22 +667,30 @@ For example, the following setting specifies that the section that starts `[scal
 scaling_settings = custom
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `scheduler`<a name="scheduler"></a>
 
 **\(Required\)** Defines the cluster scheduler\.
 
 Valid options are:
-+ `sge`
-+ `torque`
-+ `slurm`
-+ `awsbatch`
+
+`awsbatch`  
+AWS Batch
+
+`sge`  
+Son of Grid Engine \(SGE\)
+
+`slurm`  
+Slurm Workload Manager \(Slurm\)
+
+`torque`  
+Torque Resource Manager \(Torque\)
 
 **Warning**  
-A future release of AWS ParallelCluster will remove support for `sge` and `torque`\.
+Starting on December 31, 2021, AWS will no longer include SGE and Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support SGE and Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from AWS service and customer support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for either SGE or Torque\.
 
 For more information about the `awsbatch` scheduler, see [networking setup](networking.md#awsbatch-networking)\.
-
-The default value is `sge`\.
 
 **Note**  
 Prior to AWS ParallelCluster 2\.7\.0, the `scheduler` parameter was optional, and the default was `sge`\. Starting with AWS ParallelCluster 2\.7\.0, the `scheduler` parameter is required\.
@@ -607,6 +698,8 @@ Prior to AWS ParallelCluster 2\.7\.0, the `scheduler` parameter was optional, an
 ```
 scheduler = slurm
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
 
 ## `shared_dir`<a name="cluster-shared-dir"></a>
 
@@ -624,6 +717,8 @@ The following example shows a shared Amazon EBS volume mounted at `/myshared`\.
 shared_dir = myshared
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `spot_bid_percentage`<a name="spot-bid-percentage"></a>
 
 Optionally sets the on\-demand percentage used to calculate the maximum Spot price for the ComputeFleet, when `awsbatch` is the scheduler\.
@@ -634,9 +729,11 @@ If unspecified, the current spot market price is selected, capped at the On\-Dem
 spot_bid_percentage = 85
 ```
 
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `spot_price`<a name="spot-price"></a>
 
-Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the `[`cluster_type`](#cluster-type)` setting is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\.
+Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the `` setting is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\.
 
 If the scheduler is `awsbatch`, use [spot\_bid\_percentage](#spot-bid-percentage) instead\.
 
@@ -648,6 +745,8 @@ spot_price = 1.50
 
 **Note**  
 In AWS ParallelCluster 2\.5\.0, if `cluster_type = spot` but `spot_price` is not specified, the instance launches for the ComputeFleet will fail\. This was fixed in AWS ParallelCluster 2\.5\.1\.
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
 ## `tags`<a name="tags"></a>
 
@@ -665,6 +764,8 @@ For more information, see [AWS CloudFormation Resource Tags Type](https://docs.a
 tags = {"key" : "value", "key2" : "value2"}
 ```
 
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+
 ## `template_url`<a name="template-url"></a>
 
 Defines the path to the AWS CloudFormation template that is used to create the cluster\.
@@ -674,8 +775,10 @@ Updates use the template that was originally used to create the stack\.
 Defaults to `https://<aws_region_name>-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-<version>.cfn.json`\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.8.0.cfn.json
 ```
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
 ## `vpc_settings`<a name="vpc-settings"></a>
 
@@ -688,3 +791,5 @@ For example, the following setting specifies that the section that starts `[vpc 
 ```
 vpc_settings = public
 ```
+
+[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
