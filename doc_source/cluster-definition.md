@@ -70,7 +70,7 @@ The default value is `NONE`\.
 additional_cfn_template = NONE
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `additional_iam_policies`<a name="additional-iam-policies"></a>
 
@@ -131,7 +131,7 @@ If the [`scheduler`](#scheduler) parameter is `awsbatch`, either `alinux` or `al
 base_os = alinux
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `cluster_type`<a name="cluster-type"></a>
 
@@ -191,7 +191,7 @@ The default value is `NONE`\.
 custom_ami = NONE
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `cw_log_settings`<a name="cw-log-settings"></a>
 
@@ -208,7 +208,7 @@ cw_log_settings = custom-cw
 **Note**  
 Support for `cw_log_settings` was added in AWS ParallelCluster 2\.6\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `dcv_settings`<a name="dcv-settings"></a>
 
@@ -228,7 +228,7 @@ On AWS Graviton\-based instances, NICE DCV is only supported on `alinux2`\.
 **Note**  
 Support for `dcv_settings` was added in AWS ParallelCluster 2\.5\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `desired_vcpus`<a name="desired-vcpus"></a>
 
@@ -253,7 +253,7 @@ disable_hyperthreading = true
 **Note**  
 Support for `disable_hyperthreading` was added in AWS ParallelCluster 2\.5\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `ebs_settings`<a name="ebs-settings"></a>
 
@@ -269,7 +269,7 @@ For example, the following setting specifies that the sections that start `[ebs 
 ebs_settings = custom1, custom2
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `ec2_iam_role`<a name="ec2-iam-role"></a>
 
@@ -295,7 +295,7 @@ For example, the following setting specifies that the section that starts `[efs 
 efs_settings = customfs
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `enable_efa`<a name="enable-efa"></a>
 
@@ -305,7 +305,7 @@ If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the com
 enable_efa = compute
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
@@ -321,7 +321,7 @@ The `enable_intel_hpc_platform` parameter is not compatible with AWS Graviton\-b
 **Note**  
 Support for `enable_intel_hpc_platform` was added in AWS ParallelCluster 2\.5\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `encrypted_ephemeral`<a name="encrypted-ephemeral"></a>
 
@@ -335,7 +335,7 @@ The default value is `false`\.
 encrypted_ephemeral = false
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `ephemeral_dir`<a name="ephemeral-dir"></a>
 
@@ -347,7 +347,7 @@ The default value is `/scratch`\.
 ephemeral_dir = /scratch
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `extra_json`<a name="extra-json"></a>
 
@@ -380,7 +380,7 @@ For example, the following setting specifies that the section that starts `[fsx 
 fsx_settings = fs
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `initial_queue_size`<a name="configuration-initial-queue-size"></a>
 
@@ -406,7 +406,7 @@ Names an existing Amazon EC2 key pair with which to enable SSH access to the ins
 key_name = mykey
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `maintain_initial_size`<a name="maintain-initial-size"></a>
 
@@ -439,7 +439,7 @@ master_instance_type = t2.micro
 **Note**  
 Support for AWS Graviton\-based instances \(like the `A1` and `C6g`\) was added in AWS ParallelCluster 2\.8\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `master_root_volume_size`<a name="master-root-volume-size"></a>
 
@@ -454,7 +454,7 @@ Prior to AWS ParallelCluster 2\.5\.0, the default was 20\.
 master_root_volume_size = 25
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `max_queue_size`<a name="configuration-max-queue-size"></a>
 
@@ -514,7 +514,7 @@ The default value is `compute`\.
 placement = compute
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `placement_group`<a name="placement-group"></a>
 
@@ -539,7 +539,7 @@ Not all instance types support cluster placement groups\. For example, the defau
 placement_group = NONE
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `post_install`<a name="post-install"></a>
 
@@ -607,7 +607,7 @@ The default value is `NONE`\.
 proxy_server = NONE
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `raid_settings`<a name="raid-settings"></a>
 
@@ -621,7 +621,7 @@ For example, the following setting specifies that the section that starts `[raid
 raid_settings = rs
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `s3_read_resource`<a name="s3-read-resource"></a>
 
@@ -667,7 +667,7 @@ For example, the following setting specifies that the section that starts `[scal
 scaling_settings = custom
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `scheduler`<a name="scheduler"></a>
 
@@ -699,7 +699,7 @@ Prior to AWS ParallelCluster 2\.7\.0, the `scheduler` parameter was optional, an
 scheduler = slurm
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `shared_dir`<a name="cluster-shared-dir"></a>
 
@@ -717,7 +717,7 @@ The following example shows a shared Amazon EBS volume mounted at `/myshared`\.
 shared_dir = myshared
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `spot_bid_percentage`<a name="spot-bid-percentage"></a>
 
@@ -764,7 +764,7 @@ For more information, see [AWS CloudFormation Resource Tags Type](https://docs.a
 tags = {"key" : "value", "key2" : "value2"}
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `template_url`<a name="template-url"></a>
 
@@ -792,4 +792,4 @@ For example, the following setting specifies that the section that starts `[vpc 
 vpc_settings = public
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)

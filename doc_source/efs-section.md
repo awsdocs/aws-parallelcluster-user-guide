@@ -49,7 +49,7 @@ The default value is `NONE`\.
 efs_fs_id = fs-12345
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `efs_kms_key_id`<a name="efs-efs-kms-key-id"></a>
 
@@ -61,7 +61,7 @@ The default value is `NONE`\.
 efs_kms_key_id = 1234abcd-12ab-34cd-56ef-1234567890ab
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `encrypted`<a name="efs-encrypted"></a>
 
@@ -73,7 +73,7 @@ The default value is `false`\.
 encrypted = true
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `performance_mode`<a name="efs-performance-mode"></a>
 
@@ -97,7 +97,7 @@ The default value is `generalPurpose`\.
 performance_mode = generalPurpose
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `provisioned_throughput`<a name="efs-provisioned-throughput"></a>
 
@@ -129,7 +129,7 @@ The following example mounts Amazon EFS at `/efs`\.
 shared_dir = efs
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `throughput_mode`<a name="efs-throughput-mode"></a>
 

@@ -80,7 +80,7 @@ copy_tags_to_backups = true
 **Note**  
 Support for `copy_tags_to_backups` was added in AWS ParallelCluster 2\.8\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `daily_automatic_backup_start_time`<a name="fsx-daily-automatic-backup-start-time"></a>
 
@@ -123,7 +123,7 @@ deployment_type = SCRATCH_2
 **Note**  
 Support for `deployment_type` was added in AWS ParallelCluster 2\.6\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `export_path`<a name="fsx-export-path"></a>
 
@@ -135,7 +135,7 @@ The default value is `s3://import-bucket/FSxLustre[creation-timestamp]`, where `
 export_path = s3://bucket/folder
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `fsx_backup_id`<a name="fsx-backup-id"></a>
 
@@ -150,7 +150,7 @@ fsx_backup_id = backup-fedcba98
 **Note**  
 Support for `fsx_backup_id` was added in AWS ParallelCluster 2\.8\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `fsx_fs_id`<a name="fsx-fs-id"></a>
 
@@ -162,7 +162,7 @@ If this option is specified, only the [`shared_dir`](#fsx-shared-dir) and [`fsx_
 fsx_fs_id = fs-073c3803dca3e28a6
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `fsx_kms_key_id`<a name="fsx-kms-key-id"></a>
 
@@ -181,7 +181,7 @@ fsx_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 **Note**  
 Support for `fsx_kms_key_id` was added in AWS ParallelCluster 2\.6\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `import_path`<a name="fsx-import-path"></a>
 
@@ -195,7 +195,7 @@ If a value is not provided, the file system is empty\.
 import_path =  s3://bucket
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `imported_file_chunk_size`<a name="fsx-imported-file-chunk-size"></a>
 
@@ -207,7 +207,7 @@ The chunk size default is `1024` \(1 GiB\), and it can go as high as 512,000 MiB
 imported_file_chunk_size = 1024
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `per_unit_storage_throughput`<a name="fsx-per-unit-storage-throughput"></a>
 
@@ -222,7 +222,7 @@ per_unit_storage_throughput = 200
 **Note**  
 Support for `per_unit_storage_throughput` was added in AWS ParallelCluster 2\.6\.0\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `shared_dir`<a name="fsx-shared-dir"></a>
 
@@ -236,7 +236,7 @@ The following example mounts the file system at `/fsx`\.
 shared_dir = /fsx
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `storage_capacity`<a name="fsx-storage-capacity"></a>
 
@@ -257,7 +257,7 @@ storage_capacity = 7200
 **Note**  
 For AWS ParallelCluster 2\.5\.0 and 2\.5\.1, `storage_capacity` supported possible values of 1200, 2400, and any multiple of 3600\. For versions earlier than AWS ParallelCluster 2\.5\.0, `storage_capacity` had a minimum size of 3600\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `weekly_maintenance_start_time`<a name="fsx-weekly-maintenance-start-time"></a>
 

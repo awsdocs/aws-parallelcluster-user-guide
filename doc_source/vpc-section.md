@@ -38,7 +38,7 @@ Specifies a CIDR block\. Use this parameter if you want AWS ParallelCluster to c
 compute_subnet_cidr = 10.0.100.0/24
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `compute_subnet_id`<a name="compute-subnet-id"></a>
 
@@ -62,7 +62,7 @@ Specifies the ID of an existing subnet in which to provision the master node\.
 master_subnet_id = subnet-xxxxxx
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `ssh_from`<a name="ssh-from"></a>
 
@@ -107,7 +107,7 @@ Specifies the ID of the Amazon VPC in which to provision the cluster\.
 vpc_id = vpc-xxxxxx
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `vpc_security_group_id`<a name="vpc-security-group-id"></a>
 

@@ -27,7 +27,7 @@ The following example enables CloudWatch Logs\.
 enable = true
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `retention_days`<a name="cw-log-section-retention-days"></a>
 

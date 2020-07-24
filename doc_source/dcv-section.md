@@ -49,7 +49,7 @@ enable = master
 **Note**  
 NICE DCV automatically generates a self\-signed certificate that is used to secure traffic between the NICE DCV client and NICE DCV server running on the master instance\. To configure your own certificate, see [NICE DCV HTTPS Certificate](dcv.md#dcv-certificate)\.
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `port`<a name="dcv-section-port"></a>
 
@@ -61,4 +61,4 @@ The default value is `8443`\.
 port = 8443
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)

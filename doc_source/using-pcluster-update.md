@@ -4,7 +4,7 @@ Starting with AWS ParallelCluster 2\.8\.0, `` analyzes the settings used to crea
 
 The documentation for each setting defines the update policy for that setting\.
 
-**Update policy: If this setting is changed, the update will fail\.**  
+**Update policy: If this setting is changed, the update is not allowed\.**  
 These settings cannot be changed while the cluster exists\. Either the change must be reverted or the cluster must be deleted \(using ``\), and then a new cluster created \(using ``\)\.
 
 **Update policy: The compute fleet must be stopped for this setting to be changed for an update\.**  

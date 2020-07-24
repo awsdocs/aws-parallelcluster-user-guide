@@ -36,7 +36,7 @@ The following example mounts the array at `/raid`\.
 shared_dir = raid
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `raid_type`<a name="raid-type"></a>
 
@@ -56,7 +56,7 @@ The following example creates a RAID `0` array:
 raid_type = 0
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `num_of_raid_volumes`<a name="num-of-raid-volumes"></a>
 
@@ -72,7 +72,7 @@ The default value is `2`\.
 num_of_raid_volumes = 2
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `volume_type`<a name="raid-volume-type"></a>
 
@@ -92,7 +92,7 @@ The default value is `gp2`\.
 volume_type = io1
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `volume_size`<a name="raid-volume-size"></a>
 
@@ -104,7 +104,7 @@ The default value is `20`\.
 volume_size = 20
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `volume_iops`<a name="raid-volume-iops"></a>
 
@@ -126,7 +126,7 @@ The default value is `false`\.
 encrypted = false
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `ebs_kms_key_id`<a name="raid-ebs_kms_key_id"></a>
 
@@ -140,4 +140,4 @@ For more information, see [Disk Encryption with a Custom KMS Key](tutorials_04_e
 ebs_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-[Update policy: If this setting is changed, the update will fail.](using-pcluster-update.md#update-policy-fail)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
