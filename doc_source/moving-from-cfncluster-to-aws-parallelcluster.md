@@ -33,7 +33,7 @@ If you want to use an existing CfnCluster configuration file with AWS ParallelCl
 
 1. Move the configuration file from `~/.cfncluster/config` to `~/.parallelcluster/config`\.
 
-1. If you use the `extra_json` configuration parameter, change it as shown\.
+1. If you use the [`extra_json`](https://docs.aws.amazon.com/parallelcluster/latest/ug/cluster-definition.html#extra-json) configuration parameter, change it as shown\.
 
 CfnCluster setting:
 
@@ -51,7 +51,7 @@ extra_json = { "cluster" : { } }
 
 In AWS ParallelCluster, ganglia is disabled by default\. To enable ganglia:
 
-1. Set the `extra_json` parameter as shown:
+1. Set the [`extra_json`](https://docs.aws.amazon.com/parallelcluster/latest/ug/cluster-definition.html#extra-json) parameter as shown:
 
    ```
    extra_json = { "cluster" : { "ganglia_enabled" : "yes" } }
