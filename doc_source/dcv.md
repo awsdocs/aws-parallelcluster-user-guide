@@ -2,9 +2,9 @@
 
 NICE DCV is a remote visualization technology that enables users to securely connect to graphic\-intensive 3D applications hosted on a remote high\-performance server\. For more information, see [NICE DCV](https://docs.aws.amazon.com/dcv/)\.
 
-The NICE DCV software is automatically installed on the master instance when using [`base_os`](cluster-definition.md#base-os), [`base_os`](cluster-definition.md#base-os), or [`base_os`](cluster-definition.md#base-os)\.
+The NICE DCV software is automatically installed on the master instance when using [`base_os`](cluster-definition.md#base-os)` = alinux2`, [`base_os`](cluster-definition.md#base-os)` = centos7`, or [`base_os`](cluster-definition.md#base-os)` = ubuntu1804`\.
 
-To enable NICE DCV on the master instance, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [[dcv] section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable) and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7` or `ubuntu1804`\.
+To enable NICE DCV on the master instance, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [[dcv] section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable)` = master` and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7` or `ubuntu1804`\.
 
 ```
 [cluster custom-cluster]

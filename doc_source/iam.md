@@ -208,7 +208,7 @@ The following example sets the `ParallelClusterInstancePolicy`, using `awsbatch`
 The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or Torque as the scheduler\.
 
 **Note**  
-If you use a custom role, "[`ec2_iam_role`](cluster-definition.md#ec2-iam-role) = *<role\_name>*", you must change the IAM resource to include the name of that role from:  
+If you use a custom role, [`ec2_iam_role`](cluster-definition.md#ec2-iam-role)` = <role_name>`, you must change the IAM resource to include the name of that role from:  
 `"Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster-*"`  
 To:  
 `"Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/<role_name>"`

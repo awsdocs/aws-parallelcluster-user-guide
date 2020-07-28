@@ -27,13 +27,13 @@ This includes the default user home folder \(`/home/ec2_user` on Amazon Linux, `
 This includes Intel MPI, Intel Parallel Studio, and related files\.
 
 `/opt/sge`  
-This includes Son of Grid Engine and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)\.\)
+This includes Son of Grid Engine and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = sge`\.\)
 
 `/opt/slurm`  
-This includes Slurm Workload Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)\.\)
+This includes Slurm Workload Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = slurm`\.\)
 
 `/opt/torque`  
-This includes Torque Resource Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)\.\)
+This includes Torque Resource Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = torque`\.\)
 
 ## NICE DCV troubleshooting<a name="nice-dcv-troubleshooting"></a>
 

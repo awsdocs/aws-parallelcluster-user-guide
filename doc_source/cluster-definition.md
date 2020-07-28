@@ -309,7 +309,7 @@ enable_efa = compute
 
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
-If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)\)\.
+If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)` = centos7`\)\.
 
 ```
 enable_intel_hpc_platform = true
