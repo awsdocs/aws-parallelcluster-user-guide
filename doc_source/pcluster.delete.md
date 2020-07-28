@@ -6,12 +6,12 @@ Deletes a cluster\.
 pcluster delete [ -h ] [ -c CONFIG_FILE ] [ -r REGION ] [ -nw ] cluster_name
 ```
 
-## Positional Arguments<a name="pcluster.delete.arg"></a>
+## Positional arguments<a name="pcluster.delete.arg"></a>
 
 `cluster_name`  
 Specifies the name of the cluster to delete\.
 
-## Named Arguments<a name="pcluster.delete.namedarg"></a>
+## Named arguments<a name="pcluster.delete.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

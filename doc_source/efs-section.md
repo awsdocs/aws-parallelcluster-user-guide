@@ -24,7 +24,7 @@ performance_mode = generalPurpose
 
 Defines the Amazon EFS file system ID for an existing file system\.
 
-Specifying this option voids all other Amazon EFS options except for `shared_dir`\.
+Specifying this option voids all other Amazon EFS options except for [`shared_dir`](cluster-definition.md#cluster-shared-dir)\.
 
 If you set this option to `config_sanity`, it only supports file systems:
 + That do not have a mount target in the stack's Availability Zone
@@ -32,7 +32,7 @@ If you set this option to `config_sanity`, it only supports file systems:
   OR
 + That do have an existing mount target in the stack's Availability Zone, with inbound and outbound NFS traffic allowed from `0.0.0.0/0`\.
 
-The sanity check for validating `efs_fs_id` requires the IAM role to have the following permissions:
+The sanity check for validating [`efs_fs_id`](#efs-efs-fs-id) requires the IAM role to have the following permissions:
 + `elasticfilesystem:DescribeMountTargets`
 + `elasticfilesystem:DescribeMountTargetSecurityGroups`
 + `ec2:DescribeSubnets`
@@ -41,7 +41,7 @@ The sanity check for validating `efs_fs_id` requires the IAM role to have the fo
 
 To avoid errors, you must add these permissions to your IAM role, or set `sanity_check = false`\.
 
-CAUTION: When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you *not* create a mount target in the stack's Availability Zone, and instead let AWS handle this step\. If you must have a mount target in the stack's Availability Zone, consider using a custom security group by providing a `vpc_security_group_id` option under the [[vpc] section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
+CAUTION: When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you *not* create a mount target in the stack's Availability Zone, and instead let AWS handle this step\. If you must have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [[vpc] section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
 
 The default value is `NONE`\.
 
@@ -53,7 +53,7 @@ efs_fs_id = fs-12345
 
 ## `efs_kms_key_id`<a name="efs-efs-kms-key-id"></a>
 
-\(Optional\) Identifies the AWS Key Management Service \(AWS KMS\) customer managed key \(CMK\) to be used to protect the encrypted file system\. If this is set, the `` setting must be set to `true`\. This corresponds to the [KmsKeyId](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-KmsKeyId) parameter in the *Amazon EFS API Reference*\.
+\(Optional\) Identifies the AWS Key Management Service \(AWS KMS\) customer managed key \(CMK\) to be used to protect the encrypted file system\. If this is set, the [`encrypted`](#efs-encrypted) setting must be set to `true`\. This corresponds to the [KmsKeyId](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-KmsKeyId) parameter in the *Amazon EFS API Reference*\.
 
 The default value is `NONE`\.
 
@@ -103,7 +103,7 @@ performance_mode = generalPurpose
 
 Defines the provisioned throughput of the file system, measured in MiB/s\. This corresponds to the [ProvisionedThroughputInMibps](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-response-ProvisionedThroughputInMibps) parameter in the *Amazon EFS API Reference*\.
 
-If you use this parameter, you must set `` to `provisioned`\.
+If you use this parameter, you must set [`throughput_mode`](#efs-throughput-mode) to `provisioned`\.
 
 The limit on throughput is `1024` MiB/s\. To request a limit increase, contact AWS Support\.
 
@@ -119,7 +119,7 @@ provisioned_throughput = 1024
 
 Defines the Amazon EFS mount point on the master and compute nodes\.
 
-This parameter is required\. The Amazon EFS section is used only if `shared_dir` is specified\.
+This parameter is required\. The Amazon EFS section is used only if [`shared_dir`](cluster-definition.md#cluster-shared-dir) is specified\.
 
 Do not use `NONE` or `/NONE` as the shared directory\.
 

@@ -84,7 +84,7 @@ Valid options are:
 + `st1`
 + `sc1`
 
-For more information, see [Amazon EBS Volume Types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For more information, see [Amazon EBS volume types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 The default value is `gp2`\.
 
@@ -132,9 +132,9 @@ encrypted = false
 
 Specifies a custom AWS KMS key to use for encryption\.
 
-This parameter must be used together with `encrypted = true`, and it must have a custom `ec2_iam_role`\.
+This parameter must be used together with `encrypted = true`, and it must have a custom [`ec2_iam_role`](cluster-definition.md#ec2-iam-role)\.
 
-For more information, see [Disk Encryption with a Custom KMS Key](tutorials_04_encrypted_kms_fs.md)\.
+For more information, see [Disk encryption with a custom KMS Key](tutorials_04_encrypted_kms_fs.md)\.
 
 ```
 ebs_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx

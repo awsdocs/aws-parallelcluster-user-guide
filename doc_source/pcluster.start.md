@@ -6,12 +6,12 @@ Starts the compute fleet for a cluster that has been stopped\.
 pcluster start [ -h ] [ -c CONFIG_FILE ] [ -r REGION ] cluster_name
 ```
 
-## Positional Arguments<a name="pcluster.start.arg"></a>
+## Positional arguments<a name="pcluster.start.arg"></a>
 
 `cluster_name`  
 Starts the compute fleet of the provided cluster name\.
 
-## Named Arguments<a name="pcluster.start.namedarg"></a>
+## Named arguments<a name="pcluster.start.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

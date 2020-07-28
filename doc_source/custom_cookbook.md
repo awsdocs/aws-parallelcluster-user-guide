@@ -1,11 +1,11 @@
-# Setting Up a Custom AWS ParallelCluster Cookbook<a name="custom_cookbook"></a>
+# Setting up a custom AWS ParallelCluster cookbook<a name="custom_cookbook"></a>
 
 **Important**  
 The following are instructions for using a custom version of the AWS ParallelCluster cookbook recipes\. This is an advanced method of customizing AWS ParallelCluster, with potential issues that can be hard to debug\. The AWS ParallelCluster team highly recommends using the scripts in [Custom Bootstrap Actions](pre_post_install.md) for customization, because post\-install hooks are generally easier to debug and more portable across releases of AWS ParallelCluster\.
 
 ## Steps<a name="steps"></a>
 
-1. Identify the AWS ParallelCluster Cookbook working directory where you have cloned the [AWS ParallelCluster Cookbook](https://github.com/aws/aws-parallelcluster-cookbook) code\.
+1. Identify the AWS ParallelCluster Cookbook working directory where you have cloned the [AWS ParallelCluster cookbook](https://github.com/aws/aws-parallelcluster-cookbook) code\.
 
    ```
    _cookbookDir=<path to cookbook>

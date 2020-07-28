@@ -2,7 +2,7 @@
 
 For information about AWS Batch, see [AWS Batch](http://aws.amazon.com/batch/)\. For documentation, see the [AWS Batch User Guide](https://docs.aws.amazon.com/batch/latest/userguide/)\.
 
-**AWS ParallelCluster CLI Commands for AWS Batch**
+**AWS ParallelCluster CLI commands for AWS Batch**
 
 **Important**  
 When using AWS Batch, GPU jobs are not supported\.

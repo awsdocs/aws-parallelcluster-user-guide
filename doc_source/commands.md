@@ -1,4 +1,4 @@
-# AWS ParallelCluster CLI Commands<a name="commands"></a>
+# AWS ParallelCluster CLI commands<a name="commands"></a>
 
 `pcluster` is the AWS ParallelCluster CLI\. You use the AWS ParallelCluster CLI to launch and manage HPC clusters in the AWS Cloud\.
 

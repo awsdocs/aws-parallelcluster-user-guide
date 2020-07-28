@@ -1,4 +1,4 @@
-# AWS Services used in AWS ParallelCluster<a name="aws-services"></a>
+# AWS services used in AWS ParallelCluster<a name="aws-services"></a>
 
 The following Amazon Web Services \(AWS\) services are used in AWS ParallelCluster\.
 

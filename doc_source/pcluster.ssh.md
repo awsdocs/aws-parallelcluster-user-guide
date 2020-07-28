@@ -6,12 +6,12 @@ Runs an `ssh` command with the user name and IP address of the cluster pre\-popu
 pcluster ssh [ -h ] [ -d ] cluster_name
 ```
 
-## Positional Arguments<a name="pcluster.ssh.arg"></a>
+## Positional arguments<a name="pcluster.ssh.arg"></a>
 
 `cluster_name`  
 Specifies the name of the cluster to connect to\.
 
-## Named Arguments<a name="pcluster.ssh.namedarg"></a>
+## Named arguments<a name="pcluster.ssh.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

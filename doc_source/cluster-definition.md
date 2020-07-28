@@ -52,7 +52,7 @@ Defines one or more clusters for different job types or workloads\.
 
 Each cluster can have its own configuration\.
 
-The format is `[cluster <clustername>]`\. The `` named by the `` setting in the `` is used\.
+The format is `[cluster <clustername>]`\. The [[cluster] section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [[global] section](global.md) is used\.
 
 ```
 [cluster default]
@@ -74,7 +74,7 @@ additional_cfn_template = NONE
 
 ## `additional_iam_policies`<a name="additional-iam-policies"></a>
 
-Specifies a comma\-separated list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used in the cluster, in addition to the permissions required by AWS ParallelCluster\. An IAM policy name and its ARN are different\. Names cannot be used as an argument to `additional_iam_policies`\. `additional_iam_policies` should be used instead of the `ec2_iam_role`\. This is because `additional_iam_policies` are added to the permissions that AWS ParallelCluster requires, and the `ec2_iam_role` must include all permissions required\. The permissions required often change from release to release as features are added\.
+Specifies a comma\-separated list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used in the cluster, in addition to the permissions required by AWS ParallelCluster\. An IAM policy name and its ARN are different\. Names cannot be used as an argument to [`additional_iam_policies`](#additional-iam-policies)\. [`additional_iam_policies`](#additional-iam-policies) should be used instead of the [`ec2_iam_role`](#ec2-iam-role)\. This is because [`additional_iam_policies`](#additional-iam-policies) are added to the permissions that AWS ParallelCluster requires, and the [`ec2_iam_role`](#ec2-iam-role) must include all permissions required\. The permissions required often change from release to release as features are added\.
 
 The default value is `NONE`\.
 
@@ -83,7 +83,7 @@ additional_iam_policies = arn:aws:iam::aws:policy/AdministratorAccess
 ```
 
 **Note**  
-Support for `additional_iam_policies` was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`additional_iam_policies`](#additional-iam-policies) was added in AWS ParallelCluster 2\.5\.0\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
@@ -116,13 +116,13 @@ Supported operating systems by Region are listed in the following table\. Note t
 | China \(Beijing\) \(cn\-north\-1\) | True | False | True | 
 | China \(Ningxia\) \(cn\-northwest\-1\) | True | False | True | 
 
-Note: The `base_os` parameter also determines the user name that is used to log into the cluster\.
+Note: The [`base_os`](#base-os) parameter also determines the user name that is used to log into the cluster\.
 + `centos6` and `centos7`: `centos` 
 + `ubuntu1604` and `ubuntu1804`: `ubuntu` 
 + `alinux` and `alinux2`: `ec2-user` 
 
 **Note**  
-Prior to AWS ParallelCluster 2\.7\.0, the `base_os` parameter was optional, and the default was `alinux`\. Starting with AWS ParallelCluster 2\.7\.0, the `base_os` parameter is required\.
+Prior to AWS ParallelCluster 2\.7\.0, the [`base_os`](#base-os) parameter was optional, and the default was `alinux`\. Starting with AWS ParallelCluster 2\.7\.0, the [`base_os`](#base-os) parameter is required\.
 
 **Note**  
 If the [`scheduler`](#scheduler) parameter is `awsbatch`, either `alinux` or `alinux2` is supported\.
@@ -206,7 +206,7 @@ cw_log_settings = custom-cw
 ```
 
 **Note**  
-Support for `cw_log_settings` was added in AWS ParallelCluster 2\.6\.0\.
+Support for [`cw_log_settings`](#cw-log-settings) was added in AWS ParallelCluster 2\.6\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -226,7 +226,7 @@ dcv_settings = custom-dcv
 On AWS Graviton\-based instances, NICE DCV is only supported on `alinux2`\.
 
 **Note**  
-Support for `dcv_settings` was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`dcv_settings`](#dcv-settings) was added in AWS ParallelCluster 2\.5\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -244,14 +244,14 @@ desired_vcpus = 4
 
 ## `disable_hyperthreading`<a name="disable-hyperthreading"></a>
 
-Disables hyperthreading on the master and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU Cores and Threads Per CPU Core Per Instance Type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.
+Disables hyperthreading on the master and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads per CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
 disable_hyperthreading = true
 ```
 
 **Note**  
-Support for `disable_hyperthreading` was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`disable_hyperthreading`](#disable-hyperthreading) was added in AWS ParallelCluster 2\.5\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -273,7 +273,7 @@ ebs_settings = custom1, custom2
 
 ## `ec2_iam_role`<a name="ec2-iam-role"></a>
 
-Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs cannot be used as an argument to `ec2_iam_role`\. If this option is specified, the `additional_iam_policies` setting is ignored\. AWS recommends using `additional_iam_policies` rather than the `ec2_iam_role`, because features added to AWS ParallelCluster often require new permissions\.
+Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs cannot be used as an argument to [`ec2_iam_role`](#ec2-iam-role)\. If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. AWS recommends using [`additional_iam_policies`](#additional-iam-policies) rather than the [`ec2_iam_role`](#ec2-iam-role), because features added to AWS ParallelCluster often require new permissions\.
 
 The default value is `NONE`\.
 
@@ -299,7 +299,7 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \(`` is `alinux`, `alinux2`, `centos7`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
+If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux`, `alinux2`, `centos7`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
 
 ```
 enable_efa = compute
@@ -309,17 +309,17 @@ enable_efa = compute
 
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
-If present, indicates that the [End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The `enable_intel_hpc_platform` setting is only supported on CentOS 7 \(` = centos7`\)\.
+If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)\)\.
 
 ```
 enable_intel_hpc_platform = true
 ```
 
 **Note**  
-The `enable_intel_hpc_platform` parameter is not compatible with AWS Graviton\-based instances\.
+The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) parameter is not compatible with AWS Graviton\-based instances\.
 
 **Note**  
-Support for `enable_intel_hpc_platform` was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) was added in AWS ParallelCluster 2\.5\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -412,9 +412,9 @@ key_name = mykey
 
 Maintains the initial size of the Auto Scaling group for traditional schedulers \(SGE, Slurm, and Torque\)\.
 
-If the scheduler is `awsbatch`, use `` instead\.
+If the scheduler is `awsbatch`, use [`desired_vcpus`](#desired-vcpus) instead\.
 
-This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of ``\. The cluster can still scale up to the value of ``\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below `initial_queue_size`\.
+This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of [`initial_queue_size`](#configuration-initial-queue-size)\. The cluster can still scale up to the value of [`max_queue_size`](#configuration-max-queue-size)\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below [`initial_queue_size`](#configuration-initial-queue-size)\.
 
 If set to `false`, the Auto Scaling group can scale down to zero \(0\) members to prevent resources from sitting idle when they are not needed\.
 
@@ -488,9 +488,9 @@ max_vcpus = 20
 
 Maintains the initial size of the Auto Scaling group for the `awsbatch` scheduler\.
 
-If the scheduler is SGE, Slurm, or Torque, use `` instead\.
+If the scheduler is SGE, Slurm, or Torque, use [`maintain_initial_size`](#maintain-initial-size) instead\.
 
-The compute environment never has fewer members than the value of `min_vcpus`\.
+The compute environment never has fewer members than the value of [`min_vcpus`](#min-vcpus)\.
 
 Defaults to `0`\.
 
@@ -529,11 +529,11 @@ When set to `DYNAMIC`, a unique placement group is created and deleted as part o
 
 This parameter is not used when the scheduler is `awsbatch`\.
 
-For more information about placement groups, see [Placement Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For more information about placement groups, see [Placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 The default value is `NONE`\.
 
-Not all instance types support cluster placement groups\. For example, the default instance type of `t2.micro` does not support cluster placement groups\. For information about the list of instance types that support cluster placement groups, see [Cluster Placement Group Rules and Limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-cluster) in the *Amazon EC2 User Guide for Linux Instances*\. See [Placement Groups and Instance Launch Issues](troubleshooting.md#placement-groups-and-instance-launch-issues) for tips when working with placement groups\.
+Not all instance types support cluster placement groups\. For example, the default instance type of `t2.micro` does not support cluster placement groups\. For information about the list of instance types that support cluster placement groups, see [Cluster placement group rules and limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-cluster) in the *Amazon EC2 User Guide for Linux Instances*\. See [Placement groups and instance launch issues](troubleshooting.md#placement-groups-and-instance-launch-issues) for tips when working with placement groups\.
 
 ```
 placement_group = NONE
@@ -705,7 +705,7 @@ scheduler = slurm
 
 Defines the path where the shared Amazon EBS volume is mounted\.
 
-Do not use this option with multiple Amazon EBS volumes\. Instead, provide `shared_dir` values under each Amazon EBS [[ebs] section](ebs-section.md)\.
+Do not use this option with multiple Amazon EBS volumes\. Instead, provide [`shared_dir`](#cluster-shared-dir) values under each Amazon EBS [[ebs] section](ebs-section.md)\.
 
 See the [Amazon EBS Section](ebs-section.md) for details on working with multiple Amazon EBS volumes\.
 
@@ -733,18 +733,18 @@ spot_bid_percentage = 85
 
 ## `spot_price`<a name="spot-price"></a>
 
-Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the `` setting is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\.
+Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the [`cluster_type`](#cluster-type) setting is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\.
 
 If the scheduler is `awsbatch`, use [spot\_bid\_percentage](#spot-bid-percentage) instead\.
 
-For assistance finding a spot instance that meets your needs, see the [Spot Instance Advisor](https://aws.amazon.com/ec2/spot/instance-advisor/)\.
+For assistance finding a spot instance that meets your needs, see the [Spot Instance advisor](https://aws.amazon.com/ec2/spot/instance-advisor/)\.
 
 ```
 spot_price = 1.50
 ```
 
 **Note**  
-In AWS ParallelCluster 2\.5\.0, if `cluster_type = spot` but `spot_price` is not specified, the instance launches for the ComputeFleet will fail\. This was fixed in AWS ParallelCluster 2\.5\.1\.
+In AWS ParallelCluster 2\.5\.0, if `cluster_type = spot` but [`spot_price`](#spot-price) is not specified, the instance launches for the ComputeFleet will fail\. This was fixed in AWS ParallelCluster 2\.5\.1\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
@@ -758,7 +758,7 @@ Command line tags overwrite config tags that have the same key\.
 
 Tags are JSON formatted\. Do not use quotes outside of the curly braces\.
 
-For more information, see [AWS CloudFormation Resource Tags Type](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html) in the *AWS CloudFormation User Guide*\.
+For more information, see [AWS CloudFormation resource tags type](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html) in the *AWS CloudFormation User Guide*\.
 
 ```
 tags = {"key" : "value", "key2" : "value2"}

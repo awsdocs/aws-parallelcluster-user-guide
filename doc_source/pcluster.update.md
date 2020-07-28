@@ -8,12 +8,12 @@ pcluster update [ -h ] [ -c CONFIG_FILE ] [ --force ] [ -r REGION ] [ -nr ]
                 [ --yes ] cluster_name
 ```
 
-## Positional Arguments<a name="pcluster.update.arg"></a>
+## Positional arguments<a name="pcluster.update.arg"></a>
 
 `cluster_name`  
 Specifies the name of the cluster to update\.
 
-## Named Arguments<a name="pcluster.update.namedarg"></a>
+## Named arguments<a name="pcluster.update.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

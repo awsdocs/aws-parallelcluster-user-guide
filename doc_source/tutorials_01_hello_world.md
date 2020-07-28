@@ -1,10 +1,10 @@
-# Running Your First Job on AWS ParallelCluster<a name="tutorials_01_hello_world"></a>
+# Running your first job on AWS ParallelCluster<a name="tutorials_01_hello_world"></a>
 
 This tutorial walks you through running your first Hello World job on AWS ParallelCluster\.
 
 If you haven't yet completed installation of AWS ParallelCluster, and configured your CLI, follow the instructions in the [getting started](getting_started.md) guide before continuing with this tutorial\.
 
-## Verifying Your Installation<a name="verifying-your-installation"></a>
+## Verifying your installation<a name="verifying-your-installation"></a>
 
 First, we verify that AWS ParallelCluster is correctly installed and configured\.
 
@@ -18,7 +18,7 @@ This returns the running version of AWS ParallelCluster\. If the output gives yo
 $ pcluster configure
 ```
 
-## Creating Your First Cluster<a name="creating-your-first-cluster"></a>
+## Creating your first cluster<a name="creating-your-first-cluster"></a>
 
 Now it's time to create your first cluster\. Because the workload for this tutorial isn't performance intensive, we can use the default instance size of `t2.micro`\. \(For production workloads, you choose an instance size that best fits your needs\.\)
 
@@ -42,7 +42,7 @@ GangliaPublicURL = http://54.148.x.x/ganglia/
 
 The message `CREATE_COMPLETE` shows that the cluster created successfully\. The output also provides us with the public and private IP addresses of our master node\. We need this IP to log in\.
 
-## Logging into Your Master Instance<a name="logging-into-your-master-instance"></a>
+## Logging into your master instance<a name="logging-into-your-master-instance"></a>
 
 Use your OpenSSH pem file to log into your master instance\.
 
@@ -63,7 +63,7 @@ ip-192-168-1-126        lx-amd64        2    1    2    2  0.15    3.7G  130.8M 1
 
 The output shows that we have two compute nodes in our cluster, both with two threads available to them\.
 
-## Running Your First Job Using SGE<a name="running-your-first-job-using-sge"></a>
+## Running your first job using SGE<a name="running-your-first-job-using-sge"></a>
 
 Next, we create a job that sleeps for a little while and then outputs its own hostname\.
 

@@ -1,4 +1,4 @@
-# Install AWS ParallelCluster in a Virtual Environment \(Recommended\)<a name="install-virtualenv"></a>
+# Install AWS ParallelCluster in a virtual environment \(recommended\)<a name="install-virtualenv"></a>
 
 We recommend that you install AWS ParallelCluster in a virtual environment, to avoid requirement version conflicts with other `pip` packages\.
 

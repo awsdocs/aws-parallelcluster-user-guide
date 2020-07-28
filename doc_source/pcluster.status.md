@@ -6,12 +6,12 @@ Pulls the current status of the cluster\.
 pcluster status [ -h ] [ -c CONFIG_FILE ] [ -r REGION ] [ -nw ] cluster_name
 ```
 
-## Positional Arguments<a name="pcluster.status.posarg"></a>
+## Positional arguments<a name="pcluster.status.posarg"></a>
 
 `cluster_name`  
 Shows the status of the cluster with the provided name\.
 
-## Named Arguments<a name="pcluster.status.namedarg"></a>
+## Named arguments<a name="pcluster.status.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

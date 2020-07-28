@@ -46,6 +46,6 @@ sanity_check = true
 ```
 
 **Note**  
-Prior to AWS ParallelCluster 2\.5\.0, `sanity_check` defaulted to `false`\.
+Prior to AWS ParallelCluster 2\.5\.0, [`sanity_check`](#sanity-check) defaulted to `false`\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)

@@ -8,7 +8,7 @@ pcluster version [ -h ]
 
 For command\-specific flags, run: `pcluster [command] –help`\.
 
-## Named Arguments<a name="pcluster.version.named.arguments"></a>
+## Named arguments<a name="pcluster.version.named.arguments"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

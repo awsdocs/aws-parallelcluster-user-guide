@@ -1,16 +1,16 @@
-# AWS ParallelCluster Processes<a name="processes"></a>
+# AWS ParallelCluster processes<a name="processes"></a>
 
 This section applies only to HPC clusters that are deployed with one of the supported traditional job schedulers \(SGE, Slurm, or Torque\)\. When used with these schedulers, AWS ParallelCluster manages the compute node provisioning and removal by interacting with both the Auto Scaling Group \(ASG\) and the underlying job scheduler\.
 
 For HPC clusters that are based on AWS Batch, AWS ParallelCluster relies on the capabilities provided by the AWS Batch for the compute node management\.
 
 **Topics**
-+ [General Overview](#general-overview)
++ [General overview](#general-overview)
 + [`jobwatcher`](#jobwatcher)
 + [`sqswatcher`](#sqswatcher)
 + [`nodewatcher`](#nodewatcher)
 
-## General Overview<a name="general-overview"></a>
+## General overview<a name="general-overview"></a>
 
 A cluster's lifecycle begins after it is created by a user\. Typically, a cluster is created from the Command Line Interface \(CLI\)\. After it's created, a cluster exists until it's deleted\. AWS ParallelCluster daemons run on the cluster nodes, mainly to manage the HPC cluster elasticity\. The following diagram shows a user workflow and the cluster lifecycle\. The sections that follow describe the AWS ParallelCluster daemons that are used to manage the cluster\.
 

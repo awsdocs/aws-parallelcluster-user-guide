@@ -19,7 +19,7 @@ pcluster status cluster_name
 
 To manage clusters that you created with CfnCluster, you must use the `cfncluster` CLI\.
 
-If you need a CfnCluster package to manage your old clusters, we recommend that you install and use it from a [Python Virtual Environment](https://docs.python.org/3/tutorial/venv.html)\.
+If you need a CfnCluster package to manage your old clusters, we recommend that you install and use it from a [Python virtual environment](https://docs.python.org/3/tutorial/venv.html)\.
 
  **AWS ParallelCluster and CfnCluster use different IAM custom policies** 
 
@@ -33,7 +33,7 @@ If you want to use an existing CfnCluster configuration file with AWS ParallelCl
 
 1. Move the configuration file from `~/.cfncluster/config` to `~/.parallelcluster/config`\.
 
-1. If you use the [`extra_json`](https://docs.aws.amazon.com/parallelcluster/latest/ug/cluster-definition.html#extra-json) configuration parameter, change it as shown\.
+1. If you use the [`extra_json`](cluster-definition.md#extra-json) configuration parameter, change it as shown\.
 
 CfnCluster setting:
 
@@ -51,7 +51,7 @@ extra_json = { "cluster" : { } }
 
 In AWS ParallelCluster, ganglia is disabled by default\. To enable ganglia:
 
-1. Set the [`extra_json`](https://docs.aws.amazon.com/parallelcluster/latest/ug/cluster-definition.html#extra-json) parameter as shown:
+1. Set the [`extra_json`](cluster-definition.md#extra-json) parameter as shown:
 
    ```
    extra_json = { "cluster" : { "ganglia_enabled" : "yes" } }
@@ -59,4 +59,4 @@ In AWS ParallelCluster, ganglia is disabled by default\. To enable ganglia:
 
 1. Change the master security group to allow connections to port 80\.
 
-   The `parallelcluster-<CLUSTER_NAME>-MasterSecurityGroup-<xxx>` security group must be modified by adding a new security group rule to allow Inbound connection to port 80 from your Public IP\. For more information, see [Adding Rules to a Security Group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#adding-security-group-rule) in the *Amazon EC2 User Guide for Linux Instances*\.
+   The `parallelcluster-<CLUSTER_NAME>-MasterSecurityGroup-<xxx>` security group must be modified by adding a new security group rule to allow Inbound connection to port 80 from your Public IP\. For more information, see [Adding rules to a security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#adding-security-group-rule) in the *Amazon EC2 User Guide for Linux Instances*\.

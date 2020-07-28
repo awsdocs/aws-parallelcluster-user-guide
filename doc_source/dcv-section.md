@@ -20,7 +20,7 @@ NICE DCV is not supported on AWS Graviton\-based instances\.
 By default the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, users can connect to a NICE DCV port only if they have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the [`access_from`](#dcv-section-access-from) setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the [`port`](#dcv-section-port) setting to set a nonstandard port\.
 
 **Note**  
-Support for the `` on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster 2\.6\.0\. Support for the ``on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
+Support for the [[dcv] section](#dcv-section) on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster 2\.6\.0\. Support for the [[dcv] section](#dcv-section)on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
 
 ## `access_from`<a name="dcv-section-access-from"></a>
 
@@ -47,7 +47,7 @@ enable = master
 ```
 
 **Note**  
-NICE DCV automatically generates a self\-signed certificate that is used to secure traffic between the NICE DCV client and NICE DCV server running on the master instance\. To configure your own certificate, see [NICE DCV HTTPS Certificate](dcv.md#dcv-certificate)\.
+NICE DCV automatically generates a self\-signed certificate that is used to secure traffic between the NICE DCV client and NICE DCV server running on the master instance\. To configure your own certificate, see [NICE DCV HTTPS certificate](dcv.md#dcv-certificate)\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 

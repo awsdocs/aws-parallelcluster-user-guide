@@ -9,12 +9,12 @@ pcluster create [ -h ] [ -c CONFIG_FILE ] [ -r REGION ] [ -nw ] [ -nr ]
                 cluster_name
 ```
 
-## Positional Arguments<a name="pluster.create.arg"></a>
+## Positional arguments<a name="pluster.create.arg"></a>
 
 `cluster_name`  
 Defines the name of the cluster\. The AWS CloudFormation stack name is `parallelcluster-cluster_name`\.
 
-## Named Arguments<a name="pluster.create.namedarg"></a>
+## Named arguments<a name="pluster.create.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.
@@ -24,7 +24,7 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. Defaults to the Region specified by using the `` command\.
+Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 `-nw, --nowait`  
 Indicates not to wait for stack events after executing a stack command\.  

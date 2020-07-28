@@ -3,10 +3,10 @@
 You can install AWS ParallelCluster on Windows by using `pip`, which is a package manager for Python\. If you already have `pip`, follow the instructions in the main [installation topic](install.md)\.
 
 **Topics**
-+ [Install AWS ParallelCluster Using Python and `pip` on Windows](#install-windows-pip)
-+ [Add the AWS ParallelCluster Executable to Your Command Line Path](#install-windows-path)
++ [Install AWS ParallelCluster using Python and `pip` on Windows](#install-windows-pip)
++ [Add the AWS ParallelCluster executable to your command line path](#install-windows-path)
 
-## Install AWS ParallelCluster Using Python and `pip` on Windows<a name="install-windows-pip"></a>
+## Install AWS ParallelCluster using Python and `pip` on Windows<a name="install-windows-pip"></a>
 
 The Python Software Foundation provides installers for Windows that include `pip`\.
 
@@ -56,7 +56,7 @@ To upgrade to the latest version, run the installation command again\.
 C:\>pip3 install --user --upgrade aws-parallelcluster
 ```
 
-## Add the AWS ParallelCluster Executable to Your Command Line Path<a name="install-windows-path"></a>
+## Add the AWS ParallelCluster executable to your command line path<a name="install-windows-path"></a>
 
 After installing AWS ParallelCluster with `pip`, add the `pcluster` program to your operating system's `PATH` environment variable\.
 

@@ -6,12 +6,12 @@ Stops the compute fleet, leaving the master node running\.
 pcluster stop [ -h ] [ -c CONFIG_FILE ] [ -r REGION ] cluster_name
 ```
 
-## Positional Arguments<a name="pcluster.stop.posarg"></a>
+## Positional arguments<a name="pcluster.stop.posarg"></a>
 
 `cluster_name`  
 Stops the compute fleet of the provided cluster name\.
 
-## Named Arguments<a name="pcluster.stop.namedarg"></a>
+## Named arguments<a name="pcluster.stop.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

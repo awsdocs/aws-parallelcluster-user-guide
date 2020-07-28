@@ -2,9 +2,9 @@
 
 NICE DCV is a remote visualization technology that enables users to securely connect to graphic\-intensive 3D applications hosted on a remote high\-performance server\. For more information, see [NICE DCV](https://docs.aws.amazon.com/dcv/)\.
 
-The NICE DCV software is automatically installed on the master instance when using ` = alinux2`, ` = centos7`, or ` = ubuntu1804`\.
+The NICE DCV software is automatically installed on the master instance when using [`base_os`](cluster-definition.md#base-os), [`base_os`](cluster-definition.md#base-os), or [`base_os`](cluster-definition.md#base-os)\.
 
-To enable NICE DCV on the master instance, `` must contain the name of a [[dcv] section](dcv-section.md) that has ` = master` and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7` or `ubuntu1804`\.
+To enable NICE DCV on the master instance, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [[dcv] section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable) and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7` or `ubuntu1804`\.
 
 ```
 [cluster custom-cluster]
@@ -15,7 +15,7 @@ dcv_settings = custom-dcv
 enable = master
 ```
 
-For more information about NICE DCV configuration parameters, see [`dcv_settings`](cluster-definition.md#dcv-settings)\. To connect to the NICE DCV session, use the `` command\.
+For more information about NICE DCV configuration parameters, see [`dcv_settings`](cluster-definition.md#dcv-settings)\. To connect to the NICE DCV session, use the [`pcluster dcv`](pcluster.dcv.md) command\.
 
 **Note**  
 NICE DCV is not supported on AWS Graviton\-based instances\.
@@ -23,13 +23,13 @@ NICE DCV is not supported on AWS Graviton\-based instances\.
 **Note**  
 Support for NICE DCV on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster 2\.6\.0\. Support for NICE DCV on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
 
-## NICE DCV HTTPS Certificate<a name="dcv-certificate"></a>
+## NICE DCV HTTPS certificate<a name="dcv-certificate"></a>
 
 NICE DCV automatically generates a self\-signed certificate to secure traffic between the NICE DCV client and NICE DCV server\.
 
-To replace the default self\-signed NICE DCV certificate with another certificate, first connect to the master instance\. Then, copy both the certificate and key to the `/etc/dcv` folder before running the `` command\.
+To replace the default self\-signed NICE DCV certificate with another certificate, first connect to the master instance\. Then, copy both the certificate and key to the `/etc/dcv` folder before running the [`pcluster dcv`](pcluster.dcv.md) command\.
 
-For more information, see [Changing the TLS Certificate](https://docs.aws.amazon.com/dcv/latest/adminguide/manage-cert.html) in the *NICE DCV Administrator Guide*\.
+For more information, see [Changing the TLS certificate](https://docs.aws.amazon.com/dcv/latest/adminguide/manage-cert.html) in the *NICE DCV Administrator Guide*\.
 
 ## Licensing NICE DCV<a name="dcv-license"></a>
 

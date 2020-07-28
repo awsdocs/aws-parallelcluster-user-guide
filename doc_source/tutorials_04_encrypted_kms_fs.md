@@ -1,10 +1,10 @@
-# Disk Encryption with a Custom KMS Key<a name="tutorials_04_encrypted_kms_fs"></a>
+# Disk encryption with a custom KMS Key<a name="tutorials_04_encrypted_kms_fs"></a>
 
 AWS ParallelCluster supports the configuration options `ebs_kms_key_id` and `fsx_kms_key_id`\. These options allow you to provide a custom AWS KMS key for Amazon EBS Disk encryption or Amazon FSx for Lustre\. To use them, you specify an `ec2_iam_role`\.
 
 In order for the cluster to create, the AWS KMS key must know the name of the cluster's role\. This prevents you from using the role created on cluster create, requiring a custom `ec2_iam_role`\.
 
-## Creating the Role<a name="creating-the-role"></a>
+## Creating the role<a name="creating-the-role"></a>
 
 First you create a policy:
 
@@ -26,13 +26,13 @@ Next create a role:
 
 1. Name the role `ParallelClusterInstanceRole`, and then click **Create Role**\.
 
-## Give Your Key Permissions<a name="give-your-key-permissions"></a>
+## Give your key permissions<a name="give-your-key-permissions"></a>
 
 In the IAM Console > **Encryption Keys** > click your key\.
 
 Click **Add User**, and search for the *ParallelClusterInstanceRole* you just created\. Attach it\.
 
-## Creating the Cluster<a name="creating-the-cluster"></a>
+## Creating the cluster<a name="creating-the-cluster"></a>
 
 Now create a cluster\. The following is an example of a cluster with encrypted `Raid 0` drives:
 

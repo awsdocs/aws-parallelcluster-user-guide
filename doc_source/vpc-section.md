@@ -44,7 +44,7 @@ compute_subnet_cidr = 10.0.100.0/24
 
 Specifies the ID of an existing subnet in which to provision the compute nodes\.
 
-If not specified, `compute_subnet_id` uses the value of `master_subnet_id`\.
+If not specified, [`compute_subnet_id`](#compute-subnet-id) uses the valueof [`master_subnet_id`](#master-subnet-id)\.
 
 If the subnet is private, you must set up NAT for web access\.
 
@@ -95,7 +95,7 @@ use_public_ips = true
 ```
 
 **Important**  
-By default, all AWS accounts are limited to five \(5\) Elastic IP addresses per Region\. For more information, see [Elastic IP Address Limit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-limit) in *Amazon EC2 User Guide for Linux Instances*\.
+By default, all AWS accounts are limited to five \(5\) Elastic IP addresses per Region\. For more information, see [Elastic IP address limit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-limit) in *Amazon EC2 User Guide for Linux Instances*\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 

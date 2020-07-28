@@ -6,12 +6,12 @@ Displays a list of all instances in a cluster\.
 pcluster instances [ -h ] [ -c CONFIG_FILE ] [ -r REGION ] cluster_name
 ```
 
-## Positional Arguments<a name="pcluster.instances.arg"></a>
+## Positional arguments<a name="pcluster.instances.arg"></a>
 
 ***cluster\_name***  
 Displays the instances for the cluster with the provided name\.
 
-## Named Arguments<a name="pcluster.instances.namedarg"></a>
+## Named arguments<a name="pcluster.instances.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

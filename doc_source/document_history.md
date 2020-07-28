@@ -1,4 +1,4 @@
-# Document History<a name="document_history"></a>
+# Document history<a name="document_history"></a>
 
 The following table describes the major updates and new features for the *AWS ParallelCluster User Guide*\. We also update the documentation frequently to address the feedback that you send us\.
 

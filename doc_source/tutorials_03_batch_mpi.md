@@ -1,10 +1,10 @@
-# Running an MPI Job with AWS ParallelCluster and `awsbatch` Scheduler<a name="tutorials_03_batch_mpi"></a>
+# Running an MPI job with AWS ParallelCluster and `awsbatch` scheduler<a name="tutorials_03_batch_mpi"></a>
 
 This tutorial walks you through running an MPI job with `awsbatch` as a scheduler\.
 
 If you haven't yet installed AWS ParallelCluster and configured your CLI, follow the instructions in the [getting started](getting_started.md) guide before continuing with this tutorial\. Also, make sure to read through the [awsbatch networking setup](networking.md#awsbatch-networking) documentation before moving to the next step\.
 
-## Creating the Cluster<a name="creating-the-cluster"></a>
+## Creating the cluster<a name="creating-the-cluster"></a>
 
 First, let's create a configuration for a cluster that uses `awsbatch` as the scheduler\. Make sure to insert the missing data in the `vpc` section and the `key_name` field with the resources that you created at configuration time\.
 
@@ -53,7 +53,7 @@ ClusterUser: ec2-user
 MasterPrivateIP: 10.0.0.15
 ```
 
-## Logging into Your Master Instance<a name="logging-into-your-master-instance"></a>
+## Logging into your master instance<a name="logging-into-your-master-instance"></a>
 
 The [AWS ParallelCluster Batch CLI](awsbatchcli.md) commands are all available on the client machine where AWS ParallelCluster is installed\. However, we are going to SSH into the master node and submit the jobs from there\. This allows us to take advantage of the NFS volume that is shared between the master and all Docker instances that run AWS Batch jobs\.
 
@@ -79,7 +79,7 @@ i-0d6a0c8c560cd5bed  m4.large        10.0.0.235          34.239.174.236         
 
 As you can see from the output, we have one single running host\. This is due to the value we chose for [`min_vcpus`](cluster-definition.md#min-vcpus) in the configuration\. If you want to display additional details about the AWS Batch queue and hosts, add the `-d` flag to the command\.
 
-## Running Your First Job Using AWS Batch<a name="running-your-first-job-using-aws-batch"></a>
+## Running your first job using AWS Batch<a name="running-your-first-job-using-aws-batch"></a>
 
 Before moving to MPI, let's create a dummy job that sleeps for a little while and then outputs its own hostname, greeting the name passed as a parameter\.
 
@@ -165,7 +165,7 @@ If you look into the `/shared` directory, you find a secret message for you\.
 
 To explore all of the available features that are not part of this tutorial, see the [AWS ParallelCluster Batch CLI documentation](awsbatchcli.md)\. When you are ready to continue the tutorial, let's move on and see how to submit an MPI job\.
 
-## Running an MPI Job in a Multi\-Node Parallel Environment<a name="running-an-mpi-job-in-a-multi-node-parallel-environment"></a>
+## Running an MPI job in a multi\-node parallel environment<a name="running-an-mpi-job-in-a-multi-node-parallel-environment"></a>
 
 While still logged into the master node, create a file in the `/shared` directory named `mpi_hello_world.c`\. Add the following MPI program to the file:
 

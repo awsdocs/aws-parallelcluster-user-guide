@@ -12,7 +12,7 @@ This documentation helps you understand how to apply the shared responsibility m
 + [Security information for services used by AWS ParallelCluster](#security-seealso)
 + [Data protection in AWS ParallelCluster](data-protection.md)
 + [Identity and Access Management for AWS ParallelCluster](security-iam.md)
-+ [Compliance Validation for AWS ParallelCluster](security-compliance-validation.md)
++ [Compliance validation for AWS ParallelCluster](security-compliance-validation.md)
 + [Enforcing a Minimum Version of TLS 1\.2](security-enforcing-tls.md)
 
 ## Security information for services used by AWS ParallelCluster<a name="security-seealso"></a>

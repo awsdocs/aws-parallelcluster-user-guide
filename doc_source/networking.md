@@ -1,8 +1,8 @@
-# Network Configurations<a name="networking"></a>
+# Network configurations<a name="networking"></a>
 
 AWS ParallelCluster uses Amazon Virtual Private Cloud \(VPC\) for networking\. VPC provides a flexible and configurable networking platform in which to deploy clusters\.
 
-The VPC must have `DNS Resolution = yes`, `DNS Hostnames = yes` and DHCP options with the correct domain\-name for the Region\. The default DHCP Option Set already specifies the required *AmazonProvidedDNS*\. If specifying more than one domain name server, see [DHCP Options Sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
+The VPC must have `DNS Resolution = yes`, `DNS Hostnames = yes` and DHCP options with the correct domain\-name for the Region\. The default DHCP Option Set already specifies the required *AmazonProvidedDNS*\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
 
 AWS ParallelCluster supports the following high\-level configurations:
 + One subnet for both master and compute instances\.
@@ -12,7 +12,7 @@ All of these configurations can operate with or without public IP addressing\. A
 
 See the following architecture diagrams for illustrations of some of these scenarios:
 
-## AWS ParallelCluster in a Single Public Subnet<a name="aws-parallelcluster-in-a-single-public-subnet"></a>
+## AWS ParallelCluster in a single public subnet<a name="aws-parallelcluster-in-a-single-public-subnet"></a>
 
 The configuration for this architecture requires the following settings:
 
@@ -23,9 +23,9 @@ master_subnet_id = subnet-<public>
 use_public_ips = true
 ```
 
-The `` setting cannot be set to `false`, because the internet gateway requires that all instances have a globally unique IP address\. For more information, see [Enabling Internet Access](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#vpc-igw-internet-access) in *Amazon VPC User Guide*\.
+The [`use_public_ips`](vpc-section.md#use-public-ips) setting cannot be set to `false`, because the internet gateway requires that all instances have a globally unique IP address\. For more information, see [Enabling internet access](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#vpc-igw-internet-access) in *Amazon VPC User Guide*\.
 
-## AWS ParallelCluster Using Two Subnets<a name="aws-parallelcluster-using-two-subnets"></a>
+## AWS ParallelCluster using two subnets<a name="aws-parallelcluster-using-two-subnets"></a>
 
 ![\[AWS ParallelCluster using two subnets\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/networking_two_subnets.jpg)
 
@@ -51,7 +51,7 @@ compute_subnet_id = subnet-<private>
 
 Both of these configurations require a [NAT Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) or an internal PROXY to enable web access for compute instances\.
 
-## AWS ParallelCluster in a Single Private Subnet Connected Using AWS Direct Connect<a name="aws-parallelcluster-in-a-single-private-subnet-connected-using-direct-connect"></a>
+## AWS ParallelCluster in a single private subnet connected using AWS Direct Connect<a name="aws-parallelcluster-in-a-single-private-subnet-connected-using-direct-connect"></a>
 
 ![\[Private AWS ParallelCluster with AWS Direct Connect\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/networking_private_dx.jpg)
 
@@ -69,7 +69,7 @@ use_public_ips = false
 
 When `use_public_ips` is set to `false`, the VPC must be correctly set up to use the Proxy for all traffic\. Web access is required for both master and compute instances\.
 
-## AWS ParallelCluster with `awsbatch` Scheduler<a name="awsbatch-networking"></a>
+## AWS ParallelCluster with `awsbatch` scheduler<a name="awsbatch-networking"></a>
 
 When you use `awsbatch` as the scheduler type, AWS ParallelCluster creates an AWS Batch managed compute environment\. The AWS Batch environment takes care of managing Amazon Elastic Container Service \(Amazon ECS\) container instances, which are launched in the `compute_subnet`\. In order for AWS Batch to function correctly, Amazon ECS container instances need external network access to communicate with the Amazon ECS service endpoint\. This translates into the following scenarios:
 + The `compute_subnet` uses a NAT Gateway to access the internet\. \(We recommended this approach\.\)
@@ -86,6 +86,6 @@ This leaves us with the only option, to configure a NAT Gateway in order to enab
 ![\[AWS ParallelCluster networking with awsbatch scheduler\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/networking_batch.jpg)
 
 For more information, see the following AWS documents:
-+  [AWS Batch Managed Compute Environments](https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html#managed_compute_environments) 
-+  [AWS Batch Multi\-node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html) 
-+  [Amazon ECS Task Networking with the `awsvpc` Network Mode](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html) 
++  [AWS Batch managed compute environments](https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html#managed_compute_environments) 
++  [AWS Batch multi\-node parallel jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html) 
++  [Amazon ECS task networking with the `awsvpc` network mode](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html) 

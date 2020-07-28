@@ -6,7 +6,7 @@ Displays a list of stacks that are associated with AWS ParallelCluster\.
 pcluster list [ -h ] [ -c CONFIG_FILE ] [ -r REGION ]
 ```
 
-## Named Arguments<a name="pcluster.list.namedarg"></a>
+## Named arguments<a name="pcluster.list.namedarg"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

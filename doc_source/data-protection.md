@@ -11,7 +11,7 @@ For data protection purposes, we recommend that you protect AWS account credenti
 
 We strongly recommend that you never put sensitive identifying information, such as your customers' account numbers, into free\-form fields such as a **Name** field\. This includes when you work with AWS ParallelCluster or other AWS services using the console, API, or AWS SDKs\. Any data that you enter into AWS ParallelCluster or other services might get picked up for inclusion in diagnostic logs\. When you provide a URL to an external server, don't include credentials information in the URL to validate your request to that server\.
 
-For more information about data protection, see the [AWS Shared Responsibility Model and GDPR](http://aws.amazon.com/blogs/security/the-aws-shared-responsibility-model-and-gdpr/) blog post on the *AWS Security Blog*\.
+For more information about data protection, see the [AWS shared responsibility model and GDPR](http://aws.amazon.com/blogs/security/the-aws-shared-responsibility-model-and-gdpr/) blog post on the *AWS Security Blog*\.
 
 ## Data encryption<a name="security-data-encryption"></a>
 
@@ -31,7 +31,7 @@ If you use AWS ParallelCluster to invoke an AWS service that transmits customer 
 
 By default, all data transmitted from the client computer running AWS ParallelCluster and AWS service endpoints is encrypted by sending everything through a HTTPS/TLS connection\. Traffic between the nodes in the cluster can be automatically encrypted, depending on the instance types selected\. For more information, see [Encryption in transit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html#encryption-transit) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## See Also<a name="security-data-protection-seealso"></a>
+## See also<a name="security-data-protection-seealso"></a>
 + [Data protection in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html)
 + [Data protection in Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/DataDurability.html)
 + [Data protection in Amazon FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-protection.html)

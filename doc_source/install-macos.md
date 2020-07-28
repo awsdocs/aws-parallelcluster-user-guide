@@ -2,8 +2,8 @@
 
 **Topics**
 + [Prerequisites](#install-bundle-macos-os-prereq)
-+ [Install AWS ParallelCluster on macOS Using pip](#install-macos-pip)
-+ [Add the AWS ParallelCluster Executable to Your Command Line Path](#install-macos-path)
++ [Install AWS ParallelCluster on macOS using pip](#install-macos-pip)
++ [Add the AWS ParallelCluster executable to your command line path](#install-macos-path)
 
 ## Prerequisites<a name="install-bundle-macos-os-prereq"></a>
 + Python 3 version 3\.6\+ or Python 2 version 2\.7
@@ -16,7 +16,7 @@ $ python --version
 
 If your computer doesn't already have Python installed, or if you want to install a different version of Python, follow the procedure in [Install AWS ParallelCluster on Linux](install-linux.md)\.
 
-## Install AWS ParallelCluster on macOS Using pip<a name="install-macos-pip"></a>
+## Install AWS ParallelCluster on macOS using pip<a name="install-macos-pip"></a>
 
 You can also use `pip` directly to install AWS ParallelCluster\. If you don't have `pip`, follow the instructions in the main [installation topic](install.md)\. Run `pip3 --version` to see if your version of macOS already includes Python and `pip3`\.
 
@@ -56,7 +56,7 @@ To upgrade to the latest version, run the installation command again\.
 $ pip3 install aws-parallelcluster --upgrade --user
 ```
 
-## Add the AWS ParallelCluster Executable to Your Command Line Path<a name="install-macos-path"></a>
+## Add the AWS ParallelCluster executable to your command line path<a name="install-macos-path"></a>
 
 After installing with `pip`, you might need to add the `pcluster` program to your operating system's `PATH` environment variable\. The location of the program depends on where Python is installed\.
 

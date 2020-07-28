@@ -6,7 +6,7 @@ Begins an AWS ParallelCluster configuration\.
 pcluster configure [ -h ] [ -c CONFIG_FILE ]
 ```
 
-## Named Arguments<a name="pcluster.configure.namedargs"></a>
+## Named arguments<a name="pcluster.configure.namedargs"></a>
 
 `-h, --help`  
 Shows the help text for the specified command\.

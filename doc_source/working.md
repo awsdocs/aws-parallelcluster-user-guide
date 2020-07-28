@@ -2,11 +2,11 @@
 
 **Topics**
 + [`pcluster`](commands.md)
-+ [Network Configurations](networking.md)
++ [Network configurations](networking.md)
 + [Custom Bootstrap Actions](pre_post_install.md)
 + [Working with Amazon S3](s3_resources.md)
 + [Working with Spot Instances](spot.md)
-+ [AWS Identity and Access Management Roles in AWS ParallelCluster](iam.md)
++ [AWS Identity and Access Management roles in AWS ParallelCluster](iam.md)
 + [Schedulers supported by AWS ParallelCluster](schedulers.md)
 + [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)
 + [Elastic Fabric Adapter](efa.md)

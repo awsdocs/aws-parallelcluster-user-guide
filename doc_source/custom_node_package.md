@@ -1,4 +1,4 @@
-# Setting Up a Custom AWS ParallelCluster Node Package<a name="custom_node_package"></a>
+# Setting up a custom AWS ParallelCluster node package<a name="custom_node_package"></a>
 
 **Warning**  
 The following are instructions for using a custom version of the AWS ParallelCluster node package\. This is an advanced method of customizing AWS ParallelCluster, with potential issues that can be hard to debug\. The AWS ParallelCluster team highly recommends using the scripts in [Custom Bootstrap Actions](pre_post_install.md) for customization, because post\-install hooks are generally easier to debug and more portable across releases of AWS ParallelCluster\.

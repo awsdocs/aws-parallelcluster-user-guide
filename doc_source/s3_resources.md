@@ -11,7 +11,7 @@ s3_read_resource = NONE
 s3_read_write_resource = NONE
 ```
 
-Both parameters accept either `*` or a valid Amazon S3 ARN\. For details about specifying Amazon S3 ARNs, see [Amazon S3 ARN Format](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-s3) in the *AWS General Reference*
+Both parameters accept either `*` or a valid Amazon S3 ARN\. For details about specifying Amazon S3 ARNs, see [Amazon S3 ARN format](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-s3) in the *AWS General Reference*
 
 ## Examples<a name="examples"></a>
 
