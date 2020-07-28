@@ -1,4 +1,4 @@
-# `[cw_log]` Section<a name="cw-log-section"></a>
+# `[cw_log]` section<a name="cw-log-section"></a>
 
 Defines configuration settings for CloudWatch Logs\.
 

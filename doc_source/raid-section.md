@@ -1,4 +1,4 @@
-# `[raid]` Section<a name="raid-section"></a>
+# `[raid]` section<a name="raid-section"></a>
 
 **Topics**
 + [`shared_dir`](#raid-shared-dir)

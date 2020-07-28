@@ -1,4 +1,4 @@
-# `[global]` Section<a name="global"></a>
+# `[global]` section<a name="global"></a>
 
 **Topics**
 + [`cluster_template`](#cluster-template)

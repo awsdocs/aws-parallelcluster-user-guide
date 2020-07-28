@@ -1,4 +1,4 @@
-# `[vpc]` Section<a name="vpc-section"></a>
+# `[vpc]` section<a name="vpc-section"></a>
 
 **Topics**
 + [`additional_sg`](#additional-sg)

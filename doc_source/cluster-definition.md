@@ -1,4 +1,4 @@
-# `[cluster]` Section<a name="cluster-definition"></a>
+# `[cluster]` section<a name="cluster-definition"></a>
 
 **Topics**
 + [`additional_cfn_template`](#additional-cfn-template)
@@ -52,7 +52,7 @@ Defines one or more clusters for different job types or workloads\.
 
 Each cluster can have its own configuration\.
 
-The format is `[cluster <clustername>]`\. The [[cluster] section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [[global] section](global.md) is used\.
+The format is `[cluster <clustername>]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used\.
 
 ```
 [cluster default]
@@ -197,7 +197,7 @@ custom_ami = NONE
 
 Identifies the `[cw_log]` section with the CloudWatch Logs configuration\.
 
-For more information, see the [[cw_log] section](cw-log-section.md) and [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
+For more information, see the [`[cw_log]` section](cw-log-section.md) and [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
 
 For example, the following setting specifies that the section that starts `[cw_log custom-cw]` is used for the CloudWatch Logs configuration\.
 
@@ -214,7 +214,7 @@ Support for [`cw_log_settings`](#cw-log-settings) was added in AWS ParallelClust
 
 Identifies the `[dcv]` section with the NICE DCV configuration\.
 
-For more information, see the [[dcv] section](dcv-section.md)\.
+For more information, see the [`[dcv]` section](dcv-section.md)\.
 
 For example, the following setting specifies that the section that starts `[dcv custom-dcv]` is used for the NICE DCV configuration\.
 
@@ -261,7 +261,7 @@ Identifies the `[ebs]` sections with the Amazon EBS volumes that are mounted on 
 
 Up to five \(5\) additional Amazon EBS volumes are supported\.
 
-For more information, see the [[ebs] section](ebs-section.md)\.
+For more information, see the [`[ebs]` section](ebs-section.md)\.
 
 For example, the following setting specifies that the sections that start `[ebs custom1]` and `[ebs custom2]` are used for the Amazon EBS volumes\.
 
@@ -287,7 +287,7 @@ ec2_iam_role = NONE
 
 Specifies settings related to the Amazon EFS filesystem\.
 
-For more information, see the [[efs] section](efs-section.md)\.
+For more information, see the [`[efs]` section](efs-section.md)\.
 
 For example, the following setting specifies that the section that starts `[efs customfs]` is used for the Amazon EFS filesystem configuration\.
 
@@ -372,7 +372,7 @@ extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
 
 Specifies the section that defines the Amazon FSx for Lustre configuration\.
 
-For more information, see the [[fsx] section](fsx-section.md)\.
+For more information, see the [`[fsx]` section](fsx-section.md)\.
 
 For example, the following setting specifies that the section that starts `[fsx fs]` is used for the Amazon FSx for Lustre configuration\.
 
@@ -613,7 +613,7 @@ proxy_server = NONE
 
 Identifies the `[raid]` section with the Amazon EBS volume RAID configuration\.
 
-For more information, see the [[raid] section](raid-section.md)\.
+For more information, see the [`[raid]` section](raid-section.md)\.
 
 For example, the following setting specifies that the section that starts `[raid rs]` be used for the Auto Scaling configuration\.
 
@@ -659,7 +659,7 @@ s3_read_write_resource = NONE
 
 Identifies the `[scaling]` section with the Auto Scaling configuration\.
 
-For more information, see the [[scaling] section](scaling-section.md)\.
+For more information, see the [`[scaling]` section](scaling-section.md)\.
 
 For example, the following setting specifies that the section that starts `[scaling custom]` is used for the Auto Scaling configuration\.
 
@@ -705,7 +705,7 @@ scheduler = slurm
 
 Defines the path where the shared Amazon EBS volume is mounted\.
 
-Do not use this option with multiple Amazon EBS volumes\. Instead, provide [`shared_dir`](#cluster-shared-dir) values under each Amazon EBS [[ebs] section](ebs-section.md)\.
+Do not use this option with multiple Amazon EBS volumes\. Instead, provide [`shared_dir`](#cluster-shared-dir) values under each Amazon EBS [`[ebs]` section](ebs-section.md)\.
 
 See the [Amazon EBS Section](ebs-section.md) for details on working with multiple Amazon EBS volumes\.
 
@@ -784,7 +784,7 @@ template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/
 
 Identifies the `[vpc]` section with the Amazon VPC configuration where the cluster is deployed\.
 
-For more information, see the [[vpc] section](vpc-section.md)\.
+For more information, see the [`[vpc]` section](vpc-section.md)\.
 
 For example, the following setting specifies that the section that starts `[vpc public]` is used for the Amazon VPC configuration\.
 

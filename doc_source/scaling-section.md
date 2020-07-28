@@ -1,4 +1,4 @@
-# `[scaling]` Section<a name="scaling-section"></a>
+# `[scaling]` section<a name="scaling-section"></a>
 
 **Topics**
 + [`scaledown_idletime`](#scaledown-idletime)

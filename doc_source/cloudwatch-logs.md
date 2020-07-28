@@ -1,6 +1,6 @@
 # Integration with Amazon CloudWatch Logs<a name="cloudwatch-logs"></a>
 
-Starting with AWS ParallelCluster 2\.6\.0, common logs are stored in CloudWatch Logs by default\. For more information about CloudWatch Logs, see [Amazon CloudWatch Logs User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/)\. To configure CloudWatch Logs integration, see the [[cw_log] section](cw-log-section.md) and the [`cw_log_settings`](cluster-definition.md#cw-log-settings) setting\.
+Starting with AWS ParallelCluster 2\.6\.0, common logs are stored in CloudWatch Logs by default\. For more information about CloudWatch Logs, see [Amazon CloudWatch Logs User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/)\. To configure CloudWatch Logs integration, see the [`[cw_log]` section](cw-log-section.md) and the [`cw_log_settings`](cluster-definition.md#cw-log-settings) setting\.
 
 A log group is created for each cluster with a name `/aws/parallelcluster/cluster-name`; for example, `/aws/parallelcluster/testCluster`\. Each log \(or set of logs if the path contains a `*`\) on each node will have a log stream named `{hostname}.{instance_id}.{logIdentifier}`\. For example `ip-172-31-10-46.i-02587cf29cc3048f3.nodewatcher`\. Log data is sent to CloudWatch by the [CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html), which runs as `root` on all cluster instances\.
 

@@ -1,4 +1,4 @@
-# `[aws]` Section<a name="aws"></a>
+# `[aws]` section<a name="aws"></a>
 
 Specifies AWS Region information\.
 

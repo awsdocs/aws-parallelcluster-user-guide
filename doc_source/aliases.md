@@ -1,4 +1,4 @@
-# `[aliases]` Section<a name="aliases"></a>
+# `[aliases]` section<a name="aliases"></a>
 
 **Topics**
 

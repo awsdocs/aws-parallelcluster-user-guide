@@ -24,9 +24,9 @@ An example configuration file is installed with AWS ParallelCluster in the Pytho
 
 An AWS ParallelCluster configuration is defined in multiple sections\.
 
-The following sections are required: [[global] section](global.md) and [[aws] section](aws.md)\.
+The following sections are required: [`[global]` section](global.md) and [`[aws]` section](aws.md)\.
 
-You also must include at least one [[cluster] section](cluster-definition.md) and one [[vpc] section](vpc-section.md)\.
+You also must include at least one [`[cluster]` section](cluster-definition.md) and one [`[vpc]` section](vpc-section.md)\.
 
 A section starts with the section name in brackets, followed by parameters and configuration\.
 

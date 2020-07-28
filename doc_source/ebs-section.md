@@ -1,4 +1,4 @@
-# `[ebs]` Section<a name="ebs-section"></a>
+# `[ebs]` section<a name="ebs-section"></a>
 
 **Topics**
 + [`shared_dir`](#ebs-shared-dir)
@@ -35,7 +35,7 @@ Specifies the path where the shared Amazon EBS volume is mounted\.
 
 This parameter is required when using multiple Amazon EBS volumes\.
 
-When using one \(1\) Amazon EBS volume, this option overwrites the [`shared_dir`](cluster-definition.md#cluster-shared-dir) that is specified under the [[cluster] section](cluster-definition.md)\. In the following example, the volume mounts to `/vol1`\.
+When using one \(1\) Amazon EBS volume, this option overwrites the [`shared_dir`](cluster-definition.md#cluster-shared-dir) that is specified under the [`[cluster]` section](cluster-definition.md)\. In the following example, the volume mounts to `/vol1`\.
 
 ```
 shared_dir = vol1

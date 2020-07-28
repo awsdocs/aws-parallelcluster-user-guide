@@ -1,4 +1,4 @@
-# `[fsx]` Section<a name="fsx-section"></a>
+# `[fsx]` section<a name="fsx-section"></a>
 
 **Topics**
 + [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days)
@@ -156,7 +156,7 @@ Support for [`fsx_backup_id`](#fsx-backup-id) was added in AWS ParallelCluster 2
 
 **\(Optional\)** Attaches an existing Amazon FSx for Lustre file system\.
 
-If this option is specified, only the [`shared_dir`](#fsx-shared-dir) and [`fsx_fs_id`](#fsx-fs-id) settings in the [[fsx] section](#fsx-section) are used and any other settings in the [[fsx] section](#fsx-section) are ignored\.
+If this option is specified, only the [`shared_dir`](#fsx-shared-dir) and [`fsx_fs_id`](#fsx-fs-id) settings in the [`[fsx]` section](#fsx-section) are used and any other settings in the [`[fsx]` section](#fsx-section) are ignored\.
 
 ```
 fsx_fs_id = fs-073c3803dca3e28a6

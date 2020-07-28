@@ -1,4 +1,4 @@
-# `[efs]` Section<a name="efs-section"></a>
+# `[efs]` section<a name="efs-section"></a>
 
 **Topics**
 + [`efs_fs_id`](#efs-efs-fs-id)
@@ -41,7 +41,7 @@ The sanity check for validating [`efs_fs_id`](#efs-efs-fs-id) requires the IAM r
 
 To avoid errors, you must add these permissions to your IAM role, or set `sanity_check = false`\.
 
-CAUTION: When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you *not* create a mount target in the stack's Availability Zone, and instead let AWS handle this step\. If you must have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [[vpc] section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
+CAUTION: When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you *not* create a mount target in the stack's Availability Zone, and instead let AWS handle this step\. If you must have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
 
 The default value is `NONE`\.
 

@@ -36,7 +36,7 @@ The following are instructions for using a custom version of the AWS ParallelClu
    aws s3 cp --acl public-read aws-parallelcluster-cookbook-${_version}.tgz.date s3://${_bucket}/cookbooks/aws-parallelcluster-cookbook-${_version}.tgz.date
    ```
 
-1. Add the following variables to the AWS ParallelCluster configuration file, under the [[cluster] section](cluster-definition.md)\.
+1. Add the following variables to the AWS ParallelCluster configuration file, under the [`[cluster]` section](cluster-definition.md)\.
 
    ```
    custom_chef_cookbook = https://${_bucket}.s3.<the bucket region>.amazonaws.com/cookbooks/aws-parallelcluster-cookbook-${_version}.tgz

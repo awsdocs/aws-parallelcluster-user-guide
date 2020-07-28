@@ -32,7 +32,7 @@ The following are instructions for using a custom version of the AWS ParallelClu
    aws s3 cp --acl public-read aws-parallelcluster-node-${_version}.tgz s3://${_bucket}/node/aws-parallelcluster-node-${_version}.tgz
    ```
 
-1. Add the following variable to the AWS ParallelCluster configuration file, under the [[cluster] section](cluster-definition.md)\.
+1. Add the following variable to the AWS ParallelCluster configuration file, under the [`[cluster]` section](cluster-definition.md)\.
 
    ```
    extra_json = { "cluster" : { "custom_node_package" : "https://${_bucket}.s3.<the bucket region>.amazonaws.com/node/aws-parallelcluster-node-${_version}.tgz", "skip_install_recipes" : "no" } }

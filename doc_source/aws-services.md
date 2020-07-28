@@ -97,13 +97,13 @@ For more details, see [https://aws\.amazon\.com/ecr/](https://aws.amazon.com/ecr
 
 ## Amazon EFS<a name="amazon-efs"></a>
 
-Amazon EFS provides a scalable NFS file system\. Amazon EFS is used when the [`efs_settings`](cluster-definition.md#efs-settings) setting is specified and refers to an [[efs] section](efs-section.md)\. Support for Amazon EFS was added in AWS ParallelCluster 2\.1\.0\.
+Amazon EFS provides a scalable NFS file system\. Amazon EFS is used when the [`efs_settings`](cluster-definition.md#efs-settings) setting is specified and refers to an [`[efs]` section](efs-section.md)\. Support for Amazon EFS was added in AWS ParallelCluster 2\.1\.0\.
 
 For more details, see [https://aws\.amazon\.com/efs/](https://aws.amazon.com/efs/)\.
 
 ## Amazon FSx for Lustre<a name="amazon-fsx-for-lustre"></a>
 
-Amazon FSx for Lustre provides a high\-performance file system using the open\-source Lustre file system\. Amazon FSx for Lustre is used when the [`fsx_settings`](cluster-definition.md#fsx-settings) setting is specified and refers to an [[fsx] section](fsx-section.md)\. Support for Amazon FSx for Lustre was added in AWS ParallelCluster 2\.2\.1\.
+Amazon FSx for Lustre provides a high\-performance file system using the open\-source Lustre file system\. Amazon FSx for Lustre is used when the [`fsx_settings`](cluster-definition.md#fsx-settings) setting is specified and refers to an [`[fsx]` section](fsx-section.md)\. Support for Amazon FSx for Lustre was added in AWS ParallelCluster 2\.2\.1\.
 
 For more details, see [https://aws\.amazon\.com/fsx/lustre/](https://aws.amazon.com/fsx/lustre/)\.
 
@@ -125,7 +125,7 @@ For more details, see [https://aws\.amazon\.com/lambda/](https://aws.amazon.com/
 
 ## NICE DCV<a name="nice-dcv"></a>
 
-NICE DCV is a high\-performance remote display protocol that provides a secure way to deliver remote desktops and application streaming to any device, over varying network conditions\. NICE DCV is used when the [`dcv_settings`](cluster-definition.md#dcv-settings) setting is specified and refers to an [[dcv] section](dcv-section.md)\. Support for NICE DCV was added in AWS ParallelCluster 2\.5\.0\.
+NICE DCV is a high\-performance remote display protocol that provides a secure way to deliver remote desktops and application streaming to any device, over varying network conditions\. NICE DCV is used when the [`dcv_settings`](cluster-definition.md#dcv-settings) setting is specified and refers to an [`[dcv]` section](dcv-section.md)\. Support for NICE DCV was added in AWS ParallelCluster 2\.5\.0\.
 
 For more details, see [https://aws\.amazon\.com/hpc/dcv/](https://aws.amazon.com/hpc/dcv/)\.
 
@@ -155,6 +155,6 @@ For more details, see [https://aws\.amazon\.com/s3/](https://aws.amazon.com/s3/)
 
 ## Amazon VPC<a name="amazon-vpc"></a>
 
-Amazon VPC is used to define a network used by the nodes in your cluster\. The VPC settings for the cluster are defined in the [[vpc] section](vpc-section.md)\.
+Amazon VPC is used to define a network used by the nodes in your cluster\. The VPC settings for the cluster are defined in the [`[vpc]` section](vpc-section.md)\.
 
 For more details, see [https://aws\.amazon\.com/vpc/](https://aws.amazon.com/vpc/)\.

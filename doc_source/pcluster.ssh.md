@@ -32,7 +32,7 @@ Returns an `ssh` command with the user name and IP address of the cluster pre\-p
 $ ssh ec2-user@1.1.1.1 -i ~/.ssh/id_rsa
 ```
 
-The `ssh` command is defined in the global configuration file under the [[aliases] section](aliases.md)\. It can be customized as follows\.
+The `ssh` command is defined in the global configuration file under the [`[aliases]` section](aliases.md)\. It can be customized as follows\.
 
 ```
 [ aliases ]
