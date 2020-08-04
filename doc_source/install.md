@@ -38,10 +38,10 @@ You can verify that AWS ParallelCluster installed correctly by running `pcluster
 
 ```
 $ pcluster version
-2.8.0
+2.8.1
 ```
 
-AWS ParallelCluster is updated regularly\. To update to the latest version of AWS ParallelCluster, run the installation command again\. For details about the latest version of AWS ParallelCluster, see the [AWS ParallelCluster release notes](https://github.com/aws/aws-parallelcluster/blob/v2.8.0/CHANGELOG.rst)\.
+AWS ParallelCluster is updated regularly\. To update to the latest version of AWS ParallelCluster, run the installation command again\. For details about the latest version of AWS ParallelCluster, see the [AWS ParallelCluster release notes](https://github.com/aws/aws-parallelcluster/blob/v2.8.1/CHANGELOG.rst)\.
 
 ```
 $ pip3 install aws-parallelcluster --upgrade --user

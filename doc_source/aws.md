@@ -12,4 +12,4 @@ To store credentials, you can use the environment, IAM roles for Amazon EC2, or 
 aws_region_name = #region
 ```
 
-[Update policy: These settings can be changed during an update.](using-pcluster-update.md#update-policy-settings-supported)
+[Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

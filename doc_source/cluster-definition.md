@@ -183,7 +183,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.8.0/amis.txt)\.
+Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.8.1/amis.txt)\.
 
 The default value is `NONE`\.
 
@@ -240,7 +240,7 @@ The default value is `4`\.
 desired_vcpus = 4
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+[Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
 
 ## `disable_hyperthreading`<a name="disable-hyperthreading"></a>
 
@@ -386,7 +386,7 @@ fsx_settings = fs
 
 Sets the initial number of Amazon EC2 instances to launch as compute nodes in the cluster\.
 
-This setting is applicable only for traditional schedulers \(SGE, Slurm, and Torque\)\.
+This setting is applicable only for traditional schedulers \(SGE, Slurm, and Torque\)\. If the [`maintain_initial_size`](#maintain-initial-size) setting is `true` then the [`initial_queue_size`](#configuration-initial-queue-size) setting must be at least 1\.
 
 If the scheduler is `awsbatch`, use [`min_vcpus`](#min-vcpus) instead\.
 
@@ -414,7 +414,7 @@ Maintains the initial size of the Auto Scaling group for traditional schedulers 
 
 If the scheduler is `awsbatch`, use [`desired_vcpus`](#desired-vcpus) instead\.
 
-This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of [`initial_queue_size`](#configuration-initial-queue-size)\. The cluster can still scale up to the value of [`max_queue_size`](#configuration-max-queue-size)\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below [`initial_queue_size`](#configuration-initial-queue-size)\.
+This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of [`initial_queue_size`](#configuration-initial-queue-size) and [`initial_queue_size`](#configuration-initial-queue-size) must be 1 or larger\. The cluster can still scale up to the value of [`max_queue_size`](#configuration-max-queue-size)\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below [`initial_queue_size`](#configuration-initial-queue-size)\.
 
 If set to `false`, the Auto Scaling group can scale down to zero \(0\) members to prevent resources from sitting idle when they are not needed\.
 
@@ -775,10 +775,10 @@ Updates use the template that was originally used to create the stack\.
 Defaults to `https://<aws_region_name>-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-<version>.cfn.json`\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.8.0.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.8.1.cfn.json
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+[Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
 
 ## `vpc_settings`<a name="vpc-settings"></a>
 

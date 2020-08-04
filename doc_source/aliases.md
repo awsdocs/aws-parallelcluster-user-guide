@@ -16,4 +16,4 @@ Note the following default settings:
 ssh = ssh {CFN_USER}@{MASTER_IP} {ARGS}
 ```
 
-[Update policy: These settings can be changed during an update.](using-pcluster-update.md#update-policy-settings-supported)
+[Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

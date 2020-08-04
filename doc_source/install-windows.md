@@ -31,10 +31,10 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
 1. Use the following commands to verify that Python and `pip` are both installed correctly\.
 
    ```
-   C:\>python --version
-   Python 3.7.5
+   C:\>py --version
+   Python 3.8.5
    C:\>pip3 --version
-   pip 20.1.1 from C:\Users\username\AppData\Roaming\Python\Python36\site-packages\pip (python 3.6)
+   pip 20.1.1 from c:\python38\lib\site-packages\pip (python 3.8)
    ```
 
 1. Install AWS ParallelCluster using `pip`\.
@@ -47,7 +47,7 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
 
    ```
    C:\>pcluster version
-   2.8.0
+   2.8.1
    ```
 
 To upgrade to the latest version, run the installation command again\.
@@ -60,19 +60,19 @@ C:\>pip3 install --user --upgrade aws-parallelcluster
 
 After installing AWS ParallelCluster with `pip`, add the `pcluster` program to your operating system's `PATH` environment variable\.
 
-You can find where the aws program is installed by running the following command\.
+You can find where the `pcluster` program is installed by running the following command\.
 
 ```
 C:\>where pcluster
-C:\Users\username\AppData\Roaming\Python\Python36\Scripts\pcluster.exe
+C:\Python38\Scripts\pcluster.exe
 ```
 
 If that command does not return any results, then you must add the path manually\. Use the command line or Windows Explorer to discover where it is installed on your computer\. Typical paths include:
-+ **Python 3 and `pip3`** – `C:\Program Files\Python36\Scripts\`
-+ **Python 3 and `pip3` \-\-user option** – `%APPDATA%\Python\Python36\Scripts`
++ **Python 3 and `pip3`** – `C:\Python38\Scripts\`
++ **Python 3 and `pip3` \-\-user option** – `%APPDATA%\Python\Python38\Scripts`
 
 **Note**  
-Folder names that include version numbers can vary\. The preceding examples show Python36\. Replace as needed with the version number that you are using\.
+Folder names that include version numbers can vary\. The preceding examples show Python38\. Replace as needed with the version number that you are using\.
 
 **To modify your PATH variable \(Windows\)**
 
