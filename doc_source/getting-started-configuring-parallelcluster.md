@@ -213,9 +213,6 @@ Beginning VPC creation. Please do not leave the terminal until the creation is f
 If you do not create a new VPC\. you must select an existing VPC
 
 ```
-```
-
-```
 Automate VPC creation? (y/n) [n]: n
 Allowed values for VPC ID:
 1. subnet-0b4ad9c4678d3c7ad
@@ -247,3 +244,20 @@ $ pcluster create mycluster
 ```
 
 After the cluster reaches the "CREATE\_COMPLETE" status, you can connect to it by using your normal SSH client settings\. For more details on connecting to Amazon EC2 instances, see the [EC2 User Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+If [`pcluster configure`](pcluster.configure.md) created a new VPC, you can delete that VPC by deleting the AWS CloudFormation stack it created\. The name will start with "parallelclusternetworking\-" and contain the creation time in a "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
+
+```
+$ aws --region us-east-2 cloudformation list-stacks \
+   --stack-status-filter "CREATE_COMPLETE" \
+   --query "StackSummaries[].StackName" | \
+   grep -e "parallelclusternetworking-"
+    "parallelclusternetworking-pubpriv-20191029205804"
+```
+
+The stack can be deleted using the [delete\-stack](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack) command\.
+
+```
+$ aws --region us-west-2 cloudformation delete-stack \
+   --stack-name parallelclusternetworking-pubpriv-20191029205804
+```

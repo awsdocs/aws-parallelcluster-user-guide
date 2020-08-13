@@ -1,7 +1,7 @@
 # Torque Resource Manager \(`torque`\)<a name="schedulers.torque"></a>
 
 **Warning**  
-A future release of AWS ParallelCluster will remove support for Torque Resource Manager\.
+Starting on December 31, 2021, AWS will no longer include Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from AWS service and customer support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for Torque\.
 
 AWS ParallelCluster uses Torque Resource Manager 6\.1\.2\. For more information about Torque Resource Manager 6\.1\.2, see [http://docs.adaptivecomputing.com/torque/6-1-2/releaseNotes/torquerelnote.htm](http://docs.adaptivecomputing.com/torque/6-1-2/releaseNotes/torquerelnote.htm)\. For documentation, see [http://docs.adaptivecomputing.com/torque/6-1-2/adminGuide/torque.htm](http://docs.adaptivecomputing.com/torque/6-1-2/adminGuide/torque.htm)\. For the source code, see [https://github.com/adaptivecomputing/torque/tree/6.1.2](https://github.com/adaptivecomputing/torque/tree/6.1.2)\.
 

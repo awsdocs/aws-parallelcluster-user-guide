@@ -89,6 +89,8 @@ volume_size = 20
 
 Defines the number of IOPS for `io1`\-type volumes\.
 
+The default value is `100`\.
+
 ```
 volume_iops = 200
 ```

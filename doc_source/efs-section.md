@@ -139,6 +139,8 @@ Valid options are:
 + `bursting`
 + `provisioned`
 
+The default value is `bursting`\.
+
 ```
 throughput_mode = provisioned
 ```

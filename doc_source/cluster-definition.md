@@ -246,6 +246,8 @@ desired_vcpus = 4
 
 Disables hyperthreading on the master and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads per CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.
 
+The default value is `false`\.
+
 ```
 disable_hyperthreading = true
 ```
@@ -310,6 +312,8 @@ enable_efa = compute
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
 If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)` = centos7`\)\.
+
+The default value is `false`\.
 
 ```
 enable_intel_hpc_platform = true

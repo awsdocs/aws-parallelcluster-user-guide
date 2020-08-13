@@ -29,6 +29,8 @@ cluster_template = default
 
 Checks for updates to `pcluster`\.
 
+The default value is `true`\.
+
 ```
 update_check = true
 ```
