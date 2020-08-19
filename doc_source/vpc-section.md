@@ -32,7 +32,7 @@ additional_sg = sg-xxxxxx
 
 ## `compute_subnet_cidr`<a name="compute-subnet-cidr"></a>
 
-Specifies a CIDR block\. Use this parameter if you want AWS ParallelCluster to create a compute subnet\.
+Specifies a Classless Inter\-Domain Routing \(CIDR\) block\. Use this parameter if you want AWS ParallelCluster to create a compute subnet\.
 
 ```
 compute_subnet_cidr = 10.0.100.0/24

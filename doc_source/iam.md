@@ -12,9 +12,17 @@ When you use the default settings for cluster creation, an IAM role for Amazon E
 
  You can use an existing IAM role for Amazon EC2 when creating a cluster, but you must first define the IAM policy and role before attempting to launch the cluster\. Typically, you choose an existing IAM role for Amazon EC2 to reduce the permissions that are granted to users as they launch clusters\. The following example shows an IAM policy and role for both Amazon EC2 and the AWS ParallelCluster\. You must create both as individual policies in IAM and then attach to the appropriate resources\. In both policies, replace *<REGION>*, *<AWS ACCOUNT ID>*, and similar strings with the appropriate values\.
 
-## `ParallelClusterInstancePolicy`<a name="parallelclusterinstancepolicy"></a>
+## AWS ParallelCluster example instance and user policies<a name="example-parallelcluser-policies"></a>
 
-The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm, or Torque as the scheduler:
+**Topics**
++ [`ParallelClusterInstancePolicy` using SGE, Slurm, or Torque](#parallelclusterinstancepolicy)
++ [`ParallelClusterInstancePolicy` using `awsbatch`](#parallelclusterinstancepolicy-batch)
++ [`ParallelClusterUserPolicy` using SGE, Slurm, or Torque](#parallelclusteruserpolicy)
++ [`ParallelClusterUserPolicy` using `awsbatch`](#parallelclusteruserpolicy-batch)
+
+### `ParallelClusterInstancePolicy` using SGE, Slurm, or Torque<a name="parallelclusterinstancepolicy"></a>
+
+The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm, or Torque as the scheduler\.
 
 ```
 {
@@ -143,6 +151,8 @@ The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm
 }
 ```
 
+### `ParallelClusterInstancePolicy` using `awsbatch`<a name="parallelclusterinstancepolicy-batch"></a>
+
 The following example sets the `ParallelClusterInstancePolicy`, using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\. Here is an overview of the required permissions:
 
 ```
@@ -203,7 +213,7 @@ The following example sets the `ParallelClusterInstancePolicy`, using `awsbatch`
 }
 ```
 
-## `ParallelClusterUserPolicy`<a name="parallelclusteruserpolicy"></a>
+### `ParallelClusterUserPolicy` using SGE, Slurm, or Torque<a name="parallelclusteruserpolicy"></a>
 
 The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or Torque as the scheduler\.
 
@@ -302,6 +312,7 @@ To:
             "Action": [
                 "autoscaling:CreateAutoScalingGroup",
                 "ec2:CreateLaunchTemplate",
+                "ec2:CreateLaunchTemplateVersion",
                 "ec2:ModifyLaunchTemplate",
                 "ec2:DeleteLaunchTemplate",
                 "ec2:DescribeLaunchTemplates",
@@ -498,6 +509,8 @@ To:
 }
 ```
 
+### `ParallelClusterUserPolicy` using `awsbatch`<a name="parallelclusteruserpolicy-batch"></a>
+
 The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as the scheduler:
 
 ```
@@ -532,6 +545,7 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
        "Sid": "EC2LaunchTemplate",
        "Action": [
            "ec2:CreateLaunchTemplate",
+           "ec2:CreateLaunchTemplateVersion",
            "ec2:ModifyLaunchTemplate",
            "ec2:DeleteLaunchTemplate",
            "ec2:DescribeLaunchTemplates",
