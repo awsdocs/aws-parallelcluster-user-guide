@@ -28,9 +28,9 @@ Next create a role:
 
 ## Give your key permissions<a name="give-your-key-permissions"></a>
 
-In the IAM Console > **Encryption Keys** > click your key\.
+In the KMS Console > **Customer managed keys** > click your key's alias or ID\.
 
-Click **Add User**, and search for the *ParallelClusterInstanceRole* you just created\. Attach it\.
+Click the **Add** button in the **Key users** box underneath the **Key policy** tab, and search for the *ParallelClusterInstanceRole* you just created\. Attach it\.
 
 ## Creating the cluster<a name="creating-the-cluster"></a>
 
