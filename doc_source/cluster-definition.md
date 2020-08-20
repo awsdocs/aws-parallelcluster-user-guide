@@ -709,9 +709,9 @@ scheduler = slurm
 
 Defines the path where the shared Amazon EBS volume is mounted\.
 
-Do not use this option with multiple Amazon EBS volumes\. Instead, provide [`shared_dir`](#cluster-shared-dir) values under each Amazon EBS [`[ebs]` section](ebs-section.md)\.
+Do not use this option with multiple Amazon EBS volumes\. Instead, provide [`shared_dir`](#cluster-shared-dir) values under each [`[ebs]` section](ebs-section.md)\.
 
-See the [Amazon EBS Section](ebs-section.md) for details on working with multiple Amazon EBS volumes\.
+See the [`[ebs]` section](ebs-section.md) for details on working with multiple Amazon EBS volumes\.
 
 The default value is `/shared`\.
 

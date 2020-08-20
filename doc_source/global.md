@@ -13,9 +13,7 @@ Specifies global configuration options related to `pcluster`\.
 
 ## `cluster_template`<a name="cluster-template"></a>
 
-Defines the name of the cluster section that is used by default for the cluster\.
-
-See [Cluster Definition](cluster-definition.md)\.
+Defines the name of the `cluster` section that is used by default for the cluster\. For additional information about `cluster` sections, see [`[cluster]` section](cluster-definition.md)\.
 
 For example, the following setting specifies that the section that starts `[cluster default]` is used by default\.
 

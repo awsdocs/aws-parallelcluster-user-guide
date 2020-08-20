@@ -157,4 +157,4 @@ For more details, see [https://aws\.amazon\.com/s3/](https://aws.amazon.com/s3/)
 
 Amazon VPC is used to define a network used by the nodes in your cluster\. The VPC settings for the cluster are defined in the [`[vpc]` section](vpc-section.md)\.
 
-For more details, see [https://aws\.amazon\.com/vpc/](https://aws.amazon.com/vpc/)\.
+For more details, see [https://aws\.amazon\.com/vpc/](http://aws.amazon.com/vpc/)\.
