@@ -57,6 +57,6 @@ In AWS ParallelCluster, ganglia is disabled by default\. To enable ganglia:
    extra_json = { "cluster" : { "ganglia_enabled" : "yes" } }
    ```
 
-1. Change the master security group to allow connections to port 80\.
+1. Change the head security group to allow connections to port 80\.
 
    The `parallelcluster-<CLUSTER_NAME>-MasterSecurityGroup-<xxx>` security group must be modified by adding a new security group rule to allow Inbound connection to port 80 from your Public IP\. For more information, see [Adding rules to a security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#adding-security-group-rule) in the *Amazon EC2 User Guide for Linux Instances*\.

@@ -1,6 +1,6 @@
 # `pcluster dcv`<a name="pcluster.dcv"></a>
 
-Interacts with the NICE DCV server running on the master instance\.
+Interacts with the NICE DCV server running on the head node\.
 
 ```
 pcluster dcv [ -h ] ( connect )
@@ -10,12 +10,12 @@ pcluster dcv [ -h ] ( connect )
 Possible choices: `connect`
 
 **Note**  
-Support for the `pcluster dcv` command on `ubuntu1804` was added in AWS ParallelCluster 2\.6\.0\. Support for the `pcluster dcv` command on `centos7` was added in AWS ParallelCluster 2\.5\.0\.
+Support for NICE DCV on AWS Graviton\-based instances was added in AWS ParallelCluster version 2\.9\.0\. Support for the `pcluster dcv` command on `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for the `pcluster dcv` command on `centos7` was added in AWS ParallelCluster version 2\.5\.0\.
 
 ## Named arguments<a name="pcluster.dcv.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster dcv`\.
 
 ## Sub\-commands<a name="pcluster-dcv-subcommands"></a>
 
@@ -36,7 +36,7 @@ Specifies the name of the cluster to connect to\.
 #### Named arguments<a name="pcluster.dcv.connect.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster dcv connect`\.
 
 `-k SSH_KEY_PATH, --key-path SSH_KEY_PATH`  
 Key path of the SSH key to use for the connection\.  
@@ -44,7 +44,7 @@ The key must be the one specified at cluster creation time in the [`key_name`](c
 
 `-s, --show-url`  
 Displays a one\-time URL for connecting to the NICE DCV session\. The default browser is not opened when this option is specified\.  
-Support for the `--show-url` argument was added in AWS ParallelCluster 2\.5\.1\.
+Support for the `--show-url` argument was added in AWS ParallelCluster version 2\.5\.1\.
 
 Example:
 
@@ -52,6 +52,6 @@ Example:
 $ pcluster dcv connect -k ~/.ssh/id_rsa
 ```
 
-Opens the default browser to connect to the NICE DCV session running on the master instance\.
+Opens the default browser to connect to the NICE DCV session running on the head node\.
 
 A new NICE DCV session is created if one is not already started\.

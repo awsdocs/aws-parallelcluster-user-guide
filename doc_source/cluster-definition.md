@@ -36,6 +36,7 @@
 + [`pre_install`](#pre-install)
 + [`pre_install_args`](#pre-install-args)
 + [`proxy_server`](#proxy-server)
++ [`queue_settings`](#queue-settings)
 + [`raid_settings`](#raid-settings)
 + [`s3_read_resource`](#s3-read-resource)
 + [`s3_read_write_resource`](#s3-read-write-resource)
@@ -52,7 +53,7 @@ Defines one or more clusters for different job types or workloads\.
 
 Each cluster can have its own configuration\.
 
-The format is `[cluster <clustername>]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used\.
+The format is `[cluster cluster-name]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used by default, but can be overridden on the [`pcluster`](pcluster.md) command line\. *cluster\-name* must start with a letter, contain no more than 60 characters, and only contain letters, numbers, and hyphens \(\-\)\.
 
 ```
 [cluster default]
@@ -60,9 +61,9 @@ The format is `[cluster <clustername>]`\. The [`[cluster]` section](#cluster-def
 
 ## `additional_cfn_template`<a name="additional-cfn-template"></a>
 
-Defines an additional AWS CloudFormation template to launch along with the cluster\. This additional template is used for the creation of resources that exist outside of the cluster but are part of the cluster's lifecycle\.
+Defines an additional AWS CloudFormation template to launch along with the cluster\. This additional template is used for creating resources that are outside of the cluster but are part of the cluster's lifecycle\.
 
-When set to a value other than `NONE`, it must be an HTTP URL to a public template, with all parameters provided\.
+When set to a value other than `NONE`, the value must be an HTTP URL to a public template, with all parameters provided\.
 
 The default value is `NONE`\.
 
@@ -83,7 +84,7 @@ additional_iam_policies = arn:aws:iam::aws:policy/AdministratorAccess
 ```
 
 **Note**  
-Support for [`additional_iam_policies`](#additional-iam-policies) was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`additional_iam_policies`](#additional-iam-policies) was added in AWS ParallelCluster version 2\.5\.0\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
@@ -100,29 +101,30 @@ Available options are:
 + `ubuntu1804`
 
 **Note**  
-When using an AWS Graviton\-based instance, only `alinux2` or `ubuntu1804` are supported\.
+For AWS Graviton\-based instances, only `alinux2` or `ubuntu1804` are supported\.
 
 **Note**  
-Support for `alinux2` was added in AWS ParallelCluster 2\.6\.0\. Support for `ubuntu1804` was added and support for `ubuntu1404` was removed in AWS ParallelCluster 2\.5\.0\.
+Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added, and support for `ubuntu1404` was removed in AWS ParallelCluster version 2\.5\.0\.
 
-Supported operating systems by Region are listed in the following table\. Note that "commercial" entails all other supported Regions including `us-east-1`, `us-west-2`, and so on\.
+Other than the specific Regions mentioned in the following table that do not support `centos6` and `centos7`\. All other AWS commercial Regions support all of the following operating systems\. 
 
 
 | Partition \(Regions\) | `alinux` and `alinux2` | `centos6` and `centos7` | `ubuntu1604` and `ubuntu1804` | 
 | --- | --- | --- | --- | 
-| Commercial \(All Regions not mentioned below\) | True | True | True | 
+| Commercial \(All Regions not specifically mentioned\) | True | True | True | 
 | AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | True | 
 | AWS GovCloud \(US\-West\) \(us\-gov\-west\-1\) | True | False | True | 
 | China \(Beijing\) \(cn\-north\-1\) | True | False | True | 
 | China \(Ningxia\) \(cn\-northwest\-1\) | True | False | True | 
 
-Note: The [`base_os`](#base-os) parameter also determines the user name that is used to log into the cluster\.
+**Note**  
+The [`base_os`](#base-os) parameter also determines the user name that is used to log into the cluster\.
 + `centos6` and `centos7`: `centos` 
 + `ubuntu1604` and `ubuntu1804`: `ubuntu` 
 + `alinux` and `alinux2`: `ec2-user` 
 
 **Note**  
-Prior to AWS ParallelCluster 2\.7\.0, the [`base_os`](#base-os) parameter was optional, and the default was `alinux`\. Starting with AWS ParallelCluster 2\.7\.0, the [`base_os`](#base-os) parameter is required\.
+Before AWS ParallelCluster version 2\.7\.0, the [`base_os`](#base-os) parameter was optional, and the default was `alinux`\. Starting with AWS ParallelCluster version 2\.7\.0, the [`base_os`](#base-os) parameter is required\.
 
 **Note**  
 If the [`scheduler`](#scheduler) parameter is `awsbatch`, either `alinux` or `alinux2` is supported\.
@@ -135,7 +137,7 @@ base_os = alinux
 
 ## `cluster_type`<a name="cluster-type"></a>
 
-Defines the type of cluster to launch\.
+Defines the type of cluster to launch\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be replaced by the [`compute_type`](queue-section.md#queue-compute-type) settings in the [`[queue]` sections](queue-section.md)\.
 
 Valid options are: `ondemand`, and `spot`\.
 
@@ -151,7 +153,7 @@ cluster_type = ondemand
 
 ## `compute_instance_type`<a name="compute-instance-type"></a>
 
-Defines the Amazon EC2 instance type that is used for the cluster compute nodes\. The architecture of the instance type must be the same as the architecture used for the [`master_instance_type`](#master-instance-type) setting\.
+Defines the Amazon EC2 instance type that is used for the cluster compute nodes\. The architecture of the instance type must be the same as the architecture used for the [`master_instance_type`](#master-instance-type) setting\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be replaced by the [`instance_type`](compute-resource-section.md#compute-resource-instance-type) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
 If you are using the `awsbatch` scheduler, see the Compute Environments creation in the AWS Batch UI for a list of supported instance types\.
 
@@ -162,7 +164,7 @@ compute_instance_type = t2.micro
 ```
 
 **Note**  
-Support for AWS Graviton\-based instances \(like the `A1` and `C6g`\) was added in AWS ParallelCluster 2\.8\.0\.
+Support for AWS Graviton\-based instances \(such as `A1` and `C6g`\) was added in AWS ParallelCluster version 2\.8\.0\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
@@ -173,7 +175,7 @@ Specifies the ComputeFleet root volume size in GB\. The AMI must support growroo
 The default value is `25`\.
 
 **Note**  
-Prior to AWS ParallelCluster 2\.5\.0, the default was 20\.
+Prior to AWS ParallelCluster version 2\.5\.0, the default was 20\.
 
 ```
 compute_root_volume_size = 20
@@ -183,7 +185,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-Specifies the ID of a custom AMI to use for the master and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.8.1/amis.txt)\.
+Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.9.0/amis.txt)\.
 
 The default value is `NONE`\.
 
@@ -195,7 +197,7 @@ custom_ami = NONE
 
 ## `cw_log_settings`<a name="cw-log-settings"></a>
 
-Identifies the `[cw_log]` section with the CloudWatch Logs configuration\.
+Identifies the `[cw_log]` section with the CloudWatch Logs configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[cw_log]` section](cw-log-section.md) and [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
 
@@ -206,13 +208,13 @@ cw_log_settings = custom-cw
 ```
 
 **Note**  
-Support for [`cw_log_settings`](#cw-log-settings) was added in AWS ParallelCluster 2\.6\.0\.
+Support for [`cw_log_settings`](#cw-log-settings) was added in AWS ParallelCluster version 2\.6\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `dcv_settings`<a name="dcv-settings"></a>
 
-Identifies the `[dcv]` section with the NICE DCV configuration\.
+Identifies the `[dcv]` section with the NICE DCV configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[dcv]` section](dcv-section.md)\.
 
@@ -226,7 +228,7 @@ dcv_settings = custom-dcv
 On AWS Graviton\-based instances, NICE DCV is only supported on `alinux2`\.
 
 **Note**  
-Support for [`dcv_settings`](#dcv-settings) was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`dcv_settings`](#dcv-settings) was added in AWS ParallelCluster version 2\.5\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -244,7 +246,7 @@ desired_vcpus = 4
 
 ## `disable_hyperthreading`<a name="disable-hyperthreading"></a>
 
-Disables hyperthreading on the master and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads per CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.
+Disables hyperthreading on the head and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads per CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`disable_hyperthreading`](queue-section.md#queue-disable-hyperthreading) settings in the [`[queue]` sections](queue-section.md) can be defined\.
 
 The default value is `false`\.
 
@@ -253,13 +255,13 @@ disable_hyperthreading = true
 ```
 
 **Note**  
-Support for [`disable_hyperthreading`](#disable-hyperthreading) was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`disable_hyperthreading`](#disable-hyperthreading) was added in AWS ParallelCluster version 2\.5\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `ebs_settings`<a name="ebs-settings"></a>
 
-Identifies the `[ebs]` sections with the Amazon EBS volumes that are mounted on the master instance\. When using multiple Amazon EBS volumes, enter these parameters as a comma\-separated list\.
+Identifies the `[ebs]` sections with the Amazon EBS volumes that are mounted on the head node\. When using multiple Amazon EBS volumes, enter these parameters as a comma\-separated list\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 Up to five \(5\) additional Amazon EBS volumes are supported\.
 
@@ -287,7 +289,7 @@ ec2_iam_role = NONE
 
 ## `efs_settings`<a name="efs-settings"></a>
 
-Specifies settings related to the Amazon EFS filesystem\.
+Specifies settings related to the Amazon EFS filesystem\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[efs]` section](efs-section.md)\.
 
@@ -301,7 +303,7 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux`, `alinux2`, `centos7`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\.
+If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(e`c5n.18xlarge`, `c5n.metal`, `i3en.24xlarge`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux`, `alinux2`, `centos7`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\.
 
 ```
 enable_efa = compute
@@ -311,7 +313,7 @@ enable_efa = compute
 
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
-If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the master node and shared with the compute nodes\. This adds several minutes to the time it takes the master node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)` = centos7`\)\.
+If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the head node and shared with the compute nodes\. This adds several minutes to the time it takes the head node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)` = centos7`\)\.
 
 The default value is `false`\.
 
@@ -323,7 +325,7 @@ enable_intel_hpc_platform = true
 The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) parameter is not compatible with AWS Graviton\-based instances\.
 
 **Note**  
-Support for [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) was added in AWS ParallelCluster 2\.5\.0\.
+Support for [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) was added in AWS ParallelCluster version 2\.5\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -364,7 +366,7 @@ extra_json = {}
 ```
 
 **Note**  
-Starting with AWS ParallelCluster 2\.6\.1, most of the install recipes are skipped by default when launching nodes to improve start up times\. To run all of the install recipes for better backwards compatibility at the expense of start up times, add `"skip_install_recipes" : "no"` to the `cluster` key in the [`extra_json`](#extra-json) setting\. For example:  
+Starting with AWS ParallelCluster version 2\.6\.1, most of the install recipes are skipped by default when launching nodes to improve start up times\. To run all of the install recipes for better backwards compatibility at the expense of start up times, add `"skip_install_recipes" : "no"` to the `cluster` key in the [`extra_json`](#extra-json) setting\. For example:  
 
 ```
 extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
@@ -374,7 +376,7 @@ extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
 
 ## `fsx_settings`<a name="fsx-settings"></a>
 
-Specifies the section that defines the Amazon FSx for Lustre configuration\.
+Specifies the section that defines the Amazon FSx for Lustre configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[fsx]` section](fsx-section.md)\.
 
@@ -388,9 +390,9 @@ fsx_settings = fs
 
 ## `initial_queue_size`<a name="configuration-initial-queue-size"></a>
 
-Sets the initial number of Amazon EC2 instances to launch as compute nodes in the cluster\.
+Sets the initial number of Amazon EC2 instances to launch as compute nodes in the cluster\. If the [`queue_settings`](#queue-settings) setting is defined then this setting must be removed and replaced by the [`initial_count`](compute-resource-section.md#compute-resource-initial-count) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
-This setting is applicable only for traditional schedulers \(SGE, Slurm, and Torque\)\. If the [`maintain_initial_size`](#maintain-initial-size) setting is `true` then the [`initial_queue_size`](#configuration-initial-queue-size) setting must be at least 1\.
+This setting is applicable only for traditional schedulers \(SGE, Slurm, and Torque\)\. If the [`maintain_initial_size`](#maintain-initial-size) setting is `true`, then the [`initial_queue_size`](#configuration-initial-queue-size) setting must be at least 1\.
 
 If the scheduler is `awsbatch`, use [`min_vcpus`](#min-vcpus) instead\.
 
@@ -418,9 +420,11 @@ Maintains the initial size of the Auto Scaling group for traditional schedulers 
 
 If the scheduler is `awsbatch`, use [`desired_vcpus`](#desired-vcpus) instead\.
 
-This setting is a Boolean flag\. If set to `true`, the Auto Scaling group never has fewer members than the value of [`initial_queue_size`](#configuration-initial-queue-size) and [`initial_queue_size`](#configuration-initial-queue-size) must be 1 or larger\. The cluster can still scale up to the value of [`max_queue_size`](#configuration-max-queue-size)\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below [`initial_queue_size`](#configuration-initial-queue-size)\.
+This setting is a Boolean flag\. If set to `true`, the Auto Scaling group doesn't ever have fewer members than the value of [`initial_queue_size`](#configuration-initial-queue-size), and the value of [`initial_queue_size`](#configuration-initial-queue-size) must be 1 or greater\. The cluster can still scale up to the value of [`max_queue_size`](#configuration-max-queue-size)\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below [`initial_queue_size`](#configuration-initial-queue-size)\.
 
 If set to `false`, the Auto Scaling group can scale down to zero \(0\) members to prevent resources from sitting idle when they are not needed\.
+
+If the [`queue_settings`](#queue-settings) setting is defined then this setting must be removed and replaced by the [`initial_count`](compute-resource-section.md#compute-resource-initial-count) and [`min_count`](compute-resource-section.md#compute-resource-min-count) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
 Defaults to `false`\.
 
@@ -432,7 +436,7 @@ maintain_initial_size = false
 
 ## `master_instance_type`<a name="master-instance-type"></a>
 
-Defines the Amazon EC2 instance type that is used for the master node\. The architecture of the instance type must be the same as the architecture used for the [`compute_instance_type`](#compute-instance-type) setting\.
+Defines the Amazon EC2 instance type that is used for the head node\. The architecture of the instance type must be the same as the architecture used for the [`compute_instance_type`](#compute-instance-type) setting\.
 
 Defaults to `t2.micro`\.
 
@@ -441,18 +445,18 @@ master_instance_type = t2.micro
 ```
 
 **Note**  
-Support for AWS Graviton\-based instances \(like the `A1` and `C6g`\) was added in AWS ParallelCluster 2\.8\.0\.
+Support for AWS Graviton\-based instances \(such as `A1` and `C6g`\) was added in AWS ParallelCluster version 2\.8\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `master_root_volume_size`<a name="master-root-volume-size"></a>
 
-Specifies the MasterServer root volume size in GB\. The AMI must support `growroot`\.
+Specifies the head node root volume size in GB\. The AMI must support `growroot`\.
 
 The default value is `25`\.
 
 **Note**  
-Prior to AWS ParallelCluster 2\.5\.0, the default was 20\.
+Prior to AWS ParallelCluster version 2\.5\.0, the default was 20\.
 
 ```
 master_root_volume_size = 25
@@ -462,7 +466,7 @@ master_root_volume_size = 25
 
 ## `max_queue_size`<a name="configuration-max-queue-size"></a>
 
-Sets the maximum number of Amazon EC2 instances that can be launched in the cluster\.
+Sets the maximum number of Amazon EC2 instances that can be launched in the cluster\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be removed and replaced by the [`max_count`](compute-resource-section.md#compute-resource-max-count) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
 This setting is applicable only for traditional schedulers \(SGE, Slurm, and Torque\)\.
 
@@ -508,6 +512,8 @@ min_vcpus = 0
 
 Defines the cluster placement group logic, enabling either the whole cluster or only the compute instances to use the cluster placement group\.
 
+If the [`queue_settings`](#queue-settings) setting is defined, then this setting should be be removed and replaced with [`placement_group`](queue-section.md#queue-placement-group) settings for each of the [`[queue]` sections](queue-section.md)\. If the same placement group is used for different instance types, it’s much more likely that the request will fail with an insufficient capacity error\. For more information, see [Insufficient instance capacity](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshooting-launch.html#troubleshooting-launch-capacity) in the *Amazon EC2 User Guide for Linux Instances*\. Multiple queues can only share a placement group if it’s created in advance and configured in the [`placement_group`](queue-section.md#queue-placement-group) setting for each queue\. If each [`[queue]` sections](queue-section.md) defines a [`placement_group`](queue-section.md#queue-placement-group) setting, then the head node cannot be in the placement group for a queue\.
+
 Valid options are `cluster` or `compute`\.
 
 This parameter is not used when the scheduler is `awsbatch`\.
@@ -522,7 +528,7 @@ placement = compute
 
 ## `placement_group`<a name="placement-group"></a>
 
-Defines the cluster placement group\.
+Defines the cluster placement group\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting should be removed and replaced by the [`placement_group`](queue-section.md#queue-placement-group) settings in the [`[queue]` sections](queue-section.md)\.
 
 Valid options are:
 + `NONE`
@@ -549,7 +555,7 @@ placement_group = NONE
 
 Specifies the URL of a postinstall script that is executed after all of the `boot_as_*` scripts are run\.
 
-When using `awsbatch` as the scheduler, the postinstall script is executed only on the master node\.
+When using `awsbatch` as the scheduler, the postinstall script is executed only on the head node\.
 
 The parameter format can be either `http://hostname/path/to/script.sh` or `s3://bucketname/path/to/script.sh`\.
 
@@ -577,7 +583,7 @@ post_install_args = "NONE"
 
 Specifies the URL of a preinstall script that is executed before any of the `boot_as_*` scripts are run\.
 
-When using `awsbatch` as the scheduler, the preinstall script is executed only on the master node\.
+When using `awsbatch` as the scheduler, the preinstall script is executed only on the head node\.
 
 The parameter format can be either `http://hostname/path/to/script.sh` or `s3://bucketname/path/to/script.sh`\.
 
@@ -613,9 +619,31 @@ proxy_server = NONE
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
+## `queue_settings`<a name="queue-settings"></a>
+
+Specifies that the cluster uses queues instead of a homogenous compute fleet, and which [`[queue]` sections](queue-section.md) are used\. The first [`[queue]` section](queue-section.md) listed is the default scheduler queue\. The `queue` section names must start with a lowercase letter, contain no more than 30 characters, and only contain lowercase letters, numbers, and hyphens \(\-\)\.
+
+**Important**  
+[`queue_settings`](#queue-settings) is only supported when [`scheduler`](#scheduler) is set to `slurm`\. The [`cluster_type`](#cluster-type), [`compute_instance_type`](#compute-instance-type), [`initial_queue_size`](#configuration-initial-queue-size), [`maintain_initial_size`](#maintain-initial-size), [`max_queue_size`](#configuration-max-queue-size), [`placement`](#placement), [`placement_group`](#placement-group), and [`spot_price`](#spot-price) settings must not be specified\. The [`disable_hyperthreading`](#disable-hyperthreading) and [`enable_efa`](#enable-efa) settings can either be specified in the [`[cluster]` section](#cluster-definition) or the [`[queue]` sections](queue-section.md), but not both\.
+
+Up to five \(5\) [`[queue]` sections](queue-section.md) are supported\.
+
+For more information, see the [`[queue]` section](queue-section.md)\.
+
+For example, the following setting specifies that the sections that start `[queue q1]` and `[queue q2]` are used\.
+
+```
+queue_settings = q1, q2
+```
+
+**Note**  
+Support for [`queue_settings`](#queue-settings) was added in AWS ParallelCluster version 2\.9\.0\.
+
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
+
 ## `raid_settings`<a name="raid-settings"></a>
 
-Identifies the `[raid]` section with the Amazon EBS volume RAID configuration\.
+Identifies the `[raid]` section with the Amazon EBS volume RAID configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[raid]` section](raid-section.md)\.
 
@@ -645,7 +673,7 @@ s3_read_resource = NONE
 
 ## `s3_read_write_resource`<a name="s3-read-write-resource"></a>
 
-Specifies an Amazon S3 resource to which AWS ParallelCluster nodes are granted read/write access\.
+Specifies an Amazon S3 resource which AWS ParallelCluster nodes are granted read/write access to\.
 
 For example, `arn:aws:s3:::my_corporate_bucket/Development/*` provides read/write access to all objects in the Development folder of the *my\_corporate\_bucket* bucket\.
 
@@ -661,7 +689,7 @@ s3_read_write_resource = NONE
 
 ## `scaling_settings`<a name="scaling-settings"></a>
 
-Identifies the `[scaling]` section with the Auto Scaling configuration\.
+Identifies the `[scaling]` section with the Auto Scaling configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[scaling]` section](scaling-section.md)\.
 
@@ -697,7 +725,7 @@ Starting on December 31, 2021, AWS will no longer include SGE and Torque support
 For more information about the `awsbatch` scheduler, see [networking setup](networking.md#awsbatch-networking)\.
 
 **Note**  
-Prior to AWS ParallelCluster 2\.7\.0, the `scheduler` parameter was optional, and the default was `sge`\. Starting with AWS ParallelCluster 2\.7\.0, the `scheduler` parameter is required\.
+Before AWS ParallelCluster version 2\.7\.0, the `scheduler` parameter was optional, and the default was `sge`\. Starting with AWS ParallelCluster version 2\.7\.0, the `scheduler` parameter is required\.
 
 ```
 scheduler = slurm
@@ -737,7 +765,7 @@ spot_bid_percentage = 85
 
 ## `spot_price`<a name="spot-price"></a>
 
-Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the [`cluster_type`](#cluster-type) setting is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\.
+Optionally sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the [`cluster_type`](#cluster-type) setting is set to `spot`\. If you do not specify a value, you are charged the Spot price, capped at the On\-Demand price\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be removed and replaced by the [`spot_price`](compute-resource-section.md#compute-resource-spot-price) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
 If the scheduler is `awsbatch`, use [spot\_bid\_percentage](#spot-bid-percentage) instead\.
 
@@ -748,7 +776,7 @@ spot_price = 1.50
 ```
 
 **Note**  
-In AWS ParallelCluster 2\.5\.0, if `cluster_type = spot` but [`spot_price`](#spot-price) is not specified, the instance launches for the ComputeFleet will fail\. This was fixed in AWS ParallelCluster 2\.5\.1\.
+In AWS ParallelCluster version 2\.5\.0, if `cluster_type = spot` but [`spot_price`](#spot-price) is not specified, the instance launches of the ComputeFleet fail\. This was fixed in AWS ParallelCluster version 2\.5\.1\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
@@ -776,17 +804,17 @@ Defines the path to the AWS CloudFormation template that is used to create the c
 
 Updates use the template that was originally used to create the stack\.
 
-Defaults to `https://<aws_region_name>-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-<version>.cfn.json`\.
+Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-version.cfn.json`\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.8.1.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.9.0.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
 
 ## `vpc_settings`<a name="vpc-settings"></a>
 
-Identifies the `[vpc]` section with the Amazon VPC configuration where the cluster is deployed\.
+Identifies the `[vpc]` section with the Amazon VPC configuration where the cluster is deployed\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[vpc]` section](vpc-section.md)\.
 

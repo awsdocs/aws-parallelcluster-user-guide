@@ -12,7 +12,7 @@
 
 Specifies Amazon VPC configuration settings\.
 
-The format is `[vpc <vpcname>]`\.
+The format is `[vpc vpc-name]`\. *vpc\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```
 [vpc public]
@@ -56,7 +56,7 @@ compute_subnet_id = subnet-xxxxxx
 
 ## `master_subnet_id`<a name="master-subnet-id"></a>
 
-Specifies the ID of an existing subnet in which to provision the master node\.
+Specifies the ID of an existing subnet in which to provision the head node\.
 
 ```
 master_subnet_id = subnet-xxxxxx
@@ -82,9 +82,9 @@ ssh_from = 0.0.0.0/0
 
 Defines whether to assign public IP addresses to compute instances\.
 
-If set to `true`, an Elastic IP address is associated to the master instance\.
+If set to `true`, an Elastic IP address is associated to the head node\.
 
-If set to `false`, the master instance has a public IP \(or not\) according to the value of the "Auto\-assign Public IP" subnet configuration parameter\.
+If set to `false`, the head node has a public IP \(or not\) according to the value of the "Auto\-assign Public IP" subnet configuration parameter\.
 
 For examples, see [networking configuration](networking.md)\.
 
@@ -119,6 +119,6 @@ The default value is `NONE`\.
 vpc_security_group_id = sg-xxxxxx
 ```
 
-The security group created by AWS ParallelCluster allows SSH access using port 22 from the addresses specified in the [`ssh_from`](#ssh-from) setting, or all IPv4 addresses \(`0.0.0.0/0`\) if the [`ssh_from`](#ssh-from) setting is not specified\. If NICE DCV is enabled, then the security group allows access to NICE DCV using port 8443 \(or whatever the [`port`](dcv-section.md#dcv-section-port) setting specifies\) from the addresses specified in the [`access_from`](dcv-section.md#dcv-section-access-from) setting, or all IPv4 addresses \(`0.0.0.0/0`\) if the [`access_from`](dcv-section.md#dcv-section-access-from) setting is not specified\.
+The security group created by AWS ParallelCluster allows SSH access using port 22 from the addresses specified in the [`ssh_from`](#ssh-from) setting, or all IPv4 addresses \(`0.0.0.0/0`\) if the [`ssh_from`](#ssh-from) setting isn't specified\. If NICE DCV is enabled, then the security group allows access to NICE DCV using port 8443 \(or whatever the [`port`](dcv-section.md#dcv-section-port) setting specifies\) from the addresses specified in the [`access_from`](dcv-section.md#dcv-section-access-from) setting, or all IPv4 addresses \(`0.0.0.0/0`\) if the [`access_from`](dcv-section.md#dcv-section-access-from) setting isn't specified\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)

@@ -38,4 +38,4 @@ The following are instructions for using a custom version of the AWS ParallelClu
    extra_json = { "cluster" : { "custom_node_package" : "https://${_bucket}.s3.<the bucket region>.amazonaws.com/node/aws-parallelcluster-node-${_version}.tgz", "skip_install_recipes" : "no" } }
    ```
 **Note**  
-Starting with AWS ParallelCluster 2\.6\.1, most of the install recipes are skipped by default when launching nodes to improve start up times\. To skip most of the install recipes for better start up times at the expense of backwards compatibility, remove `"skip_install_recipes" : "no"` from the `cluster` key in the [`extra_json`](cluster-definition.md#extra-json) setting\.
+Starting with AWS ParallelCluster version 2\.6\.1, most of the install recipes are skipped by default when launching nodes to improve startup times\. To skip most of the install recipes for better startup times at the expense of backwards compatibility, remove `"skip_install_recipes" : "no"` from the `cluster` key in the [`extra_json`](cluster-definition.md#extra-json) setting\.

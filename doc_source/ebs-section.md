@@ -10,9 +10,9 @@
 + [`ebs_kms_key_id`](#ebs-kms-key-id)
 + [`ebs_volume_id`](#ebs-volume-id)
 
-Defines Amazon EBS volume configuration settings for volumes that are mounted on the master instance and shared via NFS to the compute nodes\.
+Defines Amazon EBS volume configuration settings for volumes that are mounted on the head node and shared via NFS to the compute nodes\.
 
-The format is `[ebs <ebsname>]`\.
+The format is `[ebs ebs-name]`\. *ebs\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```
 [ebs custom1]
@@ -125,7 +125,7 @@ ebs_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 ## `ebs_volume_id`<a name="ebs-volume-id"></a>
 
-Defines the volume Id of an existing Amazon EBS volume to attach to the master instance\.
+Defines the volume Id of an existing Amazon EBS volume to attach to the head node\.
 
 The default value is `NONE`\.
 

@@ -5,8 +5,8 @@ AWS ParallelCluster uses Amazon Virtual Private Cloud \(VPC\) for networking\. V
 The VPC must have `DNS Resolution = yes`, `DNS Hostnames = yes` and DHCP options with the correct domain\-name for the Region\. The default DHCP Option Set already specifies the required *AmazonProvidedDNS*\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
 
 AWS ParallelCluster supports the following high\-level configurations:
-+ One subnet for both master and compute instances\.
-+ Two subnets, with the master in one public subnet, and compute instances in a private subnet\. The subnets can be new or existing\.
++ One subnet for both head and compute nodes\.
++ Two subnets, with the head node in one public subnet, and compute nodes in a private subnet\. The subnets can be new or existing\.
 
 All of these configurations can operate with or without public IP addressing\. AWS ParallelCluster can also be deployed to use an HTTP proxy for all AWS requests\. The combinations of these configurations result in many deployment scenarios\. For example, you can configure a single public subnet with all access over the internet\., Or you can configure a fully private network using AWS Direct Connect and HTTP proxy for all traffic\.
 
@@ -49,7 +49,7 @@ master_subnet_id = subnet-<public>
 compute_subnet_id = subnet-<private>
 ```
 
-Both of these configurations require a [NAT Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) or an internal PROXY to enable web access for compute instances\.
+Both of these configurations require a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) or an internal proxy to enable web access for compute instances\.
 
 ## AWS ParallelCluster in a single private subnet connected using AWS Direct Connect<a name="aws-parallelcluster-in-a-single-private-subnet-connected-using-direct-connect"></a>
 
@@ -67,7 +67,7 @@ master_subnet_id = subnet-<private>
 use_public_ips = false
 ```
 
-When `use_public_ips` is set to `false`, the VPC must be correctly set up to use the Proxy for all traffic\. Web access is required for both master and compute instances\.
+When `use_public_ips` is set to `false`, the VPC must be correctly set up to use the Proxy for all traffic\. Web access is required for both head and compute nodes\.
 
 ## AWS ParallelCluster with `awsbatch` scheduler<a name="awsbatch-networking"></a>
 

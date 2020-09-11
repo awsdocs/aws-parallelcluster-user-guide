@@ -1,16 +1,16 @@
 # Custom Bootstrap Actions<a name="pre_post_install"></a>
 
-AWS ParallelCluster can execute arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action during cluster creation\. This code is typically stored in Amazon Simple Storage Service \(Amazon S3\) and accessed via HTTPS during cluster creation\. The code is executed as root and can be in any script language that is supported by the cluster OS, typically *bash* or *python*\.
+AWS ParallelCluster can execute arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action during cluster creation\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is executed as root and can be in any script language that is supported by the cluster OS\. Often the code is in *bash* or *python*\.
 
-Pre\-install actions are called before any cluster deployment bootstrap, such as configuring NAT, Amazon Elastic Block Store \(Amazon EBS\) or the scheduler\. Typical pre\-install actions can include modifying storage, adding extra users, or adding packages\.
+Pre\-install actions are called before any cluster deployment bootstrap action is started, such as configuring NAT, Amazon Elastic Block Store \(Amazon EBS\) or the scheduler\. Some pre\-install actions include modifying storage, adding extra users, and adding packages\.
 
-Post\-install actions are called after cluster bootstrap is complete, as the last action before an instance is considered complete\. Typical post\-install actions can include changing scheduler settings, modifying storage, or modifying packages\.
+Post\-install actions are called after the cluster bootstrap processes are complete\. Post\-install actions serve the last actions to occur before an instance is considered fully configured and complete\. Some post\-install actions include changing scheduler settings, modifying storage, and modifying packages\.
 
-Arguments can be passed to scripts by specifying them in the configuration\. These are passed double\-quoted to the pre\-install or post\-install actions\.
+You can pass argument to scripts by specifying them during configuration\. For this, you pass them double\-quoted to the pre\-install or post\-install actions\.
 
-If a pre\-install or post\-install action fails, the instance bootstrap fails\. Success is signaled with an exit code of 0\. Any other exit code is considered a failure\.
+If a pre\-install or post\-install action fails, the instance bootstrap also fails\. Success is signaled with an exit code of 0\. Any other exit code indicates the instance bootstrap failed\.
 
-You can differentiate between master and compute nodes execution\. Source the `/etc/parallelcluster/cfnconfig` file and evaluate the `cfn_node_type` environment variable, whose possible values are "MasterServer" and "ComputeFleet" for the master and compute nodes respectively\.
+You can differentiate between running head and compute nodes\. Source the `/etc/parallelcluster/cfnconfig` file and evaluate the `cfn_node_type` environment variable that have a value of "`MasterServer`" and "`ComputeFleet`" for the head and compute nodes, respectively\.
 
 ```
 #!/bin/bash
@@ -19,7 +19,7 @@ You can differentiate between master and compute nodes execution\. Source the `/
 
 case "${cfn_node_type}" in
     MasterServer)
-        echo "I am the master node" >> /tmp/master.txt
+        echo "I am the head node" >> /tmp/head.txt
     ;;
     ComputeFleet)
         echo "I am a compute node" >> /tmp/compute.txt
@@ -93,7 +93,7 @@ If the script was edited on Windows, line endings must be changed from CRLF to L
    post_install_args = "R curl wget"
    ```
 
-   If the bucket does not have public\-read permission, use `s3` as the URL protocol\.
+   If the bucket doesn't have public\-read permission, use `s3` as the URL protocol\.
 
    ```
    [cluster default]

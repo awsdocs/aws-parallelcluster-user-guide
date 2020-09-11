@@ -9,9 +9,9 @@
 + [`shared_dir`](#efs-shared-dir)
 + [`throughput_mode`](#efs-throughput-mode)
 
-Defines configuration settings for the Amazon EFS that is mounted on the master and compute instances\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the Amazon EFS documentation\.
+Defines configuration settings for the Amazon EFS that is mounted on the head and compute nodes\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the Amazon EFS documentation\.
 
-The format is `[efs <efsname>]`\.
+The format is `[efs efs-name]`\. *efs\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```
 [efs customfs]
@@ -41,7 +41,8 @@ The sanity check for validating [`efs_fs_id`](#efs-efs-fs-id) requires the IAM r
 
 To avoid errors, you must add these permissions to your IAM role, or set `sanity_check = false`\.
 
-CAUTION: When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you *not* create a mount target in the stack's Availability Zone, and instead let AWS handle this step\. If you must have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
+**Important**  
+When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you *not* create a mount target in the stack's Availability Zone, and instead let AWS handle this step\. If you must have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
 
 The default value is `NONE`\.
 
@@ -83,7 +84,7 @@ Valid choices are:
 + `generalPurpose`
 + `maxIO`
 
- Both values are case\-sensitive\.
+ Both values are case sensitive\.
 
 We recommend the `generalPurpose` performance mode for most file systems\.
 
@@ -117,7 +118,7 @@ provisioned_throughput = 1024
 
 ## `shared_dir`<a name="efs-shared-dir"></a>
 
-Defines the Amazon EFS mount point on the master and compute nodes\.
+Defines the Amazon EFS mount point on the head and compute nodes\.
 
 This parameter is required\. The Amazon EFS section is used only if [`shared_dir`](cluster-definition.md#cluster-shared-dir) is specified\.
 

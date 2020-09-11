@@ -14,7 +14,7 @@ Displays the instances for the cluster with the provided name\.
 ## Named arguments<a name="pcluster.instances.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster instances`\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
 Specifies the alternative configuration file to use\.  

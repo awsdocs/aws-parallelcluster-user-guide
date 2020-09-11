@@ -9,7 +9,7 @@ pcluster configure [ -h ] [ -c CONFIG_FILE ]
 ## Named arguments<a name="pcluster.configure.namedargs"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster configure`\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
 Specifies the full path of the alternative configuration file to use\.  

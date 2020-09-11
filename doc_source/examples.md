@@ -19,7 +19,7 @@ compute_instance_type = optimal # optional, defaults to optimal
 min_vcpus = 0                   # optional, defaults to 0
 desired_vcpus = 0               # optional, defaults to 4
 max_vcpus = 40                  # optional, defaults to 20
-base_os = alinux                # optional, defaults to alinux, controls the base_os of the master instance and the docker image for the compute fleet
+base_os = alinux                # optional, defaults to alinux, controls the base_os of the head node and the docker image for the compute fleet
 key_name = [your_ec2_keypair]
 vpc_settings = public
 

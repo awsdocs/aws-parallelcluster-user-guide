@@ -14,7 +14,7 @@ Specifies the name of the cluster to connect to\.
 ## Named arguments<a name="pcluster.ssh.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster ssh`\.
 
 `-d, --dryrun`  
 Prints the command that would be run and exits\.  
@@ -41,11 +41,11 @@ ssh = ssh {CFN_USER}@{MASTER_IP} {ARGS}
 
 Variables substituted:
 
-CFN\_USER  
+`CFN_USER`  
 The user name for the [`base_os`](cluster-definition.md#base-os) that is selected\.
 
-MASTER\_IP  
-The IP address of the master node\.
+`MASTER_IP`  
+The IP address of the head node\.
 
-ARGS  
+`ARGS`  
 Optional arguments to pass to the `ssh` command\.

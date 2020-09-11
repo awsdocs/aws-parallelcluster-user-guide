@@ -9,7 +9,7 @@ pcluster list [ -h ] [ -c CONFIG_FILE ] [ -r REGION ]
 ## Named arguments<a name="pcluster.list.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster list`\.
 
 `--color`  
 Displays the cluster status in color\.  

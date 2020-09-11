@@ -5,7 +5,7 @@
 
 Specifies settings that define how the compute nodes scale\.
 
-The format is `[scaling <scalingname>]`\.
+The format is `[scaling scaling-name]`\. *scaling\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```
 [scaling custom]

@@ -1,6 +1,6 @@
 # AWS Identity and Access Management roles in AWS ParallelCluster<a name="iam"></a>
 
-AWS ParallelCluster uses AWS Identity and Access Management \(IAM\) roles for Amazon EC2 to enable instances to access AWS services for the deployment and operation of a cluster\. By default, the IAM role for Amazon EC2 is created as part of the cluster creation by AWS CloudFormation\. This means that the user that creates the cluster must have the appropriate level of permissions, as described in the following sections\.
+AWS ParallelCluster uses AWS Identity and Access Management \(IAM\) roles for Amazon EC2 to enable instances to access AWS services for the deployment and operation of a cluster\. By default, the IAM role for Amazon EC2 is created when the cluster is created\. This means that the user that creates the cluster must have the appropriate level of permissions, as described in the following sections\.
 
 AWS ParallelCluster uses multiple AWS services to deploy and operate a cluster\. See the complete list in the [AWS Services used in AWS ParallelCluster](aws-services.md) section\.
 
@@ -10,15 +10,18 @@ When you use the default settings for cluster creation, an IAM role for Amazon E
 
 ## Using an existing IAM role for Amazon EC2<a name="using-an-existing-ec2-iam-role"></a>
 
- You can use an existing IAM role for Amazon EC2 when creating a cluster, but you must first define the IAM policy and role before attempting to launch the cluster\. Typically, you choose an existing IAM role for Amazon EC2 to reduce the permissions that are granted to users as they launch clusters\. The following example shows an IAM policy and role for both Amazon EC2 and the AWS ParallelCluster\. You must create both as individual policies in IAM and then attach to the appropriate resources\. In both policies, replace *<REGION>*, *<AWS ACCOUNT ID>*, and similar strings with the appropriate values\.
+You can use an existing IAM role for Amazon EC2 when creating a cluster, but you must first define the IAM policy and role before attempting to launch the cluster\. Typically, you choose an existing IAM role for Amazon EC2 to reduce the permissions that are granted to users as they launch clusters\. The following example shows an IAM policy and role for both Amazon EC2 and the AWS ParallelCluster\. You must create both policies and roles as individual policies in IAM and then attach the roles and policies to the appropriate resources\. In the policies, replace *<REGION>*, *<AWS ACCOUNT ID>*, and similar strings with the appropriate values\.
 
 ## AWS ParallelCluster example instance and user policies<a name="example-parallelcluser-policies"></a>
+
+The following example policies include Amazon Resource Names \(ARNs\) for the resources\. If you are working in the AWS GovCloud \(US\) or AWS China partitions, the ARNs must be changed from "arn:aws" to "arn:aws\-us\-gov" for the AWS GovCloud \(US\) partition or "arn:aws\-cn" for the AWS China partition\. For more information, see [Amazon Resource Names \(ARNs\) in GovCloud \(US\) Regions](https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/using-govcloud-arns.html) in the *AWS GovCloud \(US\) User Guide* and [ARNs for AWS services in China](https://docs.amazonaws.cn/aws/latest/userguide/ARNs.html) in *Getting Started with AWS services in China*\.
 
 **Topics**
 + [`ParallelClusterInstancePolicy` using SGE, Slurm, or Torque](#parallelclusterinstancepolicy)
 + [`ParallelClusterInstancePolicy` using `awsbatch`](#parallelclusterinstancepolicy-batch)
 + [`ParallelClusterUserPolicy` using SGE, Slurm, or Torque](#parallelclusteruserpolicy)
 + [`ParallelClusterUserPolicy` using `awsbatch`](#parallelclusteruserpolicy-batch)
++ [`ParallelClusterUserPolicy` for users](#parallelclusteruserpolicy-minimal-user)
 
 ### `ParallelClusterInstancePolicy` using SGE, Slurm, or Torque<a name="parallelclusterinstancepolicy"></a>
 
@@ -72,9 +75,9 @@ The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm
                 "autoscaling:DescribeAutoScalingGroups",
                 "autoscaling:TerminateInstanceInAutoScalingGroup",
                 "autoscaling:SetDesiredCapacity",
-                "autoScaling:UpdateAutoScalingGroup",
+                "autoscaling:UpdateAutoScalingGroup",
                 "autoscaling:DescribeTags",
-                "autoScaling:SetInstanceHealth"
+                "autoscaling:SetInstanceHealth"
             ],
             "Resource": [
                 "*"
@@ -153,7 +156,7 @@ The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm
 
 ### `ParallelClusterInstancePolicy` using `awsbatch`<a name="parallelclusterinstancepolicy-batch"></a>
 
-The following example sets the `ParallelClusterInstancePolicy`, using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\. Here is an overview of the required permissions:
+The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\. The following example is an overview of the required permissions:
 
 ```
 {
@@ -240,6 +243,7 @@ To:
                 "ec2:DescribeInstances",
                 "ec2:DescribeInstanceStatus",
                 "ec2:DescribeInstanceTypes",
+                "ec2:DescribeInstanceTypeOfferings",
                 "ec2:DescribeSnapshots",
                 "ec2:DescribeVolumes",
                 "ec2:DescribeVpcAttribute",
@@ -342,10 +346,27 @@ To:
             "Action": [
               "dynamodb:CreateTable",
               "dynamodb:DeleteTable",
+              "dynamodb:PutItem",
+              "dynamodb:Query",
               "dynamodb:TagResource"
             ],
             "Effect": "Allow",
             "Resource": "*"
+        },
+        {
+            "Sid": "Route53HostedZones",
+            "Action": [
+              "route53:ChangeResourceRecordSets",
+              "route53:ChangeTagsForResource1",
+              "route53:CreateHostedZone",
+              "route53:DeleteHostedZone",
+              "route53:GetChange",
+              "route53:GetHostedZone",
+              "route53:ListResourceRecordSets",
+              "route53:"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:route53:::hostedzone/*"
         },
         {
             "Sid": "SQSDescribe",
@@ -380,6 +401,7 @@ To:
             "Action": [
                 "sns:CreateTopic",
                 "sns:Subscribe",
+                "sns:Unsubscribe",
                 "sns:DeleteTopic"
             ],
             "Effect": "Allow",
@@ -418,6 +440,18 @@ To:
             "Resource": [
                 "arn:aws:s3:::<REGION>-aws-parallelcluster*"
             ]
+        },
+        {
+            "Action": [
+                "s3:DeleteBucket",
+                "s3:DeleteObject",
+                "s3:DeleteObjectVersion"
+            ],
+            "Resource": [
+                "arn:aws:s3:::parallelcluster-*"
+            ],
+            "Effect": "Allow",
+            "Sid": "S3Delete"
         },
         {
             "Sid": "IAMModify",
@@ -511,7 +545,7 @@ To:
 
 ### `ParallelClusterUserPolicy` using `awsbatch`<a name="parallelclusteruserpolicy-batch"></a>
 
-The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as the scheduler:
+The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as the scheduler:
 
 ```
 {
@@ -530,6 +564,7 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
         "ec2:DescribeInstances",
         "ec2:DescribeInstanceStatus",
         "ec2:DescribeInstanceTypes",
+        "ec2:DescribeInstanceTypeOfferings",
         "ec2:DescribeSnapshots",
         "ec2:DescribeVolumes",
         "ec2:DescribeVpcAttribute",
@@ -607,6 +642,8 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
         "dynamodb:DescribeTable",
         "dynamodb:CreateTable",
         "dynamodb:DeleteTable",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
         "dynamodb:TagResource"
       ],
       "Effect": "Allow",
@@ -627,6 +664,21 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/parallelcluster-*"
+    },
+    {
+        "Sid": "Route53HostedZones",
+        "Action": [
+          "route53:ChangeResourceRecordSets",
+          "route53:ChangeTagsForResource1",
+          "route53:CreateHostedZone",
+          "route53:DeleteHostedZone",
+          "route53:GetChange",
+          "route53:GetHostedZone",
+          "route53:ListResourceRecordSets",
+          "route53:"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:route53:::hostedzone/*"
     },
     {
       "Sid": "SQS",
@@ -659,6 +711,7 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
         "sns:GetTopicAttributes",
         "sns:CreateTopic",
         "sns:Subscribe",
+        "sns:Unsubscribe",
         "sns:DeleteTopic"],
       "Effect": "Allow",
       "Resource": "*"
@@ -718,6 +771,18 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
       "Resource": ["arn:aws:s3:::<REGION>-aws-parallelcluster/*"]
     },
     {
+        "Action": [
+            "s3:DeleteBucket",
+            "s3:DeleteObject",
+            "s3:DeleteObjectVersion"
+        ],
+        "Resource": [
+            "arn:aws:s3:::parallelcluster-*"
+        ],
+        "Effect": "Allow",
+        "Sid": "S3Delete"
+    },
+    {
       "Sid": "Lambda",
       "Action": [
         "lambda:CreateFunction",
@@ -728,7 +793,10 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
         "lambda:RemovePermission"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*"
+      "Resource": [
+        "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",
+        "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:pcluster-*"
+      ]
     },
     {
       "Sid": "Logs",
@@ -761,5 +829,54 @@ The following example sets the `ParallelClusterUserPolicy`, using `awsbatch` as 
       "Resource": "*"
     }
   ]
+}
+```
+
+### `ParallelClusterUserPolicy` for users<a name="parallelclusteruserpolicy-minimal-user"></a>
+
+The following example sets the `ParallelClusterUserPolicy` for users that do not need to create or update clusters\. The following commands are supported\.
++ [`pcluster dcv`](pcluster.dcv.md)
++ [`pcluster instances`](pcluster.instances.md)
++ [`pcluster list`](pcluster.list.md)
++ [`pcluster ssh`](pcluster.ssh.md)
++ [`pcluster start`](pcluster.start.md)
++ [`pcluster status`](pcluster.status.md)
++ [`pcluster stop`](pcluster.stop.md)
++ [`pcluster version`](pcluster.version.md)
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+             "Sid": "MinimumModify",
+             "Action": [
+                "autoscaling:UpdateAutoScalingGroup",
+                "batch:UpdateComputeEnvironment",
+                "cloudformation:DescribeStackEvents",
+                "cloudformation:DescribeStackResources",
+                "cloudformation:GetTemplate",
+                "dynamodb:GetItem",
+                "dynamodb:PutItem"
+             ],
+             "Effect": "Allow",
+             "Resource": [
+                 "arn:aws:autoscaling:<REGION>:<AWS ACCOUNT ID>:autoScalingGroup:*:autoScalingGroupName/parallelcluster-*",
+                 "arn:aws:batch:<REGION>:<AWS ACCOUNT ID>:compute-environment/*",
+                 "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/<CLUSTERNAME>/*",
+                 "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/<CLUSTERNAME>"
+             ]
+        },
+        {
+           "Sid": "Describe",
+           "Action": [
+                "cloudformation:DescribeStacks",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceStatus"
+           ],
+           "Effect": "Allow",
+           "Resource": "*"
+        }
+    ]
 }
 ```

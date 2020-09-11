@@ -10,9 +10,9 @@
 + [`encrypted`](#raid-encrypted)
 + [`ebs_kms_key_id`](#raid-ebs_kms_key_id)
 
-Defines configuration settings for a RAID array that is built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the master node and is exported to compute nodes via NFS\.
+Defines configuration settings for a RAID array that is built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the head node and is exported to compute nodes via NFS\.
 
-The format is `[raid <raidname>]`\.
+The format is `[raid raid-name]`\. *raid\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```
 [raid rs]
@@ -24,7 +24,7 @@ encrypted = true
 
 ## `shared_dir`<a name="raid-shared-dir"></a>
 
-Defines the mount point for the RAID array on the master and compute nodes\.
+Defines the mount point for the RAID array on the head and compute nodes\.
 
 The RAID drive is created only if this parameter is specified\.
 
@@ -48,7 +48,7 @@ Valid options are:
 + `0`
 + `1`
 
-For more information on RAID types, see: [RAID info](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/raid-config.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For more information on RAID types, see [RAID info](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/raid-config.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 The following example creates a RAID `0` array:
 

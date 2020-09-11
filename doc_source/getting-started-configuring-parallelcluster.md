@@ -74,7 +74,7 @@ Operating System [alinux]:
 ```
 
 **Note**  
-Support for `alinux2` was added in AWS ParallelCluster 2\.6\.0\.
+Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\.
 
 The minimum and maximum size of the cluster of compute nodes is entered\. This is measured in number of instances\.
 
@@ -83,7 +83,7 @@ Minimum cluster size (instances) [0]:
 Maximum cluster size (instances) [10]:
 ```
 
-The master and compute nodes instance types are entered\. For instance types, your account instance limits are large enough to meet your requirements\. For more information, see [On\-Demand Instance limits](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-on-demand-instances.html#ec2-on-demand-instances-limits) in the *Amazon EC2 User Guide for Linux Instances*\.
+The head and compute nodes instance types are entered\. For instance types, your account instance limits are large enough to meet your requirements\. For more information, see [On\-Demand Instance limits](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-on-demand-instances.html#ec2-on-demand-instances-limits) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
 Master instance type [t2.micro]: 
@@ -99,7 +99,7 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [prod-uswest1-key]:
 ```
 
-After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the master and compute nodes in the same public subnet, or only the master node in a public subnet with all nodes in a private subnet\. It is possible to reach your limit on number of VPCs in a Region\. The default limit is five VPCs per Region\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It is possible to reach your limit on number of VPCs in a Region\. The default limit is five VPCs per Region\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
 If you let AWS ParallelCluster create a VPC, you must decide whether all nodes should be in a public subnet\.
 
@@ -115,13 +115,13 @@ Beginning VPC creation. Please do not leave the terminal until the creation is f
 If you do not create a new VPC\. you must select an existing VPC\.
 
 ```
-```
-
-```
+Automate VPC creation? (y/n) [n]: n
 Automate VPC creation? (y/n) [n]: n
 Allowed values for VPC ID:
-1. subnet-0b4ad9c4678d3c7ad
-2. vpc-0e87c753286f37eef | ParallelClusterVPC-20191118233938 | 5 subnets inside
+  #  id                     name                                 number_of_subnets
+---  ---------------------  ---------------------------------  -------------------
+  1  vpc-0b4ad9c4678d3c7ad  ParallelClusterVPC-20200118031893                    2
+  2  vpc-0e87c753286f37eef  ParallelClusterVPC-20191118233938                    5
 VPC ID [vpc-0b4ad9c4678d3c7ad]: 1
 ```
 
@@ -182,7 +182,7 @@ Minimum cluster size (vcpus) [0]:
 Maximum cluster size (vcpus) [10]:
 ```
 
-The master node instance type is entered\. When using the `awsbatch` scheduler, the compute nodes use an instance type of `optimal`\.
+The head node instance type is entered\. When using the `awsbatch` scheduler, the compute nodes use an instance type of `optimal`\.
 
 ```
 Master instance type [t2.micro]: 
@@ -197,7 +197,7 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [prod-uswest1-key]:
 ```
 
-Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the master and compute nodes in the same public subnet, or only the master node in a public subnet with all nodes in a private subnet\. It is possible to reach your limit on number of VPCs in a Region\. The default number of VPCs is five\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It is possible to reach your limit on number of VPCs in a Region\. The default number of VPCs is five\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
 If you let AWS ParallelCluster create a VPC, decide whether all nodes should be in a public subnet\.
 
@@ -214,9 +214,12 @@ If you do not create a new VPC\. you must select an existing VPC
 
 ```
 Automate VPC creation? (y/n) [n]: n
+Automate VPC creation? (y/n) [n]: n
 Allowed values for VPC ID:
-1. subnet-0b4ad9c4678d3c7ad
-2. vpc-0e87c753286f37eef | ParallelClusterVPC-20191118233938 | 5 subnets inside
+  #  id                     name                                 number_of_subnets
+---  ---------------------  ---------------------------------  -------------------
+  1  vpc-0b4ad9c4678d3c7ad  ParallelClusterVPC-20200118031893                    2
+  2  vpc-0e87c753286f37eef  ParallelClusterVPC-20191118233938                    5
 VPC ID [vpc-0b4ad9c4678d3c7ad]: 1
 ```
 
@@ -235,7 +238,7 @@ Do not leave the terminal until the process has finished
 
 When you have completed the preceding steps, a simple cluster launches into a VPC, using an existing subnet that supports public IP's \(the route table for the subnet is `0.0.0.0/0 => igw-xxxxxx`\)\. Note the following:
 + The VPC must have `DNS Resolution = yes` and `DNS Hostnames = yes`\.
-+ The VPC should also have DHCP options with the correct `domain-name` for the Region\. The default DHCP Option Set already specifies the required AmazonProvidedDNS\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\.
++ The VPC should also have DHCP options with the correct `domain-name` for the Region\. The default DHCP Option Set already specifies the required AmazonProvidedDNS\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\. When using private subnets, use a NAT gateway or an internal proxy to enable web access for compute nodes\. For more information, see [Network configurations](networking.md)\.
 
 When all settings contain valid values, you can launch the cluster by running the create command\.
 

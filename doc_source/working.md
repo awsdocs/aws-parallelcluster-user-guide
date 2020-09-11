@@ -1,16 +1,17 @@
 # Using AWS ParallelCluster<a name="working"></a>
 
 **Topics**
-+ [`pcluster`](commands.md)
++ [AWS ParallelCluster CLI commands](commands.md)
 + [Network configurations](networking.md)
 + [Custom Bootstrap Actions](pre_post_install.md)
 + [Working with Amazon S3](s3_resources.md)
 + [Working with Spot Instances](spot.md)
 + [AWS Identity and Access Management roles in AWS ParallelCluster](iam.md)
 + [Schedulers supported by AWS ParallelCluster](schedulers.md)
++ [Multiple queue mode](queue-mode.md)
 + [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)
 + [Elastic Fabric Adapter](efa.md)
 + [Enable Intel MPI](intelmpi.md)
 + [Intel HPC Platform Specification](intel-hpc-platform-specification.md)
-+ [Connect to the master instance through NICE DCV](dcv.md)
++ [Connect to the head node through NICE DCV](dcv.md)
 + [Using `pcluster update`](using-pcluster-update.md)

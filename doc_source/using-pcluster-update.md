@@ -1,23 +1,23 @@
 # Using `pcluster update`<a name="using-pcluster-update"></a>
 
-Starting with AWS ParallelCluster 2\.8\.0, [`pcluster update`](pcluster.update.md) analyzes the settings used to create the current cluster and the settings in the configuration file for issues\. Any issues discovered are reported, with steps to take to fix any reported issues where available\. For example, if the [`compute_instance_type`](cluster-definition.md#compute-instance-type) setting is changed to a different instance type, the compute fleet must be stopped before an update can proceed\. If no blocking issues are reported, you are prompted whether to apply the changes\.
+Starting with AWS ParallelCluster version 2\.8\.0, [`pcluster update`](pcluster.update.md) analyzes the settings used to create the current cluster and the settings in the configuration file for issues\. If any issues are discovered, they are reported, and the steps to take to fix the issues are displayed\. For example, if the [`compute_instance_type`](cluster-definition.md#compute-instance-type) setting is changed to a different instance type, the compute fleet must be stopped before an update can proceed\. This issue is reported when it is discovered\. If no blocking issues are reported, you are prompted whether you want to apply the changes\.
 
 The documentation for each setting defines the update policy for that setting\.
 
 **Update policy: These settings can be changed during an update\.****Update policy: This setting can be changed during an update\.**  
-These settings can be changed, and the cluster updated using [`pcluster update`](pcluster.update.md)\.
+These settings can be changed, and the cluster can be updated using [`pcluster update`](pcluster.update.md)\.
 
 **Update policy: If this setting is changed, the update is not allowed\.**  
-These settings cannot be changed while the cluster exists\. Either the change must be reverted or the cluster must be deleted \(using [`pcluster delete`](pcluster.delete.md)\), and then a new cluster created \(using [`pcluster create`](pluster.create.md)\)\.
+These settings can't be changed if the existing cluster hasn't been deleted\. Either the change must be reverted or the cluster must be deleted \(using [`pcluster delete`](pcluster.delete.md)\), and then a new cluster created \(using [`pcluster create`](pluster.create.md)\) in the old cluster's place\.
 
 **Update policy: This setting is not analyzed during an update\.**  
 These settings can be changed, and the cluster updated using [`pcluster update`](pcluster.update.md)\.
 
 **Update policy: The compute fleet must be stopped for this setting to be changed for an update\.**  
-These settings cannot be changed while the compute fleet exists\. Either the change must be reverted or the compute fleet must be stopped \(using [`pcluster stop`](pcluster.stop.md)\), updated \(using [`pcluster update`](pcluster.update.md)\) and then a new compute fleet created \(using [`pcluster start`](pcluster.start.md)\)\.
+These settings cannot be changed while the compute fleet exists\. Either the change must be reverted or the compute fleet must be stopped \(using [`pcluster stop`](pcluster.stop.md)\), updated \(using [`pcluster update`](pcluster.update.md)\), and then a new compute fleet created \(using [`pcluster start`](pcluster.start.md)\)\.
 
 **Update policy: This setting can't be decreased during an update\.**  
-These settings can be changed but they cannot be decreased\. If these settings must be decreased it is necessary to delete the cluster \(using [`pcluster delete`](pcluster.delete.md)\), and create a new cluster \(using [`pcluster create`](pluster.create.md)\)\.
+These settings can be changed, but they cannot be decreased\. If these settings must be decreased, it is necessary to delete the cluster \(using [`pcluster delete`](pcluster.delete.md)\), and create a new cluster \(using [`pcluster create`](pluster.create.md)\)\.
 
 This example demonstrates a [`pcluster update`](pcluster.update.md) with some changes that block the update\.
 

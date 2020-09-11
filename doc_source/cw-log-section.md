@@ -2,7 +2,7 @@
 
 Defines configuration settings for CloudWatch Logs\.
 
-The format is `[cw_log <cw-log-name>]`\.
+The format is `[cw_log cw-log-name]`\. *cw\-log\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```
 [cw_log custom-cw-log]
@@ -13,7 +13,7 @@ retention_days = 14
 For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
 
 **Note**  
-Support for `cw_log` was added in AWS ParallelCluster 2\.6\.0\.
+Support for `cw_log` was added in AWS ParallelCluster version 2\.6\.0\.
 
 ## `enable`<a name="cw-log-section-enable"></a>
 

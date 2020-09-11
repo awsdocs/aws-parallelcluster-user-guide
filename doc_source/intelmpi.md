@@ -1,6 +1,6 @@
 # Enable Intel MPI<a name="intelmpi"></a>
 
-Intel MPI is available on the AWS ParallelCluster AMIs for `alinux`, `alinux2`, `centos7`, `ubuntu1604`, and `ubuntu1804` values for the [`base_os`](cluster-definition.md#base-os) setting\. Using Intel MPI indicates that you accept the [Intel simplified software license](https://software.intel.com/en-us/license/intel-simplified-software-license)\. Open MPI is placed on the path by default\. To enable Intel MPI instead of Open MPI, the Intel MPI module must be loaded first\. Install the latest using `module load intelmpi`\. The exact name of the module changes with every update\. To see which modules are available, run `module avail`\.
+Intel MPI is available on the AWS ParallelCluster AMIs for `alinux`, `alinux2`, `centos7`, `ubuntu1604`, and `ubuntu1804` values for the [`base_os`](cluster-definition.md#base-os) setting\.To use Intel MPI, you must acknowledge and accept the terms of the [Intel simplified software license](https://software.intel.com/en-us/license/intel-simplified-software-license)\. By default, Open MPI is placed on the path\. To enable Intel MPI instead of Open MPI, you must first load the Intel MPI modulet\. Then, you need to install the latest version by using `module load intelmpi`\. The exact name of the module changes with every update\. To see which modules are available, run `module avail`\. The output is as follows\.
 
 ```
 $ module avail
@@ -40,7 +40,7 @@ Copyright 2003-2020, Intel Corporation.
 After the Intel MPI module has been loaded, multiple paths are changed to use the Intel MPI tools\. To run code that was compiled by the Intel MPI tools, load the Intel MPI module first\.
 
 **Note**  
-Intel MPI is not compatible with AWS Graviton\-based instances\.
+Intel MPI isn't compatible with AWS Graviton\-based instances\.
 
 **Note**  
-Prior to AWS ParallelCluster 2\.5\.0, Intel MPI is not available on the AWS ParallelCluster AMIs in China \(Beijing\) and China \(Ningxia\)\.
+Before AWS ParallelCluster version 2\.5\.0, Intel MPI wasn't available on the AWS ParallelCluster AMIs in the China \(Beijing\) and China \(Ningxia\) Regions\.

@@ -17,7 +17,7 @@ Defines the name of the cluster\. The AWS CloudFormation stack name is `parallel
 ## Named arguments<a name="pluster.create.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster create`\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
 Specifies the alternative configuration file to use\.  

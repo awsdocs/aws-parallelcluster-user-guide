@@ -14,7 +14,7 @@ Starts the compute fleet of the provided cluster name\.
 ## Named arguments<a name="pcluster.start.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster start`\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
 Specifies the alternative configuration file to use\.  

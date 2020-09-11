@@ -1,6 +1,6 @@
 # `pcluster update`<a name="pcluster.update"></a>
 
-Analyzes the configuration file to determine if the cluster can be safely updated\. If the analysis determines the cluster can be updated, the user is prompted to confirm the change\. If the analysis shows the cluster cannot be updated, the configuration settings that are the source of the conflicts are enumerated with details\. For more information, see [Using `pcluster update`](using-pcluster-update.md)\.
+Analyzes the configuration file to determine if the cluster can be safely updated\. If the analysis determines the cluster can be updated, you are prompted to confirm the change\. If the analysis shows the cluster cannot be updated, the configuration settings that are the source of the conflicts are enumerated with details\. For more information, see [Using `pcluster update`](using-pcluster-update.md)\.
 
 ```
 pcluster update [ -h ] [ -c CONFIG_FILE ] [ --force ] [ -r REGION ] [ -nr ]
@@ -16,14 +16,14 @@ Specifies the name of the cluster to update\.
 ## Named arguments<a name="pcluster.update.namedarg"></a>
 
 `-h, --help`  
-Shows the help text for the specified command\.
+Shows the help text for `pcluster update`\.
 
 `-c CONFIG_FILE, --config CONFIG_FILE`  
 Specifies the alternative configuration file to use\.  
 Defaults to `~/.parallelcluster/config`\.
 
 `--force`  
-Enables an update even if one or more settings has a blocking change, or that an outstanding action is required \(such as stopping the compute fleet\) before the update can proceed\. This should not be combined with the `--yes` argument\.
+Enables an update even if one or more settings has a blocking change or if an outstanding action is required \(such as stopping the compute fleet\) before the update can proceed\. This should not be combined with the `--yes` argument\.
 
 `-r REGION, --region REGION`  
 Specifies the Region to connect to\.

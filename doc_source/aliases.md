@@ -5,9 +5,9 @@
 Specifies aliases, and enables you to customize the `ssh` command\.
 
 Note the following default settings:
-+ *CFN\_USER* is set to the default user name for the OS
-+ *MASTER\_IP* is set to the IP address of the master instance
-+ *ARGS* is set to whatever arguments the user provides after *pcluster ssh cluster\_name*
++ `CFN_USER` is set to the default user name for the OS
++ `MASTER_IP` is set to the IP address of the head node
++ `ARGS` is set to whatever arguments the user provides after *pcluster ssh cluster\_name*
 
 ```
 [aliases]

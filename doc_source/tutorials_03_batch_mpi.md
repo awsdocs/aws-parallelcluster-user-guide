@@ -53,11 +53,11 @@ ClusterUser: ec2-user
 MasterPrivateIP: 10.0.0.15
 ```
 
-## Logging into your master instance<a name="logging-into-your-master-instance"></a>
+## Logging into your head node<a name="logging-into-your-head-node"></a>
 
-The [AWS ParallelCluster Batch CLI](awsbatchcli.md) commands are all available on the client machine where AWS ParallelCluster is installed\. However, we are going to SSH into the master node and submit the jobs from there\. This allows us to take advantage of the NFS volume that is shared between the master and all Docker instances that run AWS Batch jobs\.
+The [AWS ParallelCluster Batch CLI](awsbatchcli.md) commands are all available on the client machine where AWS ParallelCluster is installed\. However, we are going to SSH into the head node and submit the jobs from there\. This allows us to take advantage of the NFS volume that is shared between the head and all Docker instances that run AWS Batch jobs\.
 
-Use your SSH pem file to log into your master instance\.
+Use your SSH pem file to log into your head node\.
 
 ```
 $ pcluster ssh awsbatch-tutorial -i /path/to/keyfile.pem
@@ -167,7 +167,7 @@ To explore all of the available features that are not part of this tutorial, see
 
 ## Running an MPI job in a multi\-node parallel environment<a name="running-an-mpi-job-in-a-multi-node-parallel-environment"></a>
 
-While still logged into the master node, create a file in the `/shared` directory named `mpi_hello_world.c`\. Add the following MPI program to the file:
+While still logged into the head node, create a file in the `/shared` directory named `mpi_hello_world.c`\. Add the following MPI program to the file:
 
 ```
 // Copyright 2011 www.mpitutorial.com

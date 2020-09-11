@@ -40,11 +40,11 @@ GangliaPrivateURL = http://192.168.x.x/ganglia/
 GangliaPublicURL = http://54.148.x.x/ganglia/
 ```
 
-The message `CREATE_COMPLETE` shows that the cluster created successfully\. The output also provides us with the public and private IP addresses of our master node\. We need this IP to log in\.
+The message `CREATE_COMPLETE` shows that the cluster created successfully\. The output also provides us with the public and private IP addresses of our head node\. We need this IP to log in\.
 
-## Logging into your master instance<a name="logging-into-your-master-instance"></a>
+## Logging into your head node<a name="logging-into-your-head-node"></a>
 
-Use your OpenSSH pem file to log into your master instance\.
+Use your OpenSSH pem file to log into your head node\.
 
 ```
 pcluster ssh hello-world -i /path/to/keyfile.pem
