@@ -49,12 +49,13 @@
 + [`template_url`](#template-url)
 + [`vpc_settings`](#vpc-settings)
 
-Defines one or more cluster templates for different job types or workloads\.
+Defines a cluster template that can be used to create a cluster\. A config file can contain multiple `[cluster]` sections\.
 
-The same template can be used for multiple cluster creations\.
+The same cluster template can be used to create multiple clusters\.
 
-The format is `[cluster cluster-template]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used by default when creating a cluster, but can be overridden on the [`pcluster`](pcluster.md) command line\. 
-*cluster\-template* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\) and underscores\.
+The format is `[cluster cluster-template-name]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used by default, but can be overridden on the [`pcluster`](pcluster.md) command line\.
+
+*cluster\-template\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```
 [cluster default]
@@ -186,7 +187,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.9.0/amis.txt)\.
+Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.9.1/amis.txt)\.
 
 The default value is `NONE`\.
 
@@ -808,7 +809,7 @@ Updates use the template that was originally used to create the stack\.
 Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-version.cfn.json`\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.9.0.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.9.1.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
