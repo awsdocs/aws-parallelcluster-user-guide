@@ -49,11 +49,12 @@
 + [`template_url`](#template-url)
 + [`vpc_settings`](#vpc-settings)
 
-Defines one or more clusters for different job types or workloads\.
+Defines one or more cluster templates for different job types or workloads\.
 
-Each cluster can have its own configuration\.
+The same template can be used for multiple cluster creations\.
 
-The format is `[cluster cluster-name]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used by default, but can be overridden on the [`pcluster`](pcluster.md) command line\. *cluster\-name* must start with a letter, contain no more than 60 characters, and only contain letters, numbers, and hyphens \(\-\)\.
+The format is `[cluster cluster-template]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used by default when creating a cluster, but can be overridden on the [`pcluster`](pcluster.md) command line\. 
+*cluster\-template* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\) and underscores\.
 
 ```
 [cluster default]
