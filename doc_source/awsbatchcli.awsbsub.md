@@ -5,7 +5,7 @@ Submits jobs to the cluster’s job queue\.
 ```
 awsbsub [-h] [-jn JOB_NAME] [-c CLUSTER] [-cf] [-w WORKING_DIR]
         [-pw PARENT_WORKING_DIR] [-if INPUT_FILE] [-p VCPUS] [-m MEMORY]
-        [-e ENV] [-eb ENV_BLACKLIST] [-r RETRY_ATTEMPTS] [-t TIMEOUT]
+        [-e ENV] [-eb ENV_DENYLIST] [-r RETRY_ATTEMPTS] [-t TIMEOUT]
         [-n NODES] [-a ARRAY_SIZE] [-d DEPENDS_ON]
         [command] [arguments [arguments ...]]
 ```
@@ -50,7 +50,7 @@ Default: 128
 `-e ENV, --env ENV`  
 Specifies a comma\-separated list of environment variable names to export to the job environment\. To export all environment variables, specify ‘all’\. Note that a list of 'all' environment variables will not include those listed in the `–env-blacklist` parameter, or variables starting with the `PCLUSTER_*` or `AWS_*` prefix\.
 
-`-eb ENV_BLACKLIST, --env-blacklist ENV_BLACKLIST`  
+`-eb ENV_DENYLIST, --env-blacklist ENV_DENYLIST`  
 Specifies a comma\-separated list of environment variable names to **not** export to the job environment\. By default, `HOME`, `PWD`, `USER`, `PATH`, `LD_LIBRARY_PATH`, `TERM`, and `TERMCAP` are not exported\.
 
 `-r RETRY_ATTEMPTS, --retry-attempts RETRY_ATTEMPTS`  

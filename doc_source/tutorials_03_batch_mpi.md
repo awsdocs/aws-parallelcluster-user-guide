@@ -89,8 +89,8 @@ Create a file called "hellojob\.sh" with the following content\.
 #!/bin/bash
 
 sleep 30
-echo "Hello $1 from $(hostname)"
-echo "Hello $1 from $(hostname)" > "/shared/secret_message_for_${1}_by_${AWS_BATCH_JOB_ID}"
+echo "Hello $1 from $HOSTNAME"
+echo "Hello $1 from $HOSTNAME" > "/shared/secret_message_for_${1}_by_${AWS_BATCH_JOB_ID}"
 ```
 
 Next, submit the job using `awsbsub` and verify that it runs\.
@@ -221,7 +221,7 @@ _job_dir="${_shared_dir}/${AWS_BATCH_JOB_ID%#*}-${AWS_BATCH_JOB_ATTEMPT}"
 _exit_code_file="${_job_dir}/batch-exit-code"
 
 if [[ "${AWS_BATCH_JOB_NODE_INDEX}" -eq  "${AWS_BATCH_JOB_MAIN_NODE_INDEX}" ]]; then
-    echo "Hello I'm the main node $(hostname)! I run the mpi job!"
+    echo "Hello I'm the main node $HOSTNAME! I run the mpi job!"
 
     mkdir -p "${_job_dir}"
 
@@ -236,7 +236,7 @@ if [[ "${AWS_BATCH_JOB_NODE_INDEX}" -eq  "${AWS_BATCH_JOB_MAIN_NODE_INDEX}" ]]; 
     # Waiting for compute nodes to terminate
     sleep 30
 else
-    echo "Hello I'm the compute node $(hostname)! I let the main node orchestrate the mpi execution!"
+    echo "Hello I'm the compute node $HOSTNAME! I let the main node orchestrate the mpi execution!"
     # Since mpi orchestration happens on the main node, we need to make sure the containers representing the compute
     # nodes are not terminated. A simple trick is to wait for a file containing the status code to be created.
     # All compute nodes are terminated by Batch if the main node exits abruptly.
