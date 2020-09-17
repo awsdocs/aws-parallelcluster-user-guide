@@ -90,7 +90,7 @@ If the script was edited on Windows, line endings must be changed from CRLF to L
    [cluster default]
    ...
    post_install = https://<bucket-name>.s3.amazonaws.com/myscript.sh
-   post_install_args = "R curl wget"
+   post_install_args = 'R curl wget'
    ```
 
    If the bucket doesn't have public\-read permission, use `s3` as the URL protocol\.
@@ -99,7 +99,7 @@ If the script was edited on Windows, line endings must be changed from CRLF to L
    [cluster default]
    ...
    post_install = s3://<bucket-name>/myscript.sh
-   post_install_args = "R curl wget"
+   post_install_args = 'R curl wget'
    ```
 
 1. Launch the cluster\.
@@ -113,7 +113,7 @@ If the script was edited on Windows, line endings must be changed from CRLF to L
    ```
    $ less /var/log/cfn-init.log
    2019-04-11 10:43:54,588 [DEBUG] Command runpostinstall output: post-install script has 4 arguments
-   arg: s3://eu-eu-west-1/test.sh
+   arg: s3://<bucket-name>/test.sh
    arg: R
    arg: curl
    arg: wget
