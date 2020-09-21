@@ -106,13 +106,13 @@ Support for [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-st
 The valid values are `SCRATCH_1`, `SCRATCH_2`, and `PERSISTENT_1`\.
 
 `SCRATCH_1`  
-The default deployment type for Amazon FSx for Lustre\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200, 2400, and any multiple of 3600\.
+The default deployment type for Amazon FSx for Lustre\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200, 2400, and any multiple of 3600\. Support for `SCRATCH_1` was added in AWS ParallelCluster version 2\.4\.0\.
 
 `SCRATCH_2`  
-The latest generation of scratch file systems that supports up to six times the baseline throughput for spiky workloads, and supports in\-transit encryption of data for supported instance types in supported regions\. For more information, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\.
+The latest generation of scratch file systems that supports up to six times the baseline throughput for spiky workloads, and supports in\-transit encryption of data for supported instance types in supported regions\. For more information, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `SCRATCH_2` was added in AWS ParallelCluster version 2\.6\.0\.
 
 `PERSISTENT_1`  
-Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone \(AZ\), and supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\.
+Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone \(AZ\), and supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `PERSISTENT_1` was added in AWS ParallelCluster version 2\.6\.0\.
 
 The default value is `SCRATCH_1`\.
 
