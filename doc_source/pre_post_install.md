@@ -1,6 +1,6 @@
 # Custom Bootstrap Actions<a name="pre_post_install"></a>
 
-AWS ParallelCluster can execute arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action during cluster creation\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is executed as root and can be in any script language that is supported by the cluster OS\. Often the code is in *bash* or *python*\.
+AWS ParallelCluster can run arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action during cluster creation\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is executed as root and can be in any script language that is supported by the cluster OS\. Often the code is in *bash* or *python*\.
 
 Pre\-install actions are called before any cluster deployment bootstrap action is started, such as configuring NAT, Amazon Elastic Block Store \(Amazon EBS\) or the scheduler\. Some pre\-install actions include modifying storage, adding extra users, and adding packages\.
 
@@ -76,7 +76,7 @@ The following steps create a simple post\-install script that installs the R pac
    yum -y install "${@:2}"
    ```
 
-1. Upload the script with the correct permissions to Amazon S3\.
+1. Upload the script with the correct permissions to Amazon S3\. If public read permissions are not appropriate, use either [`s3_read_resource`](cluster-definition.md#s3-read-resource) or [`s3_read_write_resource`](cluster-definition.md#s3-read-write-resource) parameters to grant access\. For more information, see [Working with Amazon S3](s3_resources.md)\.
 
    ```
    $ aws s3 cp --acl public-read /path/to/myscript.sh s3://<bucket-name>/myscript.sh

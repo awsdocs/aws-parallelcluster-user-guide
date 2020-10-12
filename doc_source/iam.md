@@ -911,6 +911,7 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
             "Action": [
                 "lambda:CreateFunction",
                 "lambda:DeleteFunction",
+                "lambda:GetFunction",
                 "lambda:GetFunctionConfiguration",
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",

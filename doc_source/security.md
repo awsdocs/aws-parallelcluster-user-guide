@@ -18,6 +18,7 @@ This documentation describes how you should apply the shared responsibility mode
 ## Security information for services used by AWS ParallelCluster<a name="security-seealso"></a>
 + [Security in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security.html)
 + [Security in AWS Batch](https://docs.aws.amazon.com/batch/latest/userguide/security.html)
++ [Security in AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/security.html)
 + [Security in Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/security.html)
 + [Security in AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/security.html)
 + [Security in Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/security.html)

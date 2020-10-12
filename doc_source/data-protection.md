@@ -33,5 +33,6 @@ By default, all data transmitted from the client computer running AWS ParallelCl
 
 ## See also<a name="security-data-protection-seealso"></a>
 + [Data protection in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html)
++ [Data protection in AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/security-data-protection.html)
 + [Data protection in Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/DataDurability.html)
 + [Data protection in Amazon FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-protection.html)

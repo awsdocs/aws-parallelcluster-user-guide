@@ -61,7 +61,8 @@ Default: 1
 Specifies the time duration in seconds \(measured from the job attempt’s startedAt timestamp\) after which AWS Batch terminates your job if it has not finished\. The timeout value must be at least 60 seconds\.
 
 `-n NODES, --nodes NODES`  
-Specifies the number of nodes to reserve for the job\. Specify a value for this parameter to enable multi\-nNode parallel submission\.
+Specifies the number of nodes to reserve for the job\. Specify a value for this parameter to enable multi\-node parallel submission\.  
+Multi\-node parallel jobs are not supported when the [`cluster_type`](cluster-definition.md#cluster-type) parameter is set to `spot`\.
 
 `-a ARRAY_SIZE, --array-size ARRAY_SIZE`  
 Indicates the size of the array\. You can specify a value between 2 and 10,000\. If you specify array properties for a job, it becomes an array job\.
