@@ -66,16 +66,12 @@ Before AWS ParallelCluster version 2\.8\.0, [Berkshelf](https://github.com/berks
 1. Use the command `createami` in the AWS ParallelCluster CLI to build an AWS ParallelCluster AMI starting from the one that you provide as base:
 
    ```
-   pcluster createami --ami-id <BASE AMI> --os <BASE OS AMI>
+   pcluster createami --ami-id <BASE_AMI> --os <BASE_AMI_OS>
    ```
 **Important**  
-You shouldn't use an AWS ParallelCluster AMI as *<BASE AMI>* for the `createami` command\. Otherwise, the command fails\.
+You shouldn't use an AWS ParallelCluster AMI as *<BASE\_AMI>* for the `createami` command\. Otherwise, the command fails\.
 
-   For other parameters, consult the command help:
-
-   ```
-   pcluster createami -h
-   ```
+   For other parameters, see [`pcluster createami`](pcluster.createami.md)\.
 
 1. The command in Step 4 executes Packer, which specifically does the following:
 
@@ -94,7 +90,7 @@ You shouldn't use an AWS ParallelCluster AMI as *<BASE AMI>* for the `createami`
 1. To create your cluster, enter the AMI ID in the [custom\_ami](cluster-definition.md#custom-ami-section) field within your cluster configuration\.
 
 **Note**  
-The instance type used to build a custom AWS ParallelCluster AMI is `t2.xlarge`\. This instance type does not qualify for the AWS free tie, so you're charged for any instances that are created when you build this AMI\.
+The instance type used to build a custom AWS ParallelCluster AMI is `t2.xlarge`\. This instance type does not qualify for the AWS free tier, so you're charged for any instances that are created when you build this AMI\.
 
 ### Use a Custom AMI at Runtime<a name="use-a-custom-ami-at-runtime"></a>
 
