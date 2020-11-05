@@ -72,16 +72,16 @@ When `use_public_ips` is set to `false`, the VPC must be correctly set up to use
 ## AWS ParallelCluster with `awsbatch` scheduler<a name="awsbatch-networking"></a>
 
 When you use `awsbatch` as the scheduler type, AWS ParallelCluster creates an AWS Batch managed compute environment\. The AWS Batch environment takes care of managing Amazon Elastic Container Service \(Amazon ECS\) container instances, which are launched in the `compute_subnet`\. In order for AWS Batch to function correctly, Amazon ECS container instances need external network access to communicate with the Amazon ECS service endpoint\. This translates into the following scenarios:
-+ The `compute_subnet` uses a NAT Gateway to access the internet\. \(We recommended this approach\.\)
++ The `compute_subnet` uses a NAT gateway to access the internet\. \(We recommended this approach\.\)
 + Instances launched in the `compute_subnet` have public IP addresses and can reach the internet through an Internet Gateway\.
 
 Additionally, if you are interested in multi\-node parallel jobs \(from the [AWS Batch docs ](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html#mnp-ce)\):
 
 AWS Batch multi\-node parallel jobs use the Amazon ECS `awsvpc` network mode, which gives your multi\-node parallel job containers the same networking properties as Amazon EC2 instances\. Each multi\-node parallel job container gets its own elastic network interface, a primary private IP address, and an internal DNS hostname\. The network interface is created in the same Amazon VPC subnet as its host compute resource\. Any security groups that are applied to your compute resources are also applied to it\.
 
-When using Amazon ECS Task Networking, the awsvpc network mode does not provide elastic network interfaces with public IP addresses for tasks that use the Amazon EC2 launch type\. To access the internet, tasks that use the Amazon EC2 launch type must be launched in a private subnet that is configured to use a NAT Gateway\.
+When using Amazon ECS Task Networking, the awsvpc network mode does not provide elastic network interfaces with public IP addresses for tasks that use the Amazon EC2 launch type\. To access the internet, tasks that use the Amazon EC2 launch type must be launched in a private subnet that is configured to use a NAT gateway\.
 
-This leaves us with the only option, to configure a NAT Gateway in order to enable the cluster to execute multi\-node parallel jobs\.
+This leaves us with the only option, to configure a NAT gateway in order to enable the cluster to run multi\-node parallel jobs\.
 
 ![\[AWS ParallelCluster networking with awsbatch scheduler\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/networking_batch.jpg)
 
