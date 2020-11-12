@@ -211,12 +211,20 @@ The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` 
     "Statement": [
         {
             "Action": [
-                "batch:SubmitJob",
                 "batch:RegisterJobDefinition",
+                "logs:GetLogEvents"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "batch:SubmitJob",
                 "cloudformation:DescribeStacks",
                 "ecs:ListContainerInstances",
                 "ecs:DescribeContainerInstances",
-                "logs:GetLogEvents",
                 "logs:FilterLogEvents",
                 "s3:PutObject",
                 "s3:Get*",

@@ -210,7 +210,7 @@ The following lit contains the key logs for the multiple queue architecture\. Th
 
   `/var/log/slurmd.log` \(`slurmd`\)
 
-## \[Optional\] Common issues and how to debug:<a name="multiple-queue-mode-slurm-user-guide-common-issues"></a>
+## Common issues and how to debug:<a name="multiple-queue-mode-slurm-user-guide-common-issues"></a>
 
 **Nodes that failed to launch, power up, or join the cluster: **
 + Dynamic nodes:
