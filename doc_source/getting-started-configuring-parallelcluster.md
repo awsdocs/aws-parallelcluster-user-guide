@@ -116,7 +116,6 @@ If you do not create a new VPC\. you must select an existing VPC\.
 
 ```
 Automate VPC creation? (y/n) [n]: n
-Automate VPC creation? (y/n) [n]: n
 Allowed values for VPC ID:
   #  id                     name                                 number_of_subnets
 ---  ---------------------  ---------------------------------  -------------------
@@ -213,7 +212,6 @@ Beginning VPC creation. Please do not leave the terminal until the creation is f
 If you do not create a new VPC\. you must select an existing VPC
 
 ```
-Automate VPC creation? (y/n) [n]: n
 Automate VPC creation? (y/n) [n]: n
 Allowed values for VPC ID:
   #  id                     name                                 number_of_subnets
