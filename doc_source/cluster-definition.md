@@ -9,6 +9,7 @@
 + [`compute_root_volume_size`](#compute-root-volume-size)
 + [`custom_ami`](#custom-ami-section)
 + [`cw_log_settings`](#cw-log-settings)
++ [`disable_cluster_dns`](#disable-cluster-dns-settings)
 + [`dcv_settings`](#dcv-settings)
 + [`desired_vcpus`](#desired-vcpus)
 + [`disable_hyperthreading`](#disable-hyperthreading)
@@ -211,6 +212,21 @@ cw_log_settings = custom-cw
 
 **Note**  
 Support for [`cw_log_settings`](#cw-log-settings) was added in AWS ParallelCluster version 2\.6\.0\.
+
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
+
+## `disable_cluster_dns`<a name="disable-cluster-dns-settings"></a>
+
+Specifies if the DNS entries for the cluster should not be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. If `disable_cluster_dns` is set to `true`, the hosted zone is not created\.
+
+The default value is `false`\.
+
+```
+disable_cluster_dns = true
+```
+
+**Note**  
+Support for [`disable_cluster_dns`](#disable-cluster-dns-settings) was added in AWS ParallelCluster version 2\.9\.1\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 

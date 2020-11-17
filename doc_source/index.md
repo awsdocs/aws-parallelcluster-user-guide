@@ -62,6 +62,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Multiple queue mode](queue-mode.md)
    + [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)
    + [Elastic Fabric Adapter](efa.md)
+   + [Intel Select Solutions](intel-select-solutions.md)
    + [Enable Intel MPI](intelmpi.md)
    + [Intel HPC Platform Specification](intel-hpc-platform-specification.md)
    + [Connect to the head node through NICE DCV](dcv.md)
