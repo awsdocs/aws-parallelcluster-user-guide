@@ -19,6 +19,15 @@ These settings cannot be changed while the compute fleet exists\. Either the cha
 **Update policy: This setting can't be decreased during an update\.**  
 These settings can be changed, but they cannot be decreased\. If these settings must be decreased, it is necessary to delete the cluster \(using [`pcluster delete`](pcluster.delete.md)\), and create a new cluster \(using [`pcluster create`](pluster.create.md)\)\.
 
+**Update policy: Reducing the size of a queue below the current number of nodes requires that the compute fleet be stopped first\.**  
+These settings can be changed, but if the change would reduce the size of the queue below the current size, the compute fleet must be stopped \(using [`pcluster stop`](pcluster.stop.md)\), updated \(using [`pcluster update`](pcluster.update.md)\), and then a new compute fleet created \(using [`pcluster start`](pcluster.start.md)\)\.
+
+**Update policy: Reducing the number of static nodes in a queue requires that the compute fleet be stopped first\.**  
+These settings can be changed, but if the change would reduce the number of static nodes in the queue below the current size, the compute fleet must be stopped \(using [`pcluster stop`](pcluster.stop.md)\), updated \(using [`pcluster update`](pcluster.update.md)\), and then a new compute fleet created \(using [`pcluster start`](pcluster.start.md)\)\.
+
+**Update policy: If this setting is changed, the update is not allowed\. Updating this setting cannot be forced\.**  
+These settings can't be changed if the existing cluster hasn't been deleted\. Either the change must be reverted or the cluster must be deleted \(using [`pcluster delete`](pcluster.delete.md)\), and then a new cluster created \(using [`pcluster create`](pluster.create.md)\) in the old cluster's place\.
+
 This example demonstrates a [`pcluster update`](pcluster.update.md) with some changes that block the update\.
 
 ```

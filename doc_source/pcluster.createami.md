@@ -3,9 +3,10 @@
 \(Linux/macOS\) Creates a custom AMI to use with AWS ParallelCluster\.
 
 ```
-pcluster createami [ -h ] -ai BASE_AMI_ID -os BASE_AMI_OS [ -i INSTANCE_TYPE ]
-                   [ -ap CUSTOM_AMI_NAME_PREFIX ] [ -cc CUSTOM_AMI_COOKBOOK ]
-                   [ -c CONFIG_FILE ] [ -r REGION ]
+pcluster createami [ -h ] -ai BASE_AMI_ID -os BASE_AMI_OS
+                   [ -ap CUSTOM_AMI_NAME_PREFIX ] [ -c CONFIG_FILE ]
+                   [ -cc CUSTOM_AMI_COOKBOOK ] [ -i INSTANCE_TYPE ]
+                   [ -post-install POST_INSTALL_SCRIPT ] [ -r REGION ]
 ```
 
 ## Required dependencies<a name="pcluster.createami.required-dependencies"></a>
@@ -25,8 +26,8 @@ Shows the help text for `pcluster createami`\.
 Specifies the base AMI to use for building the AWS ParallelCluster AMI\.
 
 `-os BASE_AMI_OS, --os BASE_AMI_OS`  
-Specifies the OS of the base AMI\. Valid options are: `alinux`, `alinux2`, `ubuntu1604`, `ubuntu1804`, `centos6`, and `centos7`\.  
-Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added in AWS ParallelCluster version 2\.5\.0\.
+Specifies the OS of the base AMI\. Valid options are: `alinux`, `alinux2`, `ubuntu1604`, `ubuntu1804`, `centos7`, and `centos8`\.  
+Support for `centos8` was added, and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\.Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added in AWS ParallelCluster version 2\.5\.0\.
 
 `-ap CUSTOM_AMI_NAME_PREFIX, --ami-name-prefix CUSTOM_AMI_NAME_PREFIX`  
 Specifies the prefix name of the resulting AWS ParallelCluster AMI\.  
@@ -44,5 +45,12 @@ Specifies the instance type to use to create the AMI\.
 Defaults to `t2.xlarge`\.  
 Support for the `--instance-type` argument was added in AWS ParallelCluster version 2\.4\.1\.
 
+`--post-install POST_INSTALL_SCRIPT`  
+Specifies the path to the post\-install script\. Paths must use a `s3://`, `https://`, or `file://` URL scheme\. Examples include:  
++ `https://bucket-name.s3.region.amazonaws.com/path/post_install.sh`
++ `s3://bucket-name/post_install.sh`
++ `file:///opt/project/post_install.sh`
+Support for the `--post-install` argument was added in AWS ParallelCluster version 2\.10\.0\.
+
 `-r REGION, --region REGION`  
-Specifies the Region to connect to\.
+Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.

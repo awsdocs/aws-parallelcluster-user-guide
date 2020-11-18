@@ -21,7 +21,7 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
-Specifies the Region to connect to\.
+Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 This command sets the Auto Scaling Group parameters to one of the following: 
 + The initial configuration values \(`max_queue_size` and `initial_queue_size`\) from the template that was used to create the cluster\.

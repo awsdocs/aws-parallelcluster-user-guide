@@ -70,7 +70,7 @@ You can install AWS ParallelCluster and its dependencies on most Linux distribut
 
    ```
    $ pip3 --version
-   pip 20.2.3 from ~/.local/lib/python3.6/site-packages (python 3.6)
+   pip 20.2.4 from ~/.local/lib/python3.6/site-packages (python 3.6)
    ```
 
 **Topics**
@@ -92,7 +92,7 @@ Verify that AWS ParallelCluster installed correctly\.
 
 ```
 $ pcluster version
-2.9.1
+2.10
 ```
 
 To upgrade to the latest version, run the installation command again\.

@@ -21,6 +21,6 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
-Specifies the Region to connect to\.
+Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 Sets the Auto Scaling group parameters to min/max/desired = 0/0/0, and terminates the compute fleet\. The head remains running\. To terminate all EC2 resources and avoid EC2 charges, consider deleting the cluster\.

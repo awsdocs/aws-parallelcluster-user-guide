@@ -97,7 +97,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 
    ```
    $ pcluster version
-   2.9.1
+   2.10
    ```
 
 ------
@@ -105,7 +105,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 
    ```
    (apc-ve) C:\>pcluster version
-   2.9.1
+   2.10
    ```
 
 ------

@@ -6,7 +6,7 @@ AWS ParallelCluster uses multiple AWS services to deploy and operate a cluster\.
 
 ## Defaults<a name="defaults"></a>
 
-When you use the default settings for cluster creation, an IAM role for Amazon EC2 is created by the cluster\. The user that is creating the cluster must have the right level of permissions to create all of the resources required to launch the cluster, including an IAM role for Amazon EC2\. Typically, the IAM user must have the permissions of an *AdministratorAccess* managed policy\. For details about managed policies, see [AWS managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies) in the *IAM User Guide*\.
+When you use the default settings for cluster creation, an IAM role for Amazon EC2 is created by the cluster\. The user that creates the cluster must have the right level of permissions to create all of the resources required to launch the cluster\. This includes an IAM role for Amazon EC2\. Typically, the IAM user must have the permissions of an *AdministratorAccess* managed policy\. For information about managed policies, see [AWS managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies) in the *IAM User Guide*\.
 
 ## Using an existing IAM role for Amazon EC2<a name="using-an-existing-ec2-iam-role"></a>
 
@@ -14,7 +14,7 @@ You can use an existing IAM role for Amazon EC2 when creating a cluster, but you
 
 ## AWS ParallelCluster example instance and user policies<a name="example-parallelcluser-policies"></a>
 
-The following example policies include Amazon Resource Names \(ARNs\) for the resources\. If you are working in the AWS GovCloud \(US\) or AWS China partitions, the ARNs must be changed from "arn:aws" to "arn:aws\-us\-gov" for the AWS GovCloud \(US\) partition or "arn:aws\-cn" for the AWS China partition\. For more information, see [Amazon Resource Names \(ARNs\) in GovCloud \(US\) Regions](https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/using-govcloud-arns.html) in the *AWS GovCloud \(US\) User Guide* and [ARNs for AWS services in China](https://docs.amazonaws.cn/aws/latest/userguide/ARNs.html) in *Getting Started with AWS services in China*\.
+The following example policies include Amazon Resource Names \(ARNs\) for the resources\. If you're working in the AWS GovCloud \(US\) or AWS China partitions, the ARNs must be changed\. Specifically, they must be changed from "arn:aws" to "arn:aws\-us\-gov" for the AWS GovCloud \(US\) partition or "arn:aws\-cn" for the AWS China partition\. For more information, see [Amazon Resource Names \(ARNs\) in GovCloud \(US\) Regions](https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/using-govcloud-arns.html) in the *AWS GovCloud \(US\) User Guide* and [ARNs for AWS services in China](https://docs.amazonaws.cn/aws/latest/userguide/ARNs.html) in *Getting Started with AWS services in China*\.
 
 **Topics**
 + [`ParallelClusterInstancePolicy` using SGE, Slurm, or Torque](#parallelclusterinstancepolicy)
@@ -25,7 +25,7 @@ The following example policies include Amazon Resource Names \(ARNs\) for the re
 
 ### `ParallelClusterInstancePolicy` using SGE, Slurm, or Torque<a name="parallelclusterinstancepolicy"></a>
 
-The following example sets the `ParallelClusterInstancePolicy`, using SGE, Slurm, or Torque as the scheduler\.
+The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm, or Torque as the scheduler\.
 
 ```
 {
@@ -663,6 +663,17 @@ To:
             ],
             "Effect": "Allow",
             "Sid": "Lambda"
+        },
+        {
+            "Sid": "CloudWatch",
+            "Effect": "Allow",
+            "Action": [
+              "cloudwatch:PutDashboard",
+              "cloudwatch:ListDashboards",
+              "cloudwatch:DeleteDashboards",
+              "cloudwatch:GetDashboard"
+            ],
+            "Resource": "*"
         }
     ]
 }
@@ -1003,6 +1014,17 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
             "Resource": "*",
             "Effect": "Allow",
             "Sid": "FSx"
+        },
+        {
+            "Sid": "CloudWatch",
+            "Effect": "Allow",
+            "Action": [
+              "cloudwatch:PutDashboard",
+              "cloudwatch:ListDashboards",
+              "cloudwatch:DeleteDashboards",
+              "cloudwatch:GetDashboard"
+            ],
+            "Resource": "*"
         }
     ]
 }
@@ -1010,7 +1032,7 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
 
 ### `ParallelClusterUserPolicy` for users<a name="parallelclusteruserpolicy-minimal-user"></a>
 
-The following example sets the `ParallelClusterUserPolicy` for users that do not need to create or update clusters\. The following commands are supported\.
+The following example sets the `ParallelClusterUserPolicy` for users that don't need to create or update clusters\. The following commands are supported\.
 + [`pcluster dcv`](pcluster.dcv.md)
 + [`pcluster instances`](pcluster.instances.md)
 + [`pcluster list`](pcluster.list.md)

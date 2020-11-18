@@ -1,4 +1,4 @@
-# AWS services used in AWS ParallelCluster<a name="aws-services"></a>
+# AWS services used by AWS ParallelCluster<a name="aws-services"></a>
 
 The following Amazon Web Services \(AWS\) services are used by AWS ParallelCluster\.
 
@@ -26,7 +26,7 @@ The following Amazon Web Services \(AWS\) services are used by AWS ParallelClust
 
 ## AWS Auto Scaling<a name="aws-auto-scaling"></a>
 
-AWS Auto Scaling is a service that monitors your applications and automatically adjusts the capacity of your applications based on your specific and changing service requirements\. This service manages your ComputeFleet instances as an Auto Scaling group, which can be elastically driven by your changing workload or statically fixed by your initial instance configurations\.
+AWS Auto Scaling is a service that monitors your applications and automatically adjusts capacity based on your specific and changing service requirements\. This service manages your ComputeFleet instances as an Auto Scaling group\. The group can be elastically driven by your changing workload or statically fixed by your initial instance configurations\.
 
 AWS Auto Scaling is used with ComputeFleet instances but is not used with AWS Batch clusters\.
 
@@ -34,7 +34,7 @@ For more information about AWS Auto Scaling, see [https://aws\.amazon\.com/autos
 
 ## AWS Batch<a name="aws-batch"></a>
 
-AWS Batch is an AWS managed job scheduler service\. It dynamically provisions the optimal quantity and type of compute resources \(for example, CPU or memory\-optimized instances\) in AWS Batch clusters\. These resources are provisioned based on the specificrequirements of your batch jobs, including volume requirements\. With AWS Batch, you don't need to install or manage additional batch computing software or server clusters to run your jobs effectively\.
+AWS Batch is an AWS managed job scheduler service\. It dynamically provisions the optimal quantity and type of compute resources \(for example, CPU or memory\-optimized instances\) in AWS Batch clusters\. These resources are provisioned based on the specific requirements of your batch jobs, including volume requirements\. With AWS Batch, you don't need to install or manage additional batch computing software or server clusters to run your jobs effectively\.
 
 AWS Batch is used only with AWS Batch clusters\.
 
@@ -42,15 +42,15 @@ For more information about AWS Batch, see [https://aws\.amazon\.com/batch/](http
 
 ## AWS CloudFormation<a name="aws-services-cloudformation"></a>
 
-AWS CloudFormation is an infrastructure\-as\-code service that provides a common language for you to model and provision AWS and third\-party application resources in your cloud environment\. It is the main service used by AWS ParallelCluster\. Each cluster in AWS ParallelCluster is represented as a stack, and all resources required by each cluster are defined within the AWS ParallelCluster AWS CloudFormation template\. In most cases, AWS ParallelCluster CLI commands directly correspond to AWS CloudFormation stack commands, such as create, update, and delete\. Instances that are launched within a cluster make HTTPS calls to the AWS CloudFormation endpoint in the Region where the cluster is launched\.
+AWS CloudFormation is an infrastructure\-as\-code service that provides a common language to model and provision AWS and third\-party application resources in your cloud environment\. It is the main service used by AWS ParallelCluster\. Each cluster in AWS ParallelCluster is represented as a stack, and all resources required by each cluster are defined within the AWS ParallelCluster AWS CloudFormation template\. In most cases, AWS ParallelCluster CLI commands directly correspond to AWS CloudFormation stack commands, such as create, update, and delete commands\. Instances that are launched within a cluster make HTTPS calls to the AWS CloudFormation endpoint in the Region where the cluster is launched\.
 
 For more information about AWS CloudFormation, see [https://aws\.amazon\.com/cloudformation/](http://aws.amazon.com/cloudformation/) and [https://docs\.aws\.amazon\.com/cloudformation/](https://docs.aws.amazon.com/cloudformation/)\.
 
 ## Amazon CloudWatch<a name="amazon-cloudwatch"></a>
 
-Amazon CloudWatch \(CloudWatch\) is a monitoring and observability service that provides you with data and actionable insights\. These insights can be used to monitor your applications, response to performance changes and service exceptions, and optimize resource utilization\. In AWS ParallelCluster, CloudWatch is used in particular to monitor and log Docker image build steps as well as the output of the AWS Batch jobs\.
+Amazon CloudWatch \(CloudWatch\) is a monitoring and observability service that provides you with data and actionable insights\. These insights can be used to monitor your applications, respond to performance changes and service exceptions, and optimize resource utilization\. In AWS ParallelCluster, CloudWatch is used for a dashboard, to monitor and log Docker image build steps and the output of the AWS Batch jobs\.
 
-CloudWatch is used only with AWS Batch clusters\.
+Before AWS ParallelCluster version 2\.10\.0, CloudWatch was used only with AWS Batch clusters\.
 
 For more information about CloudWatch, see [https://aws\.amazon\.com/cloudwatch/](http://aws.amazon.com/cloudwatch/) and [https://docs\.aws\.amazon\.com/cloudwatch/](https://docs.aws.amazon.com/cloudwatch/)\.
 
@@ -72,7 +72,7 @@ For more information about CodeBuild, see [https://aws\.amazon\.com/codebuild/](
 
 ## Amazon DynamoDB<a name="amazon-dynamodb"></a>
 
-Amazon DynamoDB \(DynamoDB\) is a fast and flexible NoSQL database service\. It is used to store minimal state of the cluster\. The head node tracks provisioned instances in a DynamoDB table\.
+Amazon DynamoDB \(DynamoDB\) is a fast and flexible NoSQL database service\. It is used to store the minimal state information of the cluster\. The head node tracks provisioned instances in a DynamoDB table\.
 
 DynamoDB is not used with AWS Batch clusters\.
 
@@ -80,19 +80,19 @@ For more information about DynamoDB, see [https://aws\.amazon\.com/dynamodb/](ht
 
 ## Amazon Elastic Block Store<a name="amazon-elastic-block-store-ebs"></a>
 
-Amazon Elastic Block Store \(Amazon EBS\) is a high\-performance block storage service that provides persistent storage for shared volumes\. All Amazon EBS settings can be passed through the configuration\. Amazon EBS volumes can either be initialized empty, or from an existing Amazon EBS snapshot\.
+Amazon Elastic Block Store \(Amazon EBS\) is a high\-performance block storage service that provides persistent storage for shared volumes\. All Amazon EBS settings can be passed through the configuration\. Amazon EBS volumes can either be initialized empty or from an existing Amazon EBS snapshot\.
 
 For more information about Amazon EBS, see [https://aws\.amazon\.com/ebs/](http://aws.amazon.com/ebs/) and [https://docs\.aws\.amazon\.com/ebs/](https://docs.aws.amazon.com/ebs/)\.
 
 ## Amazon Elastic Compute Cloud<a name="amazon-ec2"></a>
 
-Amazon Elastic Compute Cloud \(Amazon EC2\) provides the computing capacity for AWS ParallelCluster\. The head and compute nodes are Amazon EC2 instances\. Any instance type that support HVM can be selected\. The head and compute nodes can be different instance types, and if multiple queues are used, some or all of compute nodes can also be launched as a Spot instance\. Instance store volumes found on the instances are mounted as striped LVM volumes\.
+Amazon Elastic Compute Cloud \(Amazon EC2\) provides the computing capacity for AWS ParallelCluster\. The head and compute nodes are Amazon EC2 instances\. Any instance type that support HVM can be selected\. The head and compute nodes can be different instance types\. Moreover, if multiple queues are used, some or all of compute nodes can also be launched as a Spot Instance\. Instance store volumes found on the instances are mounted as striped LVM volumes\.
 
 For more information about Amazon EC2, see [https://aws\.amazon\.com/ec2/](http://aws.amazon.com/ec2/) and [https://docs\.aws\.amazon\.com/ec2/](https://docs.aws.amazon.com/ec2/)\.
 
 ## Amazon Elastic Container Registry<a name="amazon-elastic-container-registry-ecr"></a>
 
-Amazon Elastic Container Registry \(Amazon ECR\) is a fully managed Docker container registry that makes it easy to store, manage, and deploy Docker container images\. In AWS ParallelCluster, it stores the Docker images built when clusters are created\. The Docker images are then used by AWS Batch to run the containers for the submitted jobs\.
+Amazon Elastic Container Registry \(Amazon ECR\) is a fully managed Docker container registry that makes it easy to store, manage, and deploy Docker container images\. In AWS ParallelCluster, Amazon ECR stores the Docker images that are built when clusters are created\. The Docker images are then used by AWS Batch to run the containers for the submitted jobs\.
 
 Amazon ECR is used only with AWS Batch clusters\.
 
@@ -114,7 +114,7 @@ For more information about Amazon FSx for Lustre, see [https://aws\.amazon\.com/
 
 AWS Identity and Access Management \(IAM\) is used within AWS ParallelCluster to provide a least privileged IAM role for Amazon EC2 for the instance that is specific to each individual cluster\. AWS ParallelCluster instances are given access only to the specific API calls that are required to deploy and manage the cluster\.
 
-With AWS Batch clusters, IAM roles are also created for the components that are involved with the Docker image building process when clusters are created\. These components include the Lambda functions that are allowed to add and delete Docker images to and from the Amazon ECR repository and the functions allowed to delete the Amazon S3 bucket that is created for the cluster and CodeBuild project\. There are also roles for AWS Batch resources, instances, and jobs\.
+With AWS Batch clusters, IAM roles are also created for the components that are involved with the Docker image building process when clusters are created\. These components include the Lambda functions that are allowed to add and delete Docker images to and from the Amazon ECR repository\. They also include the functions allowed to delete the Amazon S3 bucket that is created for the cluster and CodeBuild project\. There are also roles for AWS Batch resources, instances, and jobs\.
 
 For more information about IAM, see [https://aws\.amazon\.com/iam/](http://aws.amazon.com/iam/) and [https://docs\.aws\.amazon\.com/iam/](https://docs.aws.amazon.com/iam/)\.
 
@@ -140,7 +140,7 @@ For more information about Route 53, see [https://aws\.amazon\.com/route53/](ht
 
 ## Amazon Simple Notification Service<a name="amazon-simple-notification-service-sns"></a>
 
-Amazon Simple Notification Service \(Amazon SNS\) receives notifications from Auto Scaling\. These events are called life cycle events and are generated when an instance launches or terminates in an Auto Scaling group\. Within AWS ParallelCluster, the Amazon SNS topic for the Auto Scaling group is subscribed to an Amazon SQS queue\.
+Amazon Simple Notification Service \(Amazon SNS\) receives notifications from Auto Scaling\. These events are called lifecycle events and are generated when an instance launches or terminates in an Auto Scaling group\. Within AWS ParallelCluster, the Amazon SNS topic for the Auto Scaling group is subscribed to an Amazon SQS queue\.
 
 Amazon SNS is not used with AWS Batch clusters\.
 
@@ -158,7 +158,7 @@ For more information about Amazon SQS, see [https://aws\.amazon\.com/sqs/](http:
 
 Amazon Simple Storage Service \(Amazon S3\) stores AWS ParallelCluster templates located in each Region\. AWS ParallelCluster can be configured to allow CLI/SDK tools to use Amazon S3\.
 
-When you use AWS Batch cluster, an Amazon S3 bucket in your account is used for storing related data\. For example, the bucket stores artifacts created from creating a Docker image and scripts from submitted jobs\.
+When you use AWS Batch cluster, an Amazon S3 bucket in your account is used for storing related data\. For example, the bucket stores artifacts created when a Docker image and scripts are created from submitted jobs\.
 
 For more information, see [https://aws\.amazon\.com/s3/](http://aws.amazon.com/s3/) and [https://docs\.aws\.amazon\.com/s3/](https://docs.aws.amazon.com/s3/)\.
 

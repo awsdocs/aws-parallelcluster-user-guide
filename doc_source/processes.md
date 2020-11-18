@@ -1,6 +1,6 @@
 # AWS ParallelCluster processes<a name="processes"></a>
 
-This section applies only to HPC clusters that are deployed with one of the supported traditional job schedulers \(SGE, Slurm, or Torque\)\. When used with these schedulers, AWS ParallelCluster manages the compute node provisioning and removal by interacting with both the Auto Scaling group and the underlying job scheduler\.
+This section applies only to HPC clusters that are deployed with one of the supported traditional job schedulers \(SGE, Slurm, or Torque\)\. When used with these schedulers, AWS ParallelCluster manages compute node provisioning and removal by interacting with both the Auto Scaling group and the underlying job scheduler\.
 
 For HPC clusters that are based on AWS Batch, AWS ParallelCluster relies on the capabilities provided by the AWS Batch for the compute node management\.
 
@@ -20,13 +20,13 @@ A cluster's lifecycle begins after it is created by a user\. Typically, a cluste
 
 ## `jobwatcher`<a name="jobwatcher"></a>
 
-When a cluster is running, a process owned by the root user monitors the configured scheduler \(SGE, Slurm, or Torque\) and each minute, it evaluates the queue in order to decide when to scale up\.
+When a cluster is running, a process owned by the root user monitors the configured scheduler \(SGE, Slurm, or Torque\)\. Each minute it evaluates the queue in order to decide when to scale up\.
 
 ![\[jobwatcher workflow\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/jobwatcher.png)
 
 ## `sqswatcher`<a name="sqswatcher"></a>
 
-The `sqswatcher` process monitors for Amazon SQS messages that are sent by Auto Scaling, to notify you of state changes within the cluster\. When an instance comes online, it submits an "instance ready" message to Amazon SQS\. This message is picked up by `sqs_watcher`, running on the head node\. These messages are used to notify the queue manager when new instances come online or are terminated, so they can be added or removed from the queue\.
+The `sqswatcher` process monitors for Amazon SQS messages that are sent by Auto Scaling to notify you of state changes within the cluster\. When an instance comes online, it submits an "instance ready" message to Amazon SQS\. This message is picked up by `sqs_watcher`, running on the head node\. These messages are used to notify the queue manager when new instances come online or are terminated, so they can be added or removed from the queue\.
 
 ![\[sqswatcher workflow\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/sqswatcher.png)
 

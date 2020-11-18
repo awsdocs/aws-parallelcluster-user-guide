@@ -14,7 +14,7 @@ Throughout their lifecycle, cloud nodes enter several if not all of the followin
 + A node in a `POWER_SAVING` state appears with a `~` suffix \(for example `idle~`\) in `sinfo`\. In this state, there is no EC2 instance backing the node\. However, Slurm can still allocate jobs to the node\.
 + A node transitioning to a `POWER_UP` state appears with a `#` suffix \(for example`idle#`\) in `sinfo`\.
 + When Slurm allocates job to a node in a `POWER_SAVING` state, the node automatically transfers to a `POWER_UP` state\. Otherwise, nodes can be placed in the `POWER_UP` state manually using the `scontrol update nodename=nodename state=power_up` command\. In this stage, the `ResumeProgram` is invoked, and EC2 instances are launched and configured to back a `POWER_UP` node\.
-+ A node that is currently available for use appears without any suffix \(for example `idle`\) in `sinfo`\. After the node is setup and joins the cluster, it becomes available to run jobs\. In this stage, the node is properly configured and ready for use\. As a general rule, we recommend that the number of instances in EC2 be the same as the number of available nodes\. In most cases, static nodes are always available after the cluster is created\.
++ A node that is currently available for use appears without any suffix \(for example `idle`\) in `sinfo`\. After the node is set up and has joined the cluster, it becomes available to run jobs\. In this stage, the node is properly configured and ready for use\. As a general rule, we recommend that the number of instances in EC2 be the same as the number of available nodes\. In most cases, static nodes are always available after the cluster is created\.
 + A node that is transitioning to a `POWER_DOWN` state appears with a `%` suffix \(for example `idle%`\) in `sinfo`\. Dynamic nodes automatically enter `POWER_DOWN` state after [`scaledown_idletime`](scaling-section.md#scaledown-idletime)\. In contrast, static nodes in most cases aren't powered down\. However, nodes can be placed in the `POWER_DOWN` state manually using the `scontrol update nodename=nodename state=powering_down` command\. In this state, the instance associated with a node is terminated, and node is reset back to the `POWER_SAVING` state to future use after [`scaledown_idletime`](scaling-section.md#scaledown-idletime)\. The `scaledown-idletime` setting is saved to the Slurm configuration as the `SuspendTimeout` setting\.
 + A node that is offline appears with a `*` suffix \(for example `down*`\) in `sinfo`\. A node goes offline if Slurm controller can't contact the node or if the static nodes are disabled and the backing instances are terminated\.
 
@@ -39,7 +39,7 @@ All of the other nodes are in `POWER_SAVING` state with no EC2 instances backing
 
 ## Working with an available node<a name="multiple-queue-mode-slurm-user-guide-working-with-available-nodes"></a>
 
-An available node is backed by an EC2 instance\. By default, the node name can be used to directly ssh into the instance \(for example `ssh efa-st-c5n18xlarge-1`\)\. The private IP address of the instance can be retrieved using the `scontrol show nodes nodename` command and checking the `NodeAddr` field\. For nodes that aren't available, the `NodeAddr` field shouldn't point to a running EC2 instance, but rather should be the same as the node name\.
+An available node is backed by an EC2 instance\. By default, the node name can be used to directly SSH into the instance \(for example `ssh efa-st-c5n18xlarge-1`\)\. The private IP address of the instance can be retrieved using the `scontrol show nodes nodename` command and checking the `NodeAddr` field\. For nodes that aren't available, the `NodeAddr` field shouldn't point to a running EC2 instance\. Rather, it should be the same as the node name\.
 
 ## Job states and submission<a name="multiple-queue-mode-slurm-user-guide-job-states"></a>
 
@@ -57,7 +57,7 @@ All nodes are configured with the following features, which can be used in job s
 
 You can see all of the features available for a particular node by using the `scontrol show nodes nodename` command and checking the `AvailableFeatures` list\.
 
-Another consideration are jobs\. First consider the initial state of the cluster, which you can view by running the `sinfo` command\.
+Another consideration is jobs\. First consider the initial state of the cluster, which you can view by running the `sinfo` command\.
 
 ```
 $ sinfo
@@ -96,7 +96,7 @@ Submit a job to one GPU node to the `gpu` queue\.
 $ sbatch --wrap "sleep 300" -p gpu -G 1
 ```
 
-Now considerthe state of the jobs using the `squeue` command\.
+Now consider the state of the jobs using the `squeue` command\.
 
 ```
 $ squeue
@@ -134,14 +134,14 @@ However, AWS ParallelCluster also replaces or terminates unhealthy nodes in `DOW
 ## Partition states<a name="multiple-queue-mode-slurm-user-guide-partition-states"></a>
 
 AWS ParallelCluster supports the following partition states\. A Slurm partition is a queue in AWS ParallelCluster\.
-+ `UP`: Indicates the partition is in an active state\. This is the default state of a partition\. In this state, all nodes in the partition are active and available for use\.
-+ `INACTIVE`: Indicates the partition is in the inactive state In this state, all instances backing nodes of an inactive partition are terminated\. New instances aren't launched for nodes in an inactive partition\.
++ `UP`: Indicates that the partition is in an active state\. This is the default state of a partition\. In this state, all nodes in the partition are active and available for use\.
++ `INACTIVE`: Indicates that the partition is in the inactive state\. In this state, all instances backing nodes of an inactive partition are terminated\. New instances aren't launched for nodes in an inactive partition\.
 
 ## pcluster start and stop<a name="multiple-queue-mode-slurm-user-guide-pcluster-start-stop"></a>
 
 When [`pcluster stop`](pcluster.stop.md) is run, all partitions are placed in the `INACTIVE` state, and the AWS ParallelCluster processes keep the partitions in the `INACTIVE` state\.
 
-When [`pcluster start`](pcluster.start.md) is run, all partitions are initially placed in the `UP` state\. However,, AWS ParallelCluster processes don't keep the partition in an `UP` state\. You need to change partition states manually\. All static nodes become available after a few minutes\. Note that setting a partition to `UP` doesn't power up any dynamic capacity\. If [`initial_count`](compute-resource-section.md#compute-resource-initial-count) is greater than [`max_count`](compute-resource-section.md#compute-resource-max-count), then [`initial_count`](compute-resource-section.md#compute-resource-initial-count) might not be satisfied when the partition state is changed to the `UP` state\.
+When [`pcluster start`](pcluster.start.md) is run, all partitions are initially placed in the `UP` state\. However, AWS ParallelCluster processes don't keep the partition in an `UP` state\. You need to change partition states manually\. All static nodes become available after a few minutes\. Note that setting a partition to `UP` doesn't power up any dynamic capacity\. If [`initial_count`](compute-resource-section.md#compute-resource-initial-count) is greater than [`max_count`](compute-resource-section.md#compute-resource-max-count), then [`initial_count`](compute-resource-section.md#compute-resource-initial-count) might not be satisfied when the partition state is changed to the `UP` state\.
 
 When [`pcluster start`](pcluster.start.md) and [`pcluster stop`](pcluster.stop.md) are running, you can check the state of the cluster by running the [`pcluster status`](pcluster.status.md) command and checking the `ComputeFleetStatus`\. The following lists possible states:
 + `STOP_REQUESTED`: The [`pcluster stop`](pcluster.stop.md) request is sent to the cluster\.
@@ -155,8 +155,8 @@ When [`pcluster start`](pcluster.start.md) and [`pcluster stop`](pcluster.stop.m
 
 In some cases, you may want to have some manual control over the nodes or queue \(known as a partition in Slurm\) in a cluster\. You can manage nodes in a cluster through the following common procedures\.
 + Power up dynamic nodes in `POWER_SAVING` state: Run the `scontrol update nodename=nodename state=power_up` command orsubmit a placeholder `sleep 1` job requesting for a certain number of nodes and rely on Slurm to power up required number of nodes\.
-+ Power down dynamic nodes prior to [`scaledown_idletime`](scaling-section.md#scaledown-idletime): Set dynamic nodes to `DOWN` with the `scontrol update nodename=nodename state=down` command\. AWS ParallelCluster automatically terminates and resets the downed dynamic nodes\. In general, we don't recommend setting nodes to `POWER_DOWN` directly by using the `scontrol update nodename=nodename state=power_down` command\. This is because AWS ParallelCluster automatically handles the power down process\. No manual is necessary\.Therefore, we recommend that you try to set nodes to `DOWN` whenever possible instead\.
-+ Disable a queue \(partition\) or stop all static nodes in specific partition: Set specific the queue to `INACTIVE` with the `scontrol update partition=queue name state=inactive` command\. Doing this terminates all instances backing nodes in the partition\.\.
++ Power down dynamic nodes before [`scaledown_idletime`](scaling-section.md#scaledown-idletime): Set dynamic nodes to `DOWN` with the `scontrol update nodename=nodename state=down` command\. AWS ParallelCluster automatically terminates and resets the downed dynamic nodes\. In general, we don't recommend setting nodes to `POWER_DOWN` directly using the `scontrol update nodename=nodename state=power_down` command\. This is because AWS ParallelCluster automatically handles the power down process\. No manual intervention is necessary\. Therefore, we recommend that you try to set nodes to `DOWN` whenever possible\.
++ Disable a queue \(partition\) or stop all static nodes in specific partition: Set specific the queue to `INACTIVE` with the `scontrol update partition=queue name state=inactive` command\. Doing this terminates all instances backing nodes in the partition\.
 + Enable a queue \(partition\): Set specific the queue to `INACTIVE` with the `scontrol update partition=queue name state=up` command\.
 
 ## Scaling behavior and adjustments<a name="multiple-queue-mode-slurm-user-guide-scaling-behavior"></a>
@@ -225,7 +225,7 @@ The following lit contains the key logs for the multiple queue architecture\. Th
 + Nodes replaced/terminated unexpectedly
   + In most cases, `clustermgtd` handles all node maintenance actions\. To check if `clustermgtd` replaced or terminated a node, check the `clustermgtd` log\.
   + If `clustermgtd` replaced or terminated the node, there should be a message indicating the reason for the action\. If the reason is scheduler related \(for example, the node was `DOWN`\), check in the `slurmctld` log for more details\. If the reason is EC2 related, use tools to check status or logs for that instance\. For example, you can check if the instance had scheduled events or failed EC2 health status checks\.
-  + If `clustermgtd` didn't terminate the node, check if `computemgtd` terminated the node or if EC2 terminated the instance to reclaim a spot instance\.
+  + If `clustermgtd` didn't terminate the node, check if `computemgtd` terminated the node or if EC2 terminated the instance to reclaim a Spot Instance\.
 + Node failures
   + In most cases, jobs are automatically requeued if a node failed\. Look in the `slurmctld` log to see why a job or a node failed and analyze the situation from there\.
 

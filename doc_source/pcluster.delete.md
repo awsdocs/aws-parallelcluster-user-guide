@@ -21,11 +21,11 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `--keep-logs`  
-Keep the CloudWatch Logs data after deleting the cluster\. The log group remains until you delete it manually, but the log events will expire based on the [`retention_days`](cw-log-section.md#cw-log-section-retention-days) setting\. The setting defaults to 14 days\.  
+Keep the CloudWatch Logs data after deleting the cluster\. The log group remains until you delete it manually, but the log events expire based on the [`retention_days`](cw-log-section.md#cw-log-section-retention-days) setting\. The setting defaults to 14 days\.  
 Support for the `--keep-logs` argument was added in AWS ParallelCluster version 2\.6\.0\.
 
 `-r REGION, --region REGION`  
-Specifies the Region to connect to\.
+Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 When the command is called and begins polling for the status of that call, it is safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
 

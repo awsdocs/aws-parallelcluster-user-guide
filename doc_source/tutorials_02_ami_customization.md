@@ -28,7 +28,7 @@ There are three ways to use a custom AWS ParallelCluster AMI\. Two of these thre
 
 This is the safest and most recommended method\. Because the base AWS ParallelCluster AMI is often updated with new releases, this AMI has all of the components required for AWS ParallelCluster to function when it is installed and configured\. You can start with this as the base\.
 
-1. In the AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.9\.1, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.9\.1/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.9.1/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.9\.1** button, select the **Tags** tab, and then select the appropriate version\.
+1. In the AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.10, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.10/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.10/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.10** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Within the Amazon EC2 console, choose **Launch Instance**\.
 
@@ -69,7 +69,7 @@ Before AWS ParallelCluster version 2\.8\.0, [Berkshelf](https://github.com/berks
    pcluster createami --ami-id <BASE_AMI> --os <BASE_AMI_OS>
    ```
 **Important**  
-You shouldn't use an AWS ParallelCluster AMI as *<BASE\_AMI>* for the `createami` command\. Otherwise, the command fails\.
+You shouldn't use an AWS ParallelCluster AMI from a running cluster as *<BASE\_AMI>* for the `createami` command\. Otherwise, the command fails\.
 
    For other parameters, see [`pcluster createami`](pcluster.createami.md)\.
 

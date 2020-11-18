@@ -13,7 +13,7 @@ Specifies global configuration options related to `pcluster`\.
 
 ## `cluster_template`<a name="cluster-template"></a>
 
-Defines the name of the `cluster` section that is used by default for the cluster\. For additional information about `cluster` sections, see [`[cluster]` section](cluster-definition.md)\. The cluster name must start with a letter, contain no more than 60 characters, and only contain letters, numbers, and hyphens \(\-\)\.
+Defines the name of the `cluster` section that is used for the cluster by default\. For additional information about `cluster` sections, see [`[cluster]` section](cluster-definition.md)\. The cluster name must start with a letter, contain no more than 60 characters, and only contain letters, numbers, and hyphens \(\-\)\.
 
 For example, the following setting specifies that the section that starts `[cluster default]` is used by default\.
 
@@ -25,7 +25,7 @@ cluster_template = default
 
 ## `update_check`<a name="update-check"></a>
 
-Checks for updates to `pcluster`\.
+**\(Optional\)** Checks for updates to `pcluster`\.
 
 The default value is `true`\.
 
@@ -37,7 +37,7 @@ update_check = true
 
 ## `sanity_check`<a name="sanity-check"></a>
 
-Attempts to validate the existence of the resources that are defined in the cluster parameters\.
+**\(Optional\)** Attempts to validate the existence of the resources that are defined in the cluster parameters\.
 
 The default value is `true`\.
 
@@ -46,6 +46,6 @@ sanity_check = true
 ```
 
 **Note**  
-Prior to AWS ParallelCluster version 2\.5\.0, [`sanity_check`](#sanity-check) defaulted to `false`\.
+Before AWS ParallelCluster version 2\.5\.0, [`sanity_check`](#sanity-check) defaulted to `false`\.
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

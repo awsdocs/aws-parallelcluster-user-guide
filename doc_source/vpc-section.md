@@ -22,7 +22,7 @@ master_subnet_id = subnet-xxxxxx
 
 ## `additional_sg`<a name="additional-sg"></a>
 
-Provides an additional Amazon VPC security group Id for all instances\.
+**\(Optional\)** Provides an additional Amazon VPC security group Id for all instances\.
 
 The default value is `NONE`\.
 
@@ -32,7 +32,7 @@ additional_sg = sg-xxxxxx
 
 ## `compute_subnet_cidr`<a name="compute-subnet-cidr"></a>
 
-Specifies a Classless Inter\-Domain Routing \(CIDR\) block\. Use this parameter if you want AWS ParallelCluster to create a compute subnet\.
+**\(Optional\)** Specifies a Classless Inter\-Domain Routing \(CIDR\) block\. Use this parameter if you want AWS ParallelCluster to create a compute subnet\.
 
 ```
 compute_subnet_cidr = 10.0.100.0/24
@@ -42,9 +42,9 @@ compute_subnet_cidr = 10.0.100.0/24
 
 ## `compute_subnet_id`<a name="compute-subnet-id"></a>
 
-Specifies the ID of an existing subnet in which to provision the compute nodes\.
+**\(Optional\)** Specifies the ID of an existing subnet in which to provision the compute nodes\.
 
-If not specified, [`compute_subnet_id`](#compute-subnet-id) uses the valueof [`master_subnet_id`](#master-subnet-id)\.
+If not specified, [`compute_subnet_id`](#compute-subnet-id) uses the value of [`master_subnet_id`](#master-subnet-id)\.
 
 If the subnet is private, you must set up NAT for web access\.
 
@@ -56,7 +56,7 @@ compute_subnet_id = subnet-xxxxxx
 
 ## `master_subnet_id`<a name="master-subnet-id"></a>
 
-Specifies the ID of an existing subnet in which to provision the head node\.
+**\(Optional\)** Specifies the ID of an existing subnet in which to provision the head node\.
 
 ```
 master_subnet_id = subnet-xxxxxx
@@ -66,7 +66,7 @@ master_subnet_id = subnet-xxxxxx
 
 ## `ssh_from`<a name="ssh-from"></a>
 
-Specifies a CIDR\-formatted IP range to allow SSH access from\.
+**\(Optional\)** Specifies a CIDR\-formatted IP range to allow SSH access from\.
 
 This parameter is used only when AWS ParallelCluster creates the security group\.
 
@@ -80,7 +80,7 @@ ssh_from = 0.0.0.0/0
 
 ## `use_public_ips`<a name="use-public-ips"></a>
 
-Defines whether to assign public IP addresses to compute instances\.
+**\(Optional\)** Defines whether to assign public IP addresses to compute instances\.
 
 If set to `true`, an Elastic IP address is associated to the head node\.
 
@@ -95,7 +95,7 @@ use_public_ips = true
 ```
 
 **Important**  
-By default, all AWS accounts are limited to five \(5\) Elastic IP addresses per Region\. For more information, see [Elastic IP address limit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-limit) in *Amazon EC2 User Guide for Linux Instances*\.
+By default, all AWS accounts are limited to five \(5\) Elastic IP addresses for each Region\. For more information, see [Elastic IP address limit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-limit) in *Amazon EC2 User Guide for Linux Instances*\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
@@ -111,7 +111,7 @@ vpc_id = vpc-xxxxxx
 
 ## `vpc_security_group_id`<a name="vpc-security-group-id"></a>
 
-Specifies the use of an existing security group for all instances\.
+**\(Optional\)** Specifies the use of an existing security group for all instances\.
 
 The default value is `NONE`\.
 

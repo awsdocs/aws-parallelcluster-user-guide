@@ -22,12 +22,12 @@ performance_mode = generalPurpose
 
 ## `efs_fs_id`<a name="efs-efs-fs-id"></a>
 
-Defines the Amazon EFS file system ID for an existing file system\.
+**\(Optional\)** Defines the Amazon EFS file system ID for an existing file system\.
 
 Specifying this option voids all other Amazon EFS options except for [`shared_dir`](cluster-definition.md#cluster-shared-dir)\.
 
 If you set this option to `config_sanity`, it only supports file systems:
-+ That do not have a mount target in the stack's Availability Zone
++ That don't have a mount target in the stack's Availability Zone
 
   OR
 + That do have an existing mount target in the stack's Availability Zone, with inbound and outbound NFS traffic allowed from `0.0.0.0/0`\.
@@ -42,7 +42,7 @@ The sanity check for validating [`efs_fs_id`](#efs-efs-fs-id) requires the IAM r
 To avoid errors, you must add these permissions to your IAM role, or set `sanity_check = false`\.
 
 **Important**  
-When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you *not* create a mount target in the stack's Availability Zone, and instead let AWS handle this step\. If you must have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
+When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you do *not* create a mount target in the stack's Availability Zone\. Instead, you should let AWS handle this step\. If you still want to have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
 
 The default value is `NONE`\.
 
@@ -54,7 +54,7 @@ efs_fs_id = fs-12345
 
 ## `efs_kms_key_id`<a name="efs-efs-kms-key-id"></a>
 
-\(Optional\) Identifies the AWS Key Management Service \(AWS KMS\) customer managed key \(CMK\) to be used to protect the encrypted file system\. If this is set, the [`encrypted`](#efs-encrypted) setting must be set to `true`\. This corresponds to the [KmsKeyId](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-KmsKeyId) parameter in the *Amazon EFS API Reference*\.
+**\(Optional\)** Identifies the AWS Key Management Service \(AWS KMS\) customer managed key \(CMK\) to be used to protect the encrypted file system\. If this is set, the [`encrypted`](#efs-encrypted) setting must be set to `true`\. This corresponds to the [KmsKeyId](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-KmsKeyId) parameter in the *Amazon EFS API Reference*\.
 
 The default value is `NONE`\.
 
@@ -66,7 +66,7 @@ efs_kms_key_id = 1234abcd-12ab-34cd-56ef-1234567890ab
 
 ## `encrypted`<a name="efs-encrypted"></a>
 
-Indicates whether the file system is encrypted\. This corresponds to the [Encrypted](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-Encrypted) parameter in the *Amazon EFS API Reference*\.
+**\(Optional\)** Indicates whether the file system is encrypted\. This corresponds to the [Encrypted](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-Encrypted) parameter in the *Amazon EFS API Reference*\.
 
 The default value is `false`\.
 
@@ -78,9 +78,9 @@ encrypted = true
 
 ## `performance_mode`<a name="efs-performance-mode"></a>
 
-Defines the performance mode of the file system\. This corresponds to the [PerformanceMode](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-PerformanceMode) parameter in the *Amazon EFS API Reference*\.
+**\(Optional\)** Defines the performance mode of the file system\. This corresponds to the [PerformanceMode](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-PerformanceMode) parameter in the *Amazon EFS API Reference*\.
 
-Valid choices are:
+Valid options are the following values:
 + `generalPurpose`
 + `maxIO`
 
@@ -102,7 +102,7 @@ performance_mode = generalPurpose
 
 ## `provisioned_throughput`<a name="efs-provisioned-throughput"></a>
 
-Defines the provisioned throughput of the file system, measured in MiB/s\. This corresponds to the [ProvisionedThroughputInMibps](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-response-ProvisionedThroughputInMibps) parameter in the *Amazon EFS API Reference*\.
+**\(Optional\)** Defines the provisioned throughput of the file system, measured in MiB/s\. This corresponds to the [ProvisionedThroughputInMibps](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-response-ProvisionedThroughputInMibps) parameter in the *Amazon EFS API Reference*\.
 
 If you use this parameter, you must set [`throughput_mode`](#efs-throughput-mode) to `provisioned`\.
 
@@ -118,7 +118,7 @@ provisioned_throughput = 1024
 
 ## `shared_dir`<a name="efs-shared-dir"></a>
 
-Defines the Amazon EFS mount point on the head and compute nodes\.
+**\(Required\)** Defines the Amazon EFS mount point on the head and compute nodes\.
 
 This parameter is required\. The Amazon EFS section is used only if [`shared_dir`](cluster-definition.md#cluster-shared-dir) is specified\.
 
@@ -134,9 +134,9 @@ shared_dir = efs
 
 ## `throughput_mode`<a name="efs-throughput-mode"></a>
 
-Defines the throughput mode of the file system\. This corresponds to the [ThroughputMode](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-ThroughputMode) parameter in the *Amazon EFS API Reference*\.
+**\(Optional\)** Defines the throughput mode of the file system\. This corresponds to the [ThroughputMode](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-ThroughputMode) parameter in the *Amazon EFS API Reference*\.
 
-Valid options are:
+Valid options are the following values:
 + `bursting`
 + `provisioned`
 

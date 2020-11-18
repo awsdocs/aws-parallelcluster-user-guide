@@ -4,5 +4,5 @@ AWS ParallelCluster was built not only as a way to manage clusters, but as a ref
 
 **Topics**
 + [AWS ParallelCluster processes](processes.md)
-+ [AWS services used in AWS ParallelCluster](aws-services.md)
++ [AWS services used by AWS ParallelCluster](aws-services.md)
 + [AWS ParallelCluster Auto Scaling](autoscaling.md)

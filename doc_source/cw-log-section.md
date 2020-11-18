@@ -10,7 +10,7 @@ enable = true
 retention_days = 14
 ```
 
-For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
+For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md), [Amazon CloudWatch dashboard](cloudwatch-dashboard.md), and [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
 
 **Note**  
 Support for `cw_log` was added in AWS ParallelCluster version 2\.6\.0\.

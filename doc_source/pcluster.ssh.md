@@ -3,7 +3,7 @@
 Runs an `ssh` command with the user name and IP address of the cluster pre\-populated\. Arbitrary arguments are appended to the end of the `ssh` command\. This command can be customized in the aliases section of the configuration file\.
 
 ```
-pcluster ssh [ -h ] [ -d ] cluster_name
+pcluster ssh [ -h ] [ -d ] [ -r REGION ] cluster_name
 ```
 
 ## Positional arguments<a name="pcluster.ssh.arg"></a>
@@ -19,6 +19,9 @@ Shows the help text for `pcluster ssh`\.
 `-d, --dryrun`  
 Prints the command that would be run and exits\.  
 Defaults to `False`\.
+
+`-r REGION, --region REGION`  
+Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 Example:
 

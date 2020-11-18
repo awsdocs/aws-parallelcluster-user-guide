@@ -2,13 +2,13 @@
 
 AWS ParallelCluster is an enhanced version of CfnCluster\.
 
-If you currently use CfnCluster, we encourage you to start using and creating new clusters with AWS ParallelCluster instead\. Although you can continue to use CfnCluster, it is no longer being developed, and no new features or functionality will be added\.
+If you currently use CfnCluster, we recommend that you use AWS ParallelCluster instead and create new clusters with it\. Even though you can continue to use CfnCluster, it's no longer being developed, and no new features or functionality will be added\.
 
 The main differences between CfnCluster and AWS ParallelCluster are described in the following sections\.
 
 **AWS ParallelCluster CLI manages a different set of clusters** 
 
-Clusters created with the `cfncluster` CLI cannot be managed with the `pcluster` CLI\. The following commands do not work on clusters created by CfnCluster:
+Clusters created with the `cfncluster` CLI can't be managed with the `pcluster` CLI\. The following commands don't work on clusters created by CfnCluster:
 
 ```
 pcluster list
@@ -23,13 +23,13 @@ If you need a CfnCluster package to manage your old clusters, we recommend that 
 
  **AWS ParallelCluster and CfnCluster use different IAM custom policies** 
 
-Custom IAM policies that were previously used for CfnCluster cluster creation cannot be used with AWS ParallelCluster\. If you require custom policies for AWS ParallelCluster, you must create new ones\. See the AWS ParallelCluster guide\.
+Custom IAM policies that were previously used for CfnCluster cluster creation can't be used with AWS ParallelCluster\. If you require custom policies for AWS ParallelCluster, you must create new ones\. See the AWS ParallelCluster guide\.
 
  **AWS ParallelCluster and CfnCluster use different configuration files** 
 
 The AWS ParallelCluster configuration file resides in the `~/.parallelcluster` folder\. The CfnCluster configuration file resides in the `~/.cfncluster` folder\.
 
-If you want to use an existing CfnCluster configuration file with AWS ParallelCluster, you must:
+If you want to use an existing CfnCluster configuration file with AWS ParallelCluster, then you must complete the following actions:
 
 1. Move the configuration file from `~/.cfncluster/config` to `~/.parallelcluster/config`\.
 
@@ -49,7 +49,7 @@ extra_json = { "cluster" : { } }
 
  **In AWS ParallelCluster, ganglia is disabled by default** 
 
-In AWS ParallelCluster, ganglia is disabled by default\. To enable ganglia:
+In AWS ParallelCluster, ganglia is disabled by default\. To enable ganglia, complete these steps:
 
 1. Set the [`extra_json`](cluster-definition.md#extra-json) parameter as shown:
 

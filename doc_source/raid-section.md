@@ -10,7 +10,7 @@
 + [`encrypted`](#raid-encrypted)
 + [`ebs_kms_key_id`](#raid-ebs_kms_key_id)
 
-Defines configuration settings for a RAID array that is built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the head node and is exported to compute nodes via NFS\.
+Defines configuration settings for a RAID array that is built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the head node and is exported to compute nodes with NFS\.
 
 The format is `[raid raid-name]`\. *raid\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
@@ -24,11 +24,11 @@ encrypted = true
 
 ## `shared_dir`<a name="raid-shared-dir"></a>
 
-Defines the mount point for the RAID array on the head and compute nodes\.
+**\(Required\)** Defines the mount point for the RAID array on the head and compute nodes\.
 
 The RAID drive is created only if this parameter is specified\.
 
-Do not use `NONE` or `/NONE` as the shared directory\.
+Don't use `NONE` or `/NONE` as the shared directory\.
 
 The following example mounts the array at `/raid`\.
 
@@ -44,7 +44,7 @@ Defines the RAID type for the RAID array\.
 
 The RAID drive is created only if this parameter is specified\.
 
-Valid options are:
+Valid options are the following values:
 + `0`
 + `1`
 
@@ -62,9 +62,9 @@ raid_type = 0
 
 Defines the number of Amazon EBS volumes to assemble the RAID array from\.
 
-Minimum number of volumes = `2`\.
+Minimum number of volumes is `2`\.
 
-Maximum number of volumes = `5`\.
+Maximum number of volumes is `5`\.
 
 The default value is `2`\.
 
@@ -78,7 +78,7 @@ num_of_raid_volumes = 2
 
 Defines the type of volume to build\.
 
-Valid options are:
+Valid options are the following values:
 + `gp2`
 + `io1`
 + `st1`

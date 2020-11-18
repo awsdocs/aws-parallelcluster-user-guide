@@ -31,7 +31,7 @@ shared_dir = vol2
 
 ## `shared_dir`<a name="ebs-shared-dir"></a>
 
-Specifies the path where the shared Amazon EBS volume is mounted\.
+**\(Required\)** Specifies the path where the shared Amazon EBS volume is mounted\.
 
 This parameter is required when using multiple Amazon EBS volumes\.
 
@@ -45,7 +45,7 @@ shared_dir = vol1
 
 ## `ebs_snapshot_id`<a name="ebs-snapshot-id"></a>
 
-Defines the Amazon EBS snapshot Id, if you are using a snapshot as the source for the volume\.
+**\(Optional\)** Defines the Amazon EBS snapshot ID if you're using a snapshot as the source for the volume\.
 
 The default value is `NONE`\.
 
@@ -57,9 +57,9 @@ ebs_snapshot_id = snap-xxxxx
 
 ## `volume_type`<a name="volume-type"></a>
 
-Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) of the volume that you want to launch\.
+**\(Optional\)** Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) of the volume that you want to launch\.
 
-Valid options are:
+Valid options are the following volume types:
 + `gp2`
 + `io1`
 + `st1`
@@ -75,7 +75,7 @@ volume_type = io1
 
 ## `volume_size`<a name="volume-size"></a>
 
-Specifies the size of the volume to be created, in GiB \(if not using a snapshot\)\.
+**\(Optional\)** Specifies the size of the volume to be created, in GiB \(if not using a snapshot\)\.
 
 The default value is `20`\.
 
@@ -87,7 +87,7 @@ volume_size = 20
 
 ## `volume_iops`<a name="volume-iops"></a>
 
-Defines the number of IOPS for `io1`\-type volumes\.
+**\(Optional\)** Defines the number of IOPS for `io1`\-type volumes\.
 
 The default value is `100`\.
 
@@ -99,7 +99,7 @@ volume_iops = 200
 
 ## `encrypted`<a name="encrypted"></a>
 
-Specifies whether the Amazon EBS volume is encrypted\. Note: Do *not* use with snapshots\.
+**\(Optional\)** Specifies whether the Amazon EBS volume is encrypted\. Note: Do *not* use with snapshots\.
 
 The default value is `false`\.
 
@@ -111,7 +111,7 @@ encrypted = false
 
 ## `ebs_kms_key_id`<a name="ebs-kms-key-id"></a>
 
-Specifies a custom AWS KMS key to use for encryption\.
+**\(Optional\)** Specifies a custom AWS KMS key to use for encryption\.
 
 This parameter must be used together with `encrypted = true`\. It also must have a custom [`ec2_iam_role`](cluster-definition.md#ec2-iam-role)\.
 
@@ -125,7 +125,7 @@ ebs_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 ## `ebs_volume_id`<a name="ebs-volume-id"></a>
 
-Defines the volume Id of an existing Amazon EBS volume to attach to the head node\.
+**\(Optional\)** Defines the volume ID of an existing Amazon EBS volume to attach to the head node\.
 
 The default value is `NONE`\.
 

@@ -12,7 +12,7 @@ Default region name [us-east-1]: us-east-1
 Default output format [None]:
 ```
 
-The Region where the cluster will be launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+The Region where the cluster is launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
 $ pcluster configure
@@ -21,12 +21,12 @@ $ pcluster configure
 The configure wizard prompts you for all of the information that's needed to create your cluster\. The details of the sequence differ when using AWS Batch as the scheduler compared to using SGE, Slurm, or Torque\.
 
 **Warning**  
-Starting on December 31, 2021, AWS will no longer include SGE and Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support SGE and Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from AWS service and customer support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for either SGE or Torque\.
+Starting on December 31, 2021, AWS will no longer include SGE and Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support SGE and Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for either SGE or Torque\.
 
 ------
 #### [ SGE, Slurm, or Torque ]
 
-From the list of valid AWS Region identifiers, choose the Region in which you want your cluster to run\.
+From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
 
 ```
 Allowed values for the AWS Region ID:
@@ -66,8 +66,8 @@ Choose the operating system\.
 Allowed values for Operating System:
 1. alinux
 2. alinux2
-3. centos6
-4. centos7
+3. centos7
+4. centos8
 5. ubuntu1604
 6. ubuntu1804
 Operating System [alinux]:
@@ -99,9 +99,9 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [prod-uswest1-key]:
 ```
 
-After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It is possible to reach your limit on number of VPCs in a Region\. The default limit is five VPCs per Region\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your limit on number of VPCs in a Region\. The default limit is five VPCs for each Region\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
-If you let AWS ParallelCluster create a VPC, you must decide whether all nodes should be in a public subnet\.
+If you let AWS ParallelCluster create a VPC, you must decide if all nodes should be in a public subnet\.
 
 ```
 Automate VPC creation? (y/n) [n]: y
@@ -112,7 +112,7 @@ Network Configuration [Master in a public subnet and compute fleet in a private 
 Beginning VPC creation. Please do not leave the terminal until the creation is finalized
 ```
 
-If you do not create a new VPC\. you must select an existing VPC\.
+If you don't create a new VPC, you must select an existing VPC\.
 
 ```
 Automate VPC creation? (y/n) [n]: n
@@ -124,7 +124,7 @@ Allowed values for VPC ID:
 VPC ID [vpc-0b4ad9c4678d3c7ad]: 1
 ```
 
-After the VPC has been selected, decide whether to use existing subnets or create new ones\.
+After the VPC has been selected, you need to decide whether to use existing subnets or create new ones\.
 
 ```
 Automate Subnet creation? (y/n) [y]: y
@@ -138,7 +138,7 @@ Do not leave the terminal until the process has finished
 ------
 #### [ AWS Batch ]
 
-From the list of valid AWS Region identifiers, choose the Region in which you want your cluster to run\.
+From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
 
 ```
 Allowed values for AWS Region ID:
@@ -196,9 +196,9 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [prod-uswest1-key]:
 ```
 
-Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It is possible to reach your limit on number of VPCs in a Region\. The default number of VPCs is five\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your limit on number of VPCs in a Region\. The default number of VPCs is five\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
-If you let AWS ParallelCluster create a VPC, decide whether all nodes should be in a public subnet\.
+If you let AWS ParallelCluster create a VPC, decide if all nodes should be in a public subnet\.
 
 ```
 Automate VPC creation? (y/n) [n]: y
@@ -209,7 +209,7 @@ Network Configuration [Master in a public subnet and compute fleet in a private 
 Beginning VPC creation. Please do not leave the terminal until the creation is finalized
 ```
 
-If you do not create a new VPC\. you must select an existing VPC
+If you don't create a new VPC\. you must select an existing VPC
 
 ```
 Automate VPC creation? (y/n) [n]: n
@@ -234,7 +234,7 @@ Do not leave the terminal until the process has finished
 
 ------
 
-When you have completed the preceding steps, a simple cluster launches into a VPC, using an existing subnet that supports public IP's \(the route table for the subnet is `0.0.0.0/0 => igw-xxxxxx`\)\. Note the following:
+When you have completed the preceding steps, a simple cluster launches into a VPC\. The VPC uses an existing subnet that supports public IP addresses\. The route table for the subnet is `0.0.0.0/0 => igw-xxxxxx`\. Note the following conditions:
 + The VPC must have `DNS Resolution = yes` and `DNS Hostnames = yes`\.
 + The VPC should also have DHCP options with the correct `domain-name` for the Region\. The default DHCP Option Set already specifies the required AmazonProvidedDNS\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\. When using private subnets, use a NAT gateway or an internal proxy to enable web access for compute nodes\. For more information, see [Network configurations](networking.md)\.
 
@@ -244,7 +244,7 @@ When all settings contain valid values, you can launch the cluster by running th
 $ pcluster create mycluster
 ```
 
-After the cluster reaches the "CREATE\_COMPLETE" status, you can connect to it by using your normal SSH client settings\. For more details on connecting to Amazon EC2 instances, see the [EC2 User Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux) in the *Amazon EC2 User Guide for Linux Instances*\.
+After the cluster reaches the "CREATE\_COMPLETE" status, you can connect to it by using your normal SSH client settings\. For more information about connecting to Amazon EC2 instances, see the [EC2 User Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 If [`pcluster configure`](pcluster.configure.md) created a new VPC, you can delete that VPC by deleting the AWS CloudFormation stack it created\. The name will start with "parallelclusternetworking\-" and contain the creation time in a "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
 

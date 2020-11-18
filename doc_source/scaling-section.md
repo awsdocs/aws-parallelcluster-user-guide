@@ -14,9 +14,9 @@ scaledown_idletime = 10
 
 ## `scaledown_idletime`<a name="scaledown-idletime"></a>
 
-Specifies the amount of time in minutes without a job, after which the compute node terminates\.
+**\(Optional\)** Specifies the amount of time in minutes without a job, after which the compute node terminates\.
 
-This parameter is not used if `awsbatch` is the scheduler\.
+This parameter isn't used if `awsbatch` is the scheduler\.
 
 The default value is `10`\.
 

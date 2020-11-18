@@ -1,6 +1,6 @@
 # Example<a name="examples"></a>
 
-The following example launches a cluster with the `awsbatch` scheduler\. It is set to pick the optimal instance type, based on your job resource needs\.
+The following example launches a cluster with the `awsbatch` scheduler\. It's set to pick the optimal instance type based on your job resource needs\.
 
 The example configuration allows a maximum of 40 concurrent vCPUs, and scales down to zero when no jobs have run for 10 minutes\.
 

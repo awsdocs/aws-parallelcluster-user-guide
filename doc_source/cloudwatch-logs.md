@@ -4,6 +4,8 @@ Starting with AWS ParallelCluster version 2\.6\.0, common logs are stored in Clo
 
 A log group is created for each cluster with a name `/aws/parallelcluster/cluster-name` \(for example, `/aws/parallelcluster/testCluster`\)\. Each log \(or set of logs if the path contains a `*`\) on each node has a log stream named `{hostname}.{instance_id}.{logIdentifier}`\. \(For example `ip-172-31-10-46.i-02587cf29cc3048f3.nodewatcher`\.\) Log data is sent to CloudWatch by the [CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html), which runs as `root` on all cluster instances\.
 
+Starting with AWS ParallelCluster version 2\.10\.0, an Amazon CloudWatch dashboard is created when the cluster is created\. This dashboard makes it easy to review the logs stored in CloudWatch Logs\. For more information, see [Amazon CloudWatch dashboard](cloudwatch-dashboard.md)\.
+
 This list contains the path of the logs and the *logIdentifier* used for those logs\.
 + `/opt/sge/default/spool/qmaster/messages` \(`sge-qmaster`\)
 + `/var/log/cfn-init.log` \(`cfn-init`\)

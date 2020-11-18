@@ -21,8 +21,8 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
-Specifies the Region to connect to\.
+Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 `-nw, --nowait`  
-Indicates not to wait for stack events after executing a stack command\.  
+Indicates not to wait for stack events after processing a stack command\.  
 Defaults to `False`\.

@@ -27,7 +27,7 @@ Defaults to `~/.parallelcluster/config`\.
 Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 `-nw, --nowait`  
-Indicates not to wait for stack events after executing a stack command\.  
+Indicates not to wait for stack events after running a stack command\.  
 Defaults to `False`\.
 
 `-nr, --norollback`  
@@ -35,7 +35,7 @@ Disables stack rollback on error\.
 Defaults to `False`\.
 
 `-u TEMPLATE_URL, --template-url TEMPLATE_URL`  
-Specifies a URL for the custom AWS CloudFormation template, if it was used at creation time\.
+Specifies a URL for the custom AWS CloudFormation template if it was used at creation time\.
 
 `-t CLUSTER_TEMPLATE, --cluster-template CLUSTER_TEMPLATE`  
 Indicates the cluster template to use\.
