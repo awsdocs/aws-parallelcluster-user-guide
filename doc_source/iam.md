@@ -203,7 +203,7 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
 
 ### `ParallelClusterInstancePolicy` using `awsbatch`<a name="parallelclusterinstancepolicy-batch"></a>
 
-The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\. The following example is an overview of the required permissions:
+The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\.  In this example, “*<RESOURCES S3 BUCKET>*” is the value of the [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) setting; if [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) is not specified then “*<RESOURCES S3 BUCKET>*” is “parallelcluster\-\*”\. The following example is an overview of the required permissions:
 
 ```
 {
@@ -313,7 +313,7 @@ The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` 
 
 ### `ParallelClusterUserPolicy` using SGE, Slurm, or Torque<a name="parallelclusteruserpolicy"></a>
 
-The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or Torque as the scheduler\.
+The following example sets the `ParallelClusterUserPolicy`, using SGE, Slurm, or Torque as the scheduler\. In this example, “*<RESOURCES S3 BUCKET>*” is the value of the [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) setting; if [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) is not specified then “*<RESOURCES S3 BUCKET>*” is “parallelcluster\-\*”\.
 
 **Note**  
 If you use a custom role, [`ec2_iam_role`](cluster-definition.md#ec2-iam-role)` = <role_name>`, you must change the IAM resource to include the name of that role from:  
@@ -532,7 +532,7 @@ To:
                 "s3:*"
             ],
             "Resource": [
-                "arn:aws:s3:::parallelcluster-*"
+                "arn:aws:s3:::<RESOURCES S3 BUCKET>"
             ],
             "Effect": "Allow",
             "Sid": "S3ResourcesBucket"
@@ -555,7 +555,7 @@ To:
                 "s3:DeleteObjectVersion"
             ],
             "Resource": [
-                "arn:aws:s3:::parallelcluster-*"
+                "arn:aws:s3:::<RESOURCES S3 BUCKET>"
             ],
             "Effect": "Allow",
             "Sid": "S3Delete"
@@ -681,7 +681,7 @@ To:
 
 ### `ParallelClusterUserPolicy` using `awsbatch`<a name="parallelclusteruserpolicy-batch"></a>
 
-The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as the scheduler:
+The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as the scheduler\. In this example, “*<RESOURCES S3 BUCKET>*” is the value of the [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) setting; if [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) is not specified then “*<RESOURCES S3 BUCKET>*” is “parallelcluster\-\*”\.
 
 ```
 {
@@ -900,7 +900,7 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
                 "s3:*"
             ],
             "Resource": [
-                "arn:aws:s3:::parallelcluster-*"
+                "arn:aws:s3:::<RESOURCES S3 BUCKET>"
             ],
             "Effect": "Allow",
             "Sid": "S3ResourcesBucket"
@@ -923,7 +923,7 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
                 "s3:DeleteObjectVersion"
             ],
             "Resource": [
-                "arn:aws:s3:::parallelcluster-*"
+                "arn:aws:s3:::<RESOURCES S3 BUCKET>"
             ],
             "Effect": "Allow",
             "Sid": "S3Delete"
