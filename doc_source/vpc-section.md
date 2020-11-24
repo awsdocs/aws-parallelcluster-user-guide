@@ -56,7 +56,7 @@ compute_subnet_id = subnet-xxxxxx
 
 ## `master_subnet_id`<a name="master-subnet-id"></a>
 
-**\(Optional\)** Specifies the ID of an existing subnet in which to provision the head node\.
+**\(Required\)** Specifies the ID of an existing subnet in which to provision the head node\.
 
 ```
 master_subnet_id = subnet-xxxxxx
@@ -101,7 +101,7 @@ By default, all AWS accounts are limited to five \(5\) Elastic IP addresses for 
 
 ## `vpc_id`<a name="vpc-id"></a>
 
-Specifies the ID of the Amazon VPC in which to provision the cluster\.
+**\(Required\)** Specifies the ID of the Amazon VPC in which to provision the cluster\.
 
 ```
 vpc_id = vpc-xxxxxx

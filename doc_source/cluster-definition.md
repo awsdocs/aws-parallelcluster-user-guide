@@ -471,7 +471,7 @@ initial_queue_size = 2
 
 ## `key_name`<a name="key-name"></a>
 
-Names an existing Amazon EC2 key pair with which to enable SSH access to the instances\.
+**\(Required\)** Names an existing Amazon EC2 key pair with which to enable SSH access to the instances\.
 
 ```
 key_name = mykey
@@ -885,7 +885,7 @@ template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/
 
 ## `vpc_settings`<a name="vpc-settings"></a>
 
-Identifies the `[vpc]` section with the Amazon VPC configuration where the cluster is deployed\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
+**\(Required\)** Identifies the `[vpc]` section with the Amazon VPC configuration where the cluster is deployed\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[vpc]` section](vpc-section.md)\.
 
