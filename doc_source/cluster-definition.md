@@ -107,7 +107,7 @@ Available options are:
 + `ubuntu1804`
 
 **Note**  
-For AWS Graviton\-based instances, only `alinux2` or `ubuntu1804` are supported\.
+For AWS Graviton\-based instances, only `alinux2`, `centos8`, or `ubuntu1804` are supported\.
 
 **Note**  
 Support for `centos8` was added and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\. Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added, and support for `ubuntu1404` was removed in AWS ParallelCluster version 2\.5\.0\.

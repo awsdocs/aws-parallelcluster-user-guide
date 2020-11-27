@@ -29,7 +29,7 @@ max_vcpus = 24
 [vpc my-vpc]
 # Replace with the id of the vpc you intend to use.
 vpc_id = vpc-#######
-# Replace with id of the subnet for the Master node.
+# Replace with id of the subnet for the Head node.
 master_subnet_id = subnet-#######
 # Replace with id of the subnet for the Compute nodes.
 # A NAT Gateway is required for MNP.
