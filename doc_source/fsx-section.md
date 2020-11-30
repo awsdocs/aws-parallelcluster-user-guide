@@ -319,7 +319,7 @@ For AWS ParallelCluster version 2\.5\.0 and 2\.5\.1, [`storage_capacity`](#fsx-s
 
 ## `storage_type`<a name="fsx-storage-type"></a>
 
-**\(Optional\)** Specifies the storage type of the file system\. This corresponds to the [StorageType](https://docs.aws.amazon.com/https://alpha-docs-aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-fsx-filesystem.html#cfn-fsx-filesystem-storagetype) property\. The possible values are `SSD` and `HDD`\. The default is `SSD`\.
+**\(Optional\)** Specifies the storage type of the file system\. This corresponds to the [StorageType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-fsx-filesystem.html#cfn-fsx-filesystem-storagetype) property\. The possible values are `SSD` and `HDD`\. The default is `SSD`\.
 
 The storage type changes the possible values of other settings\.
 
