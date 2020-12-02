@@ -42,7 +42,8 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
                 "ec2:RunInstances",
                 "ec2:TerminateInstances",
                 "ec2:DescribeLaunchTemplates",
-                "ec2:CreateTags"
+                "ec2:CreateTags",
+                "ec2:DescribeInstanceTypes"
             ],
             "Resource": [
                 "*"
@@ -179,7 +180,8 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
         },
         {
             "Action": [
-                "logs:CreateLogStream"
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
             ],
             "Resource": [
                 "*"
