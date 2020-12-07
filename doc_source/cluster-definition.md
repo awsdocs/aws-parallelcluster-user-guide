@@ -332,7 +332,7 @@ ebs_settings = custom1, custom2
 
 ## `ec2_iam_role`<a name="ec2-iam-role"></a>
 
-**\(Optional\)** Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNscan;t be used as an argument to [`ec2_iam_role`](#ec2-iam-role)\. If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. We recommend that you use [`additional_iam_policies`](#additional-iam-policies), rather than [`ec2_iam_role`](#ec2-iam-role), because features added to AWS ParallelCluster often require new permissions\.
+**\(Optional\)** Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to [`ec2_iam_role`](#ec2-iam-role)\. If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. We recommend that you use [`additional_iam_policies`](#additional-iam-policies), rather than [`ec2_iam_role`](#ec2-iam-role), because features added to AWS ParallelCluster often require new permissions\.
 
 The default value is `NONE`\.
 
