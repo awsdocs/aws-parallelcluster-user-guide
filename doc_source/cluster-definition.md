@@ -124,7 +124,7 @@ Other than the specific Regions mentioned in the following table that don't supp
 | China \(Ningxia\) \(cn\-northwest\-1\) | True | False | True | 
 
 **Note**  
-The [`base_os`](#base-os) parameter also determines the user name that is used to log into the cluster\.
+The [`base_os`](#base-os) parameter also determines the user name that's used to log into the cluster\.
 + `centos7` and `centos8`: `centos` 
 + `ubuntu1604` and `ubuntu1804`: `ubuntu` 
 + `alinux` and `alinux2`: `ec2-user` 
@@ -151,6 +151,14 @@ The default value is `ondemand`\.
 
 For more information about Spot Instances, see [Working with Spot Instances](spot.md)\.
 
+**Note**  
+Using Spot Instances requires that the **AWSServiceRoleForEC2SpotFleet** service\-linked role exist in your account\. To create this role in your account using the AWS CLI, run the following command:  
+
+```
+aws iam create-service-linked-role --aws-service-name spotfleet.amazonaws.com
+```
+For more information, see [Spot Fleet permissions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html#spot-fleet-prerequisites) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 ```
 cluster_type = ondemand
 ```
@@ -159,7 +167,7 @@ cluster_type = ondemand
 
 ## `compute_instance_type`<a name="compute-instance-type"></a>
 
-**\(Optional\)** Defines the Amazon EC2 instance type that is used for the cluster compute nodes\. The architecture of the instance type must be the same as the architecture used for the [`master_instance_type`](#master-instance-type) setting\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be replaced by the [`instance_type`](compute-resource-section.md#compute-resource-instance-type) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
+**\(Optional\)** Defines the Amazon EC2 instance type that's used for the cluster compute nodes\. The architecture of the instance type must be the same as the architecture used for the [`master_instance_type`](#master-instance-type) setting\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be replaced by the [`instance_type`](compute-resource-section.md#compute-resource-instance-type) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
 If you're using the `awsbatch` scheduler, see the Compute Environments creation in the AWS Batch UI for a list of supported instance types\.
 
@@ -203,7 +211,7 @@ custom_ami = NONE
 
 ## `cluster_resource_bucket`<a name="cluster-resource-bucket-section"></a>
 
-**\(Optional\)** Specifies the name of the Amazon S3 bucket that is used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service Developer Guide*\. This bucket can be used for multiple clusters\.
+**\(Optional\)** Specifies the name of the Amazon S3 bucket that's used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service Developer Guide*\. This bucket can be used for multiple clusters\.
 
 If this parameter isn't specified, a new bucket is created when the cluster is created\. The new bucket has the name of `parallelcluster-random_string`\. In this name, *random\_string* is a random string of alphanumeric characters\. All cluster resources are stored in this bucket in a path with the form `bucket_name/resource_directory`\. `resource_directory` has the form `stack_name-random_string`, where *stack\_name* is the name of one of the AWS CloudFormation stacks used by AWS ParallelCluster\. The value of *bucket\_name* can be found in the `ResourcesS3Bucket` value in the output of the `parallelcluster-clustername` stack\. The value of *resource\_directory* can be found in the value of the `ArtifactS3RootDirectory` output from the same stack\.
 
@@ -241,7 +249,7 @@ Support for [`cw_log_settings`](#cw-log-settings) was added in AWS ParallelClust
 
 For more information, see the [`[dashboard]` section](dashboard-section.md)\.
 
-For example, the following setting specifies that the section that starts `[dashboard custom-dashboard]` is used for the CloudWatch dashboard configuration\.
+For example, the following setting specifies that the section that starts `[dashboard custom-dashboard` is used for the CloudWatch dashboard configuration\.
 
 ```
 dashboard_settings = custom-dashboard
@@ -301,7 +309,7 @@ desired_vcpus = 4
 
 ## `disable_hyperthreading`<a name="disable-hyperthreading"></a>
 
-**\(Optional\)** Disables hyperthreading on the head and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads per CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`disable_hyperthreading`](queue-section.md#queue-disable-hyperthreading) settings in the [`[queue]` sections](queue-section.md) can be defined\.
+**\(Optional\)** Disables hyperthreading on the head and compute nodes\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads for each CPU core for each instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`disable_hyperthreading`](queue-section.md#queue-disable-hyperthreading) settings in the [`[queue]` sections](queue-section.md) can be defined\.
 
 The default value is `false`\.
 
@@ -332,7 +340,7 @@ ebs_settings = custom1, custom2
 
 ## `ec2_iam_role`<a name="ec2-iam-role"></a>
 
-**\(Optional\)** Defines the name of an existing IAM role for Amazon EC2 that is attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to [`ec2_iam_role`](#ec2-iam-role)\. If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. We recommend that you use [`additional_iam_policies`](#additional-iam-policies), rather than [`ec2_iam_role`](#ec2-iam-role), because features added to AWS ParallelCluster often require new permissions\.
+**\(Optional\)** Defines the name of an existing IAM role for Amazon EC2 that's attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to [`ec2_iam_role`](#ec2-iam-role)\. If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. We recommend that you use [`additional_iam_policies`](#additional-iam-policies), rather than [`ec2_iam_role`](#ec2-iam-role), because features added to AWS ParallelCluster often require new permissions\.
 
 The default value is `NONE`\.
 
@@ -387,7 +395,7 @@ enable_intel_hpc_platform = true
 ```
 
 **Note**  
-The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) parameter is not compatible with AWS Graviton\-based instances\.
+The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) parameter isn't compatible with AWS Graviton\-based instances\.
 
 **Note**  
 Support for [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) was added in AWS ParallelCluster version 2\.5\.0\.
@@ -422,7 +430,7 @@ ephemeral_dir = /scratch
 
 ## `extra_json`<a name="extra-json"></a>
 
-**\(Optional\)** Defines the extra JSON that is merged into the Chef `dna.json`\. For more information, see [Building a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md)\.
+**\(Optional\)** Defines the extra JSON that's merged into the Chef `dna.json`\. For more information, see [Building a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md)\.
 
 The default value is `{}`\.
 
@@ -485,7 +493,7 @@ key_name = mykey
 
 If the scheduler is `awsbatch`, use [`desired_vcpus`](#desired-vcpus) instead\.
 
-This setting is a Boolean flag\. If set to `true`, the Auto Scaling group doesn't ever have fewer members than the value of [`initial_queue_size`](#configuration-initial-queue-size), and the value of [`initial_queue_size`](#configuration-initial-queue-size) must be one \(1\) or greater\. The cluster can still scale up to the value of [`max_queue_size`](#configuration-max-queue-size)\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop below [`initial_queue_size`](#configuration-initial-queue-size)\.
+This setting is a Boolean flag\. If set to `true`, the Auto Scaling group doesn't ever have fewer members than the value of [`initial_queue_size`](#configuration-initial-queue-size), and the value of [`initial_queue_size`](#configuration-initial-queue-size) must be one \(1\) or greater\. The cluster can still scale up to the value of [`max_queue_size`](#configuration-max-queue-size)\. If `cluster_type = spot` then the Auto Scaling group can have instances interrupted and the size can drop under [`initial_queue_size`](#configuration-initial-queue-size)\.
 
 If set to `false`, the Auto Scaling group can scale down to zero \(0\) members to prevent resources from sitting idle when they aren't needed\.
 
@@ -501,7 +509,7 @@ maintain_initial_size = false
 
 ## `master_instance_type`<a name="master-instance-type"></a>
 
-**\(Optional\)** Defines the Amazon EC2 instance type that is used for the head node\. The architecture of the instance type must be the same as the architecture used for the [`compute_instance_type`](#compute-instance-type) setting\.
+**\(Optional\)** Defines the Amazon EC2 instance type that's used for the head node\. The architecture of the instance type must be the same as the architecture used for the [`compute_instance_type`](#compute-instance-type) setting\.
 
 Defaults to `t2.micro`\.
 
@@ -510,7 +518,7 @@ master_instance_type = t2.micro
 ```
 
 **Note**  
-The `p4d.24xlarge` is not supported for the head node\.
+The `p4d.24xlarge` isn't supported for the head node\.
 
 **Note**  
 Support for AWS Graviton\-based instances \(such as `A1` and `C6g`\) was added in AWS ParallelCluster version 2\.8\.0\.
@@ -621,7 +629,7 @@ placement_group = NONE
 
 ## `post_install`<a name="post-install"></a>
 
-**\(Optional\)** Specifies the URL of a post\-install script that is run after all of the `boot_as_*` scripts are run\.
+**\(Optional\)** Specifies the URL of a post\-install script that's run after all of the `boot_as_*` scripts are run\.
 
 When using `awsbatch` as the scheduler, the post\-install script is run only on the head node\.
 
@@ -649,7 +657,7 @@ post_install_args = "NONE"
 
 ## `pre_install`<a name="pre-install"></a>
 
-**\(Optional\)** Specifies the URL of a pre\-install script that is run before any of the `boot_as_*` scripts are run\.
+**\(Optional\)** Specifies the URL of a pre\-install script that's run before any of the `boot_as_*` scripts are run\.
 
 When using `awsbatch` as the scheduler, the pre\-install script is run only on the head node\.
 
@@ -805,7 +813,7 @@ scheduler = slurm
 
 **\(Optional\)** Defines the path where the shared Amazon EBS volume is mounted\.
 
-Do not use this option with multiple Amazon EBS volumes\. Instead, provide [`shared_dir`](#cluster-shared-dir) values under each [`[ebs]` section](ebs-section.md)\.
+Don't use this option with multiple Amazon EBS volumes\. Instead, provide [`shared_dir`](#cluster-shared-dir) values under each [`[ebs]` section](ebs-section.md)\.
 
 See the [`[ebs]` section](ebs-section.md) for details on working with multiple Amazon EBS volumes\.
 
@@ -844,7 +852,7 @@ spot_price = 1.50
 ```
 
 **Note**  
-In AWS ParallelCluster version 2\.5\.0, if `cluster_type = spot` but [`spot_price`](#spot-price) is not specified, the instance launches of the ComputeFleet fail\. This was fixed in AWS ParallelCluster version 2\.5\.1\.
+In AWS ParallelCluster version 2\.5\.0, if `cluster_type = spot` but [`spot_price`](#spot-price) isn't specified, the instance launches of the ComputeFleet fail\. This was fixed in AWS ParallelCluster version 2\.5\.1\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
@@ -871,7 +879,7 @@ The update policy did not support changing the `tags` setting for AWS ParallelCl
 
 ## `template_url`<a name="template-url"></a>
 
-**\(Optional\)** Defines the path to the AWS CloudFormation template that is used to create the cluster\.
+**\(Optional\)** Defines the path to the AWS CloudFormation template that's used to create the cluster\.
 
 Updates use the template that was originally used to create the stack\.
 

@@ -28,7 +28,7 @@ Support for the [`[queue]` section](#queue-section) was added in AWS ParallelClu
 
 **\(Required\)** Identifies the [`[compute_resource]` sections](compute-resource-section.md) containing the compute resources configurations for this queue\. The section names must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
-Up to three \(3\) [`[compute_resource]` sections](compute-resource-section.md) are supported per [`[queue]` section](#queue-section)\.
+Up to three \(3\) [`[compute_resource]` sections](compute-resource-section.md) are supported for each [`[queue]` section](#queue-section)\.
 
 For example, the following setting specifies that the sections that start `[compute_resource cr1]` and `[compute_resource cr2]` are used\.
 
@@ -48,6 +48,14 @@ The default value is `ondemand`\.
 
 For more information about Spot Instances, see [Working with Spot Instances](spot.md)\.
 
+**Note**  
+Using Spot Instances requires that the **AWSServiceRoleForEC2SpotFleet** service\-linked role exist in your account\. To create this role in your account using the AWS CLI, run the following command:  
+
+```
+aws iam create-service-linked-role --aws-service-name spotfleet.amazonaws.com
+```
+For more information, see [Spot Fleet permissions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html#spot-fleet-prerequisites) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 The following example uses SpotInstances for the compute nodes in this queue\.
 
 ```
@@ -58,7 +66,7 @@ compute_type = spot
 
 ## `disable_hyperthreading`<a name="queue-disable-hyperthreading"></a>
 
-**\(Optional\)** Disables hyperthreading on the nodes in this queue\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads per CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\. If the [`disable_hyperthreading`](cluster-definition.md#disable-hyperthreading) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\.
+**\(Optional\)** Disables hyperthreading on the nodes in this queue\. Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads for each CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\. If the [`disable_hyperthreading`](cluster-definition.md#disable-hyperthreading) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\.
 
 The default value is `false`\.
 

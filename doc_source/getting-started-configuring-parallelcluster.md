@@ -28,24 +28,31 @@ Starting on December 31, 2021, AWS will no longer include SGE and Torque support
 
 From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
 
+**Note**  
+The list of Regions shown is based on the partition of your account, and only includes Regions that are enabled for your account\. For more information about enabling Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of Regions supported by AWS ParallelCluster, see [Supported Regions](supported-regions.md)\.
+
 ```
 Allowed values for the AWS Region ID:
-1. ap-northeast-1
-2. ap-northeast-2
-3. ap-south-1
-4. ap-southeast-1
-5. ap-southeast-2
-6. ca-central-1
-7. eu-central-1
-8. eu-north-1
-9. eu-west-1
-10. eu-west-2
-11. eu-west-3
-12. sa-east-1
-13. us-east-1
-14. us-east-2
-15. us-west-1
-16. us-west-2
+1. af-south-1
+2. ap-east-1
+3. ap-northeast-1
+4. ap-northeast-2
+5. ap-south-1
+6. ap-southeast-1
+7. ap-southeast-2
+8. ca-central-1
+9. eu-central-1
+10. eu-north-1
+11. eu-south-1
+12. eu-west-1
+13. eu-west-2
+14. eu-west-3
+15. me-south-1
+16. sa-east-1
+17. us-east-1
+18. us-east-2
+19. us-west-1
+20. us-west-2
 AWS Region ID [ap-northeast-1]:
 ```
 

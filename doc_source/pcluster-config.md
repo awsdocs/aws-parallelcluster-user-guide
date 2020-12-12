@@ -13,6 +13,8 @@ For command\-specific flags, run: `pcluster-config [command] –h`\.
 `-h, --help`  
 Shows the help text for `pcluster-config`\.
 
+
+
 **Note**  
 The `pcluster-config` command was added in AWS ParallelCluster version 2\.9\.0\.
 

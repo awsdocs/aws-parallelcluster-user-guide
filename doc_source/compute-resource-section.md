@@ -25,7 +25,7 @@ Support for the [`[compute_resource]` section](#compute-resource-section) was ad
 
 ## `initial_count`<a name="compute-resource-initial-count"></a>
 
-**\(Optional\)** Sets the initial number of Amazon EC2 instances to launch for this compute resource\. Cluster creation doesn't complete until at least this many nodes have been launched into the compute resource\. If the [`compute_type`](queue-section.md#queue-compute-type) setting for the queue is `spot` and there aren't enough Spot Instances available, the cluster creation may time out and fail\. Any count larger than the [`min_count`](#compute-resource-min-count) setting is dynamic capacity subject to the [`scaledown_idletime`](scaling-section.md#scaledown-idletime) setting\. This setting replaces the [`initial_queue_size`](cluster-definition.md#configuration-initial-queue-size) setting\.
+**\(Optional\)** Sets the initial number of Amazon EC2 instances to launch for this compute resource\. Cluster creation doesn't complete until at least this many nodes have been launched into the compute resource\. If the [`compute_type`](queue-section.md#queue-compute-type) setting for the queue is `spot` and there aren't enough Spot Instances available, the cluster creation might time out and fail\. Any count larger than the [`min_count`](#compute-resource-min-count) setting is dynamic capacity subject to the [`scaledown_idletime`](scaling-section.md#scaledown-idletime) setting\. This setting replaces the [`initial_queue_size`](cluster-definition.md#configuration-initial-queue-size) setting\.
 
 Defaults to `0`\.
 
@@ -37,7 +37,7 @@ initial_count = 2
 
 ## `instance_type`<a name="compute-resource-instance-type"></a>
 
-**\(Required\)** Defines the Amazon EC2 instance type that is used for this compute resource\. The architecture of the instance type must be the same as the architecture used for the [`master_instance_type`](cluster-definition.md#master-instance-type) setting\. The `instance_type` setting must be unique for each [`[compute_resource]` section](#compute-resource-section) referenced by a [`[queue]` section](queue-section.md)\. This setting replaces the [`compute_instance_type`](cluster-definition.md#compute-instance-type) setting\.
+**\(Required\)** Defines the Amazon EC2 instance type that's used for this compute resource\. The architecture of the instance type must be the same as the architecture used for the [`master_instance_type`](cluster-definition.md#master-instance-type) setting\. The `instance_type` setting must be unique for each [`[compute_resource]` section](#compute-resource-section) referenced by a [`[queue]` section](queue-section.md)\. This setting replaces the [`compute_instance_type`](cluster-definition.md#compute-instance-type) setting\.
 
 ```
 instance_type = t2.micro

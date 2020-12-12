@@ -10,7 +10,7 @@
 + [`encrypted`](#raid-encrypted)
 + [`ebs_kms_key_id`](#raid-ebs_kms_key_id)
 
-Defines configuration settings for a RAID array that is built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the head node and is exported to compute nodes with NFS\.
+Defines configuration settings for a RAID array that's built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the head node and is exported to compute nodes with NFS\.
 
 The format is `[raid raid-name]`\. *raid\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 

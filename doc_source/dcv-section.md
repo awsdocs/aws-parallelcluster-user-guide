@@ -44,7 +44,7 @@ enable = master
 ```
 
 **Note**  
-NICE DCV automatically generates a self\-signed certificate that is used to secure traffic between the NICE DCV client and NICE DCV server running on the head node\. To configure your own certificate, see [NICE DCV HTTPS certificate](dcv.md#dcv-certificate)\.
+NICE DCV automatically generates a self\-signed certificate that's used to secure traffic between the NICE DCV client and NICE DCV server running on the head node\. To configure your own certificate, see [NICE DCV HTTPS certificate](dcv.md#dcv-certificate)\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 

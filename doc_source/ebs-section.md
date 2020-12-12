@@ -35,7 +35,7 @@ shared_dir = vol2
 
 This parameter is required when using multiple Amazon EBS volumes\.
 
-When using one \(1\) Amazon EBS volume, this option overwrites the [`shared_dir`](cluster-definition.md#cluster-shared-dir) that is specified under the [`[cluster]` section](cluster-definition.md)\. In the following example, the volume mounts to `/vol1`\.
+When using one \(1\) Amazon EBS volume, this option overwrites the [`shared_dir`](cluster-definition.md#cluster-shared-dir) that's specified under the [`[cluster]` section](cluster-definition.md)\. In the following example, the volume mounts to `/vol1`\.
 
 ```
 shared_dir = vol1

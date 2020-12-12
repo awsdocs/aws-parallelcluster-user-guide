@@ -50,6 +50,7 @@ Specifies the path to the post\-install script\. Paths must use a `s3://`, `http
 + `https://bucket-name.s3.region.amazonaws.com/path/post_install.sh`
 + `s3://bucket-name/post_install.sh`
 + `file:///opt/project/post_install.sh`
+  
 Support for the `--post-install` argument was added in AWS ParallelCluster version 2\.10\.0\.
 
 `-r REGION, --region REGION`  

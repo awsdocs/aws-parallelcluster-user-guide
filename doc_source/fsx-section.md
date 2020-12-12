@@ -26,7 +26,7 @@ Amazon FSx for Lustre is supported if the [`base_os`](cluster-definition.md#base
 When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. For detailed instructions, see [Installing the lustre client](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/install-lustre-client.html) in the *Amazon FSx for Lustre User Guide*\.
 
 **Note**  
-Amazon FSx for Lustre is not currently supported when using `awsbatch` as a scheduler\.
+Amazon FSx for Lustre isn't currently supported when using `awsbatch` as a scheduler\.
 
 **Note**  
 Support for Amazon FSx for Lustre on `centos8` was added in AWS ParallelCluster version 2\.10\.0\.Support for Amazon FSx for Lustre on `alinux2`, `ubuntu1604`, and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for Amazon FSx for Lustre on `centos7` was added in AWS ParallelCluster version 2\.4\.0\.
@@ -168,7 +168,7 @@ Support for [`drive_cache_type`](#fsx-drive-cache-type) was added in AWS Paralle
 
 ## `export_path`<a name="fsx-export-path"></a>
 
-**\(Optional\)** Specifies the Amazon S3 path where the root of your file system is exported\. The path **must** be in the same Amazon S3 bucket as the [`import_path`](#fsx-import-path) parameter\. When the [`export_path`](#fsx-export-path) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ExportPath](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-exportpath) property\. File data and metadata is not automatically exported to the `export_path`\. For information about exporting data and metadata, see [Using Data Repository Tasks to Export Data and Metadata Changes](https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task.html) in the *Amazon FSx for Lustre User Guide*\.
+**\(Optional\)** Specifies the Amazon S3 path where the root of your file system is exported\. The path **must** be in the same Amazon S3 bucket as the [`import_path`](#fsx-import-path) parameter\. When the [`export_path`](#fsx-export-path) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ExportPath](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-exportpath) property\. File data and metadata isn't automatically exported to the `export_path`\. For information about exporting data and metadata, see [Using Data Repository Tasks to Export Data and Metadata Changes](https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task.html) in the *Amazon FSx for Lustre User Guide*\.
 
 The default value is `s3://import-bucket/FSxLustre[creation-timestamp]`, where `import-bucket` is the bucket provided in the [`import_path`](#fsx-import-path) parameter\.
 
@@ -228,9 +228,9 @@ Support for [`fsx_kms_key_id`](#fsx-kms-key-id) was added in AWS ParallelCluster
 
 **\(Optional\)** Specifies the S3 bucket to load data from into the file system and serve as the export bucket\. For more information, see [`export_path`](#fsx-export-path)\. If you specify the [`import_path`](#fsx-import-path) parameter, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ImportPath](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-ImportPath) parameter in the *Amazon FSx API Reference*\.
 
-Import occurs on cluster creation\. For more information, see [Importing data from your data repository](https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files.html) in the *Amazon FSx for Lustre User Guide*\. On import, only file metadata \(name, ownership, timestamp, and permissions\) is imported\. File data is not imported from the S3 bucket until the file is first accessed\. For details on preloading the file contents, see [Preloading files into your file system](https://docs.aws.amazon.com/fsx/latest/LustreGuide/preload-file-contents-hsm.html) in the *Amazon FSx for Lustre User Guide*\.
+Import occurs on cluster creation\. For more information, see [Importing data from your data repository](https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files.html) in the *Amazon FSx for Lustre User Guide*\. On import, only file metadata \(name, ownership, timestamp, and permissions\) is imported\. File data isn't imported from the S3 bucket until the file is first accessed\. For details on preloading the file contents, see [Preloading files into your file system](https://docs.aws.amazon.com/fsx/latest/LustreGuide/preload-file-contents-hsm.html) in the *Amazon FSx for Lustre User Guide*\.
 
-If a value is not provided, the file system is empty\.
+If a value isn't provided, the file system is empty\.
 
 ```
 import_path =  s3://bucket
@@ -240,7 +240,7 @@ import_path =  s3://bucket
 
 ## `imported_file_chunk_size`<a name="fsx-imported-file-chunk-size"></a>
 
-**\(Optional\)** Determines the stripe count and the maximum amount of data per file \(in MiB\) stored on a single physical disk for files that are imported from a data repository \(using [`import_path`](#fsx-import-path)\)\. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system\. When the [`imported_file_chunk_size`](#fsx-imported-file-chunk-size) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ImportedFileChunkSize](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-importedfilechunksize) property\.
+**\(Optional\)** Determines the stripe count and the maximum amount of data for each file \(in MiB\) stored on a single physical disk for files that are imported from a data repository \(using [`import_path`](#fsx-import-path)\)\. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system\. When the [`imported_file_chunk_size`](#fsx-imported-file-chunk-size) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ImportedFileChunkSize](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-importedfilechunksize) property\.
 
 The chunk size default is `1024` \(1 GiB\), and it can go as high as 512,000 MiB \(500 GiB\)\. Amazon S3 objects have a maximum size of 5 TB\.
 
@@ -275,7 +275,7 @@ Support for [`per_unit_storage_throughput`](#fsx-per-unit-storage-throughput) wa
 
 **\(Required\)** Defines the mount point for the Amazon FSx for Lustre file system on the head and compute nodes\.
 
-Do not use `NONE` or `/NONE` as the shared directory\.
+Don't use `NONE` or `/NONE` as the shared directory\.
 
 The following example mounts the file system at `/fsx`\.
 
