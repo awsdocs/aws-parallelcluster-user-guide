@@ -442,6 +442,7 @@ To:
             "Action": [
                 "dynamodb:CreateTable",
                 "dynamodb:DeleteTable",
+                "dynamodb:GetItem",
                 "dynamodb:PutItem",
                 "dynamodb:Query",
                 "dynamodb:TagResource"
@@ -778,6 +779,7 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
                 "dynamodb:DescribeTable",
                 "dynamodb:CreateTable",
                 "dynamodb:DeleteTable",
+                "dynamodb:GetItem",
                 "dynamodb:PutItem",
                 "dynamodb:Query",
                 "dynamodb:TagResource"
