@@ -4,16 +4,16 @@
 + [`additional_cfn_template`](#additional-cfn-template)
 + [`additional_iam_policies`](#additional-iam-policies)
 + [`base_os`](#base-os)
++ [`cluster_resource_bucket`](#cluster-resource-bucket-section)
 + [`cluster_type`](#cluster-type)
 + [`compute_instance_type`](#compute-instance-type)
 + [`compute_root_volume_size`](#compute-root-volume-size)
 + [`custom_ami`](#custom-ami-section)
-+ [`cluster_resource_bucket`](#cluster-resource-bucket-section)
 + [`cw_log_settings`](#cw-log-settings)
 + [`dashboard_settings`](#dashboard-settings)
-+ [`disable_cluster_dns`](#disable-cluster-dns-settings)
 + [`dcv_settings`](#dcv-settings)
 + [`desired_vcpus`](#desired-vcpus)
++ [`disable_cluster_dns`](#disable-cluster-dns-settings)
 + [`disable_hyperthreading`](#disable-hyperthreading)
 + [`ebs_settings`](#ebs-settings)
 + [`ec2_iam_role`](#ec2-iam-role)
@@ -141,6 +141,23 @@ base_os = alinux
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
+## `cluster_resource_bucket`<a name="cluster-resource-bucket-section"></a>
+
+**\(Optional\)** Specifies the name of the Amazon S3 bucket that's used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service Developer Guide*\. This bucket can be used for multiple clusters\.
+
+If this parameter isn't specified, a new bucket is created when the cluster is created\. The new bucket has the name of `parallelcluster-random_string`\. In this name, *random\_string* is a random string of alphanumeric characters\. All cluster resources are stored in this bucket in a path with the form `bucket_name/resource_directory`\. `resource_directory` has the form `stack_name-random_string`, where *stack\_name* is the name of one of the AWS CloudFormation stacks used by AWS ParallelCluster\. The value of *bucket\_name* can be found in the `ResourcesS3Bucket` value in the output of the `parallelcluster-clustername` stack\. The value of *resource\_directory* can be found in the value of the `ArtifactS3RootDirectory` output from the same stack\.
+
+The default value is `parallelcluster-random_string`\.
+
+```
+cluster_resource_bucket = my-s3-bucket
+```
+
+**Note**  
+Support for [`cluster_resource_bucket`](#cluster-resource-bucket-section) was added in AWS ParallelCluster version 2\.10\.0\.
+
+[Update policy: If this setting is changed, the update is not allowed. Updating this setting cannot be forced.](using-pcluster-update.md#update-policy-read-only-resource-bucket)
+
 ## `cluster_type`<a name="cluster-type"></a>
 
 **\(Optional\)** Defines the type of cluster to launch\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be replaced by the [`compute_type`](queue-section.md#queue-compute-type) settings in the [`[queue]` sections](queue-section.md)\.
@@ -209,23 +226,6 @@ custom_ami = NONE
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
-## `cluster_resource_bucket`<a name="cluster-resource-bucket-section"></a>
-
-**\(Optional\)** Specifies the name of the Amazon S3 bucket that's used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service Developer Guide*\. This bucket can be used for multiple clusters\.
-
-If this parameter isn't specified, a new bucket is created when the cluster is created\. The new bucket has the name of `parallelcluster-random_string`\. In this name, *random\_string* is a random string of alphanumeric characters\. All cluster resources are stored in this bucket in a path with the form `bucket_name/resource_directory`\. `resource_directory` has the form `stack_name-random_string`, where *stack\_name* is the name of one of the AWS CloudFormation stacks used by AWS ParallelCluster\. The value of *bucket\_name* can be found in the `ResourcesS3Bucket` value in the output of the `parallelcluster-clustername` stack\. The value of *resource\_directory* can be found in the value of the `ArtifactS3RootDirectory` output from the same stack\.
-
-The default value is `parallelcluster-random_string`\.
-
-```
-cluster_resource_bucket = my-s3-bucket
-```
-
-**Note**  
-Support for [`cluster_resource_bucket`](#cluster-resource-bucket-section) was added in AWS ParallelCluster version 2\.10\.0\.
-
-[Update policy: If this setting is changed, the update is not allowed. Updating this setting cannot be forced.](using-pcluster-update.md#update-policy-read-only-resource-bucket)
-
 ## `cw_log_settings`<a name="cw-log-settings"></a>
 
 **\(Optional\)** Identifies the `[cw_log]` section with the CloudWatch Logs configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
@@ -260,21 +260,6 @@ Support for [`dashboard_settings`](#dashboard-settings) was added in AWS Paralle
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
-## `disable_cluster_dns`<a name="disable-cluster-dns-settings"></a>
-
-**\(Optional\)** Specifies if the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. If `disable_cluster_dns` is set to `true`, the hosted zone isn't created\.
-
-The default value is `false`\.
-
-```
-disable_cluster_dns = true
-```
-
-**Note**  
-Support for [`disable_cluster_dns`](#disable-cluster-dns-settings) was added in AWS ParallelCluster version 2\.9\.1\.
-
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
-
 ## `dcv_settings`<a name="dcv-settings"></a>
 
 **\(Optional\)** Identifies the `[dcv]` section with the NICE DCV configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
@@ -306,6 +291,24 @@ desired_vcpus = 4
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
+
+## `disable_cluster_dns`<a name="disable-cluster-dns-settings"></a>
+
+**\(Optional\)** Specifies if the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. If `disable_cluster_dns` is set to `true`, the hosted zone isn't created\.
+
+The default value is `false`\.
+
+```
+disable_cluster_dns = true
+```
+
+**Important**  
+[`disable_cluster_dns`](#disable-cluster-dns-settings) = `true` is only supported if the [`queue_settings`](#queue-settings) setting is specified\.
+
+**Note**  
+Support for [`disable_cluster_dns`](#disable-cluster-dns-settings) was added in AWS ParallelCluster version 2\.9\.1\.
+
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `disable_hyperthreading`<a name="disable-hyperthreading"></a>
 
