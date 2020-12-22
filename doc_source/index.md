@@ -66,6 +66,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Intel Select Solutions](intel-select-solutions.md)
    + [Enable Intel MPI](intelmpi.md)
    + [Intel HPC Platform Specification](intel-hpc-platform-specification.md)
+   + [Arm Performance Libraries](arm-performance-libraries.md)
    + [Connect to the head node through NICE DCV](dcv.md)
    + [Using pcluster update](using-pcluster-update.md)
 + [Configuration](configuration.md)

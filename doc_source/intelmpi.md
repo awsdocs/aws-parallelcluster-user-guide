@@ -1,6 +1,6 @@
 # Enable Intel MPI<a name="intelmpi"></a>
 
-Intel MPI is available on the AWS ParallelCluster AMIs for `alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, and `ubuntu1804` values for the [`base_os`](cluster-definition.md#base-os) setting\.To use Intel MPI, you must acknowledge and accept the terms of the [Intel simplified software license](https://software.intel.com/en-us/license/intel-simplified-software-license)\. By default, Open MPI is placed on the path\. To enable Intel MPI instead of Open MPI, you must first load the Intel MPI modulet\. Then, you need to install the latest version by using `module load intelmpi`\. The exact name of the module changes with every update\. To see which modules are available, run `module avail`\. The output is as follows\.
+Intel MPI is available on the AWS ParallelCluster AMIs for `alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, and `ubuntu1804` values for the [`base_os`](cluster-definition.md#base-os) setting\. To use Intel MPI, you must acknowledge and accept the terms of the [Intel simplified software license](https://software.intel.com/en-us/license/intel-simplified-software-license)\. By default, Open MPI is placed on the path\. To enable Intel MPI instead of Open MPI, you must first load the Intel MPI module\. Then, you need to install the latest version by using `module load intelmpi`\. The exact name of the module changes with every update\. To see which modules are available, run `module avail`\. The output is as follows\.
 
 ```
 $ module avail

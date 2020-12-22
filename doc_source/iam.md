@@ -21,6 +21,8 @@ The following example policies include Amazon Resource Names \(ARNs\) for the re
 + [`ParallelClusterInstancePolicy` using `awsbatch`](#parallelclusterinstancepolicy-batch)
 + [`ParallelClusterUserPolicy` using SGE, Slurm, or Torque](#parallelclusteruserpolicy)
 + [`ParallelClusterUserPolicy` using `awsbatch`](#parallelclusteruserpolicy-batch)
++ [`ParallelClusterLambdaPolicy` using SGE, Slurm, or Torque](#parallelcluster-lambda-policy)
++ [`ParallelClusterLambdaPolicy` using `awsbatch`](#parallelcluster-lambda-policy-batch)
 + [`ParallelClusterUserPolicy` for users](#parallelclusteruserpolicy-minimal-user)
 
 ### `ParallelClusterInstancePolicy` using SGE, Slurm, or Torque<a name="parallelclusterinstancepolicy"></a>
@@ -37,13 +39,13 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
                 "ec2:AttachVolume",
                 "ec2:DescribeInstanceAttribute",
                 "ec2:DescribeInstanceStatus",
+                "ec2:DescribeInstanceTypes",
                 "ec2:DescribeInstances",
                 "ec2:DescribeRegions",
                 "ec2:RunInstances",
                 "ec2:TerminateInstances",
                 "ec2:DescribeLaunchTemplates",
-                "ec2:CreateTags",
-                "ec2:DescribeInstanceTypes"
+                "ec2:CreateTags"
             ],
             "Resource": [
                 "*"
@@ -1031,6 +1033,128 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
             "Resource": "*"
         }
     ]
+}
+```
+
+### `ParallelClusterLambdaPolicy` using SGE, Slurm, or Torque<a name="parallelcluster-lambda-policy"></a>
+
+The following example sets the `ParallelClusterLambdaPolicy`, using SGE, Slurm, or Torque as the scheduler\.
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws::logs:*:*:*",
+      "Effect": "Allow",
+      "Sid": "CloudWatchLogsPolicy"
+    },
+    {
+      "Action": [
+        "s3:DeleteBucket",
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "Resource": [
+        "arn:aws::s3:::*"
+      ],
+      "Effect": "Allow",
+      "Sid": "S3BucketPolicy"
+    },
+    {
+      "Action": [
+        "ec2:DescribeInstances"
+      ],
+      "Resource": "*",
+      "Effect": "Allow",
+      "Sid": "DescribeInstances"
+    },
+    {
+      "Action": [
+        "ec2:TerminateInstances"
+      ],
+      "Resource": "*",
+      "Effect": "Allow",
+      "Sid": "FleetTerminatePolicy"
+    },
+    {
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem"
+      ],
+      "Resource": "arn:aws::dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
+      "Effect": "Allow",
+      "Sid": "DynamoDBTable"
+    },
+    {
+      "Action": [
+        "route53:ListResourceRecordSets",
+        "route53:ChangeResourceRecordSets"
+      ],
+      "Resource": [
+        "arn:aws::route53:::hostedzone/*"
+      ],
+      "Effect": "Allow",
+      "Sid": "Route53DeletePolicy"
+    }
+  ]
+}
+```
+
+### `ParallelClusterLambdaPolicy` using `awsbatch`<a name="parallelcluster-lambda-policy-batch"></a>
+
+The following example sets the `ParallelClusterLambdaPolicy` using `awsbatch` as the scheduler\.
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws::logs:*:*:*",
+      "Sid": "CloudWatchLogsPolicy"
+    },
+    {
+      "Action": [
+        "ecr:BatchDeleteImage",
+        "ecr:ListImages"
+      ],
+      "Effect": "Allow",
+      "Resource": "*",
+      "Sid": "ECRPolicy"
+    },
+    {
+      "Action": [
+        "codebuild:BatchGetBuilds",
+        "codebuild:StartBuild"
+      ],
+      "Effect": "Allow",
+      "Resource": "*",
+      "Sid": "CodeBuildPolicy"
+    },
+    {
+      "Action": [
+        "s3:DeleteBucket",
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "Effect": "Allow",
+      "Resource": "*",
+      "Sid": "S3BucketPolicy"
+    }
+  ]
 }
 ```
 

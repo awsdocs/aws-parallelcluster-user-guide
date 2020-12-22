@@ -25,6 +25,7 @@
 + [`ephemeral_dir`](#ephemeral-dir)
 + [`extra_json`](#extra-json)
 + [`fsx_settings`](#fsx-settings)
++ [`iam_lambda_role`](#iam-lambda-role)
 + [`initial_queue_size`](#configuration-initial-queue-size)
 + [`key_name`](#key-name)
 + [`maintain_initial_size`](#maintain-initial-size)
@@ -216,7 +217,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.0/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.1/amis.txt)\.
 
 The default value is `NONE`\.
 
@@ -369,11 +370,14 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `r5dn.24xlarge`, `r5n.24xlarge`, and `p3dn.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\.
+**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.24xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems \([`base_os`](#base-os) is `alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, or `ubuntu1804` for x86\-64 instances and `alinux2` or `ubuntu1804` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\.
 
 ```
 enable_efa = compute
 ```
+
+**Note**  
+Support EFA on Arm\-based Graviton2 instances was added in AWS ParallelCluster version 2\.10\.1\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -464,6 +468,23 @@ fsx_settings = fs
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
+## `iam_lambda_role`<a name="iam-lambda-role"></a>
+
+**\(Optional\)** Defines the name of an existing AWS Lambda execution role\. This role is attached to all Lambda functions in the cluster\. For more information, see [AWS Lambda execution role](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html) in the *AWS Lambda Developer Guide*\.
+
+An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to `iam_lambda_role`\. If both [`ec2_iam_role`](#ec2-iam-role)and `iam_lambda_role` are defined, and the [`scheduler`](#scheduler) is `sge`, `slurm`, or `torque`, then there will be no roles created\. If the [`scheduler`](#scheduler) is `awsbatch`, then there will be roles created during [`pcluster start`](pcluster.start.md)\. For example policies, see [`ParallelClusterLambdaPolicy` using SGE, Slurm, or Torque](iam.md#parallelcluster-lambda-policy) and [`ParallelClusterLambdaPolicy` using `awsbatch`](iam.md#parallelcluster-lambda-policy-batch)\.
+
+The default value is `NONE`\.
+
+```
+iam_lambda_role = NONE
+```
+
+**Note**  
+Support for `iam_lambda_role` was added in AWS ParallelCluster version 2\.10\.1\.
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `initial_queue_size`<a name="configuration-initial-queue-size"></a>
 
 **\(Optional\)** Sets the initial number of Amazon EC2 instances to launch as compute nodes in the cluster\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be removed and replaced by the [`initial_count`](compute-resource-section.md#compute-resource-initial-count) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
@@ -514,17 +535,14 @@ maintain_initial_size = false
 
 **\(Optional\)** Defines the Amazon EC2 instance type that's used for the head node\. The architecture of the instance type must be the same as the architecture used for the [`compute_instance_type`](#compute-instance-type) setting\.
 
-Defaults to `t2.micro`\.
+In Regions that have a Free Tier, defaults to the Free Tier instance type \(`t2.micro` or `t3.micro`\)\. In Regions that do not have a Free Tier, defaults to `t3.micro`\. For more information about the AWS Free Tier, see [AWS Free Tier FAQs](http://aws.amazon.com/free/free-tier-faqs/)\.
 
 ```
 master_instance_type = t2.micro
 ```
 
 **Note**  
-The `p4d.24xlarge` isn't supported for the head node\.
-
-**Note**  
-Support for AWS Graviton\-based instances \(such as `A1` and `C6g`\) was added in AWS ParallelCluster version 2\.8\.0\.
+Before AWS ParallelCluster version 2\.10\.1, defaulted to `t2.micro` in all Regions\. In AWS ParallelCluster version 2\.10\.0, the `p4d.24xlarge` wasn't supported for the head node\. Support for AWS Graviton\-based instances \(such as `A1` and `C6g`\) was added in AWS ParallelCluster version 2\.8\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -889,7 +907,7 @@ Updates use the template that was originally used to create the stack\.
 Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-version.cfn.json`\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.10.0.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.10.1.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

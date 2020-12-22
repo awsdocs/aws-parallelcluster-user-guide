@@ -36,7 +36,7 @@ The job is removed from the system and the node is removed from the scheduler\. 
 The behavior of this interruption depends on the scheduler being used\.
 
 Slurm  
-The job fails with a state code of `NODE_FAIL`, and the job is requeued \(unless `--no-requeue` was specified when the job was submitted\.\) If the node is a static node, it's replaced\. If the node is a dynamic node, the node is terminated and reset\. Other nodes that were running the terminated jobs might be allocated to other pending jobs, or scaled down after the configured [`scaledown_idletime`](scaling-section.md#scaledown-idletime) time has passed\.  
+The job fails with a state code of `NODE_FAIL`, and the job is requeued \(unless `--no-requeue` was specified when the job was submitted\)\. If the node is a static node, it's replaced\. If the node is a dynamic node, the node is terminated and reset\. Other nodes that were running the terminated jobs might be allocated to other pending jobs, or scaled down after the configured [`scaledown_idletime`](scaling-section.md#scaledown-idletime) time has passed\.  
 This behavior changed in AWS ParallelCluster version 2\.9\.0\. Earlier versions terminated the job with a state code of `NODE_FAIL` and the node was removed from the scheduler queue\. Other nodes that were running the terminated jobs might be scaled down after the configured [`scaledown_idletime`](scaling-section.md#scaledown-idletime) time has passed\.
 
 SGE  
