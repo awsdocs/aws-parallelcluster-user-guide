@@ -499,7 +499,7 @@ Defaults to `2`\.
 initial_queue_size = 2
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+Update policy: This setting can be changed during an update, but the compute fleet should be stopped\. Otherwise, existing nodes may be terminated\.
 
 ## `key_name`<a name="key-name"></a>
 
@@ -575,7 +575,7 @@ Defaults to `10`\.
 max_queue_size = 10
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+Update policy: This setting can be changed during an update, but the compute fleet should be stopped if the value is reduced\. Otherwise, existing nodes may be terminated\.
 
 ## `max_vcpus`<a name="max-vcpus"></a>
 

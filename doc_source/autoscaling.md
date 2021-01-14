@@ -1,6 +1,9 @@
 # AWS ParallelCluster Auto Scaling<a name="autoscaling"></a>
 
-The auto scaling strategy described here applies to HPC clusters that are deployed with one of the supported traditional job schedulers, either Son of Grid Engine \(SGE\), Slurm Workload Manager \(Slurm\), or Torque Resource Manager \(Torque\)\. When deployed with one of these schedulers, AWS ParallelCluster implements the scaling capabilities by managing the Auto Scaling group of the compute nodes, and then changing the scheduler configuration as needed\. For HPC clusters that are based on AWS Batch, AWS ParallelCluster relies on the elastic scaling capabilities provided by the AWS\-managed job scheduler\. For more information, see [What is Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html) in the *Amazon EC2 Auto Scaling User Guide*\.
+The auto scaling strategy described here applies to HPC clusters that are deployed with either Son of Grid Engine \(SGE\) or Torque Resource Manager \(Torque\)\. When deployed with one of these schedulers, AWS ParallelCluster implements the scaling capabilities by managing the Auto Scaling group of the compute nodes, and then changing the scheduler configuration as needed\. For HPC clusters that are based on AWS Batch, AWS ParallelCluster relies on the elastic scaling capabilities provided by the AWS\-managed job scheduler\. For more information, see [What is Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html) in the *Amazon EC2 Auto Scaling User Guide*\.
+
+**Note**  
+Before AWS ParallelCluster version 2\.9\.0, Auto Scaling was used with Slurm Workload Manager \(Slurm\)\.
 
 Clusters deployed with AWS ParallelCluster are elastic in several ways\. Setting the [`initial_queue_size`](cluster-definition.md#configuration-initial-queue-size) specifies the minimum size value of the ComputeFleet Auto Scaling group, and also the desired capacity value\. Setting the [`max_queue_size`](cluster-definition.md#configuration-max-queue-size) specifies the maximum size value of the ComputeFleet Auto Scaling group\.
 
@@ -12,7 +15,7 @@ Every minute, a process called [https://github.com/aws/aws-parallelcluster-node/
 
 With an SGE scheduler, each job requires a number of slots to run \(one slot corresponds to one processing unit, for example, a vCPU\)\. To evaluate the number of instances that are required to serve the currently pending jobs, the `jobwatcher` divides the total number of requested slots by the capacity of a single compute node\. The capacity of a compute node that corresponds to the number of available vCPUs depends on the Amazon EC2 instance type that is specified in the cluster configuration\.
 
-With Slurm and Torque schedulers, each job might require both a number of nodes and a number of slots per node, depending on circumstance\. For each request, the `jobwatcher` determines the number of compute nodes that are needed to fulfill the new computational requirements\. For example, let's assume a cluster with `c5.2xlarge` \(8 vCPU\) as the compute instance type, and three queued pending jobs with the following requirements: 
+With Slurm \(before AWS ParallelCluster version 2\.9\.0\) and Torque schedulers, each job might require both a number of nodes and a number of slots per node, depending on circumstance\. For each request, the `jobwatcher` determines the number of compute nodes that are needed to fulfill the new computational requirements\. For example, let's assume a cluster with `c5.2xlarge` \(8 vCPU\) as the compute instance type, and three queued pending jobs with the following requirements: 
 + job1: 2 nodes / 4 slots each
 + job2: 3 nodes / 2 slots each
 + job3: 1 node / 4 slots each

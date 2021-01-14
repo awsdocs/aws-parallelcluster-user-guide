@@ -24,7 +24,15 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
+Specifies the AWS Region to use\. The priority order used to select the Region for a new cluster is:  
+
+1. `-r` or `--region` parameter to [`pcluster create`](#pluster.create)\.
+
+1. `AWS_DEFAULT_REGION` environment variable\.
+
+1. `aws_region_name` setting in `[aws]` section of AWS ParallelCluster config file \(default location is `~/.parallelcluster/config`\.\) This is the location updated by the [`pcluster configure`](pcluster.configure.md) command\.
+
+1. `region` setting in `[default]` section of AWS CLI config file \(`~/.aws/config`\.\)
 
 `-nw, --nowait`  
 Indicates not to wait for stack events after running a stack command\.  
