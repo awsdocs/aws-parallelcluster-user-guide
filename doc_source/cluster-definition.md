@@ -499,7 +499,7 @@ Defaults to `2`\.
 initial_queue_size = 2
 ```
 
-Update policy: This setting can be changed during an update, but the compute fleet should be stopped\. Otherwise, existing nodes may be terminated\.
+Update policy: This setting can be changed during an update.
 
 ## `key_name`<a name="key-name"></a>
 
