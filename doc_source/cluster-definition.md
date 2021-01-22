@@ -70,12 +70,12 @@ The format is `[cluster cluster-template-name]`\. The [`[cluster]` section](#clu
 
 **\(Optional\)** Defines an additional AWS CloudFormation template to launch along with the cluster\. This additional template is used for creating resources that are outside of the cluster but are part of the cluster's lifecycle\.
 
-When set to a value other than `NONE`, the value must be an HTTP URL to a public template, with all parameters provided\.
+The value must be an HTTP URL to a public template, with all parameters provided\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-additional_cfn_template = NONE
+additional_cfn_template = https://<bucket-name>.s3.amazonaws.com/my-cfn-template.yaml
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
@@ -84,7 +84,7 @@ additional_cfn_template = NONE
 
 **\(Optional\)** Specifies a list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used in the cluster in addition to the permissions required by AWS ParallelCluster separated by commas\. An IAM policy name and its ARN are different\. Names can't be used as an argument to [`additional_iam_policies`](#additional-iam-policies)\. [`additional_iam_policies`](#additional-iam-policies) should be used instead of the [`ec2_iam_role`](#ec2-iam-role)\. This is because [`additional_iam_policies`](#additional-iam-policies) are added to the permissions that AWS ParallelCluster requires, and the [`ec2_iam_role`](#ec2-iam-role) must include all permissions required\. The permissions required often change from release to release as features are added\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
 additional_iam_policies = arn:aws:iam::aws:policy/AdministratorAccess
@@ -219,10 +219,10 @@ compute_root_volume_size = 20
 
 **\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.1/amis.txt)\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-custom_ami = NONE
+custom_ami = ami-00d4efc81188687a0
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
@@ -346,10 +346,10 @@ ebs_settings = custom1, custom2
 
 **\(Optional\)** Defines the name of an existing IAM role for Amazon EC2 that's attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to [`ec2_iam_role`](#ec2-iam-role)\. If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. We recommend that you use [`additional_iam_policies`](#additional-iam-policies), rather than [`ec2_iam_role`](#ec2-iam-role), because features added to AWS ParallelCluster often require new permissions\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-ec2_iam_role = NONE
+ec2_iam_role = ParallelClusterInstanceRole
 ```
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
@@ -474,10 +474,10 @@ fsx_settings = fs
 
 An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to `iam_lambda_role`\. If both [`ec2_iam_role`](#ec2-iam-role)and `iam_lambda_role` are defined, and the [`scheduler`](#scheduler) is `sge`, `slurm`, or `torque`, then there will be no roles created\. If the [`scheduler`](#scheduler) is `awsbatch`, then there will be roles created during [`pcluster start`](pcluster.start.md)\. For example policies, see [`ParallelClusterLambdaPolicy` using SGE, Slurm, or Torque](iam.md#parallelcluster-lambda-policy) and [`ParallelClusterLambdaPolicy` using `awsbatch`](iam.md#parallelcluster-lambda-policy-batch)\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-iam_lambda_role = NONE
+iam_lambda_role = ParallelClusterLambdaRole
 ```
 
 **Note**  
@@ -499,7 +499,7 @@ Defaults to `2`\.
 initial_queue_size = 2
 ```
 
-Update policy: This setting can be changed during an update.
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
 ## `key_name`<a name="key-name"></a>
 
@@ -628,7 +628,6 @@ placement = compute
 **\(Optional\)** Defines the cluster placement group\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting should be removed and replaced by the [`placement_group`](queue-section.md#queue-placement-group) settings in the [`[queue]` sections](queue-section.md)\.
 
 Valid options are the following values:
-+ `NONE`
 + `DYNAMIC`
 + An existing Amazon EC2 cluster placement group name
 
@@ -638,12 +637,12 @@ This parameter isn't used when the scheduler is `awsbatch`\.
 
 For more information about placement groups, see [Placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-The default value is `NONE`\.
+There is no default value\.
 
-Not all instance types support cluster placement groups\. For example, the default instance type of `t2.micro` doesn't support cluster placement groups\. For information about the list of instance types that support cluster placement groups, see [Cluster placement group rules and limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-cluster) in the *Amazon EC2 User Guide for Linux Instances*\. See [Placement groups and instance launch issues](troubleshooting.md#placement-groups-and-instance-launch-issues) for tips when working with placement groups\.
+Not all instance types support cluster placement groups\. For example, the default instance type of `t3.micro` doesn't support cluster placement groups\. For information about the list of instance types that support cluster placement groups, see [Cluster placement group rules and limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-cluster) in the *Amazon EC2 User Guide for Linux Instances*\. See [Placement groups and instance launch issues](troubleshooting.md#placement-groups-and-instance-launch-issues) for tips when working with placement groups\.
 
 ```
-placement_group = NONE
+placement_group = DYNAMIC
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
@@ -656,10 +655,10 @@ When using `awsbatch` as the scheduler, the post\-install script is run only on 
 
 The parameter format can be either `http://hostname/path/to/script.sh` or `s3://bucketname/path/to/script.sh`\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-post_install = NONE
+post_install = s3://<bucket-name>/my-post-install-script.sh
 ```
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
@@ -668,10 +667,10 @@ post_install = NONE
 
 **\(Optional\)** Specifies a quoted list of arguments to pass to the post\-install script\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-post_install_args = "NONE"
+post_install_args = "argument-1 argument-2"
 ```
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
@@ -684,10 +683,10 @@ When using `awsbatch` as the scheduler, the pre\-install script is run only on t
 
 The parameter format can be either `http://hostname/path/to/script.sh` or `s3://bucketname/path/to/script.sh`\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-pre_install = NONE
+pre_install = s3://<bucket-name>/my-pre-install-script.sh
 ```
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
@@ -696,10 +695,10 @@ pre_install = NONE
 
 **\(Optional\)** Specifies a quoted list of arguments to pass to the pre\-install script\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-pre_install_args = "NONE"
+pre_install_args = "argument-3 argument-4"
 ```
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
@@ -708,10 +707,10 @@ pre_install_args = "NONE"
 
 **\(Optional\)** Defines an HTTP or HTTPS proxy server, typically `http://x.x.x.x:8080`\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-proxy_server = NONE
+proxy_server = http://10.11.12.13:8080
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
@@ -760,10 +759,10 @@ For example, `arn:aws:s3:::my_corporate_bucket/*` provides read\-only access to 
 
 See [working with Amazon S3](s3_resources.md) for details on format\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-s3_read_resource = NONE
+s3_read_resource = arn:aws:s3:::my_corporate_bucket*
 ```
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
@@ -776,10 +775,10 @@ For example, `arn:aws:s3:::my_corporate_bucket/Development/*` provides read/writ
 
 See [working with Amazon S3](s3_resources.md) for details on format\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
-s3_read_write_resource = NONE
+s3_read_write_resource = arn:aws:s3:::my_corporate_bucket/*
 ```
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)

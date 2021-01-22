@@ -24,7 +24,7 @@ master_subnet_id = subnet-xxxxxx
 
 **\(Optional\)** Provides an additional Amazon VPC security group Id for all instances\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
 additional_sg = sg-xxxxxx
@@ -113,7 +113,7 @@ vpc_id = vpc-xxxxxx
 
 **\(Optional\)** Specifies the use of an existing security group for all instances\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
 vpc_security_group_id = sg-xxxxxx

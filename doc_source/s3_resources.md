@@ -4,11 +4,11 @@ You can access Amazon S3 from within AWS ParallelCluster\. You control the acces
 
 ```
 # Specify Amazon S3 resource which AWS ParallelCluster nodes will be granted read-only access
-# (defaults to NONE)
-s3_read_resource = NONE
+# (no default)
+s3_read_resource = arn:aws:s3:::my_corporate_bucket*
 # Specify Amazon S3 resource which AWS ParallelCluster nodes will be granted read-write access
-# (defaults to NONE)
-s3_read_write_resource = NONE
+# (no default)
+s3_read_write_resource = arn:aws:s3:::my_corporate_bucket/*
 ```
 
 Both parameters accept either `*` or a valid Amazon S3 ARN\. For information about specifying Amazon S3 ARNs, see [Amazon S3 ARN format](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-s3) in the *AWS General Reference*

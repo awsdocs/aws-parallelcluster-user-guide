@@ -17,7 +17,7 @@
 + [`[raid]` section](raid-section.md)
 + [`[scaling]` section](scaling-section.md)
 + [`[vpc]` section](vpc-section.md)
-+ [Example](examples.md)
++ [Examples](examples.md)
 
 By default, AWS ParallelCluster uses the `~/.parallelcluster/config` file for all configuration parameters\. You can specify a custom configuration file by using the `-c` or `--config` command line option or the `AWS_PCLUSTER_CONFIG_FILE` environment variable\.
 

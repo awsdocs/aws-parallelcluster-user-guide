@@ -67,7 +67,7 @@ Amazon FSx for Lustre automatically imports file and directory listings of any n
 
 This corresponds to the [AutoImportPolicy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-autoimportpolicy) property\. For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *Amazon FSx for Lustre User Guide* When the [`auto_import_policy`](#fsx-auto-import-policy) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\.
 
-The default value, if the `auto_import_policy` setting isn't specified, is `NONE`\. This setting disables automatic imports\. Amazon FSx for Lustre only updates file and directory listings from the linked S3 bucket when the file system is created\.
+If the `auto_import_policy` setting isn't specified, automatic imports are disabled\. Amazon FSx for Lustre only updates file and directory listings from the linked S3 bucket when the file system is created\.
 
 ```
 auto_import_policy = NEW_CHANGED

@@ -44,7 +44,7 @@ To avoid errors, you must add these permissions to your IAM role, or set `sanity
 **Important**  
 When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you do *not* create a mount target in the stack's Availability Zone\. Instead, you should let AWS handle this step\. If you still want to have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then add that security group to the mount target, and turn off config sanity to create the cluster\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
 efs_fs_id = fs-12345
@@ -56,7 +56,7 @@ efs_fs_id = fs-12345
 
 **\(Optional\)** Identifies the AWS Key Management Service \(AWS KMS\) customer managed key \(CMK\) to be used to protect the encrypted file system\. If this is set, the [`encrypted`](#efs-encrypted) setting must be set to `true`\. This corresponds to the [KmsKeyId](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html#efs-CreateFileSystem-request-KmsKeyId) parameter in the *Amazon EFS API Reference*\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
 efs_kms_key_id = 1234abcd-12ab-34cd-56ef-1234567890ab

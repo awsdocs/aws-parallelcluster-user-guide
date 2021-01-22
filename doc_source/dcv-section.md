@@ -35,8 +35,6 @@ access_from = 0.0.0.0/0
 
  **\(Required\)** Indicates whether NICE DCV is enabled on the head node\. To enable NICE DCV on the head node and configure the required security group rule, set the `enable` setting to `master`\.
 
-The default value is `NONE`\.
-
 The following example enables NICE DCV on the head node\.
 
 ```

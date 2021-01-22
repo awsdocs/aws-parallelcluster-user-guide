@@ -85,7 +85,7 @@ Amazon's trademarks and trade dress may not be used in
    + [[raid] section](raid-section.md)
    + [[scaling] section](scaling-section.md)
    + [[vpc] section](vpc-section.md)
-   + [Example](examples.md)
+   + [Examples](examples.md)
 + [How AWS ParallelCluster works](functional.md)
    + [AWS ParallelCluster processes](processes.md)
    + [AWS services used by AWS ParallelCluster](aws-services.md)

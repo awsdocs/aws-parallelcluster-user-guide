@@ -35,17 +35,17 @@ The following configuration settings are used to define pre\-install and post\-i
 
 ```
 # URL to a preinstall script. This is executed before any of the boot_as_* scripts are run
-# (defaults to NONE)
-pre_install = NONE
+# (no default)
+pre_install = https://<bucket-name>.s3.amazonaws.com/my-pre-install-script.sh
 # Arguments to be passed to preinstall script
-# (defaults to NONE)
-pre_install_args = NONE
+# (no default)
+pre_install_args = argument-1 argument-2
 # URL to a postinstall script. This is executed after any of the boot_as_* scripts are run
-# (defaults to NONE)
-post_install = NONE
+# (no default)
+post_install = https://<bucket-name>.s3.amazonaws.com/my-post-install-script.sh
 # Arguments to be passed to postinstall script
-# (defaults to NONE)
-post_install_args = NONE
+# (no default)
+post_install_args = argument-3 argument-4
 ```
 
 ## Arguments<a name="arguments"></a>

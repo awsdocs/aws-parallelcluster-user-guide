@@ -62,7 +62,7 @@ ebs_kms_key_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 **\(Optional\)** Defines the Amazon EBS snapshot ID if you're using a snapshot as the source for the volume\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
 ebs_snapshot_id = snap-xxxxx
@@ -74,7 +74,7 @@ ebs_snapshot_id = snap-xxxxx
 
 **\(Optional\)** Defines the volume ID of an existing Amazon EBS volume to attach to the head node\.
 
-The default value is `NONE`\.
+There is no default value\.
 
 ```
 ebs_volume_id = vol-xxxxxx
