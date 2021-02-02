@@ -1,6 +1,6 @@
 # Custom Bootstrap Actions<a name="pre_post_install"></a>
 
-AWS ParallelCluster can run arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action when the cluster is created\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as root and can be in any script language that is supported by the cluster OS\. Often the code is in *bash* or *python*\.
+AWS ParallelCluster can run arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action when the cluster is created\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as root and can be in any script language that is supported by the cluster OS\. Often the code is in *Bash* or *Python*\.
 
 Pre\-install actions are called before any cluster deployment bootstrap action is started, such as configuring NAT, Amazon Elastic Block Store \(Amazon EBS\) or the scheduler\. Some pre\-install actions include modifying storage, adding extra users, and adding packages\.
 
@@ -34,13 +34,13 @@ esac
 The following configuration settings are used to define pre\-install and post\-install actions and arguments\.
 
 ```
-# URL to a preinstall script. This is executed before any of the boot_as_* scripts are run
+# URL to a preinstall script. This is run before any of the boot_as_* scripts are run
 # (no default)
 pre_install = https://<bucket-name>.s3.amazonaws.com/my-pre-install-script.sh
 # Arguments to be passed to preinstall script
 # (no default)
 pre_install_args = argument-1 argument-2
-# URL to a postinstall script. This is executed after any of the boot_as_* scripts are run
+# URL to a postinstall script. This is run after any of the boot_as_* scripts are run
 # (no default)
 post_install = https://<bucket-name>.s3.amazonaws.com/my-post-install-script.sh
 # Arguments to be passed to postinstall script

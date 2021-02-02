@@ -8,7 +8,7 @@ AWS ParallelCluster supports the following high\-level configurations:
 + One subnet for both head and compute nodes\.
 + Two subnets, with the head node in one public subnet, and compute nodes in a private subnet\. The subnets can be new or existing\.
 
-All of these configurations can operate with or without public IP addressing\. AWS ParallelCluster can also be deployed to use an HTTP proxy for all AWS requests\. The combinations of these configurations result in many deployment scenarios\. For example, you can configure a single public subnet with all access over the internet\., Or you can configure a fully private network using AWS Direct Connect and HTTP proxy for all traffic\.
+All of these configurations can operate with or without public IP addressing\. AWS ParallelCluster can also be deployed to use an HTTP proxy for all AWS requests\. The combinations of these configurations result in many deployment scenarios\. For example, you can configure a single public subnet with all access over the internet\. Or you can configure a fully private network using AWS Direct Connect and HTTP proxy for all traffic\.
 
 See the following architecture diagrams for illustrations of some of these scenarios:
 

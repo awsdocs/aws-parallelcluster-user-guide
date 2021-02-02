@@ -236,10 +236,10 @@ if [[ "${AWS_BATCH_JOB_NODE_INDEX}" -eq  "${AWS_BATCH_JOB_MAIN_NODE_INDEX}" ]]; 
     # Waiting for compute nodes to terminate
     sleep 30
 else
-    echo "Hello I'm the compute node $HOSTNAME! I let the main node orchestrate the mpi execution!"
+    echo "Hello I'm the compute node $HOSTNAME! I let the main node orchestrate the mpi processing!"
     # Since mpi orchestration happens on the main node, we need to make sure the containers representing the compute
     # nodes are not terminated. A simple trick is to wait for a file containing the status code to be created.
-    # All compute nodes are terminated by Batch if the main node exits abruptly.
+    # All compute nodes are terminated by AWS Batch if the main node exits abruptly.
     while [ ! -f "${_exit_code_file}" ]; do
         sleep 2
     done

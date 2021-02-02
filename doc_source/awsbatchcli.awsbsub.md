@@ -31,10 +31,10 @@ Indicates that the command is a file to be transferred to the compute instances\
 Default: False
 
 `-w WORKING_DIR, --working-dir WORKING_DIR`  
-Specifies the folder to use as the job's working directory\. If a working directory is not specified, the job is executed in the `job-<AWS_BATCH_JOB_ID>` subfolder of the user’s home directory\. You can use either this parameter or the `--parent-working-dir` parameter\.
+Specifies the folder to use as the job's working directory\. If a working directory is not specified, the job is run in the `job-<AWS_BATCH_JOB_ID>` subfolder of the user’s home directory\. You can use either this parameter or the `--parent-working-dir` parameter\.
 
 `-pw PARENT_WORKING_DIR, --parent-working-dir PARENT_WORKING_DIR`  
-Specfies the parent folder of the job's working directory\. If a parent working directory is not specified, it defaults to the user’s home directory\. A subfolder named `job-<AWS_BATCH_JOB_ID>` is created in the parent working directory\. You can use either this parameter or the `--working-dir` parameter\.
+Specifies the parent folder of the job's working directory\. If a parent working directory is not specified, it defaults to the user’s home directory\. A subfolder named `job-<AWS_BATCH_JOB_ID>` is created in the parent working directory\. You can use either this parameter or the `--working-dir` parameter\.
 
 `-if INPUT_FILE, --input-file INPUT_FILE`  
 Specifies the file to be transferred to the compute instances, in the job's working directory\. You can specify multiple input file parameters\.

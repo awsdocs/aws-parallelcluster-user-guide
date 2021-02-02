@@ -73,7 +73,7 @@ You shouldn't use an AWS ParallelCluster AMI from a running cluster as *<BASE\_A
 
    For other parameters, see [`pcluster createami`](pcluster.createami.md)\.
 
-1. The command in Step 4 executes Packer, which specifically does the following:
+1. The command in Step 4 runs Packer, which specifically does the following:
 
    1. Launches an instance using the base AMI provided\.
 

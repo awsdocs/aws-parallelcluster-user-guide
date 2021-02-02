@@ -649,7 +649,7 @@ placement_group = DYNAMIC
 
 ## `post_install`<a name="post-install"></a>
 
-**\(Optional\)** Specifies the URL of a post\-install script that's run after all of the `boot_as_*` scripts are run\.
+**\(Optional\)** Specifies the URL of a post\-install script that's run after all of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.
 
 When using `awsbatch` as the scheduler, the post\-install script is run only on the head node\.
 
@@ -677,7 +677,7 @@ post_install_args = "argument-1 argument-2"
 
 ## `pre_install`<a name="pre-install"></a>
 
-**\(Optional\)** Specifies the URL of a pre\-install script that's run before any of the `boot_as_*` scripts are run\.
+**\(Optional\)** Specifies the URL of a pre\-install script that's run before any of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.
 
 When using `awsbatch` as the scheduler, the pre\-install script is run only on the head node\.
 
@@ -755,7 +755,7 @@ raid_settings = rs
 
 **\(Optional\)** Specifies an Amazon S3 resource to which AWS ParallelCluster nodes are granted read\-only access\.
 
-For example, `arn:aws:s3:::my_corporate_bucket/*` provides read\-only access to all objects in the *my\_corporate\_bucket* bucket\.
+For example, `arn:aws:s3:::my_corporate_bucket*` provides read\-only access to the *my\_corporate\_bucket* bucket and to the objects in the bucket\.
 
 See [working with Amazon S3](s3_resources.md) for details on format\.
 
@@ -771,7 +771,7 @@ s3_read_resource = arn:aws:s3:::my_corporate_bucket*
 
 **\(Optional\)** Specifies an Amazon S3 resource which AWS ParallelCluster nodes are granted read/write access to\.
 
-For example, `arn:aws:s3:::my_corporate_bucket/Development/*` provides read/write access to all objects in the Development folder of the *my\_corporate\_bucket* bucket\.
+For example, `arn:aws:s3:::my_corporate_bucket/Development/*` provides read/write access to all objects in the `Development` folder of the *my\_corporate\_bucket* bucket\.
 
 See [working with Amazon S3](s3_resources.md) for details on format\.
 

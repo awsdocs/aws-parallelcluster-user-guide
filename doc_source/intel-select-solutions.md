@@ -25,6 +25,8 @@ master_instance_type = c5.xlarge
 vpc_settings = <Your VPC section>
 scaling_settings = demo
 queue_settings = c5n,m5n,r5n
+master_root_volume_size = 200
+compute_root_volume_size = 80
 
 [queue c5n]
 compute_resource_settings = c5n_i1
