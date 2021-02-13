@@ -10,7 +10,11 @@ pcluster dcv [ -h ] ( connect )
 Possible choices: `connect`
 
 **Note**  
-Support for the `pcluster dcv` command on `centos8` was added in AWS ParallelCluster version 2\.10\.0\. Support for NICE DCV on AWS Graviton\-based instances was added in AWS ParallelCluster version 2\.9\.0\. Support for the `pcluster dcv` command on `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for the `pcluster dcv` command on `centos7` was added in AWS ParallelCluster version 2\.5\.0\.
+OS support changes for the `pcluster dcv` command in different AWS ParallelCluster versions:  
+Support for the `pcluster dcv` command on `centos8` was added in AWS ParallelCluster version 2\.10\.0\.
+Support for the `pcluster dcv` command on AWS Graviton\-based instances was added in AWS ParallelCluster version 2\.9\.0\.
+Support for the `pcluster dcv` command on `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\.
+Support for the `pcluster dcv` command on `centos7` was added in AWS ParallelCluster version 2\.5\.0\.
 
 ## Named arguments<a name="pcluster.dcv.namedarg"></a>
 
@@ -26,7 +30,7 @@ pcluster dcv connect [ -h ] [ -k SSH_KEY_PATH ] [ -r REGION ] cluster_name
 ```
 
 **Important**  
-The URL expires 30 seconds after it is issued\. If the connection is not made before the URL expires, run `pcluster dcv connect` again to generate a new URL\.
+The URL expires 30 seconds after it's issued\. If the connection isn't made before the URL expires, run `pcluster dcv connect` again to generate a new URL\.
 
 #### Positional arguments<a name="pcluster.dcv.connect.arg"></a>
 
@@ -40,13 +44,13 @@ Shows the help text for `pcluster dcv connect`\.
 
 `-k SSH_KEY_PATH, --key-path SSH_KEY_PATH`  
 Key path of the SSH key to use for the connection\.  
-The key must be the one specified at cluster creation time in the [`key_name`](cluster-definition.md#key-name) configuration parameter\. This argument is optional, but if it is not specified, then the key must be available by default for the SSH client\. For example, add it to the `ssh-agent` with `ssh-add`\.
+The key must be the one specified at cluster creation time in the [`key_name`](cluster-definition.md#key-name) configuration parameter\. This argument is optional, but if it's not specified, then the key must be available by default for the SSH client\. For example, add it to the `ssh-agent` with `ssh-add`\.
 
 `-r REGION, --region REGION`  
 Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 `-s, --show-url`  
-Displays a one\-time URL for connecting to the NICE DCV session\. The default browser is not opened when this option is specified\.  
+Displays a one\-time URL for connecting to the NICE DCV session\. The default browser isn't opened when this option is specified\.  
 Support for the `--show-url` argument was added in AWS ParallelCluster version 2\.5\.1\.
 
 Example:

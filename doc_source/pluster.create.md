@@ -24,7 +24,7 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. The priority order used to select the Region for a new cluster is:  
+Specifies the AWS Region to use\. The priority order used to select the Region for a new cluster is as follows:  
 
 1. `-r` or `--region` parameter to [`pcluster create`](#pluster.create)\.
 
@@ -43,7 +43,7 @@ Disables stack rollback on error\.
 Defaults to `False`\.
 
 `-u TEMPLATE_URL, --template-url TEMPLATE_URL`  
-Specifies a URL for the custom AWS CloudFormation template if it was used at creation time\.
+Specifies a URL for the custom AWS CloudFormation template if it was used when created\.
 
 `-t CLUSTER_TEMPLATE, --cluster-template CLUSTER_TEMPLATE`  
 Indicates the cluster template to use\.
@@ -54,7 +54,7 @@ Adds extra parameters to stack create\.
 `-g TAGS, --tags TAGS`  
 Specifies additional tags to add to the stack\.
 
-When the command is called and begins polling for the status of that call, it is safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
+When the command is called and begins polling for the status of that call, it's safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
 
 Examples:
 

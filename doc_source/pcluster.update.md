@@ -23,7 +23,7 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `--force`  
-Enables an update even if one or more settings has a blocking change or if an outstanding action is required \(such as stopping the compute fleet\) before the update can proceed\. This should not be combined with the `--yes` argument\.
+Enables an update even if one or more settings has a blocking change or if an outstanding action is required \(such as stopping the compute fleet\) before the update can proceed\. This shouldn't be combined with the `--yes` argument\.
 
 `-r REGION, --region REGION`  
 Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
@@ -49,4 +49,4 @@ Defaults to `False`\.
 `--yes`  
 Automatically assumes that the answer to all prompts is yes\. This should not be combined with the `--force` argument\.
 
-When the command is called and begins polling for the status of that call, it is safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
+When the command is called and begins polling for the status of that call, it's safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.

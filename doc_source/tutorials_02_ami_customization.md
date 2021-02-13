@@ -26,13 +26,13 @@ There are three ways to use a custom AWS ParallelCluster AMI\. Two of these thre
 
 ### Modify an AWS ParallelCluster AMI<a name="modify-an-aws-parallelcluster-ami"></a>
 
-This is the safest and most recommended method\. Because the base AWS ParallelCluster AMI is often updated with new releases, this AMI has all of the components required for AWS ParallelCluster to function when it is installed and configured\. You can start with this as the base\.
+This is the safest and most recommended method\. Because the base AWS ParallelCluster AMI is often updated with new releases, this AMI has all of the components required for AWS ParallelCluster to function when it's installed and configured\. You can start with this as the base\.
 
 1. In the AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.10\.1, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.10\.1/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.10.1/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.10\.1** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Within the Amazon EC2 console, choose **Launch Instance**\.
 
-1. Navigate to **Community AMIs**, and enter the AMI id for your Region into the search box\.
+1. Navigate to **Community AMIs**, and enter the AMI ID for your Region into the search box\.
 
 1. Select the AMI, choose your instance type and properties, and launch your instance\.
 
@@ -90,7 +90,7 @@ You shouldn't use an AWS ParallelCluster AMI from a running cluster as *<BASE\_A
 1. To create your cluster, enter the AMI ID in the [custom\_ami](cluster-definition.md#custom-ami-section) field within your cluster configuration\.
 
 **Note**  
-The instance type used to build a custom AWS ParallelCluster AMI is `t2.xlarge`\. This instance type does not qualify for the AWS free tier, so you're charged for any instances that are created when you build this AMI\.
+The instance type used to build a custom AWS ParallelCluster AMI is `t2.xlarge`\. This instance type doesn't qualify for the AWS free tier, so you're charged for any instances that are created when you build this AMI\.
 
 ### Use a Custom AMI at Runtime<a name="use-a-custom-ami-at-runtime"></a>
 

@@ -1,6 +1,6 @@
 # `pcluster`<a name="pcluster"></a>
 
-`pcluster` is the primary AWS ParallelCluster CLI\. You use `pcluster` to launch and manage HPC clusters in the AWS Cloud\.
+`pcluster` is the primary AWS ParallelCluster CLI command\. You use `pcluster` to launch and manage HPC clusters in the AWS Cloud\.
 
 ```
 pcluster [ -h ] ( create | update | delete | start | stop | status | list |

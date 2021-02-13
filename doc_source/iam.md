@@ -4,7 +4,7 @@ AWS ParallelCluster uses AWS Identity and Access Management \(IAM\) roles for Am
 
 AWS ParallelCluster uses multiple AWS services to deploy and operate a cluster\. See the complete list in the [AWS Services used in AWS ParallelCluster](aws-services.md) section\.
 
-## Defaults<a name="defaults"></a>
+## Default settings for cluster creation<a name="defaults"></a>
 
 When you use the default settings for cluster creation, an IAM role for Amazon EC2 is created by the cluster\. The user that creates the cluster must have the right level of permissions to create all of the resources required to launch the cluster\. This includes an IAM role for Amazon EC2\. Typically, the IAM user must have the permissions of an *AdministratorAccess* managed policy\. For information about managed policies, see [AWS managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies) in the *IAM User Guide*\.
 
@@ -207,7 +207,7 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
 
 ### `ParallelClusterInstancePolicy` using `awsbatch`<a name="parallelclusterinstancepolicy-batch"></a>
 
-The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\.  In this example, “*<RESOURCES S3 BUCKET>*” is the value of the [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) setting; if [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) is not specified then “*<RESOURCES S3 BUCKET>*” is “parallelcluster\-\*”\. The following example is an overview of the required permissions:
+The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` as the scheduler\. You must include the same policies that are assigned to the `BatchUserRole` that is defined in the AWS Batch AWS CloudFormation nested stack\. The `BatchUserRole` ARN is provided as a stack output\. In this example, “*<RESOURCES S3 BUCKET>*” is the value of the [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) setting; if [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) is not specified then “*<RESOURCES S3 BUCKET>*” is “parallelcluster\-\*”\. The following example is an overview of the required permissions:
 
 ```
 {

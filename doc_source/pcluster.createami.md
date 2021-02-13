@@ -27,7 +27,10 @@ Specifies the base AMI to use for building the AWS ParallelCluster AMI\.
 
 `-os BASE_AMI_OS, --os BASE_AMI_OS`  
 Specifies the OS of the base AMI\. Valid options are: `alinux`, `alinux2`, `ubuntu1604`, `ubuntu1804`, `centos7`, and `centos8`\.  
-Support for `centos8` was added, and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\.Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added in AWS ParallelCluster version 2\.5\.0\.
+OS support changes in different AWS ParallelCluster versions:  
++ Support for `centos8` was added, and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\.
++ Support for alinux2 was added in AWS ParallelCluster version 2\.6\.0\.
++ Support for ubuntu1804 was added in AWS ParallelCluster version 2\.5\.0\.
 
 `-ap CUSTOM_AMI_NAME_PREFIX, --ami-name-prefix CUSTOM_AMI_NAME_PREFIX`  
 Specifies the prefix name of the resulting AWS ParallelCluster AMI\.  
@@ -46,7 +49,7 @@ Defaults to `t2.xlarge`\.
 Support for the `--instance-type` argument was added in AWS ParallelCluster version 2\.4\.1\.
 
 `--post-install POST_INSTALL_SCRIPT`  
-Specifies the path to the post\-install script\. Paths must use a `s3://`, `https://`, or `file://` URL scheme\. Examples include:  
+Specifies the path to the post\-install script\. Paths must use a `s3://`, `https://`, or `file://` URL scheme\. Examples include the following:  
 + `https://bucket-name.s3.region.amazonaws.com/path/post_install.sh`
 + `s3://bucket-name/post_install.sh`
 + `file:///opt/project/post_install.sh`

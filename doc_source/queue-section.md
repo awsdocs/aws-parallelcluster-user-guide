@@ -78,7 +78,7 @@ disable_hyperthreading = true
 
 ## `enable_efa`<a name="queue-enable-efa"></a>
 
-**\(Optional\)** If set to `true`, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the nodes in this queue\. EFA is supported by the following instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.24xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge`\) on these operating systems \(`alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`enable_efa`](cluster-definition.md#enable-efa) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\.
+**\(Optional\)** If set to `true`, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the nodes in this queue\. EFA is supported by the following instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge`\) on these operating systems \(`alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, or `ubuntu1804`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`enable_efa`](cluster-definition.md#enable-efa) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\.
 
 ```
 enable_efa = true

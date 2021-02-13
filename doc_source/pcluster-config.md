@@ -41,7 +41,7 @@ For more information, see [Configuring AWS ParallelCluster](getting-started-conf
 Indicates the [`[cluster]` section](cluster-definition.md) to use\. If this argument is not specified, `pcluster-config convert` will use the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md)\. If that isn't specified, then the `[cluster default]` section is used\.
 
 `-o OUTPUT_FILE, --output OUTPUT_FILE`  
-Specifies the path of the converted configuration file to be written\. By default the output is written to `STDOUT`\.
+Specifies the path of the converted configuration file to be written\. By default, the output is written to `STDOUT`\.
 
 Example:
 

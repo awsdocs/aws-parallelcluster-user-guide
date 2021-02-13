@@ -1,6 +1,6 @@
 # `awsbsub`<a name="awsbatchcli.awsbsub"></a>
 
-Submits jobs to the cluster’s job queue\.
+Submits jobs to the job queue of the cluster\.
 
 ```
 awsbsub [-h] [-jn JOB_NAME] [-c CLUSTER] [-cf] [-w WORKING_DIR]
@@ -13,7 +13,7 @@ awsbsub [-h] [-jn JOB_NAME] [-c CLUSTER] [-cf] [-w WORKING_DIR]
 ## Positional Arguments<a name="awsbatchcli.awsbsub.args"></a>
 
 `command`  
-Submits the job \(the command specified must be available on the compute instances\), or specifies the file name to be transferred \(also see the `--command-file` option\)\.
+Submits the job \(the command specified must be available on the compute instances\) or the file name to be transferred\. See also `--command-file`\.
 
 `arguments`  
 \(Optional\) Specifies arguments for the command or the command\-file\.
@@ -21,7 +21,7 @@ Submits the job \(the command specified must be available on the compute instanc
 ## Named Arguments<a name="awsbatchcli.awsbsub.namedargs"></a>
 
 `-jn JOB_NAME, --job-name JOB_NAME`  
-Names the job\. The first character must be alphanumeric\. The job name can contain up to 128 characters\. Letters \(both uppercase and lowercase\), numbers, hyphens, and underscores are allowed\.
+Names the job\. The first character must be either a letter or number\. The job name can contain letters \(both uppercase and lowercase\), numbers, hyphens, and underscores, and be up to 128 characters in length\. 
 
 `-c CLUSTER, --cluster CLUSTER`  
 Specifies the cluster to use\.
@@ -31,41 +31,41 @@ Indicates that the command is a file to be transferred to the compute instances\
 Default: False
 
 `-w WORKING_DIR, --working-dir WORKING_DIR`  
-Specifies the folder to use as the job's working directory\. If a working directory is not specified, the job is run in the `job-<AWS_BATCH_JOB_ID>` subfolder of the user’s home directory\. You can use either this parameter or the `--parent-working-dir` parameter\.
+Specifies the folder to use as the job's working directory\. If a working directory isn't specified, the job is run in the `job-<AWS_BATCH_JOB_ID>` subfolder of the user’s home directory\. You can use either this parameter or the `--parent-working-dir` parameter\.
 
 `-pw PARENT_WORKING_DIR, --parent-working-dir PARENT_WORKING_DIR`  
-Specifies the parent folder of the job's working directory\. If a parent working directory is not specified, it defaults to the user’s home directory\. A subfolder named `job-<AWS_BATCH_JOB_ID>` is created in the parent working directory\. You can use either this parameter or the `--working-dir` parameter\.
+Specifies the parent folder of the job's working directory\. If a parent working directory isn't specified, it defaults to the user’s home directory\. A subfolder named `job-<AWS_BATCH_JOB_ID>` is created in the parent working directory\. You can use either this parameter or the `--working-dir` parameter\.
 
 `-if INPUT_FILE, --input-file INPUT_FILE`  
 Specifies the file to be transferred to the compute instances, in the job's working directory\. You can specify multiple input file parameters\.
 
 `-p VCPUS, --vcpus VCPUS`  
-Specifies the number of vCPUs to reserve for the container\. When used together with `–nodes`, it identifies the number of vCPUs per node\.  
+Specifies the number of vCPUs to reserve for the container\. When used together with `–nodes`, it identifies the number of vCPUs for each node\.  
 Default: 1
 
 `-m MEMORY, --memory MEMORY`  
-Specifies the hard limit of memory \(in MiB\) to provide for the job\. If your job attempts to exceed the memory limit specified here, the job is killed\.  
+Specifies the hard limit of memory \(in MiB\) to provide for the job\. If your job attempts to exceed the memory limit specified here, the job is ended\.  
 Default: 128
 
 `-e ENV, --env ENV`  
-Specifies a comma\-separated list of environment variable names to export to the job environment\. To export all environment variables, specify ‘all’\. Note that a list of 'all' environment variables will not include those listed in the `–env-blacklist` parameter, or variables starting with the `PCLUSTER_*` or `AWS_*` prefix\.
+Specifies a comma\-separated list of environment variable names to export to the job environment\. To export all environment variables, specify ‘all’\. Note that a list of 'all' environment variables doesn't include those listed in the `–env-blacklist` parameter, or variables starting with the `PCLUSTER_*` or `AWS_*` prefix\.
 
 `-eb ENV_DENYLIST, --env-blacklist ENV_DENYLIST`  
 Specifies a comma\-separated list of environment variable names to **not** export to the job environment\. By default, `HOME`, `PWD`, `USER`, `PATH`, `LD_LIBRARY_PATH`, `TERM`, and `TERMCAP` are not exported\.
 
 `-r RETRY_ATTEMPTS, --retry-attempts RETRY_ATTEMPTS`  
-Specifies the number of times to move a job to the RUNNABLE status\. You can specify between 1 and 10 attempts\. If the value of attempts is greater than 1, the job is retried if it fails, until it has moved to RUNNABLE that specified number of times\.  
+Specifies the number of times to move a job to the `RUNNABLE` status\. You can specify between 1 and 10 attempts\. If the value of attempts is greater than 1, the job is retried if it fails, until it has moved to a `RUNNABLE` status for the specified number of times\.  
 Default: 1
 
 `-t TIMEOUT, --timeout TIMEOUT`  
-Specifies the time duration in seconds \(measured from the job attempt’s startedAt timestamp\) after which AWS Batch terminates your job if it has not finished\. The timeout value must be at least 60 seconds\.
+Specifies the time duration in seconds \(measured from the job attempt’s `startedAt` timestamp\) after which AWS Batch terminates your job if it hasn't finished\. The timeout value must be at least 60 seconds\.
 
 `-n NODES, --nodes NODES`  
 Specifies the number of nodes to reserve for the job\. Specify a value for this parameter to enable multi\-node parallel submission\.  
-Multi\-node parallel jobs are not supported when the [`cluster_type`](cluster-definition.md#cluster-type) parameter is set to `spot`\.
+Multi\-node parallel jobs aren't supported when the [`cluster_type`](cluster-definition.md#cluster-type) parameter is set to `spot`\.
 
 `-a ARRAY_SIZE, --array-size ARRAY_SIZE`  
 Indicates the size of the array\. You can specify a value between 2 and 10,000\. If you specify array properties for a job, it becomes an array job\.
 
 `-d DEPENDS_ON, --depends-on DEPENDS_ON`  
-Specifies a semicolon\-separated list of dependencies for a job\. A job can depend upon a maximum of 20 jobs\. You can specify a SEQUENTIAL type dependency without specifying a job ID for array jobs\. A sequential dependency allows each child array job to complete sequentially, starting at index 0\. You can also specify an N\_TO\_N type dependency with a job ID for array jobs\. An N\_TO\_N dependency means that each index child of this job must wait for the corresponding index child of each dependency to complete before it can begin\. The syntax for this parameter is "jobId=*<string>*,type=<string>;\.\.\."\.
+Specifies a semicolon\-separated list of dependencies for a job\. A job can depend upon a maximum of 20 jobs\. You can specify a `SEQUENTIAL` type dependency without specifying a job ID for array jobs\. A sequential dependency allows each child array job to complete sequentially, starting at index 0\. You can also specify an N\_TO\_N type dependency with a job ID for array jobs\. An N\_TO\_N dependency means that each index child of this job must wait for the corresponding index child of each dependency to complete before it can begin\. The syntax for this parameter is "jobId=*<string>*,type=*<string>*;\.\.\."\.

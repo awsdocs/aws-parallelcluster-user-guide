@@ -17,7 +17,7 @@ Defaults to `~/.parallelcluster/config`\.
 For more information, see [Configuring AWS ParallelCluster](getting-started-configuring-parallelcluster.md)\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. If this is specified, the configuration will skip the Region detection\.
+Specifies the AWS Region to use\. If this is specified, the configuration skips Region detection\.
 
 If [`pcluster configure`](#pcluster.configure) created a new VPC, you can delete that VPC by deleting the AWS CloudFormation stack it created\. The name will start with "parallelclusternetworking\-" and contain the creation time in a "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
 

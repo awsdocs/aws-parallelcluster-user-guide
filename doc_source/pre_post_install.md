@@ -1,6 +1,6 @@
 # Custom Bootstrap Actions<a name="pre_post_install"></a>
 
-AWS ParallelCluster can run arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action when the cluster is created\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as root and can be in any script language that is supported by the cluster OS\. Often the code is in *Bash* or *Python*\.
+AWS ParallelCluster can run arbitrary code either before \(pre\-install\) or after \(post\-install\) the main bootstrap action when the cluster is created\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as root and can be in any script language that's supported by the cluster OS\. Often the code is in *Bash* or *Python*\.
 
 Pre\-install actions are called before any cluster deployment bootstrap action is started, such as configuring NAT, Amazon Elastic Block Store \(Amazon EBS\) or the scheduler\. Some pre\-install actions include modifying storage, adding extra users, and adding packages\.
 
