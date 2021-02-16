@@ -1,18 +1,25 @@
 # AWS ParallelCluster troubleshooting<a name="troubleshooting"></a>
 
 **Topics**
++ [Retrieving and preserving logs](#retrieving-and-preserve-logs)
 + [Troubleshooting stack deployment issues](#troubleshooting-stack-creation-failures)
-+ [AWS Batch multi\-node parallel jobs submission issues](#troubleshooting-aws-batch-mnp)
++ [Troubleshooting issues in multiple queue mode clusters](#multiple-queue-mode)
++ [Troubleshooting issues in single queue mode clusters](#troubleshooting-issues-in-single-queue-clusters)
 + [Placement groups and instance launch issues](#placement-groups-and-instance-launch-issues)
 + [Directories that cannot be replaced](#directories-cannot-be-replaced)
 + [Troubleshooting issues in NICE DCV](#nice-dcv-troubleshooting)
-+ [Retrieving and preserving logs](#retrieving-and-preserve-logs)
-+ [Troubleshooting issues in multiple queue mode clusters](#multiple-queue-mode)
-+ [Troubleshooting issues in single queue mode clusters](#troubleshooting-issues-in-single-queue-clusters)
 + [Troubleshooting issues in clusters with AWS Batch integration](#clusters-with-aws-batch-integration)
 + [Additional support](#getting-support)
 
 The AWS ParallelCluster community maintains a Wiki page that provides many troubleshooting tips on the [AWS ParallelCluster GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki/)\. For a list of known issues, see [Known issues](https://github.com/aws/aws-parallelcluster/wiki#known-issues-)\.
+
+## Retrieving and preserving logs<a name="retrieving-and-preserve-logs"></a>
+
+ Logs are a useful resource for troubleshooting issues\. Before you can use logs to troubleshoot issues for your AWS ParallelCluster resources, you should first create an archive of cluster logs\. Follow the steps described in the [Creating an Archive of a Cluster’s Logs](https://github.com/aws/aws-parallelcluster/wiki/Creating-an-Archive-of-a-Cluster's-Logs) topic on the [AWS ParallelCluster GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki/) to start this process\.
+
+If one of your running clusters is experiencing issues, you should place the cluster in a `STOPPED` state by running the ``pcluster stop` <cluster_name>` command before you begin to troubleshoot\. This prevents incurring any unexpected costs\.
+
+ If `pcluster` stops functioning or if you want to delete a cluster while still preserving its logs, run the ``pcluster delete` —keep-logs <cluster_name>` command\. Running this command deletes the cluster yet retains the log group that’s stored in Amazon CloudWatch\. For more information about this command, see the [`pcluster delete`](pcluster.delete.md) documentation\.
 
 ## Troubleshooting stack deployment issues<a name="troubleshooting-stack-creation-failures"></a>
 
@@ -38,53 +45,6 @@ After you're logged into the head node, you should find three primary log files 
 + `/var/log/cfn-init.log` is the log for the `cfn-init` script\. First check this log\. You're likely to see an error like `Command chef failed` in this log\. Look at the lines immediately before this line for more specifics connected with the error message\. For more information, see [cfn\-init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-init.html)\.
 + `/var/log/cloud-init.log` is the log for [cloud\-init](https://cloudinit.readthedocs.io/)\. If you don't see anything in `cfn-init.log`, then try checking this log next\.
 + `/var/log/cloud-init-output.log` is the output of commands that were run by [cloud\-init](https://cloudinit.readthedocs.io/)\. This includes the output from `cfn-init`\. In most cases, you don't need to look at this log to troubleshoot this type of issue\.
-
-## AWS Batch multi\-node parallel jobs submission issues<a name="troubleshooting-aws-batch-mnp"></a>
-
-If you have problems submitting multi\-node parallel jobs when using AWS Batch as the job scheduler, you should upgrade to AWS ParallelCluster version 2\.5\.0\. If that's not feasible, you can use the workaround that's detailed in the topic: [Self patch a cluster used for submitting multi\-node parallel jobs through AWS Batch](https://github.com/aws/aws-parallelcluster/wiki/Self-patch-a-Cluster-Used-for-Submitting-Multi-node-Parallel-Jobs-through-AWS-Batch)\.
-
-## Placement groups and instance launch issues<a name="placement-groups-and-instance-launch-issues"></a>
-
-To get the lowest inter\-node latency, use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If there aren't enough instances available when a request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving this error when using cluster placement groups, set the [`placement_group`](cluster-definition.md#placement-group) parameter to `DYNAMIC` and set the [`placement`](cluster-definition.md#placement) parameter to `compute`\.
-
-If you require a high performance shared filesystem, consider using [Amazon FSx for Lustre](http://aws.amazon.com/fsx/lustre/)\.
-
-If the head node must be in the placement group, use the same instance type and subnet for both the head as well as all of the compute nodes\. By doing this, the [`compute_instance_type`](cluster-definition.md#compute-instance-type) parameter has the same value as the [`master_instance_type`](cluster-definition.md#master-instance-type) parameter, the [`placement`](cluster-definition.md#placement) parameter is set to `cluster`, and the [`compute_subnet_id`](vpc-section.md#compute-subnet-id) parameter isn't specified\. With this configuration, the value of the [`master_subnet_id`](vpc-section.md#master-subnet-id) parameter is used for the compute nodes\.
-
-For more information, see [Troubleshooting instance launch issues](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshooting-launch.html) and [Placement groups roles and limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#concepts-placement-groups) in the *Amazon EC2 User Guide for Linux Instances*
-
-## Directories that cannot be replaced<a name="directories-cannot-be-replaced"></a>
-
-The following directories are shared between the nodes and cannot be replaced\.
-
-`/home`  
-This includes the default user home folder \(`/home/ec2_user` on Amazon Linux, `/home/centos` on CentOS, and `/home/ubuntu` on Ubuntu\)\.
-
-`/opt/intel`  
-This includes Intel MPI, Intel Parallel Studio, and related files\.
-
-`/opt/sge`  
-This includes Son of Grid Engine and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = sge`\.\)
-
-`/opt/slurm`  
-This includes Slurm Workload Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = slurm`\.\)
-
-`/opt/torque`  
-This includes Torque Resource Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = torque`\.\)
-
-## Troubleshooting issues in NICE DCV<a name="nice-dcv-troubleshooting"></a>
-
-The logs for NICE DCV are written to files in the `/var/log/dcv/` directory\. Reviewing these logs can help to troubleshoot issues\.
-
-The instance type should have at least 1\.7 gibibyte \(GiB\) of RAM to run NICE DCV\. Nano and micro instance types don't have enough memory to run NICE DCV\.
-
-## Retrieving and preserving logs<a name="retrieving-and-preserve-logs"></a>
-
- Logs are a useful resource for troubleshooting issues\. Before you can use logs to troubleshoot issues for your AWS ParallelCluster resources, you should first create an archive of cluster logs\. Follow the steps described in the [Creating an Archive of a Cluster’s Logs](https://github.com/aws/aws-parallelcluster/wiki/Creating-an-Archive-of-a-Cluster's-Logs) topic on the [AWS ParallelCluster GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki/) to start this process\.
-
-If one of your running clusters is experiencing issues, you should place the cluster in a `STOPPED` state by running the ``pcluster stop` <cluster_name>` command before you begin to troubleshoot\. This prevents incurring any unexpected costs\.
-
- If `pcluster` stops functioning or if you want to delete a cluster while still preserving its logs, run the ``pcluster delete` —keep-logs <cluster_name>` command\. Running this command deletes the cluster yet retains the log group that’s stored in Amazon CloudWatch\. For more information about this command, see the [`pcluster delete`](pcluster.delete.md) documentation\.
 
 ## Troubleshooting issues in multiple queue mode clusters<a name="multiple-queue-mode"></a>
 
@@ -256,6 +216,41 @@ One known issue is random compute note fails on large\-scale clusters, specifica
 
 For ultra\-large scale clusters, additional tuning to your system might be required\. For more information, contact AWS Support\.
 
+## Placement groups and instance launch issues<a name="placement-groups-and-instance-launch-issues"></a>
+
+To get the lowest inter\-node latency, use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If there aren't enough instances available when a request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving this error when using cluster placement groups, set the [`placement_group`](cluster-definition.md#placement-group) parameter to `DYNAMIC` and set the [`placement`](cluster-definition.md#placement) parameter to `compute`\.
+
+If you require a high performance shared filesystem, consider using [Amazon FSx for Lustre](http://aws.amazon.com/fsx/lustre/)\.
+
+If the head node must be in the placement group, use the same instance type and subnet for both the head as well as all of the compute nodes\. By doing this, the [`compute_instance_type`](cluster-definition.md#compute-instance-type) parameter has the same value as the [`master_instance_type`](cluster-definition.md#master-instance-type) parameter, the [`placement`](cluster-definition.md#placement) parameter is set to `cluster`, and the [`compute_subnet_id`](vpc-section.md#compute-subnet-id) parameter isn't specified\. With this configuration, the value of the [`master_subnet_id`](vpc-section.md#master-subnet-id) parameter is used for the compute nodes\.
+
+For more information, see [Troubleshooting instance launch issues](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshooting-launch.html) and [Placement groups roles and limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#concepts-placement-groups) in the *Amazon EC2 User Guide for Linux Instances*
+
+## Directories that cannot be replaced<a name="directories-cannot-be-replaced"></a>
+
+The following directories are shared between the nodes and cannot be replaced\.
+
+`/home`  
+This includes the default user home folder \(`/home/ec2_user` on Amazon Linux, `/home/centos` on CentOS, and `/home/ubuntu` on Ubuntu\)\.
+
+`/opt/intel`  
+This includes Intel MPI, Intel Parallel Studio, and related files\.
+
+`/opt/sge`  
+This includes Son of Grid Engine and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = sge`\.\)
+
+`/opt/slurm`  
+This includes Slurm Workload Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = slurm`\.\)
+
+`/opt/torque`  
+This includes Torque Resource Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = torque`\.\)
+
+## Troubleshooting issues in NICE DCV<a name="nice-dcv-troubleshooting"></a>
+
+The logs for NICE DCV are written to files in the `/var/log/dcv/` directory\. Reviewing these logs can help to troubleshoot issues\.
+
+The instance type should have at least 1\.7 gibibyte \(GiB\) of RAM to run NICE DCV\. Nano and micro instance types don't have enough memory to run NICE DCV\.
+
 ## Troubleshooting issues in clusters with AWS Batch integration<a name="clusters-with-aws-batch-integration"></a>
 
  This section is relevant to clusters with AWS Batch scheduler integration\.
@@ -263,6 +258,10 @@ For ultra\-large scale clusters, additional tuning to your system might be requi
 ### Head node issues<a name="head-node-issues"></a>
 
  Head node related setup issues can be troubleshooted in the same way as single queue cluster\. For more information about these issues, see [Troubleshooting issues in single queue mode clusters](#troubleshooting-issues-in-single-queue-clusters)\.
+
+### AWS Batch multi\-node parallel jobs submission issues<a name="troubleshooting-aws-batch-mnp"></a>
+
+If you have problems submitting multi\-node parallel jobs when using AWS Batch as the job scheduler, you should upgrade to AWS ParallelCluster version 2\.5\.0\. If that's not feasible, you can use the workaround that's detailed in the topic: [Self patch a cluster used for submitting multi\-node parallel jobs through AWS Batch](https://github.com/aws/aws-parallelcluster/wiki/Self-patch-a-Cluster-Used-for-Submitting-Multi-node-Parallel-Jobs-through-AWS-Batch)\.
 
 ### Compute issues<a name="compute-issues"></a>
 
