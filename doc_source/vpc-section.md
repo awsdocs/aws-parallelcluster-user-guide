@@ -10,7 +10,7 @@
 + [`vpc_id`](#vpc-id)
 + [`vpc_security_group_id`](#vpc-security-group-id)
 
-Specifies Amazon VPC configuration settings\.
+Specifies Amazon VPC configuration settings\. For more information about VPCs, see [What is Amazon VPC?](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) and [Security best practices for your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html) in the *Amazon VPC User Guide*\.
 
 The format is `[vpc vpc-name]`\. *vpc\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 

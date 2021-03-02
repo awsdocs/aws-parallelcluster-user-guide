@@ -110,6 +110,9 @@ After the previous steps are completed, decide whether to use an existing VPC or
 
 If you let AWS ParallelCluster create a VPC, you must decide if all nodes should be in a public subnet\.
 
+**Important**  
+VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.
+
 ```
 Automate VPC creation? (y/n) [n]: y
 Allowed values for Network Configuration:
@@ -204,6 +207,9 @@ EC2 Key Pair Name [prod-uswest1-key]:
 ```
 
 Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your limit on number of VPCs in a Region\. The default number of VPCs is five\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+
+**Important**  
+VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.
 
 If you let AWS ParallelCluster create a VPC, decide if all nodes should be in a public subnet\.
 
