@@ -92,7 +92,7 @@ Verify that AWS ParallelCluster installed correctly\.
 
 ```
 $ pcluster version
-2.10.2
+2.10.3
 ```
 
 To upgrade to the latest version, run the installation command again\.

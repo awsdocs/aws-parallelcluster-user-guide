@@ -144,7 +144,7 @@ base_os = alinux
 
 ## `cluster_resource_bucket`<a name="cluster-resource-bucket-section"></a>
 
-**\(Optional\)** Specifies the name of the Amazon S3 bucket that's used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service Developer Guide*\. This bucket can be used for multiple clusters\.
+**\(Optional\)** Specifies the name of the Amazon S3 bucket that's used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service Developer Guide*\. This bucket can be used for multiple clusters\. The bucket must be in the same Region as the cluster\.
 
 If this parameter isn't specified, a new bucket is created when the cluster is created\. The new bucket has the name of `parallelcluster-random_string`\. In this name, *random\_string* is a random string of alphanumeric characters\. All cluster resources are stored in this bucket in a path with the form `bucket_name/resource_directory`\. `resource_directory` has the form `stack_name-random_string`, where *stack\_name* is the name of one of the AWS CloudFormation stacks used by AWS ParallelCluster\. The value of *bucket\_name* can be found in the `ResourcesS3Bucket` value in the output of the `parallelcluster-clustername` stack\. The value of *resource\_directory* can be found in the value of the `ArtifactS3RootDirectory` output from the same stack\.
 
@@ -217,7 +217,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.2/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.3/amis.txt)\.
 
 There is no default value\.
 
@@ -638,7 +638,7 @@ When set to `DYNAMIC`, a unique placement group is created and deleted as part o
 
 This parameter isn't used when the scheduler is `awsbatch`\.
 
-For more information about placement groups, see [Placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For more information about placement groups, see [Placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\. If the same placement group is used for different instance types, it’s more likely that the request might fail due to an insufficient capacity error\. For more information, see [Insufficient instance capacity](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshooting-launch.html#troubleshooting-launch-capacity) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 There is no default value\.
 
@@ -909,7 +909,7 @@ Updates use the template that was originally used to create the stack\.
 Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-version.cfn.json`\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.10.2.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.10.3.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

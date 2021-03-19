@@ -32,9 +32,9 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
 
    ```
    C:\>py --version
-   Python 3.8.5
+   Python 3.9.2
    C:\>pip3 --version
-   pip 21.0.1 from c:\python38\lib\site-packages\pip (python 3.8)
+   pip 21.0.1 from c:\python39\lib\site-packages\pip (python 3.9)
    ```
 
 1. Install AWS ParallelCluster using `pip`\.
@@ -47,7 +47,7 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
 
    ```
    C:\>pcluster version
-   2.10.2
+   2.10.3
    ```
 
 To upgrade to the latest version, run the installation command again\.
@@ -64,15 +64,15 @@ You can find where the `pcluster` program is installed by running the following 
 
 ```
 C:\>where pcluster
-C:\Python38\Scripts\pcluster.exe
+C:\Python39\Scripts\pcluster.exe
 ```
 
 If that command does not return any results, then you must add the path manually\. Use the command line or Windows Explorer to discover where it is installed on your computer\. Typical paths include:
-+ **Python 3 and `pip3`** – `C:\Python38\Scripts\`
-+ **Python 3 and `pip3` \-\-user option** – `%APPDATA%\Python\Python38\Scripts`
++ **Python 3 and `pip3`** – `C:\Python39\Scripts\`
++ **Python 3 and `pip3` \-\-user option** – `%APPDATA%\Python\Python39\Scripts`
 
 **Note**  
-Folder names that include version numbers can vary\. The preceding examples show Python38\. Replace as needed with the version number that you are using\.
+Folder names that include version numbers can vary\. The preceding examples show Python39\. Replace as needed with the version number that you are using\.
 
 **To modify your PATH variable \(Windows\)**
 
