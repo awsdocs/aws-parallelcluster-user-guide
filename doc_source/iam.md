@@ -42,7 +42,6 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
                 "ec2:DescribeInstanceTypes",
                 "ec2:DescribeInstances",
                 "ec2:DescribeRegions",
-                "ec2:RunInstances",
                 "ec2:TerminateInstances",
                 "ec2:DescribeLaunchTemplates",
                 "ec2:CreateTags"
@@ -52,6 +51,22 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
             ],
             "Effect": "Allow",
             "Sid": "EC2"
+        },
+        {
+            "Action": "ec2:RunInstances",
+            "Resource": [
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:subnet/<COMPUTE SUBNET ID>",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:network-interface/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:instance/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:volume/*",
+                "arn:aws:ec2:<REGION>::image/<IMAGE ID>",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:key-pair/<KEY NAME>",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:security-group/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:launch-template/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:placement-group/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "EC2RunInstances"
         },
         {
             "Action": [
