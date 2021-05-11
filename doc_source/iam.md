@@ -1049,7 +1049,7 @@ The following example sets the `ParallelClusterLambdaPolicy`, using SGE, Slurm, 
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:aws::logs:*:*:*",
+      "Resource": "arn:aws:logs:*:*:*",
       "Effect": "Allow",
       "Sid": "CloudWatchLogsPolicy"
     },
@@ -1062,7 +1062,7 @@ The following example sets the `ParallelClusterLambdaPolicy`, using SGE, Slurm, 
         "s3:ListBucketVersions"
       ],
       "Resource": [
-        "arn:aws::s3:::*"
+        "arn:aws:s3:::*"
       ],
       "Effect": "Allow",
       "Sid": "S3BucketPolicy"
@@ -1088,7 +1088,7 @@ The following example sets the `ParallelClusterLambdaPolicy`, using SGE, Slurm, 
         "dynamodb:GetItem",
         "dynamodb:PutItem"
       ],
-      "Resource": "arn:aws::dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
+      "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
       "Effect": "Allow",
       "Sid": "DynamoDBTable"
     },
@@ -1098,7 +1098,7 @@ The following example sets the `ParallelClusterLambdaPolicy`, using SGE, Slurm, 
         "route53:ChangeResourceRecordSets"
       ],
       "Resource": [
-        "arn:aws::route53:::hostedzone/*"
+        "arn:aws:route53:::hostedzone/*"
       ],
       "Effect": "Allow",
       "Sid": "Route53DeletePolicy"
@@ -1121,7 +1121,7 @@ The following example sets the `ParallelClusterLambdaPolicy` using `awsbatch` as
         "logs:PutLogEvents"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws::logs:*:*:*",
+      "Resource": "arn:aws:logs:*:*:*",
       "Sid": "CloudWatchLogsPolicy"
     },
     {
