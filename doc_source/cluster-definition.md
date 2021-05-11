@@ -303,6 +303,9 @@ The default value is `false`\.
 disable_cluster_dns = true
 ```
 
+**Warning**  
+A name resolution system is required for the cluster to operate properly\. If `disable_cluster_dns` is set to `true`, an additional name resolution system must also be provided\.
+
 **Important**  
 [`disable_cluster_dns`](#disable-cluster-dns-settings) = `true` is only supported if the [`queue_settings`](#queue-settings) setting is specified\.
 
@@ -738,7 +741,7 @@ queue_settings = q1, q2
 **Note**  
 Support for [`queue_settings`](#queue-settings) was added in AWS ParallelCluster version 2\.9\.0\.
 
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
 ## `raid_settings`<a name="raid-settings"></a>
 

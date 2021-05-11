@@ -57,7 +57,7 @@ This is the safest and most recommended method\. Because the base AWS ParallelCl
 If you have a customized AMI and software already in place, you can apply the changes needed by AWS ParallelCluster on top of it\.
 
 1. Install the following in your local system, together with the AWS ParallelCluster CLI:
-   + Packer: find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it\. Verify that the `packer` command is available in your PATH\.
+   + Packer: find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it\. The version must be at least 1\.4\.0, but the latest version is recommended\. Verify that the `packer` command is available in your PATH\.
 **Note**  
 Before AWS ParallelCluster version 2\.8\.0, [Berkshelf](https://github.com/berkshelf/berkshelf) \(which is installed by using `gem install berkshelf`\) was required to use `pcluster createami`\.
 

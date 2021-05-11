@@ -39,5 +39,5 @@ If your Linux distribution came with Python, you might need to install the Pytho
 
    ```
    $ python3 --version
-   Python 3.9.2
+   Python 3.7.9
    ```
