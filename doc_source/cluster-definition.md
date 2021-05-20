@@ -217,7 +217,7 @@ compute_root_volume_size = 20
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.3/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.4/amis.txt)\.
 
 There is no default value\.
 
@@ -912,7 +912,7 @@ Updates use the template that was originally used to create the stack\.
 Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-version.cfn.json`\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.10.3.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.10.4.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
