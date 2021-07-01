@@ -100,23 +100,22 @@ Support for [`additional_iam_policies`](#additional-iam-policies) was added in A
 **\(Required\)** Specifies which OS type is used in the cluster\.
 
 Available options are:
-+ `alinux`
 + `alinux2`
 + `centos7`
 + `centos8`
-+ `ubuntu1604`
 + `ubuntu1804`
++ `ubuntu2004`
 
 **Note**  
-For AWS Graviton\-based instances, only `alinux2`, `centos8`, or `ubuntu1804` are supported\.
+For AWS Graviton\-based instances, only `alinux2`, `centos8`, `ubuntu1804`, or `ubuntu2004` are supported\.
 
 **Note**  
-Support for `centos8` was added and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\. Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added, and support for `ubuntu1404` was removed in AWS ParallelCluster version 2\.5\.0\.
+Support for `ubuntu2004` was added and support for `alinux` and `ubuntu1604` was removed in AWS ParallelCluster version 2\.11\.0\. Support for `centos8` was added and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\. Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added, and support for `ubuntu1404` was removed in AWS ParallelCluster version 2\.5\.0\.
 
-Other than the specific Regions mentioned in the following table that don't support `centos7` and `centos8`\. All other AWS commercial Regions support all of the following operating systems\. 
+Other than the specific Regions mentioned in the following table that don't support `centos7` and `centos8`\. All other AWS commercial Regions support all of the following operating systems\.
 
 
-| Partition \(Regions\) | `alinux` and `alinux2` | `centos7` and `centos8` | `ubuntu1604` and `ubuntu1804` | 
+| Partition \(Regions\) | `alinux2` | `centos7` and `centos8` | `ubuntu1804` and `ubuntu2004` | 
 | --- | --- | --- | --- | 
 | Commercial \(All Regions not specifically mentioned\) | True | True | True | 
 | AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | True | 
@@ -127,17 +126,17 @@ Other than the specific Regions mentioned in the following table that don't supp
 **Note**  
 The [`base_os`](#base-os) parameter also determines the user name that's used to log into the cluster\.
 + `centos7` and `centos8`: `centos` 
-+ `ubuntu1604` and `ubuntu1804`: `ubuntu` 
-+ `alinux` and `alinux2`: `ec2-user` 
++ `ubuntu1804` and `ubuntu2004`: `ubuntu` 
++ `alinux2`: `ec2-user` 
 
 **Note**  
 Before AWS ParallelCluster version 2\.7\.0, the [`base_os`](#base-os) parameter was optional, and the default was `alinux`\. Starting with AWS ParallelCluster version 2\.7\.0, the [`base_os`](#base-os) parameter is required\.
 
 **Note**  
-If the [`scheduler`](#scheduler) parameter is `awsbatch`, either `alinux` or `alinux2` is supported\.
+If the [`scheduler`](#scheduler) parameter is `awsbatch`, only `alinux2` is supported\.
 
 ```
-base_os = alinux
+base_os = alinux2
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
@@ -170,12 +169,12 @@ The default value is `ondemand`\.
 For more information about Spot Instances, see [Working with Spot Instances](spot.md)\.
 
 **Note**  
-Using Spot Instances requires that the **AWSServiceRoleForEC2SpotFleet** service\-linked role exist in your account\. To create this role in your account using the AWS CLI, run the following command:  
+Using Spot Instances requires that the **AWSServiceRoleForEC2Spot** service\-linked role exist in your account\. To create this role in your account using the AWS CLI, run the following command:  
 
 ```
-aws iam create-service-linked-role --aws-service-name spotfleet.amazonaws.com
+aws iam create-service-linked-role --aws-service-name spot.amazonaws.com
 ```
-For more information, see [Spot Fleet permissions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html#spot-fleet-prerequisites) in the *Amazon EC2 User Guide for Linux Instances*\.
+For more information, see [Service\-linked role for Spot Instance requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html#service-linked-roles-spot-instance-requests) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
 cluster_type = ondemand
@@ -202,22 +201,22 @@ Support for AWS Graviton\-based instances \(including `A1` and `C6g` instances\)
 
 ## `compute_root_volume_size`<a name="compute-root-volume-size"></a>
 
-**\(Optional\)** Specifies the ComputeFleet root volume size in GB\. The AMI must support growroot\.
+**\(Optional\)** Specifies the ComputeFleet root volume size in gibibytes \(GiB\)\. The AMI must support `growroot`\.
 
-The default value is `25`\.
+The default value is `35`\.
 
 **Note**  
-Before AWS ParallelCluster version 2\.5\.0, the default was 20\.
+For AWS ParallelCluster versions between 2\.5\.0 and 2\.10\.4, the default was 25\. Before AWS ParallelCluster version 2\.5\.0, the default was 20\.
 
 ```
-compute_root_volume_size = 20
+compute_root_volume_size = 35
 ```
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.10.4/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.0/amis.txt)\.
 
 There is no default value\.
 
@@ -295,7 +294,7 @@ desired_vcpus = 4
 
 ## `disable_cluster_dns`<a name="disable-cluster-dns-settings"></a>
 
-**\(Optional\)** Specifies if the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. If `disable_cluster_dns` is set to `true`, the hosted zone isn't created\.
+**\(Optional\)** Specifies if the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. If `disable_cluster_dns` is set to `true`, the hosted zone isn't created\.
 
 The default value is `false`\.
 
@@ -376,20 +375,20 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems \([`base_os`](#base-os) is `alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, or `ubuntu1804` for x86\-64 instances and `alinux2` or `ubuntu1804` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\.
+**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\.
 
 ```
 enable_efa = compute
 ```
 
 **Note**  
-Support EFA on Arm\-based Graviton2 instances was added in AWS ParallelCluster version 2\.10\.1\.
+Support for EFA on Arm\-based Graviton2 instances was added in AWS ParallelCluster version 2\.10\.1\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `enable_efa_gdr`<a name="enable-efa-gdr"></a>
 
-**\(Optional\)** If `compute`, specifies that Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes\. Setting this setting to `compute` requires that the [`enable_efa`](#enable-efa) setting is set to `compute`\. EFA support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, or `ubuntu1804`\)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa_gdr`](queue-section.md#queue-enable-efa-gdr) settings in the [`[queue]` sections](queue-section.md) can be defined\.
+**\(Optional\)** If `compute`, specifies that Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes\. Setting this setting to `compute` requires that the [`enable_efa`](#enable-efa) setting is set to `compute`\. EFA support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa_gdr`](queue-section.md#queue-enable-efa-gdr) settings in the [`[queue]` sections](queue-section.md) can be defined\.
 
 ```
 enable_efa_gdr = compute
@@ -509,11 +508,14 @@ initial_queue_size = 2
 
 ## `key_name`<a name="key-name"></a>
 
-**\(Required\)** Names an existing Amazon EC2 key pair with which to enable SSH access to the instances\.
+**\(Optional\)** Names an existing Amazon EC2 key pair with which to enable SSH access to the instances\.
 
 ```
 key_name = mykey
 ```
+
+**Note**  
+Before AWS ParallelCluster version 2\.11\.0, `key_name` was a required setting\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -554,15 +556,15 @@ Before AWS ParallelCluster version 2\.10\.1, defaulted to `t2.micro` in all Regi
 
 ## `master_root_volume_size`<a name="master-root-volume-size"></a>
 
-**\(Optional\)** Specifies the head node root volume size in GB\. The AMI must support `growroot`\.
+**\(Optional\)** Specifies the head node root volume size in gibibytes \(GiB\)\. The AMI must support `growroot`\.
 
-The default value is `25`\.
+The default value is `35`\.
 
 **Note**  
-Before AWS ParallelCluster version 2\.5\.0, the default was 20\.
+For AWS ParallelCluster versions between 2\.5\.0 and 2\.10\.4, the default was 25\. Before AWS ParallelCluster version 2\.5\.0, the default was 20\.
 
 ```
-master_root_volume_size = 25
+master_root_volume_size = 35
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
@@ -911,8 +913,11 @@ Updates use the template that was originally used to create the stack\.
 
 Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-version.cfn.json`\.
 
+**Warning**  
+This is an advanced parameter\. Any change to this setting is done at your own risk\.
+
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.10.4.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.0.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

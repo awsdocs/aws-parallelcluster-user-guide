@@ -2,7 +2,7 @@
 
 After you install AWS ParallelCluster, complete the following configuration steps\.
 
-First, set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI user guide*\. 
+First, set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI user guide*\.
 
 ```
 $ aws configure
@@ -75,8 +75,8 @@ Allowed values for Operating System:
 2. alinux2
 3. centos7
 4. centos8
-5. ubuntu1604
-6. ubuntu1804
+5. ubuntu1804
+6. ubuntu2004
 Operating System [alinux]:
 ```
 
@@ -182,7 +182,7 @@ Allowed values for Scheduler:
 Scheduler [sge]:
 ```
 
-When `awsbatch` is selected as the scheduler, either `alinux` or `alinux2` can used as the operating system\.
+When `awsbatch` is selected as the scheduler, `alinux2` is used as the operating system\.
 
 The minimum and maximum size of the cluster of compute nodes is entered\. This is measured in vCPUs\.
 

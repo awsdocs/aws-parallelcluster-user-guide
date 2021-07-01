@@ -9,7 +9,7 @@ pcluster [ -h ] ( create | update | delete | start | stop | status | list |
 
 ## Arguments<a name="pcluster.arguments"></a>
 
-`pcluster command`  
+**`pcluster command`**  
 Possible choices: `configure`, `create`, `createami`, `dcv`, `delete`, `instances`, `list`, `ssh`, `start`, `status`, `stop`, `update`, `version`
 
 ## Sub\-commands:<a name="pcluster.subcommands"></a>

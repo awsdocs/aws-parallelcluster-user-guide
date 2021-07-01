@@ -16,7 +16,7 @@ Shows the status of the cluster with the provided name\.
 `-h, --help`  
 Shows the help text for `pcluster status`\.
 
-`-c CONFIG_FILE, --config CONFIG_FILE`  
+**\-c *CONFIG\_FILE*, `--config` *CONFIG\_FILE***  
 Specifies the alternative configuration file to use\.  
 Defaults to `~/.parallelcluster/config`\.
 

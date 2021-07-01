@@ -6,7 +6,7 @@ Interacts with the NICE DCV server running on the head node\.
 pcluster dcv [ -h ] ( connect )
 ```
 
-`pcluster dcv command`  
+**`pcluster dcv command`**  
 Possible choices: `connect`
 
 **Note**  

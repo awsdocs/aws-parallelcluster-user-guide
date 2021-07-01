@@ -26,7 +26,7 @@ Shows the help text for `pcluster createami`\.
 Specifies the base AMI to use for building the AWS ParallelCluster AMI\.
 
 `-os BASE_AMI_OS, --os BASE_AMI_OS`  
-Specifies the OS of the base AMI\. Valid options are: `alinux`, `alinux2`, `ubuntu1604`, `ubuntu1804`, `centos7`, and `centos8`\.  
+Specifies the OS of the base AMI\. Valid options are: `alinux2`, `ubuntu1804`, `ubuntu2004`, `centos7`, and `centos8`\.  
 OS support changes in different AWS ParallelCluster versions:  
 + Support for `centos8` was added, and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\.
 + Support for alinux2 was added in AWS ParallelCluster version 2\.6\.0\.

@@ -5,6 +5,7 @@
 + [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days)
 + [`copy_tags_to_backups`](#fsx-copy-tags-to-backups)
 + [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time)
++ [`data_compression_type`](#fsx-data-compression-type)
 + [`deployment_type`](#fsx-deployment-type)
 + [`drive_cache_type`](#fsx-drive-cache-type)
 + [`export_path`](#fsx-export-path)
@@ -21,7 +22,7 @@
 
 Defines configuration settings for an attached Amazon FSx for Lustre file system\. For more information about Amazon FSx for Lustre, see [Amazon FSx CreateFileSystem](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystem.html)\.
 
-Amazon FSx for Lustre is supported if the [`base_os`](cluster-definition.md#base-os) is `alinux`, `alinux2`, `centos7`, `centos8`, `ubuntu1604`, or `ubuntu1804`\.
+Amazon FSx for Lustre is supported if the [`base_os`](cluster-definition.md#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\.
 
 When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. For detailed instructions, see [Installing the lustre client](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/install-lustre-client.html) in the *Amazon FSx for Lustre User Guide*\.
 
@@ -29,7 +30,7 @@ When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. F
 Amazon FSx for Lustre isn't currently supported when using `awsbatch` as a scheduler\.
 
 **Note**  
-Support for Amazon FSx for Lustre on `centos8` was added in AWS ParallelCluster version 2\.10\.0\.Support for Amazon FSx for Lustre on `alinux2`, `ubuntu1604`, and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for Amazon FSx for Lustre on `centos7` was added in AWS ParallelCluster version 2\.4\.0\.
+Support for Amazon FSx for Lustre on `ubuntu2004` was added in AWS ParallelCluster version 2\.11\.0\. Support for Amazon FSx for Lustre on `centos8` was added in AWS ParallelCluster version 2\.10\.0\. Support for Amazon FSx for Lustre on `alinux2`, `ubuntu1604`, and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for Amazon FSx for Lustre on `centos7` was added in AWS ParallelCluster version 2\.4\.0\.
 
 If using an existing file system, it must be associated to a security group that allows inbound TCP traffic to port `988`\. Setting the source to `0.0.0.0/0` on a security group rule provides client access from all the IP ranges within your VPC security group for the protocol and port range for that rule\. To further limit access to your file systems, we recommend using more restrictive sources for your security group rules\. For example, you can use more specific CIDR ranges, IP addresses, or security group IDs\. This is done automatically when not using [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id)\.
 
@@ -125,6 +126,21 @@ Support for [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-st
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
+## `data_compression_type`<a name="fsx-data-compression-type"></a>
+
+**\(Optional\)** Specifies the Amazon FSx for Lustre data compression type\. This corresponds to the [DataCompressionType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-datacompressiontype) property\. For more information, see [Amazon FSx for Lustre data compression](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-compression.html) in the *Amazon FSx for Lustre User Guide*\.
+
+The only valid value is `LZ4`\. To disable data compression, remove the `data\_compression\_type` parameter\.
+
+```
+data_compression_type = LZ4
+```
+
+**Note**  
+Support for [](#fsx-data-compression-type) was added in AWS ParallelCluster version 2\.11\.0\.
+
+[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+
 ## `deployment_type`<a name="fsx-deployment-type"></a>
 
 **\(Optional\)** Specifies the Amazon FSx for Lustre deployment type\. This corresponds to the [DeploymentType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-deploymenttype) property\. For more information, see [Amazon FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *Amazon FSx for Lustre User Guide*\. Choose a scratch deployment type for temporary storage and shorter\-term processing of data\. `SCRATCH_2` is the latest generation of scratch file systems\. It offers higher burst throughput over baseline throughput and the in\-transit encryption of data\.
@@ -138,7 +154,7 @@ The default deployment type for Amazon FSx for Lustre\. With this deployment typ
 The latest generation of scratch file systems\. It supports up to six times the baseline throughput for spiky workloads\. It also supports in\-transit encryption of data for supported instance types in supported Regions\. For more information, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `SCRATCH_2` was added in AWS ParallelCluster version 2\.6\.0\.
 
 `PERSISTENT_1`  
-Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone,\. It supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `PERSISTENT_1` was added in AWS ParallelCluster version 2\.6\.0\.
+Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone, It supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `PERSISTENT_1` was added in AWS ParallelCluster version 2\.6\.0\.
 
 The default value is `SCRATCH_1`\.
 
