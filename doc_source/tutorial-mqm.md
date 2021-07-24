@@ -202,7 +202,7 @@ Submitted batch job 3
 You used these parameters for `sbatch`\.
 + `-N 3`– requests three nodes
 + `-p spot`– submits the job to the `spot` queue\. You can also submit a job to the `ondemand` queue by specifying `-p ondemand`\.
-+ `-C "[c5.2xlarge*1&t2.micro*2]"`– specifies the specific node constraints for this job\. This requests one \(1\) `c5.2xlarge` node and two \(2\) `t2.micro` nodes to be used for this job\.
++ `-C "[c5.xlarge*1&t2.micro*2]"`– specifies the specific node constraints for this job\. This requests one \(1\) `c5.xlarge` node and two \(2\) `t2.micro` nodes to be used for this job\.
 
 Run the `sinfo` command to view the nodes and queues\. \(Queues in AWS ParallelCluster are called partitions in Slurm\.\)
 
