@@ -78,7 +78,7 @@ disable_hyperthreading = true
 
 ## `enable_efa`<a name="queue-enable-efa"></a>
 
-**\(Optional\)** If set to `true`, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the nodes in this queue\. EFA is supported by the following instance types `c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances on these operating systems \(`alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`enable_efa`](cluster-definition.md#enable-efa) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\.
+**\(Optional\)** If set to `true`, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the nodes in this queue\. EFA is supported by the following instance types `c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances on these operating systems \(`alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`enable_efa`](cluster-definition.md#enable-efa) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](cluster-definition.md#placement) and [`placement_group`](cluster-definition.md#placement-group)\.
 
 ```
 enable_efa = true
@@ -88,7 +88,7 @@ enable_efa = true
 
 ## `enable_efa_gdr`<a name="queue-enable-efa-gdr"></a>
 
-**\(Optional\)** If `true`, specifies that Elastic Fabric Adapter \(EFA\) GPUDirect RDMA \(remote direct memory access\) is enabled for the nodes in this queue\. Setting this setting to `true` requires that the [`enable_efa_gdr`](#queue-enable-efa-gdr) setting is set to `true` \.EFA GPUDirect RDMA is supported by the following instance types \(`p4d.24xlarge`\) on these operating systems \(`alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`enable_efa_gdr`](cluster-definition.md#enable-efa-gdr) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\.
+**\(Optional\)** If `true`, specifies that Elastic Fabric Adapter \(EFA\) GPUDirect RDMA \(remote direct memory access\) is enabled for the nodes in this queue\. Setting this to `true` requires that the [`enable_efa`](#queue-enable-efa) setting is set to `true` \.EFA GPUDirect RDMA is supported by the following instance types \(`p4d.24xlarge`\) on these operating systems \(`alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`enable_efa_gdr`](cluster-definition.md#enable-efa-gdr) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](cluster-definition.md#placement) and [`placement_group`](cluster-definition.md#placement-group)\.
 
 The default value is `false`\.
 

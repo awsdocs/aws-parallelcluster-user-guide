@@ -137,7 +137,7 @@ data_compression_type = LZ4
 ```
 
 **Note**  
-Support for [](#fsx-data-compression-type) was added in AWS ParallelCluster version 2\.11\.0\.
+Support for [`data_compression_type`](#fsx-data-compression-type) was added in AWS ParallelCluster version 2\.11\.0\.
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
