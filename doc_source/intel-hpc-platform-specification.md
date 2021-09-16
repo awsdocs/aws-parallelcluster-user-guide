@@ -9,4 +9,4 @@ To be compliant with the Intel HPC Platform Specification, the following require
 + The End User License Agreement for Intel Parallel Studio must be accepted \([`enable_intel_hpc_platform`](cluster-definition.md#enable-intel-hpc-platform)` = true`\)\.
 + Each compute node must have at least 80 GB of storage \([`compute_root_volume_size`](cluster-definition.md#compute-root-volume-size)` = 80`\)\.
 
-The storage can be local or on a network \(NFS shared from the head node, Amazon EBS or Amazon FSx for Lustre\), and it can be shared\.
+The storage can be local or on a network \(NFS shared from the head node, Amazon EBS or FSx for Lustre\), and it can be shared\.

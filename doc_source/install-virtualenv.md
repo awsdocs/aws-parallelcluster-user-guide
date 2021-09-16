@@ -4,7 +4,6 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 
 **Prerequisites**
 + Verify that `pip` and Python are installed\. We recommend `pip3`, and Python 3 version 3\.8\. If you are using Python 2, use `pip` instead of `pip3` and `virtualenv` instead of `venv`\.
-+ 
 
 **To install AWS ParallelCluster in a virtual environment**
 
@@ -79,14 +78,14 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 #### [ Linux, macOS, or Unix ]
 
    ```
-   (apc-ve)~$ python3 -m pip install --upgrade aws-parallelcluster
+   (apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster<3.0"
    ```
 
 ------
 #### [ Windows ]
 
    ```
-   (apc-ve) C:\>pip3 install --upgrade aws-parallelcluster
+   (apc-ve) C:\>pip3 install --upgrade "aws-parallelcluster<3.0"
    ```
 
 ------
@@ -119,14 +118,14 @@ To upgrade to the latest version of AWS ParallelCluster, run the installation co
 #### [ Linux, macOS, or Unix ]
 
 ```
-(apc-ve)~$ python3 -m pip install --upgrade aws-parallelcluster
+(apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster<3.0"
 ```
 
 ------
 #### [ Windows ]
 
 ```
-(apc-ve) C:\>pip3 install --upgrade aws-parallelcluster
+(apc-ve) C:\>pip3 install --upgrade "aws-parallelcluster<3.0"
 ```
 
 ------

@@ -461,11 +461,11 @@ extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
 
 ## `fsx_settings`<a name="fsx-settings"></a>
 
-**\(Optional\)** Specifies the section that defines the Amazon FSx for Lustre configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
+**\(Optional\)** Specifies the section that defines the FSx for Lustre configuration\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[fsx]` section](fsx-section.md)\.
 
-For example, the following setting specifies that the section that starts `[fsx fs]` is used for the Amazon FSx for Lustre configuration\.
+For example, the following setting specifies that the section that starts `[fsx fs]` is used for the FSx for Lustre configuration\.
 
 ```
 fsx_settings = fs

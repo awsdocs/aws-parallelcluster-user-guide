@@ -17,6 +17,7 @@ This documentation describes how you should apply the shared responsibility mode
 
 ## Security information for services used by AWS ParallelCluster<a name="security-seealso"></a>
 + [Security in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security.html)
++ [Security in Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/security.html)
 + [Security in AWS Batch](https://docs.aws.amazon.com/batch/latest/userguide/security.html)
 + [Security in AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/security.html)
 + [Security in Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/security.html)
@@ -25,10 +26,12 @@ This documentation describes how you should apply the shared responsibility mode
 + [Security in Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/security.html)
 + [Security in Amazon ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security.html)
 + [Security in Amazon EFS](https://docs.aws.amazon.com/efs/latest/ug/security-considerations.html)
-+ [Security in Amazon FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/security.html)
++ [Security in FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/security.html)
 + [Security in AWS Identity and Access Management \(IAM\) ](https://docs.aws.amazon.com/IAM/latest/UserGuide/security.html)
++ [Security in EC2 Image Builder](https://docs.aws.amazon.com/imagebuilder/latest/userguide/image-builder-security.html)
 + [Security in AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-security.html)
++ [Security in Amazon Route 53 ](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/security.html)
 + [Security in Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-security.html)
-+ [Security in Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-security.html)
++ [Security in Amazon SQS \(For AWS ParallelCluster version 2\.x\.\)](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-security.html)
 + [Security in Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/security.html)
 + [Security in Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/security.html)

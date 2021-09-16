@@ -70,7 +70,7 @@ If you're able to make a connection, you need to recompile OpenSSL and Python to
 
 ## Compile OpenSSL and Python<a name="enforcing-tls-compile"></a>
 
-To that AWS ParallelCluster doesn't negotiate for anything earlier than TLS 1\.2, you need to recompile OpenSSL and Python\. To do this, copy the following content to create a script and run it\.
+To ensure that AWS ParallelCluster doesn't negotiate for anything earlier than TLS 1\.2, you need to recompile OpenSSL and Python\. To do this, copy the following content to create a script and run it\.
 
 ```
 #!/usr/bin/env bash

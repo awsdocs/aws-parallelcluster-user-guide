@@ -78,7 +78,7 @@ These are the Key notes for the Compute nodes:
 This is the [cloud\-init](https://cloudinit.readthedocs.io/) log\. It contains all commands that were run when an instance is set up\. It's useful for troubleshooting initialization issues\.
 
 `/var/log/parallelcluster/computemgtd`  
-This is the `computemgtd` log\. It runs on each compute node to monitor the node in the rare event that `computemgtd` daemon on the head node is offline\. It's useful for troubleshooting unexpected termination issues\. 
+This is the `computemgtd` log\. It runs on each compute node to monitor the node in the rare event that `clustermgtd` daemon on the head node is offline\. It's useful for troubleshooting unexpected termination issues\. 
 
 `/var/log/slurmd.log`  
 This is the Slurm compute daemon log\. It's useful for troubleshooting initialization and compute failure related issues\.
@@ -220,7 +220,7 @@ For ultra\-large scale clusters, additional tuning to your system might be requi
 
 To get the lowest inter\-node latency, use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If there aren't enough instances available when a request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving this error when using cluster placement groups, set the [`placement_group`](cluster-definition.md#placement-group) parameter to `DYNAMIC` and set the [`placement`](cluster-definition.md#placement) parameter to `compute`\.
 
-If you require a high performance shared filesystem, consider using [Amazon FSx for Lustre](http://aws.amazon.com/fsx/lustre/)\.
+If you require a high performance shared filesystem, consider using [FSx for Lustre](http://aws.amazon.com/fsx/lustre/)\.
 
 If the head node must be in the placement group, use the same instance type and subnet for both the head as well as all of the compute nodes\. By doing this, the [`compute_instance_type`](cluster-definition.md#compute-instance-type) parameter has the same value as the [`master_instance_type`](cluster-definition.md#master-instance-type) parameter, the [`placement`](cluster-definition.md#placement) parameter is set to `cluster`, and the [`compute_subnet_id`](vpc-section.md#compute-subnet-id) parameter isn't specified\. With this configuration, the value of the [`master_subnet_id`](vpc-section.md#master-subnet-id) parameter is used for the compute nodes\.
 

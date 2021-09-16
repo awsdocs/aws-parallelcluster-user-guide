@@ -1,6 +1,6 @@
 # Supported Regions<a name="supported-regions"></a>
 
-AWS ParallelCluster is available in the following AWS Regions:
+AWS ParallelCluster version 2\.x is available in the following AWS Regions:
 
 
 | Region Name | Region | 

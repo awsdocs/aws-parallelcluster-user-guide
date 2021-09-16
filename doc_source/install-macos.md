@@ -38,7 +38,7 @@ $ pip3 --version
 1. Use your newly installed `pip3` to install AWS ParallelCluster\. We recommend that if you use Python version 3\+, you use the `pip3` command\.
 
    ```
-   $ python3 -m pip install aws-parallelcluster --upgrade --user
+   $ python3 -m pip install "aws-parallelcluster<3.0" --upgrade --user
    ```
 
 1. Verify that AWS ParallelCluster is installed correctly\.
@@ -53,7 +53,7 @@ $ pip3 --version
 To upgrade to the latest version, run the installation command again\.
 
 ```
-$ pip3 install aws-parallelcluster --upgrade --user
+$ pip3 install "aws-parallelcluster<3.0" --upgrade --user
 ```
 
 ## Add the AWS ParallelCluster executable to your command line path<a name="install-macos-path"></a>

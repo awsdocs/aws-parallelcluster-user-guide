@@ -24,7 +24,7 @@ AWS ParallelCluster is updated regularly\. To determine whether you have the lat
 If you already have `pip` and a supported version of Python, you can install AWS ParallelCluster by using the following command\. If you have Python version 3\+ installed, we recommend that you use the **pip3** command\.
 
 ```
-$ pip3 install aws-parallelcluster --upgrade --user
+$ pip3 install "aws-parallelcluster<3.0" --upgrade --user
 ```
 
 ## Steps to take after installation<a name="install-post"></a>
@@ -44,13 +44,13 @@ $ pcluster version
 AWS ParallelCluster is updated regularly\. To update to the latest version of AWS ParallelCluster, run the installation command again\. For details about the latest version of AWS ParallelCluster, see the [AWS ParallelCluster release notes](https://github.com/aws/aws-parallelcluster/blob/v2.11.2/CHANGELOG.md)\.
 
 ```
-$ pip3 install aws-parallelcluster --upgrade --user
+$ pip3 install "aws-parallelcluster<3.0" --upgrade --user
 ```
 
 To uninstall AWS ParallelCluster, use `pip uninstall`\.
 
 ```
-$ pip3 uninstall aws-parallelcluster
+$ pip3 uninstall "aws-parallelcluster<3.0"
 ```
 
 If you don't have Python and `pip`, use the procedure for your environment\.

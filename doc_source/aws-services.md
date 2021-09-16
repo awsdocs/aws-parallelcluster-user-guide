@@ -106,9 +106,9 @@ For more information about Amazon EFS, see [https://aws\.amazon\.com/efs/](http:
 
 ## Amazon FSx for Lustre<a name="amazon-fsx-for-lustre"></a>
 
-Amazon FSx for Lustre provides a high\-performance file system that uses the open\-source Lustre file system\. Amazon FSx for Lustre is used when the [`fsx_settings`](cluster-definition.md#fsx-settings) setting is specified and refers to an [`[fsx]` section](fsx-section.md)\. Support for Amazon FSx for Lustre was added in AWS ParallelCluster version 2\.2\.1\.
+FSx for Lustre provides a high\-performance file system that uses the open\-source Lustre file system\. FSx for Lustre is used when the [`fsx_settings`](cluster-definition.md#fsx-settings) setting is specified and refers to an [`[fsx]` section](fsx-section.md)\. Support for FSx for Lustre was added in AWS ParallelCluster version 2\.2\.1\.
 
-For more information about Amazon FSx for Lustre, see [https://aws\.amazon\.com/fsx/lustre/](http://aws.amazon.com/fsx/lustre/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
+For more information about FSx for Lustre, see [https://aws\.amazon\.com/fsx/lustre/](http://aws.amazon.com/fsx/lustre/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
 
 ## AWS Identity and Access Management<a name="aws-identity-and-access-management-iam"></a>
 

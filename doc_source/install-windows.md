@@ -34,13 +34,13 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
    C:\>py --version
    Python 3.8.11
    C:\>pip3 --version
-   pip 21.1.3 from c:\python38\lib\site-packages\pip (python 3.8)
+   pip 21.2.4 from c:\python38\lib\site-packages\pip (python 3.8)
    ```
 
 1. Install AWS ParallelCluster using `pip`\.
 
    ```
-   C:\>pip3 install aws-parallelcluster
+   C:\>pip3 install "aws-parallelcluster<3.0"
    ```
 
 1. Verify that AWS ParallelCluster is installed correctly\.
@@ -53,7 +53,7 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
 To upgrade to the latest version, run the installation command again\.
 
 ```
-C:\>pip3 install --user --upgrade aws-parallelcluster
+C:\>pip3 install --user --upgrade "aws-parallelcluster<3.0"
 ```
 
 ## Add the AWS ParallelCluster executable to your command line path<a name="install-windows-path"></a>

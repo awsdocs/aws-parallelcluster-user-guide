@@ -1,7 +1,6 @@
 # Using AWS ParallelCluster<a name="working"></a>
 
 **Topics**
-+ [AWS ParallelCluster CLI commands](commands.md)
 + [Network configurations](networking.md)
 + [Custom Bootstrap Actions](pre_post_install.md)
 + [Working with Amazon S3](s3_resources.md)

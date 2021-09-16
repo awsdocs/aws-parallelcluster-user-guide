@@ -20,11 +20,17 @@ A key feature of any secure service is that information is encrypted when it is 
 
 AWS ParallelCluster does not itself store any customer data other than the credentials it needs to interact with the AWS services on the user's behalf\.
 
-For data on the nodes in the cluster, data can be encrypted at rest\. For Amazon EBS volumes, encryption is configured using the [`encrypted`](ebs-section.md#encrypted) and [`ebs_kms_key_id`](ebs-section.md#ebs-kms-key-id) settings in the [`[ebs]` section](ebs-section.md)\. For more information, see [Amazon EBS encryption](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html) in the Amazon EC2 User Guide for Linux Instances\. For Amazon EFS volumes, encryption is configured using the [`encrypted`](efs-section.md#efs-encrypted) and [`efs_kms_key_id`](efs-section.md#efs-efs-kms-key-id) settings in the [`[efs]` section](efs-section.md)\. For more information, see [How encryption at rest works](https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html#howencrypt) in the *Amazon Elastic File System User Guide\. *For Amazon FSx for Lustre file systems, encryption of data at rest is automatically enabled when creating an Amazon FSx file system\. For more information, see [Encrypting data at rest](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-at-rest.html) in the *Amazon FSx for Lustre User Guide*\.
+For data on the nodes in the cluster, data can be encrypted at rest\.
+
+For Amazon EBS volumes, encryption is configured using the [`EbsSettings`](SharedStorage-v3.md#SharedStorage-v3-EbsSettings)/`Encrypted` and [`EbsSettings`](SharedStorage-v3.md#SharedStorage-v3-EbsSettings)/`KmsKeyId` settings in the [`EbsSettings`](SharedStorage-v3.md#SharedStorage-v3-EbsSettings) section \([`encrypted`](ebs-section.md#encrypted) and [`ebs_kms_key_id`](ebs-section.md#ebs-kms-key-id) settings in the [`[ebs]` section](ebs-section.md) for AWS ParallelCluster version 2\.x\.\) For more information, see [Amazon EBS encryption](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html) in the Amazon EC2 User Guide for Linux Instances\.
+
+For Amazon EFS volumes, encryption is configured using the [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings)/`Encrypted` and [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings)/`KmsKeyId` settings in the [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings) \([`encrypted`](efs-section.md#efs-encrypted) and [`efs_kms_key_id`](efs-section.md#efs-efs-kms-key-id) settings in the [`[efs]` section](efs-section.md) in AWS ParallelCluster version 2\.x\)\. For more information, see [How encryption at rest works](https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html#howencrypt) in the *Amazon Elastic File System User Guide\. *
+
+For FSx for Lustre file systems, encryption of data at rest is automatically enabled when creating an Amazon FSx file system\. For more information, see [Encrypting data at rest](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-at-rest.html) in the *FSx for Lustre User Guide*\.
 
 For instance types with NVMe volumes, the data on NVMe instance store volumes is encrypted using an XTS\-AES\-256 cipher implemented on a hardware module on the instance\. The encryption keys are generated using the hardware module and are unique to each NVMe instance storage device\. All encryption keys are destroyed when the instance is stopped or terminated and cannot be recovered\. You cannot disable this encryption and you cannot provide your own encryption key\. For more information, see [Encryption at rest](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html#encryption-rest) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-If you use AWS ParallelCluster to invoke an AWS service that transmits customer data to your local computer for storage, then refer to the Security & Compliance chapter in that service's User Guide for information on how that data is stored, protected, and encrypted\.
+If you use AWS ParallelCluster to invoke an AWS service that transmits customer data to your local computer for storage, then refer to the Security and Compliance chapter in that service's User Guide for information on how that data is stored, protected, and encrypted\.
 
 ### Encryption in transit<a name="security-data-encryption-in-transit"></a>
 
@@ -32,6 +38,8 @@ By default, all data transmitted from the client computer running AWS ParallelCl
 
 ## See also<a name="security-data-protection-seealso"></a>
 + [Data protection in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html)
++ [Data protection in EC2 Image Builder](https://docs.aws.amazon.com/imagebuilder/latest/userguide/data-protection.html)
 + [Data protection in AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/security-data-protection.html)
++ [Data protection in Amazon EFS](https://docs.aws.amazon.com/efs/latest/ug/efs-backup-solutions.html)
 + [Data protection in Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/DataDurability.html)
-+ [Data protection in Amazon FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-protection.html)
++ [Data protection in FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-protection.html)
