@@ -818,6 +818,7 @@ Here is the minimal set of policies to be used as part of this role when the sch
         },
         {
             "Action": [
+                "dynamodb:GetItem",
                 "dynamodb:PutItem",
                 "dynamodb:BatchWriteItem"
             ],
