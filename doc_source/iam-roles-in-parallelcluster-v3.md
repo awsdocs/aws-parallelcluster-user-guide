@@ -828,7 +828,7 @@ Here is the minimal set of policies to be used as part of this role when the sch
         {
             "Condition": {
                 "StringEquals": {
-                    "ec2:ResourceTag/parallelcluster:node-type": "ComputeNode"
+                    "ec2:ResourceTag/parallelcluster:node-type": "Compute"
                 }
             },
             "Action": "ec2:TerminateInstances",
