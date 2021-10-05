@@ -12,7 +12,7 @@ Default region name [us-east-1]: us-east-1
 Default output format [None]:
 ```
 
-The Region where the cluster is launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+The Region where the cluster is launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
 $ pcluster configure --config cluster-config.yaml
@@ -23,7 +23,7 @@ The configure wizard prompts you for all of the information that's needed to cre
 ------
 #### [ Slurm ]
 
-From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\. 
+From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
 
 **Note**  
 The list of Regions shown is based on the partition of your account, and only includes Regions that are enabled for your account\. For more information about enabling Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of Regions supported by AWS ParallelCluster, see [Supported Regions for AWS ParallelCluster version 3](supported-regions-v3.md)\.
@@ -53,7 +53,7 @@ Allowed values for AWS Region ID:
 AWS Region ID [ap-northeast-1]:
 ```
 
- The key pair is selected from the key pairs registered with Amazon EC2 in the selected Region\. Choose the key pair: 
+The key pair is selected from the key pairs registered with Amazon EC2 in the selected Region\. Choose the key pair:
 
 ```
 Allowed values for EC2 Key Pair Name:
@@ -62,7 +62,7 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [your-key-1]:
 ```
 
- Choose the scheduler to use with your cluster\. 
+Choose the scheduler to use with your cluster\.
 
 ```
 Allowed values for Scheduler:
@@ -71,7 +71,7 @@ Allowed values for Scheduler:
 Scheduler [slurm]:
 ```
 
- Choose the operating system\. 
+Choose the operating system\.
 
 ```
 Allowed values for Operating System:
@@ -82,13 +82,13 @@ Allowed values for Operating System:
 Operating System [alinux2]:
 ```
 
- Choose head node instance type: 
+Choose head node instance type:
 
 ```
 Head node instance type [t2.micro]:
 ```
 
- Choose the queue configuration\. Note: Instance type cannot be specified for multiple compute resources in the same queue\. 
+Choose the queue configuration\. Note: Instance type cannot be specified for multiple compute resources in the same queue\.
 
 ```
 Number of queues [1]:
@@ -180,7 +180,7 @@ Allowed values for AWS Region ID:
 AWS Region ID [us-east-1]:
 ```
 
- The key pair is selected from the key pairs registered with Amazon EC2 in the selected Region\. Choose the key pair: 
+The key pair is selected from the key pairs registered with Amazon EC2 in the selected Region\. Choose the key pair:
 
 ```
 Allowed values for EC2 Key Pair Name:
@@ -189,7 +189,7 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [your-key-1]:
 ```
 
- Choose the scheduler to use with your cluster\. 
+Choose the scheduler to use with your cluster\.
 
 ```
 Allowed values for Scheduler:
@@ -236,7 +236,7 @@ Network Configuration [Head node in a public subnet and compute fleet in a priva
 Beginning VPC creation. Please do not leave the terminal until the creation is finalized
 ```
 
- If you don't create a new VPC\. you must select an existing VPC 
+If you don't create a new VPC\. you must select an existing VPC
 
 ```
 Automate VPC creation? (y/n) [n]: n
@@ -294,13 +294,13 @@ $ pcluster describe-cluster --cluster-name test-cluster
 $ pcluster list-clusters --query 'items[?clusterName==`test-cluster`]'
 ```
 
- After the cluster reaches the `"clusterStatus": "CREATE_COMPLETE"` status, you can connect to it by using your normal SSH client settings\. For more information about connecting to Amazon EC2 instances, see the [EC2 User Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux) in the *Amazon EC2 User Guide for Linux Instances*\. Or you can connect the cluster through 
+After the cluster reaches the `"clusterStatus": "CREATE_COMPLETE"` status, you can connect to it by using your normal SSH client settings\. For more information about connecting to Amazon EC2 instances, see the [EC2 User Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux) in the *Amazon EC2 User Guide for Linux Instances*\. Or you can connect the cluster through 
 
 ```
 $ pcluster ssh --cluster-name test-cluster
 ```
 
- If [`pcluster configure`](pcluster.configure-v3.md) created a new VPC, you can delete that VPC by deleting the AWS CloudFormation stack it created\. The name will start with "parallelclusternetworking\-" and contain the creation time in a "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
+If [`pcluster configure`](pcluster.configure-v3.md) created a new VPC, you can delete that VPC by deleting the AWS CloudFormation stack it created\. The name will start with "parallelclusternetworking\-" and contain the creation time in a "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
 
 ```
 $ aws --region us-east-2 cloudformation list-stacks \

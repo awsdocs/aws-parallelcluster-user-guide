@@ -2,11 +2,11 @@
 
 ## Best practices: head node instance type selection<a name="best-practices-head-node-instance-type"></a>
 
-Although the head node doesn't execute any job, its functions and its sizing are crucial to the overall performance of the cluster\. When choosing the instance type to use for your head node you want to evaluate the following items: 
+Although the head node doesn't execute any job, its functions and its sizing are crucial to the overall performance of the cluster\. When choosing the instance type to use for your head node you want to evaluate the following items:
 
- **Cluster size:** the head node orchestrates the scaling logic of the cluster and is responsible of attaching new nodes to the scheduler\. If you need to scale up and down the cluster of a considerable amount of nodes then you want to give the head node some extra compute capacity\. 
+**Cluster size:** the head node orchestrates the scaling logic of the cluster and is responsible of attaching new nodes to the scheduler\. If you need to scale up and down the cluster of a considerable amount of nodes then you want to give the head node some extra compute capacity\.
 
- **Shared file systems:** when using shared file systems to share artifacts between compute nodes and the head node take into account that the head node is the node exposing the NFS server\. For this reason you want to choose an instance type with enough network bandwidth and enough dedicated Amazon EBS bandwidth to handle your workflows\.
+**Shared file systems:** when using shared file systems to share artifacts between compute nodes and the head node take into account that the head node is the node exposing the NFS server\. For this reason you want to choose an instance type with enough network bandwidth and enough dedicated Amazon EBS bandwidth to handle your workflows\.
 
 ## Best practices: network performance<a name="best-practices-network-performance-v3"></a>
 
@@ -17,10 +17,10 @@ Network performance is critical to ensuring high performance computing \(HPC\) a
   Networking:
     PlacementGroup:
       Enabled: true
-       Id: your-placement-group-id
+      Id: your-placement-group-name
   ```
 
-   Or let AWS ParallelCluster create a placement group with: 
+  Or let AWS ParallelCluster create a placement group with:
 
   ```
   Networking:
@@ -28,6 +28,6 @@ Network performance is critical to ensuring high performance computing \(HPC\) a
       Enabled: true
   ```
 
-   For more information, see [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking)\.
+  For more information, see [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking)\.
 + **Enhanced networking:** consider choosing an instance type that supports enhanced networking\. This applies to all [current generation instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#current-gen-instances)\. For more information, see [enhanced networking on Linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enhanced-networking.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 + **Instance bandwidth:** the bandwidth scales with instance size, please consider to choose the instance type which better suits your needs, see [Amazon EBS–optimized instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html) and [Amazon EBS volume types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html) in the *Amazon EC2 User Guide for Linux Instances*\.

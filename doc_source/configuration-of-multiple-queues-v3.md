@@ -43,4 +43,4 @@ The instances that are launched into the compute fleet are dynamically assigned\
 
 From the example configuration file above, a given node from `queue1` and compute resource `c5xlarge` would have a hostname: `queue1-dy-c5xlarge-1`\.
 
-Both hostnames and fully\-qualified domain names \(FQDN\) are created using Amazon Route 53 hosted zones\. The FQDN is `$HOSTNAME.$CLUSTERNAME.pcluster`, where `$CLUSTERNAME` is the name of the cluster\.
+Both hostnames and fully\-qualified domain names \(FQDN\) are created using Amazon Route 53 hosted zones\. The FQDN is `$HOSTNAME.$CLUSTERNAME.pcluster`, where `$CLUSTERNAME` is the name of the cluster\.

@@ -16,7 +16,7 @@ AdditionalPackages:
 
 ```
 IntelSoftware:
-  IntelHpcPlatform: Boolean
+  IntelHpcPlatform: boolean
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

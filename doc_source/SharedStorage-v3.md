@@ -14,8 +14,12 @@ SharedStorage:
       Encrypted: boolean
       KmsKeyId: string
       SnapshotId: string
+      Throughput: integer
       VolumeId: string
       DeletionPolicy: string
+      Raid:
+        Type: string
+        NumberOfVolumes: integer
   - MountDir: string
     Name: string
     StorageType: Efs
@@ -78,6 +82,7 @@ EbsSettings:
   KmsKeyId: string
   SnapshotId: string
   VolumeId: string
+  Throughput: integer
   DeletionPolicy: string
 ```
 
@@ -136,6 +141,28 @@ This setting is valid only when `VolumeType` is `gp3`\. The supported range is 1
 `DeletionPolicy` \(**Required**, `String`\)  
 Specifies whether the volume should be retained, deleted, or snapshotted when the cluster is deleted\. The supported values are `Delete`, `Retain`, and `Snapshot`\. The default value is `Delete`\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+
+## `Raid`<a name="SharedStorage-v3-EbsSettings-Raid"></a>
+
+**\(Optional\)** Defines the configuration of a RAID volume\.
+
+```
+Raid:
+  Type: string
+  NumberOfVolumes: integer
+```
+
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+
+### `Raid` Properties<a name="SharedStorage-v3-EbsSettings-Raid.properties"></a>
+
+`Type` \(**Optional**, `String`\)  
+Defines the type of RAID array\. Supported values are "0" \(striped\) and "1" \(mirrored\)\.  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+
+`NumberOfVolumes` \(**Optional**, `Integer`\)  
+Defines the number of Amazon EBS volumes to use to create the RAID array\. The supported range of values is 2\-5\. The default value \(when the `Raid` setting is defined\) is 2\.  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ## `EfsSettings`<a name="SharedStorage-v3-EfsSettings"></a>
 
@@ -297,8 +324,8 @@ If `AutoImportPolicy` is not specified, automatic import is off\. FSx for Lustre
 For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *FSx for Lustre User Guide*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-`DriveCacheType` \(**Required when `StorageType` is `HDD`**, `String`\)  
-Specifies that the file system has an SSD drive cache\. This can only be set if the `StorageType` setting is set to `HDD`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *FSx for Lustre User Guide*\.  
+`DriveCacheType` \(**Optional**, `String`\)  
+Specifies that the file system has an SSD drive cache\. This can only be set if the `StorageType` setting is set to `HDD`, and the `DeploymentType` setting is set to `PERSISTENT_1`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *FSx for Lustre User Guide*\.  
 The only valid value is `READ`\. To disable the SSD drive cache, don’t specify the `DriveCacheType` setting\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 

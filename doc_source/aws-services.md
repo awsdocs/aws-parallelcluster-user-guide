@@ -18,7 +18,7 @@ The following Amazon Web Services \(AWS\) services are used by AWS ParallelClust
 + [AWS Identity and Access Management](#aws-identity-and-access-management-iam)
 + [AWS Lambda](#aws-lambda)
 + [NICE DCV](#nice-dcv)
-+ [Amazon Route 53](#amazon-route-53)
++ [Amazon Route 53](#amazon-route-53)
 + [Amazon Simple Notification Service](#amazon-simple-notification-service-sns)
 + [Amazon Simple Queue Service](#amazon-simple-queuing-service-sqs)
 + [Amazon Simple Storage Service](#amazon-s3)
@@ -132,11 +132,11 @@ NICE DCV is a high\-performance remote display protocol that provides a secure w
 
 For more information about NICE DCV, see [https://aws\.amazon\.com/hpc/dcv/](http://aws.amazon.com/hpc/dcv/) and [https://docs\.aws\.amazon\.com/dcv/](https://docs.aws.amazon.com/dcv/)\.
 
-## Amazon Route 53<a name="amazon-route-53"></a>
+## Amazon Route 53<a name="amazon-route-53"></a>
 
-Amazon Route 53 \(Route 53\) is used to create hosted zones with hostnames and fully qualified domain names for each of the compute nodes\.
+Amazon Route 53 \(Route 53\) is used to create hosted zones with hostnames and fully qualified domain names for each of the compute nodes\.
 
-For more information about Route 53, see [https://aws\.amazon\.com/route53/](http://aws.amazon.com/route53/) and [https://docs\.aws\.amazon\.com/route53/](https://docs.aws.amazon.com/route53/)\.
+For more information about Route 53, see [https://aws\.amazon\.com/route53/](http://aws.amazon.com/route53/) and [https://docs\.aws\.amazon\.com/route53/](https://docs.aws.amazon.com/route53/)\.
 
 ## Amazon Simple Notification Service<a name="amazon-simple-notification-service-sns"></a>
 

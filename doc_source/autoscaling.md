@@ -26,11 +26,11 @@ In this example, the `jobwatcher` requires three new compute instances in the Au
 
 ## Scaling down<a name="scaling-down"></a>
 
-On each compute node, a process called [https://github.com/aws/aws-parallelcluster-node/tree/develop/src/nodewatcher](https://github.com/aws/aws-parallelcluster-node/tree/develop/src/nodewatcher) runs and evaluates the idle time of the node\. An instance is terminated when both of the following conditions are met: 
+On each compute node, a process called [https://github.com/aws/aws-parallelcluster-node/tree/release-2.11/src/nodewatcher](https://github.com/aws/aws-parallelcluster-node/tree/release-2.11/src/nodewatcher) runs and evaluates the idle time of the node\. An instance is terminated when both of the following conditions are met: 
 + An instance has no jobs for a period of time longer than the [`scaledown_idletime`](scaling-section.md#scaledown-idletime) \(the default setting is 10 minutes\)
 + There are no pending jobs in the cluster
 
-To terminate an instance, `nodewatcher` calls the [TerminateInstanceInAutoScalingGroup](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_TerminateInstanceInAutoScalingGroup.html) API call, which removes an instance if the size of the Auto Scaling group is at least the minimum Auto Scaling group size\. This process scales down a cluster without affecting running jobs\. It also enables an elastic cluster with a fixed base number of instances\.
+To terminate an instance, `nodewatcher` calls the [TerminateInstanceInAutoScalingGroup](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_TerminateInstanceInAutoScalingGroup.html) API operation, which removes an instance if the size of the Auto Scaling group is at least the minimum Auto Scaling group size\. This process scales down a cluster without affecting running jobs\. It also enables an elastic cluster with a fixed base number of instances\.
 
 ## Static cluster<a name="static-cluster"></a>
 

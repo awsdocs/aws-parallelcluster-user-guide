@@ -143,7 +143,7 @@ base_os = alinux2
 
 ## `cluster_resource_bucket`<a name="cluster-resource-bucket-section"></a>
 
-**\(Optional\)** Specifies the name of the Amazon S3 bucket that's used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service Developer Guide*\. This bucket can be used for multiple clusters\. The bucket must be in the same Region as the cluster\.
+**\(Optional\)** Specifies the name of the Amazon S3 bucket that's used to host resources that are generated when the cluster is created\. The bucket must have versioning enabled\. For more information, see [Using versioning](https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html) in the *Amazon Simple Storage Service User Guide*\. This bucket can be used for multiple clusters\. The bucket must be in the same Region as the cluster\.
 
 If this parameter isn't specified, a new bucket is created when the cluster is created\. The new bucket has the name of `parallelcluster-random_string`\. In this name, *random\_string* is a random string of alphanumeric characters\. All cluster resources are stored in this bucket in a path with the form `bucket_name/resource_directory`\. `resource_directory` has the form `stack_name-random_string`, where *stack\_name* is the name of one of the AWS CloudFormation stacks used by AWS ParallelCluster\. The value of *bucket\_name* can be found in the `ResourcesS3Bucket` value in the output of the `parallelcluster-clustername` stack\. The value of *resource\_directory* can be found in the value of the `ArtifactS3RootDirectory` output from the same stack\.
 
@@ -294,7 +294,7 @@ desired_vcpus = 4
 
 ## `disable_cluster_dns`<a name="disable-cluster-dns-settings"></a>
 
-**\(Optional\)** Specifies if the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. If `disable_cluster_dns` is set to `true`, the hosted zone isn't created\.
+**\(Optional\)** Specifies if the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. If `disable_cluster_dns` is set to `true`, the hosted zone isn't created\.
 
 The default value is `false`\.
 

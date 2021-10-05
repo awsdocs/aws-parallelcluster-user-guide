@@ -86,17 +86,17 @@ Not all instance types can disable hyperthreading\. For a list of instance types
 **\(Required\)** Defines the networking configuration for the head node\.
 
 ```
-  Networking:
-    SubnetId: string
-    ElasticIp: string/boolean
-    SecurityGroups:
-      - string
-      - string
-    AdditionalSecurityGroups:
-      - string
-      - string
-    Proxy:
-      HttpProxyAddress: string
+Networking:
+  SubnetId: string
+  ElasticIp: string/boolean
+  SecurityGroups:
+    - string
+    - string
+  AdditionalSecurityGroups:
+    - string
+    - string
+  Proxy:
+    HttpProxyAddress: string
 ```
 
 ### `Networking` Properties<a name="HeadNode-v3-Networking.properties"></a>
@@ -121,8 +121,8 @@ List of additional Amazon VPC security group ids to use for the head node\.
 Specifies details for any instance store volume\. For more information, see [Instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\.  
 
 ```
-  Proxy:
-    HttpProxyAddress: string
+Proxy:
+  HttpProxyAddress: string
 ```  
 `HttpProxyAddress` \(**Optional**, `String`\)  
 Defines an HTTP or HTTPS proxy server, typically `https://x.x.x.x:8080`\.  
@@ -134,9 +134,9 @@ There is no default value\.
 **\(Optional\)** Defines the configuration for SSH access to the head node\.
 
 ```
-  Ssh:
-    KeyName: string
-    AllowedIps: string
+Ssh:
+  KeyName: string
+  AllowedIps: string
 ```
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
@@ -156,17 +156,17 @@ Specifies the CIDR\-formatted IP range for SSH connections to the head node\. Th
 **\(Optional\)** Defines the local storage configuration for the head node\.
 
 ```
-  LocalStorage:
-    RootVolume:
-      Size: integer
-      Encrypted: boolean
-      VolumeType: string
-      Iops: integer
-      Throughput: integer
-      DeleteOnTermination: boolean
-      KmsKeyId: string
-    EphemeralVolume:
-      MountDir: string
+LocalStorage:
+  RootVolume:
+    Size: integer
+    Encrypted: boolean
+    VolumeType: string
+    Iops: integer
+    Throughput: integer
+    DeleteOnTermination: boolean
+    KmsKeyId: string
+  EphemeralVolume:
+    MountDir: string
 ```
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
@@ -177,14 +177,14 @@ Specifies the CIDR\-formatted IP range for SSH connections to the head node\. Th
 Specifies the root volume storage for the head node\.  
 
 ```
-  RootVolume:
-    Size: integer
-    Encrypted: boolean
-    VolumeType: string
-    Iops: integer
-    Throughput: integer
-    DeleteOnTermination: boolean
-    KmsKeyId: string
+RootVolume:
+  Size: integer
+  Encrypted: boolean
+  VolumeType: string
+  Iops: integer
+  Throughput: integer
+  DeleteOnTermination: boolean
+  KmsKeyId: string
 ```
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)    
 `Size` \(**Optional**, `Integer`\)  
@@ -241,10 +241,10 @@ Specifies the mount directory for the instance store volume\. The default is `/s
 **\(Optional\)** Defines configuration settings for the NICE DCV server running on the head node\.
 
 ```
-  Dcv:
-    Enabled: boolean
-    Port: integer
-    AllowedIps: string
+Dcv:
+  Enabled: boolean
+  Port: integer
+  AllowedIps: string
 ```
 
 **Important**  
@@ -272,17 +272,17 @@ Specifies the CIDR\-formatted IP range for connections to NICE DCV\. This settin
 **\(Optional\)** Specifies custom scripts to run on the head node\.
 
 ```
-  CustomActions:
-    OnNodeStart:
-      Script: string
-      Args:
-        - string
-        - string
-    OnNodeConfigured:
-      Script: string
-      Args:
-        - string
-        - string
+CustomActions:
+  OnNodeStart:
+    Script: string
+    Args:
+      - string
+      - string
+  OnNodeConfigured:
+    Script: string
+    Args:
+      - string
+      - string
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
@@ -327,12 +327,12 @@ Iam:
 
 `InstanceProfile` \(**Optional**, `String`\)  
 Specifies an instance profile to override the default head node instance profile\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:instance-profile/InstanceProfileName`\.  
-If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.
+If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `InstanceRole` \(**Optional**, `String`\)  
 Specifies an instance role to override the default head node instance role\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:role/RoleName`\.  
-If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.
-
+If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 ### `S3Access`<a name="HeadNode-v3-Iam-S3Access.properties"></a>
@@ -377,8 +377,8 @@ List of IAM policies\.
 **\(Optional\)** Specifies the properties for instance metadata service \(IMDS\)\. For more information, see [How instance metadata service version 2 works](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html#instance-metadata-v2-how-it-works) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
-  Imds:
-    Secured: string
+Imds:
+  Secured: boolean
 ```
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)

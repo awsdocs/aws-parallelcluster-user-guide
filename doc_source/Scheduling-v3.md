@@ -255,15 +255,15 @@ Name for the compute environment for the AWS Batch queue\.
 Array of instance types to include in this AWS Batch compute environment\. All of the instance types must use the `x86_64` architecture\.   
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
-`MinVcpus` \(**Optional**, `Integer`\)  
+`MinvCpus` \(**Optional**, `Integer`\)  
 The minimum number of VCPUs for the AWS Batch compute environment\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `DesiredVcpus` \(**Optional**, `Integer`\)  
-The desired number of VCPUs in the AWS Batch compute environment\. AWS Batch will adjust this value between `MinVcpus` and `MaxVcpus`, based on the demand in the job queue\.  
+The desired number of VCPUs in the AWS Batch compute environment\. AWS Batch will adjust this value between `MinvCpus` and `MaxvCpus`, based on the demand in the job queue\.  
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
 
-`MaxVcpus` \(**Optional**, `Integer`\)  
+`MaxvCpus` \(**Optional**, `Integer`\)  
 The maximum number of VCPUs for the AWS Batch compute environment\. This can not be set to a lower value than `DesiredVcpus`\.  
 [Update policy: This setting can't be decreased during an update.](using-pcluster-update-cluster-v3.md#update-policy-no-decrease-v3)
 
@@ -278,11 +278,32 @@ The maximum percentage that an EC2 Spot Instance price can be when compared with
 ```
 SlurmQueues:
   - Name: string
+    ComputeSettings:
+      LocalStorage:
+        RootVolume:
+          Size: integer
+          Encrypted: boolean
+          VolumeType: string
+          Iops: integer
+          Throughput: string
+          KmsKeyId: string
+        EphemeralVolume:
+          MountDir: string
     CapacityType: string
     Networking:
       SubnetIds:
         - string
-    ComputeResources:
+      AssignPublicIp: boolean
+      SecurityGroups:
+        - string
+      AdditionalSecurityGroups:
+        - string
+      PlacementGroup:
+        Enabled: boolean
+        Id: string
+      Proxy:
+        HttpProxyAddress: string
+   ComputeResources:
       - Name: string
         InstanceType: string
       - Name: string
@@ -334,6 +355,8 @@ SlurmQueues:
       AssignPublicIp: boolean
       SecurityGroups:
         - string
+      AdditionalSecurityGroups:
+        - string
       PlacementGroup:
         Enabled: boolean
         Id: string
@@ -383,6 +406,8 @@ Networking:
   AssignPublicIp: boolean
   SecurityGroups:
     - string
+  AdditionalSecurityGroups:
+    - string
   PlacementGroup:
     Enabled: boolean
     Id: string
@@ -421,7 +446,7 @@ PlacementGroup:
 Indicates whether a placement group is used for the Slurm queue\. If this is not specified, the default value is `false`\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `Id` \(**Optional**, `String`\)  
-The placement group ID for an existing cluster placement group used for the Slurm queue\. If this is not specified, AWS ParallelCluster will create a new cluster placement group for each queue\.  
+The placement group name for an existing cluster placement group used for the Slurm queue\. If this is not specified, AWS ParallelCluster will create a new cluster placement group for each queue\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `Proxy` \(**Optional**\)  
@@ -455,7 +480,7 @@ The AMI to use for the Slurm queue instead of the default [published AMIs](https
 
 #### `ComputeResources`<a name="Scheduling-v3-SlurmQueues-ComputeResources"></a>
 
-**\(Required\)** Defines the ComputeResources configuration for the Slurm queue\.
+**\(Required\)** Defines the `ComputeResources` configuration for the Slurm queue\.
 
 ```
 ComputeResources:
@@ -506,7 +531,7 @@ Specifies the Elastic Fabric Adapter \(EFA\) settings for the nodes in the Slurm
 ```
 Efa:
   Enabled: boolean
-  GdrSupport: boolean
+  /: boolean
 ```  
 `Enabled` \(**Optional**, `Boolean`\)  
 Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. A cluster placement group should be used to minimize latencies between instances\. The default value is false\.  
@@ -745,10 +770,10 @@ Dns:
 #### `Dns` Properties<a name="Scheduling-v3-SlurmSettings-Dns.properties"></a>
 
 `DisableManagedDns` \(**Optional**, `Boolean`\)  
-If `true`, the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. The default value is `false`\. If `DisableManagedDns` is set to `true`, the hosted zone isn't created by AWS ParallelCluster\.  
+If `true`, the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. The default value is `false`\. If `DisableManagedDns` is set to `true`, the hosted zone isn't created by AWS ParallelCluster\.  
 A name resolution system is required for the cluster to operate properly\. If `DisableManagedDns` is set to `true`, an additional name resolution system must also be provided\.
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `HostedZoneId` \(**Optional**, `String`\)  
-Defines a custom Route 53 hosted zone id to use for DNS name resolution for the cluster\.  
+Defines a custom Route 53 hosted zone id to use for DNS name resolution for the cluster\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

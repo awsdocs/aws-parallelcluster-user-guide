@@ -80,31 +80,6 @@ The following policy shows the permissions required to execute AWS ParallelClust
         },
         {
             "Action": [
-                "autoscaling:DescribeAutoScalingGroups",
-                "autoscaling:DescribeScalingActivities",
-                "autoscaling:DescribeAutoScalingInstances",
-                "autoscaling:DescribeScheduledActions"
-            ],
-            "Resource": "*",
-            "Effect": "Allow",
-            "Sid": "AutoScalingList"
-        },
-        {
-            "Action": [
-                "autoscaling:CreateAutoScalingGroup",
-                "autoscaling:DeleteAutoScalingGroup",
-                "autoscaling:UpdateAutoScalingGroup",
-                "autoscaling:SuspendProcesses",
-                "autoscaling:TerminateInstanceInAutoScalingGroup",
-                "autoscaling:ResumeProcesses",
-                "autoscaling:SetDesiredCapacity"
-            ],
-            "Resource": "arn:aws:autoscaling:*:<AWS ACCOUNT ID>:autoScalingGroup:*:autoScalingGroupName/parallelcluster-headnode-asg-*",
-            "Effect": "Allow",
-            "Sid": "AutoScalingWrite"
-        },
-        {
-            "Action": [
                 "dynamodb:DescribeTable",
                 "dynamodb:ListTagsOfResource",
                 "dynamodb:CreateTable",
