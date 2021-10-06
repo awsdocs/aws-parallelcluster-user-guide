@@ -201,7 +201,7 @@ This section is relevant to clusters that were installed using AWS ParallelClust
 If one of your running clusters is experiencing issues, you should place the cluster in a `STOPPED` state by running the following command before you begin to troubleshoot\. This prevents incurring any unexpected costs\.
 
 ```
-$ pcluster update-compute-fleet --cluster-name mycluster\
+$ pcluster update-compute-fleet --cluster-name mycluster \
    --status STOP_REQUESTED
 ```
 

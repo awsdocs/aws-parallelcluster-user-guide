@@ -2,12 +2,12 @@
 
 ## Custom Bootstrap Actions<a name="custom_bootstrap_actions"></a>
 
- AWS ParallelCluster 3 allows you to specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling/SlurmQueues`](Scheduling-v3.md) sections\. Please refer to [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md) for more information\. 
+AWS ParallelCluster 3 allows you to specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling/SlurmQueues`](Scheduling-v3.md) sections\. Please refer to [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md) for more information\. 
 
- Custom bootstrap actions scripts developed for AWS ParallelCluster 2 need to be adapted to be used in AWS ParallelCluster 3: 
-+  using `/etc/parallelcluster/cfnconfig` and `cfn_node_type` to differentiate between head and compute nodes is not recommended\. Instead, we recommend to specify two different scripts in the `HeadNode` and `Scheduling/SlurmQueues sections`\. 
-+  if you prefer to continue loading `/etc/parallelcluster/cfnconfig` for use in your bootstrap actions script, note the value of `cfn_node_type` has been changed from “MasterServer” to “HeadNode” \(see: [Inclusive language](#inclusive_language)\)\.
-+  on AWS ParallelCluster 2 the first input argument to bootstrap action scripts was the S3 URL to the script and was reserved\. In AWS ParallelCluster 3, only the arguments configured in the configuration are passed to the scripts\. 
+ Custom bootstrap actions scripts developed for AWS ParallelCluster 2 need to be adapted to be used in AWS ParallelCluster 3:
++ Using `/etc/parallelcluster/cfnconfig` and `cfn_node_type` to differentiate between head and compute nodes is not recommended\. Instead, we recommend to specify two different scripts in the `HeadNode` and `Scheduling/SlurmQueues sections`\.
++ If you prefer to continue loading `/etc/parallelcluster/cfnconfig` for use in your bootstrap actions script, note the value of `cfn_node_type` has been changed from "MasterServer" to "HeadNode" \(see: [Inclusive language](#inclusive_language)\)\.
++ On AWS ParallelCluster 2 the first input argument to bootstrap action scripts was the S3 URL to the script and was reserved\. In AWS ParallelCluster 3, only the arguments configured in the configuration are passed to the scripts\.
 
 **Warning**  
 Using internal variables provided through the `/etc/parallelcluster/cfnconfig` file is not officially supported\. This file may be removed as part of a future release\.
@@ -20,9 +20,9 @@ AWS ParallelCluster 3\.x configuration uses YAML syntax, its the full reference 
 
  In addition to requiring a YAML file format, a number of configuration sections, settings, and parameter values have been updated in AWS ParallelCluster 3\.x\. Here we note key changes to the AWS ParallelCluster configuration along with side\-by\-side examples illustrating these differences across each version of AWS ParallelCluster\.
 
- **Example of multiple scheduler queues configuration with hyperthreading enabled and disabled** 
+**Example of multiple scheduler queues configuration with hyperthreading enabled and disabled**
 
-AWS ParallelCluster 2: 
+AWS ParallelCluster 2:
 
 ```
 [cluster default]
@@ -43,7 +43,7 @@ instance_type = c5n.18xlarge
 instance_type = c5.xlarge
 ```
 
- AWS ParallelCluster 3: 
+AWS ParallelCluster 3:
 
 ```
 ...
@@ -68,9 +68,9 @@ Scheduling:
           InstanceType: c5.xlarge
 ```
 
- **Example of new FSx for Lustre file\-system configuration** 
+**Example of new FSx for Lustre file\-system configuration**
 
- AWS ParallelCluster 2: 
+AWS ParallelCluster 2:
 
 ```
 [cluster default]
@@ -88,7 +88,7 @@ deployment_type = PERSISTENT_1
 data_compression_type = LZ4
 ```
 
- AWS ParallelCluster 3: 
+AWS ParallelCluster 3:
 
 ```
 ...
@@ -106,9 +106,9 @@ SharedStorage:
       DataCompressionType: LZ4
 ```
 
- **Example of a cluster configuration mounting an existing FSx for Lustre file\-system** 
+**Example of a cluster configuration mounting an existing FSx for Lustre file\-system**
 
- AWS ParallelCluster 2: 
+AWS ParallelCluster 2:
 
 ```
 [cluster default]
@@ -120,7 +120,7 @@ shared_dir = /shared-fsx
 fsx_fs_id = fsx_fs_id
 ```
 
- AWS ParallelCluster 3: 
+AWS ParallelCluster 3:
 
 ```
 ...
@@ -134,7 +134,7 @@ SharedStorage:
 
  **Example of a cluster with the Intel HPC Platform Specification software stack** 
 
-AWS ParallelCluster 2: 
+AWS ParallelCluster 2:
 
 ```
 [cluster default]
@@ -142,7 +142,7 @@ enable_intel_hpc_platform = true
 ...
 ```
 
-AWS ParallelCluster 3: 
+AWS ParallelCluster 3:
 
 ```
 ...
@@ -197,9 +197,9 @@ Scheduling:
 + For AWS ParallelCluster 3 you can have different IAM settings for head and compute nodes and even specify different IAM settings for each compute queue\. 
 + For AWS ParallelCluster 3 you can use an IAM instance profile as an alternative to an IAM role\. `InstanceProfile`, `InstanceRole` or `AdditionalIamPolicies` can not be configured together\. 
 
- **Example of custom bootstrap actions** 
+**Example of custom bootstrap actions**
 
-AWS ParallelCluster 2: 
+AWS ParallelCluster 2:
 
 ```
 [cluster default]

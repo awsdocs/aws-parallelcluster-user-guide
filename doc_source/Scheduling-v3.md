@@ -43,7 +43,7 @@ Scheduling:
           Id: string
         Proxy:
           HttpProxyAddress: string
-     ComputeResources:
+      ComputeResources:
         - Name: string
           InstanceType: string
         - Name: string
@@ -303,7 +303,7 @@ SlurmQueues:
         Id: string
       Proxy:
         HttpProxyAddress: string
-   ComputeResources:
+    ComputeResources:
       - Name: string
         InstanceType: string
       - Name: string
@@ -531,7 +531,7 @@ Specifies the Elastic Fabric Adapter \(EFA\) settings for the nodes in the Slurm
 ```
 Efa:
   Enabled: boolean
-  /: boolean
+  GdrSupport: boolean
 ```  
 `Enabled` \(**Optional**, `Boolean`\)  
 Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. A cluster placement group should be used to minimize latencies between instances\. The default value is false\.  

@@ -84,6 +84,9 @@ EbsSettings:
   VolumeId: string
   Throughput: integer
   DeletionPolicy: string
+  Raid:
+    Type: string
+    NumberOfVolumes: integer
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-ignored-v3)
@@ -142,7 +145,7 @@ This setting is valid only when `VolumeType` is `gp3`\. The supported range is 1
 Specifies whether the volume should be retained, deleted, or snapshotted when the cluster is deleted\. The supported values are `Delete`, `Retain`, and `Snapshot`\. The default value is `Delete`\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
-## `Raid`<a name="SharedStorage-v3-EbsSettings-Raid"></a>
+### `Raid`<a name="SharedStorage-v3-EbsSettings-Raid"></a>
 
 **\(Optional\)** Defines the configuration of a RAID volume\.
 
@@ -154,7 +157,7 @@ Raid:
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-### `Raid` Properties<a name="SharedStorage-v3-EbsSettings-Raid.properties"></a>
+#### `Raid` Properties<a name="SharedStorage-v3-EbsSettings-Raid.properties"></a>
 
 `Type` \(**Optional**, `String`\)  
 Defines the type of RAID array\. Supported values are "0" \(striped\) and "1" \(mirrored\)\.  

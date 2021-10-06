@@ -139,12 +139,14 @@ AWS ParallelCluster supports the following partition states\. A Slurm partition 
 + **Stopping the compute fleet** \- When the following command is executed, all partitions are placed in the `INACTIVE` state, and the AWS ParallelCluster processes keep the partitions in the `INACTIVE` state\.
 
   ```
-  $ pcluster update-compute-fleet --cluster-name testSlurm --region eu-west-1 --status STOP_REQUESTED
+  $ pcluster update-compute-fleet --cluster-name testSlurm \
+     --region eu-west-1 --status STOP_REQUESTED
   ```
 + **Starting the compute fleet** \- When the following command is executed, all partitions are initially placed in the `UP` state\. However, AWS ParallelCluster processes don't keep the partition in an `UP` state\. You need to change partition states manually\. All static nodes become available after a few minutes\. Note that setting a partition to `UP` doesn't power up any dynamic capacity\.
 
   ```
-  $ pcluster update-compute-fleet --cluster-name testSlurm --region eu-west-1 --status START_REQUESTED
+  $ pcluster update-compute-fleet --cluster-name testSlurm \
+     --region eu-west-1 --status START_REQUESTED
   ```
 
 When update compute fleet is run, you can check the state of the cluster by running the `pcluster describe-compute-fleet` command and checking the `Status`\. The following lists possible states:
