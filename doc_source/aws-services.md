@@ -122,8 +122,6 @@ For more information about IAM, see [https://aws\.amazon\.com/iam/](http://aws.a
 
 AWS Lambda \(Lambda\) runs the functions that orchestrate the creation of Docker images\. Lambda also manages the cleanup of custom cluster resources, such as Docker images stored in the Amazon ECR repository and on Amazon S3\.
 
-Lambda is used only with AWS Batch clusters\.
-
 For more information about Lambda, see [https://aws\.amazon\.com/lambda/](http://aws.amazon.com/lambda/) and [https://docs\.aws\.amazon\.com/lambda/](https://docs.aws.amazon.com/lambda/)\.
 
 ## NICE DCV<a name="nice-dcv"></a>

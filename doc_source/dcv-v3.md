@@ -5,7 +5,7 @@ NICE DCV is a remote visualization technology that enables users to securely con
 The NICE DCV software is automatically installed on the head node and can be enabled by using the [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv) section from the `HeadNode` configuration\.
 
 ```
-Headode:
+HeadNode:
   Dcv:
     Enabled: true
 ```
