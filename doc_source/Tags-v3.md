@@ -15,7 +15,7 @@ Tags:
 ## `Tags` Properties<a name="Tags-v3.properties"></a>
 
 `Key` \(**Required**, `String`\)  
-Defines the name of the tag\.\.  
+Defines the name of the tag\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `Value` \(**Required**, `String`\)  

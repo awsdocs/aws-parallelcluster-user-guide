@@ -563,7 +563,7 @@ To:
           "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/*",
           "Effect": "Allow",
           "Sid": "IAMServiceLinkedRole"
-        },         
+        },
         {
             "Action": [
                 "iam:CreateInstanceProfile",
@@ -931,7 +931,7 @@ To:
           "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/*",
           "Effect": "Allow",
           "Sid": "IAMServiceLinkedRole"
-        },           
+        },
         {
             "Action": [
                 "iam:CreateInstanceProfile",

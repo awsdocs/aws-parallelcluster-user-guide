@@ -118,7 +118,7 @@ List of additional Amazon VPC security group ids to use for the head node\.
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `Proxy` \(**Optional**\)  
-Specifies details for any instance store volume\. For more information, see [Instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\.  
+Specifies the proxy settings for the head node\.  
 
 ```
 Proxy:
@@ -290,14 +290,14 @@ CustomActions:
 ### `CustomActions` Properties<a name="HeadNode-v3-CustomActions.properties"></a>
 
 `OnNodeStart` \(**Optional**, `String`\)  
-Specifies a script to run on the head node before any of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.\.    
+Specifies a script to run on the head node before any of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
 List of arguments to pass to the script\.
 
 `OnNodeConfigured` \(**Optional**, `String`\)  
-Specifies a script to run on the head node after all of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.\.    
+Specifies a script to run on the head node after all of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://`, `s3://`, or `file://`\.  
 `Args` \(**Optional**, `[String]`\)  
