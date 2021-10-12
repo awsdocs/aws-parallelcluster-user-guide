@@ -163,7 +163,14 @@ The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm,
                 "*"
             ],
             "Effect": "Allow",
-            "Sid": "IAMPassRole"
+            "Sid": "IAMPassRole",
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": [
+                        "ec2.amazonaws.com"
+                    ]
+                }
+            }
         },
         {
             "Action": [
@@ -529,7 +536,6 @@ To:
             "Action": [
                 "iam:PassRole",
                 "iam:CreateRole",
-                "iam:CreateServiceLinkedRole",
                 "iam:DeleteRole",
                 "iam:GetRole",
                 "iam:TagRole",
@@ -537,12 +543,27 @@ To:
             ],
             "Resource": [
                 "arn:aws:iam::<AWS ACCOUNT ID>:role/<PARALLELCLUSTER EC2 ROLE NAME>",
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster-*",
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/*"
+                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster-*"
             ],
             "Effect": "Allow",
             "Sid": "IAMModify"
         },
+        {
+          "Condition": {
+              "StringEquals": {
+                  "iam:AWSServiceName": [
+                      "fsx.amazonaws.com",
+                      "s3.data-source.lustre.fsx.amazonaws.com"
+                  ]
+              }
+          },
+          "Action": [
+              "iam:CreateServiceLinkedRole"
+          ],
+          "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/*",
+          "Effect": "Allow",
+          "Sid": "IAMServiceLinkedRole"
+        },         
         {
             "Action": [
                 "iam:CreateInstanceProfile",
@@ -883,7 +904,6 @@ To:
             "Action": [
                 "iam:PassRole",
                 "iam:CreateRole",
-                "iam:CreateServiceLinkedRole",
                 "iam:DeleteRole",
                 "iam:GetRole",
                 "iam:TagRole",
@@ -891,12 +911,27 @@ To:
             ],
             "Resource": [
                 "arn:aws:iam::<AWS ACCOUNT ID>:role/<PARALLELCLUSTER EC2 ROLE NAME>",
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster-*",
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/*"
+                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster-*"
             ],
             "Effect": "Allow",
             "Sid": "IAMModify"
         },
+        {
+          "Condition": {
+              "StringEquals": {
+                  "iam:AWSServiceName": [
+                      "fsx.amazonaws.com",
+                      "s3.data-source.lustre.fsx.amazonaws.com"
+                  ]
+              }
+          },
+          "Action": [
+              "iam:CreateServiceLinkedRole"
+          ],
+          "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/*",
+          "Effect": "Allow",
+          "Sid": "IAMServiceLinkedRole"
+        },           
         {
             "Action": [
                 "iam:CreateInstanceProfile",
