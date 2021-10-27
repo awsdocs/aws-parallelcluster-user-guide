@@ -25,7 +25,7 @@ Identifies one or more config validators to suppress\.
 Format: \(`ALL`\|`type:[A-Za-z0-9]+`\)
 
 `--region REGION`  
-Specifies the AWS Region to use\. The Region must be specified, either using the [`Region`](cluster-configuration-file-v3.md#yaml-Region) setting in the cluster configuration file, the `AWS_DEFAULT_REGION` environment variable, or the `--region` parameter\.
+Specifies the AWS Region to use\. The Region must be specified, using the [`Region`](cluster-configuration-file-v3.md#yaml-Region) setting in the cluster configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--dryrun DRYRUN`  
 Only perform the requested validation without creating any resources\. It can be used to validate the image configuration and update requirements\. \(Defaults to `false`\.\)

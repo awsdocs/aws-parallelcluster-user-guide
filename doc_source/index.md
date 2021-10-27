@@ -72,6 +72,7 @@ Amazon's trademarks and trade dress may not be used in
             + [pcluster export-cluster-logs](pcluster.export-cluster-logs-v3.md)
             + [pcluster export-image-logs](pcluster.export-image-logs-v3.md)
             + [pcluster version](pcluster.version-v3.md)
+         + [pcluster3-config-converter](pcluster3-config-converter.md)
       + [Configuration files](configuration-v3.md)
          + [Cluster configuration file](cluster-configuration-file-v3.md)
             + [Image section](Image-v3.md)

@@ -4,6 +4,16 @@ The following table describes the major updates and new features for the *AWS Pa
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [AWS ParallelCluster version 3\.0\.1 released](https://docs.aws.amazon.com/parallelcluster/latest/ug/document_history.html#aws-parallelcluster-3.0.1) | AWS ParallelCluster version 3\.0\.1 released\. 
+
+Cluster configuration migration tool  
+Customers can now migrate their cluster configurations from the AWS ParallelCluster version 2 format to the YAML\-based AWS ParallelCluster version 3 format\. For more information, see [`pcluster3-config-converter`](pcluster3-config-converter.md)\.   
+
+Head node can be stopped  
+After stopping the compute fleet, the head node can be stopped and later restarted using the Amazon EC2 console or the [stop\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/stop-instances.html) AWS CLI command\. 
+
+Default Region read from `~/.aws/config` file  
+For the [`pcluster`](pcluster-v3.md) command, if the Region is not specified in the configuration file, in the environment, or on the command line, the default Region specified in the `region` setting in the `[default]` section of the `~/.aws/config` file is used\.   For details of the changes, see the `CHANGELOG` files for the [aws\-parallelcluster](https://github.com/aws/aws-parallelcluster/blob/v3.0.1/CHANGELOG.md), [aws\-parallelcluster\-cookbook](https://github.com/aws/aws-parallelcluster-cookbook/blob/v3.0.1/CHANGELOG.md) and [aws\-parallelcluster\-node](https://github.com/aws/aws-parallelcluster-node/blob/v3.0.1/CHANGELOG.md) packages on GitHub\. | October 27, 2021 | 
 | [AWS ParallelCluster version 3\.0\.0 released](https://docs.aws.amazon.com/parallelcluster/latest/ug/document_history.html#aws-parallelcluster-3.0.0) | AWS ParallelCluster version 3\.0\.0 released\. 
 
 Support for cluster management via Amazon API Gateway  

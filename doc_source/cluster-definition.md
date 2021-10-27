@@ -357,7 +357,7 @@ There is no default value\.
 ec2_iam_role = ParallelClusterInstanceRole
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `efs_settings`<a name="efs-settings"></a>
 

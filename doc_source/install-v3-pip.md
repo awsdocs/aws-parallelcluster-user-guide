@@ -13,12 +13,22 @@
 
    When you use the `--user` switch, `pip` installs AWS ParallelCluster to `~/.local/bin`\. 
 
+1. Install Node Version Manager and Node\.js \(required due to AWS Cloud Development Kit \(CDK\) usage for template generation\)\.
+
+   ```
+   $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+   $ chmod ug+x ~/.nvm/nvm.sh
+   $ source ~/.nvm/nvm.sh
+   $ nvm install node
+   $ node --version
+   ```
+
 1. Verify that AWS ParallelCluster installed correctly\.
 
    ```
    $ pcluster version
    {
-     "version": "3.0.0"
+     "version": "3.0.1"
    }
    ```
 

@@ -32,7 +32,7 @@ Only perform the requested validation without creating any resources\. It can be
 When set, will automatically initiate an image stack rollback on failure\. \(Defaults to `false`\.\)
 
 `--region REGION`  
-Specifies the AWS Region to use\. The Region must be specified, either using the [Region](image-builder-configuration-file-v3.md#yaml-build-image-Region) setting in the image configuration file, the `AWS_DEFAULT_REGION` environment variable, or the `--region` parameter\.
+Specifies the AWS Region to use\. The Region must be specified, using the [Region](image-builder-configuration-file-v3.md#yaml-build-image-Region) setting in the image configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--image-configuration IMAGE_CONFIGURATION`  
 Specifies the image configuration file as a YAML document\.

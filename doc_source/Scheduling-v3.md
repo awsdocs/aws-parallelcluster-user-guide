@@ -268,7 +268,7 @@ The maximum number of VCPUs for the AWS Batch compute environment\. This can not
 [Update policy: This setting can't be decreased during an update.](using-pcluster-update-cluster-v3.md#update-policy-no-decrease-v3)
 
 `SpotBidPercentage` \(**Optional**, `Float`\)  
-The maximum percentage that an EC2 Spot Instance price can be when compared with the On\-Demand price for that instance type before instances are launched\. The default value is `1` \(100%\)\.  
+The maximum percentage that an EC2 Spot Instance price can be when compared with the On\-Demand price for that instance type before instances are launched\. The default value is `100` \(100%\)\. The supported range is `1`\-`100`\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 ## `SlurmQueues`<a name="Scheduling-v3-SlurmQueues"></a>
@@ -692,12 +692,12 @@ Iam:
 ##### `Iam` Properties<a name="Scheduling-v3-SlurmQueues-Iam.properties"></a>
 
 `InstanceProfile` \(**Optional**, `String`\)  
-Specifies an instance profile to override the default instance role or instance profile for the Slurm queue\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:${Partition}:iam::${Account}:role/${RoleName}`\.  
+Specifies an instance profile to override the default instance role or instance profile for the Slurm queue\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:${Partition}:iam::${Account}:instance-profile/${InstanceProfileName}`\.  
 If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `InstanceRole` \(**Optional**, `String`\)  
-Specifies an instance role to override the default instance role or instance profile for the Slurm queue\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:${Partition}:iam::${Account}:instance-profile/${InstanceProfileName}`\.  
+Specifies an instance role to override the default instance role or instance profile for the Slurm queue\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:${Partition}:iam::${Account}:role/${RoleName}`\.  
 If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 

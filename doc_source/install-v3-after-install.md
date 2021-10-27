@@ -1,22 +1,11 @@
 # Steps to take after installation<a name="install-v3-after-install"></a>
 
-**Install Node Version Manager and Node\.js**  
-[Node\.js](https://nodejs.org/en/) is a new requirement for the AWS ParallelCluster CLI, because of CDK usage for template generation\. Here is how to install Node\.js: 
-
-```
-$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-$ chmod ug+x ~/.nvm/nvm.sh
-$ source ~/.nvm/nvm.sh
-$ nvm install node
-$ node --version
-```
-
 You can verify that AWS ParallelCluster installed correctly by running ``pcluster version``\.
 
 ```
 $ pcluster version
 {
-"version": "3.0.0"
+"version": "3.0.1"
 }
 ```
 

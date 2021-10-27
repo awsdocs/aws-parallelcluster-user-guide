@@ -18,7 +18,7 @@ Shows the help text for `pcluster update-compute-fleet`\.
 Specifies the name of the cluster\.
 
 `--region REGION`  
-Specifies the AWS Region to use\. The Region must be specified, either using the `AWS_DEFAULT_REGION` environment variable or the `--region` parameter\.
+Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--status {START_REQUESTED,STOP_REQUESTED,ENABLED,DISABLED}`  
 Specifies the status applied to the cluster compute fleet\. The statuses `START_REQUESTED` and `STOP_REQUESTED` correspond to the slurm scheduler while the statuses `ENABLED` and `DISABLED` correspond to the AWS Batch scheduler\.

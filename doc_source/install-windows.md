@@ -34,7 +34,7 @@ If you use Python version 3\+, we recommend that you use the `pip3` command\.
    C:\>py --version
    Python 3.8.11
    C:\>pip3 --version
-   pip 21.2.4 from c:\python38\lib\site-packages\pip (python 3.8)
+   pip 21.3 from c:\python38\lib\site-packages\pip (python 3.8)
    ```
 
 1. Install AWS ParallelCluster using `pip`\.

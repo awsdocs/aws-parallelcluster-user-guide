@@ -159,7 +159,7 @@ Raid:
 
 #### `Raid` Properties<a name="SharedStorage-v3-EbsSettings-Raid.properties"></a>
 
-`Type` \(**Optional**, `String`\)  
+`Type` \(**Required**, `String`\)  
 Defines the type of RAID array\. Supported values are "0" \(striped\) and "1" \(mirrored\)\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
