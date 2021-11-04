@@ -46,7 +46,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
    $ chmod ug+x ~/.nvm/nvm.sh
    $ source ~/.nvm/nvm.sh
-   $ nvm install node
+   $ nvm install --lts
    $ node --version
    ```
 
