@@ -88,13 +88,19 @@ enable_efa = true
 
 ## `enable_efa_gdr`<a name="queue-enable-efa-gdr"></a>
 
-**\(Optional\)** If `true`, specifies that Elastic Fabric Adapter \(EFA\) GPUDirect RDMA \(remote direct memory access\) is enabled for the nodes in this queue\. Setting this to `true` requires that the [`enable_efa`](#queue-enable-efa) setting is set to `true` \.EFA GPUDirect RDMA is supported by the following instance types \(`p4d.24xlarge`\) on these operating systems \(`alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`enable_efa_gdr`](cluster-definition.md#enable-efa-gdr) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](cluster-definition.md#placement) and [`placement_group`](cluster-definition.md#placement-group)\.
+**\(Optional\)** Starting with AWS ParallelCluster version 2\.11\.3, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes is always enabled if it's supported by the instance type\.
+
+**Note**  
+AWS ParallelCluster version 2\.10\.0 through 2\.11\.2: If `true`, specifies that Elastic Fabric Adapter \(EFA\) GPUDirect RDMA \(remote direct memory access\) is enabled for the nodes in this queue\. Setting this to `true` requires that the [`enable_efa`](#queue-enable-efa) setting is set to `true` \.EFA GPUDirect RDMA is supported by the following instance types \(`p4d.24xlarge`\) on these operating systems \(`alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`enable_efa_gdr`](cluster-definition.md#enable-efa-gdr) setting in the [`[cluster]` section](cluster-definition.md) is defined, then this setting cannot be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](cluster-definition.md#placement) and [`placement_group`](cluster-definition.md#placement-group)\.
 
 The default value is `false`\.
 
 ```
 enable_efa_gdr = true
 ```
+
+**Note**  
+Support for `enable_efa_gdr` was added in AWS ParallelCluster version 2\.10\.0\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 

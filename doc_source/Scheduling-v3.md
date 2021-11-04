@@ -474,7 +474,7 @@ Image:
 ##### `Image` Properties<a name="Scheduling-v3-SlurmQueues-Image.properties"></a>
 
 `CustomAmi` \(**Optional**, `String`\)  
-The AMI to use for the Slurm queue instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.2/amis.txt)\.
+The AMI to use for the Slurm queue instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.3/amis.txt)\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 

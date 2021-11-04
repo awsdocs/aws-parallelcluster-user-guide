@@ -216,7 +216,7 @@ compute_root_volume_size = 35
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.2/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.3/amis.txt)\.
 
 There is no default value\.
 
@@ -388,11 +388,17 @@ Support for EFA on Arm\-based Graviton2 instances was added in AWS ParallelClust
 
 ## `enable_efa_gdr`<a name="enable-efa-gdr"></a>
 
-**\(Optional\)** If `compute`, specifies that Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes\. Setting this setting to `compute` requires that the [`enable_efa`](#enable-efa) setting is set to `compute`\. EFA support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa_gdr`](queue-section.md#queue-enable-efa-gdr) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
+**\(Optional\)** Starting with AWS ParallelCluster version 2\.11\.3, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes is always enabled if it's supported by the instance type\.
+
+**Note**  
+AWS ParallelCluster version 2\.10\.0 through 2\.11\.2: If `compute`, specifies that Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes\. Setting this setting to `compute` requires that the [`enable_efa`](#enable-efa) setting is set to `compute`\. EFA support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa_gdr`](queue-section.md#queue-enable-efa-gdr) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
 
 ```
 enable_efa_gdr = compute
 ```
+
+**Note**  
+Support for `enable_efa_gdr` was added in AWS ParallelCluster version 2\.10\.0\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
@@ -917,7 +923,7 @@ Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templa
 This is an advanced parameter\. Any change to this setting is done at your own risk\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.2.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.3.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)
