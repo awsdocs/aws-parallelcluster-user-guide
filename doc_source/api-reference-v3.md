@@ -26,7 +26,7 @@
 
  `https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/parallelcluster-api.yaml` 
 
- where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.0\.1\)\. 
+ where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.0\.2\)\. 
 
  The Docker image used to deploy the AWS Lambda function implementing AWS ParallelCluster features is available at:  [https://gallery\.ecr\.aws/parallelcluster/pcluster\-api](https://gallery.ecr.aws/parallelcluster/pcluster-api) 
 
@@ -46,7 +46,7 @@ Run the following command to deploy the API
 ```
 REGION=<region>
 API_STACK_NAME=<stack-name>  # This can be any name
-VERSION=3.0.1
+VERSION=3.0.2
 aws cloudformation create-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \
@@ -90,7 +90,7 @@ aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME} -
 ```
 REGION=<region>
 API_STACK_NAME=<stack-name>  # This needs to correspond to the existing API stack name
-VERSION=3.0.1
+VERSION=3.0.2
 aws cloudformation update-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \  

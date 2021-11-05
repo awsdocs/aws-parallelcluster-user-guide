@@ -75,10 +75,10 @@ Right after the execution of the `build-image` command, it is possible to retrie
 $ pcluster get-image-stack-events --image-id IMAGE_ID --region REGION --query "events[0]"
 {
   "eventId": "ParallelClusterImage-CREATE_IN_PROGRESS-2021-07-28T08:41:46.626Z",
-  "physicalResourceId": "arn:aws:imagebuilder:eu-west-1:xxx:image/parallelclusterimage-myimage/3.0.1/1",
+  "physicalResourceId": "arn:aws:imagebuilder:eu-west-1:xxx:image/parallelclusterimage-myimage/3.0.2/1",
   "resourceStatus": "CREATE_IN_PROGRESS",
   "resourceStatusReason": "Resource creation Initiated",
-  "resourceProperties": "{\"InfrastructureConfigurationArn\":\"arn:aws:imagebuilder:eu-west-1:xxx:infrastructure-configuration/parallelclusterimage-3cbb8760-ef7f-11eb-a4c0-02abee05253b\",\"ImageRecipeArn\":\"arn:aws:imagebuilder:eu-west-1:xxx:image-recipe/parallelclusterimage-myimage/3.0.1\",\"DistributionConfigurationArn\":\"arn:aws:imagebuilder:eu-west-1:xxx:distribution-configuration/parallelclusterimage-3cbb8760-ef7f-11eb-a4c0-02abee05253b\",\"Tags\":{\"parallelcluster:image_name\":\"myimage\",\"parallelcluster:image_id\":\"myimage\"}}",
+  "resourceProperties": "{\"InfrastructureConfigurationArn\":\"arn:aws:imagebuilder:eu-west-1:xxx:infrastructure-configuration/parallelclusterimage-3cbb8760-ef7f-11eb-a4c0-02abee05253b\",\"ImageRecipeArn\":\"arn:aws:imagebuilder:eu-west-1:xxx:image-recipe/parallelclusterimage-myimage/3.0.2\",\"DistributionConfigurationArn\":\"arn:aws:imagebuilder:eu-west-1:xxx:distribution-configuration/parallelclusterimage-3cbb8760-ef7f-11eb-a4c0-02abee05253b\",\"Tags\":{\"parallelcluster:image_name\":\"myimage\",\"parallelcluster:image_id\":\"myimage\"}}",
   "stackId": "arn:aws:cloudformation:eu-west-1:xxx:stack/alinux2-image/3cbb8760-ef7f-11eb-a4c0-02abee05253b",
   "stackName": "myimage",
   "logicalResourceId": "ParallelClusterImage",
@@ -93,11 +93,11 @@ After about 15 minutes the stack events will appear the log event entry related 
 $ pcluster list-image-log-streams --image-id IMAGE_ID --region REGION \
      --query 'logStreams[*].logStreamName'
 [
-  "3.0.1/1"
+  "3.0.2/1"
 ]
 
 $ pcluster get-image-log-events --image-id IMAGE_ID --region REGION \
- --log-stream-name 3.0.1/1 --limit 3
+ --log-stream-name 3.0.2/1 --limit 3
 {
   "nextToken": "f/36295977202298886557255241372854078762600452615936671762",
   "prevToken": "b/36295977196879805474012299949460899222346900769983430672",
@@ -107,7 +107,7 @@ $ pcluster get-image-log-events --image-id IMAGE_ID --region REGION \
       "timestamp": "2021-07-29T16:11:47.429Z"
     },
     {
-      "message": "Document arn:aws:imagebuilder:eu-west-1:xxx:component/parallelclusterimage-test-c6200fa0-f072-11eb-b9ab-063c2565c5c1/3.0.1/1",
+      "message": "Document arn:aws:imagebuilder:eu-west-1:xxx:component/parallelclusterimage-test-c6200fa0-f072-11eb-b9ab-063c2565c5c1/3.0.2/1",
       "timestamp": "2021-07-29T16:11:47.570Z"
     },
     {
@@ -124,7 +124,7 @@ Continue to check with `describe-image` command until you’ll see the `BUILD_CO
 $ pcluster describe-image --image-id IMAGE_ID --region REGION
 {
   "imageConfiguration": {
-    "url": "https://parallelcluster-ae5a9f1a011e9d83-v1-do-not-delete.s3.eu-west-1.amazonaws.com/parallelcluster/3.0.1/images/alinux2-0729-r13st0t82cuwjvko/configs/image-config.yaml?Signature=..."
+    "url": "https://parallelcluster-ae5a9f1a011e9d83-v1-do-not-delete.s3.eu-west-1.amazonaws.com/parallelcluster/3.0.2/images/alinux2-0729-r13st0t82cuwjvko/configs/image-config.yaml?Signature=..."
   },
   "imageId": "alinux2-0729",
   "imagebuilderImageStatus": "AVAILABLE",

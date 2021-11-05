@@ -388,7 +388,7 @@ Support for EFA on Arm\-based Graviton2 instances was added in AWS ParallelClust
 
 ## `enable_efa_gdr`<a name="enable-efa-gdr"></a>
 
-**\(Optional\)** Starting with AWS ParallelCluster version 2\.11\.3, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes is always enabled if it's supported by the instance type\.
+**\(Optional\)** Starting with AWS ParallelCluster version 2\.11\.3, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is always enabled if it's supported by both the instance type and the operating system\.
 
 **Note**  
 AWS ParallelCluster version 2\.10\.0 through 2\.11\.2: If `compute`, specifies that Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes\. Setting this setting to `compute` requires that the [`enable_efa`](#enable-efa) setting is set to `compute`\. EFA support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa_gdr`](queue-section.md#queue-enable-efa-gdr) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.

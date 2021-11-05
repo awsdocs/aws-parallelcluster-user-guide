@@ -39,7 +39,7 @@ These settings can't be changed if the existing cluster hasn't been deleted\. Ei
       "cloudformationStackStatus": "UPDATE_IN_PROGRESS",
       "cloudformationStackArn": stack_arn,
       "region": "us-east-1",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "clusterStatus": "UPDATE_IN_PROGRESS"
     },
     "changeSet": [
