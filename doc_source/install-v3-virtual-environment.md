@@ -19,25 +19,25 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 1. Create a virtual environment and name it\.
 
    ```
-   $ python3 -m virtualenv ~/apc-ve
+   $ python3 -m virtualenv ~/hpc-ve
    ```
 
    Alternatively, you can use the `-p` option to specify a specific version of Python\.
 
    ```
-   $ python3  -m virtualenv -p $(which python3) ~/apc-ve
+   $ python3  -m virtualenv -p $(which python3) ~/hpc-ve
    ```
 
 1. <a name="activate-virtual-environment-3"></a>Activate your new virtual environment\.
 
    ```
-   $ source ~/apc-ve/bin/activate
+   $ source ~/hpc-ve/bin/activate
    ```
 
 1. Install AWS ParallelCluster into your virtual environment\.
 
    ```
-   (apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster"
+   (hpc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster"
    ```
 
 1. Install Node Version Manager and Node\.js \(required due to AWS Cloud Development Kit \(CDK\) usage for template generation\)\.
@@ -64,5 +64,5 @@ You can use the `deactivate` command to exit the virtual environment\. Each time
 To upgrade to the latest version of AWS ParallelCluster, run the installation command again\.
 
 ```
-(apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster"
+(hpc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster"
 ```
