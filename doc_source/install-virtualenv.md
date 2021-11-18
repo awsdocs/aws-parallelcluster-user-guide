@@ -36,20 +36,20 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 #### [ Linux, macOS, or Unix ]
 
    ```
-   $ python3 -m virtualenv ~/apc-ve
+   $ python3 -m virtualenv ~/hpc-ve
    ```
 
    Alternatively, you can use the `-p` option to specify a specific version of Python\.
 
    ```
-   $ python3  -m virtualenv -p $(which python3) ~/apc-ve
+   $ python3  -m virtualenv -p $(which python3) ~/hpc-ve
    ```
 
 ------
 #### [ Windows ]
 
    ```
-   C:\>virtualenv %USERPROFILE%\apc-ve
+   C:\>virtualenv %USERPROFILE%\hpc-ve
    ```
 
 ------
@@ -60,14 +60,14 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 #### [ Linux, macOS, or Unix ]
 
    ```
-   $ source ~/apc-ve/bin/activate
+   $ source ~/hpc-ve/bin/activate
    ```
 
 ------
 #### [ Windows ]
 
    ```
-   C:\>%USERPROFILE%\apc-ve\Scripts\activate
+   C:\>%USERPROFILE%\hpc-ve\Scripts\activate
    ```
 
 ------
@@ -78,14 +78,14 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 #### [ Linux, macOS, or Unix ]
 
    ```
-   (apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster<3.0"
+   (hpc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster<3.0"
    ```
 
 ------
 #### [ Windows ]
 
    ```
-   (apc-ve) C:\>pip3 install --upgrade "aws-parallelcluster<3.0"
+   (hpc-ve) C:\>pip3 install --upgrade "aws-parallelcluster<3.0"
    ```
 
 ------
@@ -104,7 +104,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 #### [ Windows ]
 
    ```
-   (apc-ve) C:\>pcluster version
+   (hpc-ve) C:\>pcluster version
    2.11.3
    ```
 
@@ -118,14 +118,14 @@ To upgrade to the latest version of AWS ParallelCluster, run the installation co
 #### [ Linux, macOS, or Unix ]
 
 ```
-(apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster<3.0"
+(hpc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster<3.0"
 ```
 
 ------
 #### [ Windows ]
 
 ```
-(apc-ve) C:\>pip3 install --upgrade "aws-parallelcluster<3.0"
+(hpc-ve) C:\>pip3 install --upgrade "aws-parallelcluster<3.0"
 ```
 
 ------
