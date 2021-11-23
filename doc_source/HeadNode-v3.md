@@ -28,7 +28,6 @@ HeadNode:
       Iops: integer
       Throughput: integer
       DeleteOnTermination: boolean
-      KmsKeyId: string
     EphemeralVolume:
       MountDir: string
   Dcv:
@@ -164,7 +163,6 @@ LocalStorage:
     Iops: integer
     Throughput: integer
     DeleteOnTermination: boolean
-    KmsKeyId: string
   EphemeralVolume:
     MountDir: string
 ```
@@ -184,7 +182,6 @@ RootVolume:
   Iops: integer
   Throughput: integer
   DeleteOnTermination: boolean
-  KmsKeyId: string
 ```
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)    
 `Size` \(**Optional**, `Integer`\)  
@@ -220,10 +217,7 @@ The ratio of `Throughput` to `Iops` can be no more than 0\.25\. The maximum thro
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
 `DeleteOnTermination` \(**Optional**, `Boolean`\)  
 Specifies whether the root volume should be deleted when the head node is terminated\. The default value is `true`\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
-`KmsKeyId` \(**Optional**, `String`\)  
-Specifies the ARN of the AWS KMS key used to encrypt the volume\. The format is "`arn:Partition:kms:Region:Account:key/KeyId`\.  
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `EphemeralVolume` \(**Optional**\)  
 Specifies details for any instance store volume\. For more information, see [Instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\.  

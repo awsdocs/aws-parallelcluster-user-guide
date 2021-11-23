@@ -26,7 +26,6 @@ Scheduling:
             VolumeType: string
             Iops: integer
             Throughput: string
-            KmsKeyId: string
           EphemeralVolume:
             MountDir: string
       CapacityType: string
@@ -86,7 +85,6 @@ Scheduling:
             VolumeType: string
             Iops: integer
             Throughput: string
-            KmsKeyId: string
           EphemeralVolume:
             MountDir: string
       Networking:
@@ -286,7 +284,6 @@ SlurmQueues:
           VolumeType: string
           Iops: integer
           Throughput: string
-          KmsKeyId: string
         EphemeralVolume:
           MountDir: string
     CapacityType: string
@@ -346,7 +343,6 @@ SlurmQueues:
           VolumeType: string
           Iops: integer
           Throughput: string
-          KmsKeyId: string
         EphemeralVolume:
           MountDir: string
     Networking:
@@ -558,7 +554,6 @@ ComputeSettings:
       VolumeType: string
       Iops: integer
       Throughput: string
-      KmsKeyId: string
      EphemeralVolume:
       MountDir: string
 ```
@@ -574,7 +569,6 @@ LocalStorage:
     VolumeType: string
     Iops: integer
     Throughput: string
-    KmsKeyId: string
   EphemeralVolume:
     MountDir: string
 ```
@@ -589,7 +583,6 @@ RootVolume:
   VolumeType: string
   Iops: integer
   Throughput: string
-  KmsKeyId: string
 ```
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)    
 `Size` \(**Optional**, `Integer`\)  
@@ -597,9 +590,6 @@ Specifies the root volume size in gibibytes \(GiB\) for the notes in the Slurm q
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `Encrypted` \(**Optional**, `Boolean`\)  
 If `true`, the root volume of the nodes in the Slurm queue are encrypted\. The default value is `false`\.  
-[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
-`KmsKeyId` \(**Optional**, `String`\)  
-Specifies the ARN of the AWS KMS key used to encrypt the root volume of the nodes in the Slurm queue\. The format is "`arn:${Partition}:kms:${Region}:${Account}:key/${KeyId}`\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `VolumeType` \(**Optional**, `String`\)  
 Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) of the nodes in the Slurm queue\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `stl`, and `standard`\. The default value is `gp2`\.  

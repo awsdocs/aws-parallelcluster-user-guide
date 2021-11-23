@@ -49,7 +49,7 @@ The default value is `ondemand`\.
 For more information about Spot Instances, see [Working with Spot Instances](spot.md)\.
 
 **Note**  
-Using Spot Instances requires that the **AWSServiceRoleForEC2Spot** service\-linked role exist in your account\. To create this role in your account using the AWS CLI, run the following command:  
+Using Spot Instances requires that the `AWSServiceRoleForEC2Spot` service\-linked role exist in your account\. To create this role in your account using the AWS CLI, run the following command:  
 
 ```
 aws iam create-service-linked-role --aws-service-name spot.amazonaws.com
