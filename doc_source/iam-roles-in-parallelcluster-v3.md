@@ -525,7 +525,17 @@ Users that intend to create custom EC2 images with AWS ParallelCluster will need
             ],
             "Effect": "Allow",
             "Sid": "S3Objects"
-        }
+        },
+        {
+            "Action": "iam:CreateServiceLinkedRole",
+            "Effect": "Allow",
+            "Resource": "arn:aws:iam::*:role/aws-service-role/imagebuilder.amazonaws.com/AWSServiceRoleForImageBuilder",
+            "Condition": {
+                "StringLike": {
+                    "iam:AWSServiceName": "imagebuilder.amazonaws.com"
+                }
+            }
+        }        
     ]
 }
 ```
