@@ -45,3 +45,6 @@ Turn on debug logging\.
 
 `--query QUERY`  
 JMESPath query to perform on output\.
+
+**Warning**  
+`pcluster build-image` uses the default VPC\. If the default VPC has been deleted, perhaps by using AWS Control Tower or AWS Landing Zone, then the subnet ID must be specified in the image configuration file\. For more information, see [SubnetId](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId)\.

@@ -4,7 +4,7 @@ NICE DCV is a remote visualization technology that enables users to securely con
 
 The NICE DCV software is automatically installed on the head node when using [`base_os`](cluster-definition.md#base-os)` = alinux2`, [`base_os`](cluster-definition.md#base-os)` = centos7`, or [`base_os`](cluster-definition.md#base-os)` = ubuntu1804`\.
 
-To enable NICE DCV on the head node, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [`[dcv]` section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable)` = master` and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7`, `centos8`, or `ubuntu1804`\.
+To enable NICE DCV on the head node, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [`[dcv]` section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable)` = master` and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7`, or `ubuntu1804`\.
 
 ```
 [cluster custom-cluster]
@@ -18,7 +18,7 @@ enable = master
 For more information about NICE DCV configuration parameters, see [`dcv_settings`](cluster-definition.md#dcv-settings)\. To connect to the NICE DCV session, use the [`pcluster dcv`](pcluster.dcv.md) command\.
 
 **Note**  
-Support for NICE DCV on `centos8` was added in AWS ParallelCluster version 2\.10\.0\.Support for NICE DCV on AWS Graviton\-based instances was added in AWS ParallelCluster version 2\.9\.0\. Support for NICE DCV on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for NICE DCV on `centos7` was added in AWS ParallelCluster version 2\.5\.0\.
+Support for NICE DCV on `centos8` was removed in AWS ParallelCluster version 2\.10\.4\. Support for NICE DCV on `centos8` was added in AWS ParallelCluster version 2\.10\.0\. Support for NICE DCV on AWS Graviton\-based instances was added in AWS ParallelCluster version 2\.9\.0\. Support for NICE DCV on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for NICE DCV on `centos7` was added in AWS ParallelCluster version 2\.5\.0\.
 
 **Note**  
 NICE DCV is not supported on AWS Graviton\-based instances in AWS ParallelCluster versions 2\.8\.0 and 2\.8\.1\.

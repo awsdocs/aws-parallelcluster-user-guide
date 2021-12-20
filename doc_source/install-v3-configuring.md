@@ -297,7 +297,7 @@ $ pcluster list-clusters --query 'items[?clusterName==`test-cluster`]'
 After the cluster reaches the `"clusterStatus": "CREATE_COMPLETE"` status, you can connect to it by using your normal SSH client settings\. For more information about connecting to Amazon EC2 instances, see the [EC2 User Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux) in the *Amazon EC2 User Guide for Linux Instances*\. Or you can connect the cluster through 
 
 ```
-$ pcluster ssh --cluster-name test-cluster
+$ pcluster ssh --cluster-name test-cluster -i ~/path/to/keyfile.pem
 ```
 
 If [`pcluster configure`](pcluster.configure-v3.md) created a new VPC, you can delete that VPC by deleting the AWS CloudFormation stack it created\. The name will start with "parallelclusternetworking\-" and contain the creation time in a "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.

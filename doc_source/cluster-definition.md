@@ -102,20 +102,19 @@ Support for [`additional_iam_policies`](#additional-iam-policies) was added in A
 Available options are:
 + `alinux2`
 + `centos7`
-+ `centos8`
 + `ubuntu1804`
 + `ubuntu2004`
 
 **Note**  
-For AWS Graviton\-based instances, only `alinux2`, `centos8`, `ubuntu1804`, or `ubuntu2004` are supported\.
+For AWS Graviton\-based instances, only `alinux2`, `ubuntu1804`, or `ubuntu2004` are supported\.
 
 **Note**  
-Support for `ubuntu2004` was added and support for `alinux` and `ubuntu1604` was removed in AWS ParallelCluster version 2\.11\.0\. Support for `centos8` was added and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\. Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added, and support for `ubuntu1404` was removed in AWS ParallelCluster version 2\.5\.0\.
+Support for `centos8` was removed in AWS ParallelCluster version 2\.11\.4\. Support for `ubuntu2004` was added and support for `alinux` and `ubuntu1604` was removed in AWS ParallelCluster version 2\.11\.0\. Support for `centos8` was added and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\. Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added, and support for `ubuntu1404` was removed in AWS ParallelCluster version 2\.5\.0\.
 
-Other than the specific Regions mentioned in the following table that don't support `centos7` and `centos8`\. All other AWS commercial Regions support all of the following operating systems\.
+Other than the specific Regions mentioned in the following table that don't support `centos7`\. All other AWS commercial Regions support all of the following operating systems\.
 
 
-| Partition \(Regions\) | `alinux2` | `centos7` and `centos8` | `ubuntu1804` and `ubuntu2004` | 
+| Partition \(Regions\) | `alinux2` | `centos7` | `ubuntu1804` and `ubuntu2004` | 
 | --- | --- | --- | --- | 
 | Commercial \(All Regions not specifically mentioned\) | True | True | True | 
 | AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | True | 
@@ -125,7 +124,7 @@ Other than the specific Regions mentioned in the following table that don't supp
 
 **Note**  
 The [`base_os`](#base-os) parameter also determines the user name that's used to log into the cluster\.
-+ `centos7` and `centos8`: `centos` 
++ `centos7`: `centos` 
 + `ubuntu1804` and `ubuntu2004`: `ubuntu` 
 + `alinux2`: `ec2-user` 
 
@@ -216,7 +215,7 @@ compute_root_volume_size = 35
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.3/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.4/amis.txt)\.
 
 There is no default value\.
 
@@ -375,7 +374,7 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
+**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
 
 ```
 enable_efa = compute
@@ -391,7 +390,7 @@ Support for EFA on Arm\-based Graviton2 instances was added in AWS ParallelClust
 **\(Optional\)** Starting with AWS ParallelCluster version 2\.11\.3, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is always enabled if it's supported by both the instance type and the operating system\.
 
 **Note**  
-AWS ParallelCluster version 2\.10\.0 through 2\.11\.2: If `compute`, specifies that Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes\. Setting this setting to `compute` requires that the [`enable_efa`](#enable-efa) setting is set to `compute`\. EFA support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa_gdr`](queue-section.md#queue-enable-efa-gdr) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
+AWS ParallelCluster version 2\.10\.0 through 2\.11\.2: If `compute`, specifies that Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is enabled for the compute nodes\. Setting this setting to `compute` requires that the [`enable_efa`](#enable-efa) setting is set to `compute`\. EFA support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`\)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa_gdr`](queue-section.md#queue-enable-efa-gdr) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
 
 ```
 enable_efa_gdr = compute
@@ -404,7 +403,7 @@ Support for `enable_efa_gdr` was added in AWS ParallelCluster version 2\.10\.0\.
 
 ## `enable_intel_hpc_platform`<a name="enable-intel-hpc-platform"></a>
 
-**\(Optional\)** If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the head node and shared with the compute nodes\. This adds several minutes to the time it takes the head node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)` = centos7`\) and CentOS 8 \([`base_os`](#base-os)` = centos8`\)\.
+**\(Optional\)** If present, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the head node and shared with the compute nodes\. This adds several minutes to the time it takes the head node to bootstrap\. The [`enable_intel_hpc_platform`](#enable-intel-hpc-platform) setting is only supported on CentOS 7 \([`base_os`](#base-os)` = centos7`\)\.
 
 The default value is `false`\.
 
@@ -923,7 +922,7 @@ Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templa
 This is an advanced parameter\. Any change to this setting is done at your own risk\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.3.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.4.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

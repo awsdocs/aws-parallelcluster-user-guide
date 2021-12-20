@@ -470,7 +470,7 @@ Image:
 ##### `Image` Properties<a name="Scheduling-v3-SlurmQueues-Image.properties"></a>
 
 `CustomAmi` \(**Optional**, `String`\)  
-The AMI to use for the Slurm queue instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.3/amis.txt)\.
+The AMI to use for the Slurm queue instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.4/amis.txt)\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
@@ -592,7 +592,7 @@ Specifies the root volume size in gibibytes \(GiB\) for the notes in the Slurm q
 If `true`, the root volume of the nodes in the Slurm queue are encrypted\. The default value is `false`\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `VolumeType` \(**Optional**, `String`\)  
-Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) of the nodes in the Slurm queue\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `stl`, and `standard`\. The default value is `gp2`\.  
+Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) of the nodes in the Slurm queue\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `st1`, and `standard`\. The default value is `gp2`\.  
 For more information, see [Amazon EBS volume types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `Iops` \(**Optional**, `Boolean`\)  
@@ -763,7 +763,7 @@ Dns:
 `DisableManagedDns` \(**Optional**, `Boolean`\)  
 If `true`, the DNS entries for the cluster shouldn't be created\. By default, AWS ParallelCluster creates a Route 53 hosted zone\. The default value is `false`\. If `DisableManagedDns` is set to `true`, the hosted zone isn't created by AWS ParallelCluster\.  
 A name resolution system is required for the cluster to operate properly\. If `DisableManagedDns` is set to `true`, an additional name resolution system must also be provided\.
-[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `HostedZoneId` \(**Optional**, `String`\)  
 Defines a custom Route 53 hosted zone id to use for DNS name resolution for the cluster\.  

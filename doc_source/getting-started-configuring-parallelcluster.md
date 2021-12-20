@@ -74,9 +74,8 @@ Allowed values for Operating System:
 1. alinux
 2. alinux2
 3. centos7
-4. centos8
-5. ubuntu1804
-6. ubuntu2004
+4. ubuntu1804
+5. ubuntu2004
 Operating System [alinux]:
 ```
 

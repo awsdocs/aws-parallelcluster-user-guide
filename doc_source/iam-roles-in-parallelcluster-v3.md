@@ -535,7 +535,7 @@ Users that intend to create custom EC2 images with AWS ParallelCluster will need
                     "iam:AWSServiceName": "imagebuilder.amazonaws.com"
                 }
             }
-        }        
+        }
     ]
 }
 ```
@@ -776,232 +776,295 @@ AWS ParallelCluster exposes a series of configuration options to control and cus
 
 ### Cluster configuration<a name="iam-roles-in-parallelcluster-v3-cluster-config"></a>
 
-**`HeadNode` / `Iam` / `InstanceRole` \| `InstanceProfile`**
+**Topics**
++ [`HeadNode` / `Iam` / `InstanceRole` \| `InstanceProfile`](#iam-roles-in-parallelcluster-v3-cluster-config-headnode-instanceprofile)
++ [`HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `Iam` / `S3Access`](#iam-roles-in-parallelcluster-v3-cluster-config-headnode-s3access)
++ [`HeadNode` / `Iam` / `AdditionalIamPolicies` or `Scheduling` / `SlurmQueues` / `Iam` / `AdditionalIamPolicies`](#iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies)
++ [`Iam` / [Roles](Iam-v3.md#yaml-Iam-Roles) / `LambdaFunctionsRole`](#iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole)
++ [`Scheduling` / `SlurmQueues` / `Iam` / `InstanceRole` \| `InstanceProfile`](#iam-roles-in-parallelcluster-v3-cluster-config-slurmqueues-instanceprofile)
++ [`Iam` / `PermissionsBoundary`](#iam-roles-in-parallelcluster-v3-cluster-config-permissionsboundary)
+
+#### `HeadNode` / `Iam` / `InstanceRole` \| `InstanceProfile`<a name="iam-roles-in-parallelcluster-v3-cluster-config-headnode-instanceprofile"></a>
 
 This option allows to override the IAM role that is assigned to the head node of the cluster\. For additional details, please refer to the `InstanceProfile` reference\.
 
 Here is the minimal set of policies to be used as part of this role when the scheduler is Slurm:
-+  `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy
-+  `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy
-+ additional IAM policy:
++ `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy\. For more information, see [Create IAM roles and users for use with the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent.html) in the *Amazon CloudWatch User Guide*\.
++ `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy\. For more information, see [AWS managed policies for AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/security_iam_service-with-iam.html#managed-policies) in the *AWS Systems Manager User Guide*\.
++ Additional IAM policy:
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "s3:GetObject",
-                "s3:GetObjectVersion"
-            ],
-            "Resource": [
-                "arn:aws:s3:::<REGION>-aws-parallelcluster/*",
-                "arn:aws:s3:::dcv-license.<REGION>/*",
-                "arn:aws:s3:::parallelcluster-*-v1-do-not-delete/*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "dynamodb:GetItem",
-                "dynamodb:PutItem",
-                "dynamodb:BatchWriteItem"
-            ],
-            "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
-            "Effect": "Allow"
-        },
-        {
-            "Condition": {
-                "StringEquals": {
-                    "ec2:ResourceTag/parallelcluster:node-type": "Compute"
-                }
-            },
-            "Action": "ec2:TerminateInstances",
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "ec2:RunInstances",
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Condition": {
-                "StringEquals": {
-                    "iam:PassedToService": [
-                        "ec2.amazonaws.com"
-                    ]
-                }
-            },
-            "Action": [
-                "iam:PassRole"
-            ],
-            "Resource": [
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*",
-                "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "ec2:DescribeInstances",
-                "ec2:DescribeInstanceStatus",
-                "ec2:CreateTags",
-                "ec2:DescribeVolumes",
-                "ec2:AttachVolume",
-                "ec2:DescribeInstanceAttribute"
-            ],
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "cloudformation:DescribeStackResource",
-                "cloudformation:SignalResource"
-            ],
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "route53:ChangeResourceRecordSets"
-            ],
-            "Resource": "*",
-            "Effect": "Allow"
-        }
-    ]
-}
-```
+  ```
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": [
+                  "s3:GetObject",
+                  "s3:GetObjectVersion"
+              ],
+              "Resource": [
+                  "arn:aws:s3:::<REGION>-aws-parallelcluster/*",
+                  "arn:aws:s3:::dcv-license.<REGION>/*",
+                  "arn:aws:s3:::parallelcluster-*-v1-do-not-delete/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "dynamodb:GetItem",
+                  "dynamodb:PutItem",
+                  "dynamodb:BatchWriteItem"
+              ],
+              "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
+              "Effect": "Allow"
+          },
+          {
+              "Condition": {
+                  "StringEquals": {
+                      "ec2:ResourceTag/parallelcluster:node-type": "Compute"
+                  }
+              },
+              "Action": "ec2:TerminateInstances",
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "ec2:RunInstances",
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Condition": {
+                  "StringEquals": {
+                      "iam:PassedToService": [
+                          "ec2.amazonaws.com"
+                      ]
+                  }
+              },
+              "Action": [
+                  "iam:PassRole"
+              ],
+              "Resource": [
+                  "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*",
+                  "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "ec2:DescribeInstances",
+                  "ec2:DescribeInstanceStatus",
+                  "ec2:CreateTags",
+                  "ec2:DescribeVolumes",
+                  "ec2:AttachVolume",
+                  "ec2:DescribeInstanceAttribute"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "cloudformation:DescribeStackResource",
+                  "cloudformation:SignalResource"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "route53:ChangeResourceRecordSets"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          }
+      ]
+  }
+  ```
 
 Note that in case `Scheduling / SlurmQueues / Iam / InstanceRole` is used to override the compute IAM role, the head node policy reported above needs to include such role in the `Resource` section of the `iam:PassRole` permission\.
 
 Here is the minimal set of policies to be used as part of this role when the scheduler is AWS Batch:
-+  `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy
-+  `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM
-+  `arn:aws:iam::aws:policy/AWSBatchFullAccess` managed IAM policy
-+ additional IAM policy:
++ `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy\. For more information, see [Create IAM roles and users for use with the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent.html) in the *Amazon CloudWatch User Guide*\.
++ `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy\. For more information, see [AWS managed policies for AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/security_iam_service-with-iam.html#managed-policies) in the *AWS Systems Manager User Guide*\.
++  `arn:aws:iam::aws:policy/AWSBatchFullAccess` managed IAM policy\. For more information, see [AWS managed policy: `BatchFullAccess`](https://docs.aws.amazon.com/batch/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-BatchFullAccess) in the *AWS Batch User Guide*\.
++ Additional IAM policy:
+
+  ```
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": [
+                  "s3:GetObject",
+                  "s3:PutObject",
+                  "s3:GetObjectVersion"
+              ],
+              "Resource": [
+                  "arn:aws:s3:::parallelcluster-*-v1-do-not-delete/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Action": "s3:GetObject",
+              "Resource": [
+                  "arn:aws:s3:::dcv-license.<REGION>/*",
+                  "arn:aws:s3:::<REGION>-aws-parallelcluster/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Condition": {
+                  "StringEquals": {
+                      "iam:PassedToService": [
+                          "batch.amazonaws.com"
+                      ]
+                  }
+              },
+              "Action": [
+                  "iam:PassRole"
+              ],
+              "Resource": [
+                  "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*",
+                  "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "ec2:DescribeInstances",
+                  "ec2:DescribeInstanceStatus",
+                  "ec2:CreateTags",
+                  "ec2:DescribeVolumes",
+                  "ec2:AttachVolume",
+                  "ec2:DescribeInstanceAttribute"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "cloudformation:DescribeStackResource",
+                  "cloudformation:DescribeStacks",
+                  "cloudformation:SignalResource"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "route53:ChangeResourceRecordSets"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          }
+      ]
+  }
+  ```
+
+#### `HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `Iam` / `S3Access`<a name="iam-roles-in-parallelcluster-v3-cluster-config-headnode-s3access"></a>
+
+This configuration sections allow to customize the Amazon S3 access by granting additional Amazon S3 policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\. For more information, see the reference documentation for each of the configuration parameter\.
+
+This parameter can be only used when the AWS ParallelCluster user is configured in [Privileged IAM access mode](#iam-roles-in-parallelcluster-v3-privileged-iam-access) or [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsboundary-mode)\.
+
+#### `HeadNode` / `Iam` / `AdditionalIamPolicies` or `Scheduling` / `SlurmQueues` / `Iam` / `AdditionalIamPolicies`<a name="iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies"></a>
+
+This configuration sections allow to attach additional managed IAM policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\.
+
+To use this option make sure the AWS ParallelCluster user is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
+
+#### `Iam` / [Roles](Iam-v3.md#yaml-Iam-Roles) / `LambdaFunctionsRole`<a name="iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole"></a>
+
+This option overrides the role attached to all AWS Lambda functions that are used during the cluster creation process\. AWS Lambda needs to be configured as the principal allowed to assume the role\.
+
+Here is the minimal set of policies to be used as part of this role:
 
 ```
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "s3:GetObject",
-                "s3:PutObject",
-                "s3:GetObjectVersion"
-            ],
-            "Resource": [
-                "arn:aws:s3:::parallelcluster-*-v1-do-not-delete/*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Action": "s3:GetObject",
-            "Resource": [
-                "arn:aws:s3:::dcv-license.<REGION>/*",
-                "arn:aws:s3:::<REGION>-aws-parallelcluster/*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Condition": {
-                "StringEquals": {
-                    "iam:PassedToService": [
-                        "batch.amazonaws.com"
-                    ]
-                }
-            },
-            "Action": [
-                "iam:PassRole"
-            ],
-            "Resource": [
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*",
-                "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "ec2:DescribeInstances",
-                "ec2:DescribeInstanceStatus",
-                "ec2:CreateTags",
-                "ec2:DescribeVolumes",
-                "ec2:AttachVolume",
-                "ec2:DescribeInstanceAttribute"
-            ],
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "cloudformation:DescribeStackResource",
-                "cloudformation:DescribeStacks",
-                "cloudformation:SignalResource"
-            ],
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "route53:ChangeResourceRecordSets"
-            ],
-            "Resource": "*",
-            "Effect": "Allow"
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "route53:ListResourceRecordSets",
+        "route53:ChangeResourceRecordSets"
+      ],
+      "Resource": "arn:aws:route53:::hostedzone/*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Action": "ec2:DescribeInstances",
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": "ec2:TerminateInstances",
+      "Condition": {
+        "StringEquals": {
+          "ec2:ResourceTag/parallelcluster:node-type": "Compute"
         }
-    ]
+      },
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": [
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion",
+        "s3:ListBucket",
+        "s3:ListBucketVersions"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::parallelcluster-*-v1-do-not-delete",
+        "arn:aws:s3:::parallelcluster-*-v1-do-not-delete/*"
+      ]
+    }
+  ]
 }
 ```
 
-**`Scheduling` / `SlurmQueues` / `Iam` / `InstanceRole` \| `InstanceProfile`**
+#### `Scheduling` / `SlurmQueues` / `Iam` / `InstanceRole` \| `InstanceProfile`<a name="iam-roles-in-parallelcluster-v3-cluster-config-slurmqueues-instanceprofile"></a>
 
 This option allows to override the IAM role that is assigned to the compute nodes of the cluster\. For more information, see `InstanceProfile`\.
 
 Here is the minimal set of policies to be used as part of this role:
-+  `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy
-+  `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy
-+ additional IAM policy:
++ `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy\. For more information, see [Create IAM roles and users for use with the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent.html) in the *Amazon CloudWatch User Guide*\.
++ `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy\. For more information, see [AWS managed policies for AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/security_iam_service-with-iam.html#managed-policies) in the *AWS Systems Manager User Guide*\.
++ Additional IAM policy:
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "dynamodb:Query"
-            ],
-            "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "s3:GetObject",
-            "Resource": [
-                "arn:aws:s3:::<REGION>-aws-parallelcluster/*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Action": "ec2:DescribeInstanceAttribute",
-            "Resource": "*",
-            "Effect": "Allow"
-        }
-    ]
-}
-```
+  ```
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": [
+                  "dynamodb:Query"
+              ],
+              "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "s3:GetObject",
+              "Resource": [
+                  "arn:aws:s3:::<REGION>-aws-parallelcluster/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Action": "ec2:DescribeInstanceAttribute",
+              "Resource": "*",
+              "Effect": "Allow"
+          }
+      ]
+  }
+  ```
 
-**`HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `Iam` / `S3Access`**
-
-This configuration sections allow to customize the S3 access by granting additional S3 policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\. For more information, see the reference documentation for each of the configuration parameter\.
-
-This parameter can be only used when the AWS ParallelCluster user is configured in [Privileged IAM access mode](#iam-roles-in-parallelcluster-v3-privileged-iam-access) or [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsboundary-mode)\.
-
-**`HeadNode` / `Iam` / `AdditionalIamPolicies` or `Scheduling` / `SlurmQueues` / `Iam` / [AdditionalIamPolicies](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies)**
-
-This configuration sections allow to attach additional managed IAM policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\.
-
-To use this option make sure the AWS ParallelCluster User is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
-
-**`Iam` / `PermissionsBoundary`**
+#### `Iam` / `PermissionsBoundary`<a name="iam-roles-in-parallelcluster-v3-cluster-config-permissionsboundary"></a>
 
 This parameter forces AWS ParallelCluster to attach the given IAM policy as a `PermissionsBoundary` to all IAM roles that are created as part of a cluster deployment\.
 
@@ -1009,138 +1072,144 @@ See [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsbou
 
 ### Custom Image configuration<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration"></a>
 
-**`Build` / `Iam` / `InstanceRole` \| `InstanceProfile`**
+**Topics**
++ [`Build` / `Iam` / `InstanceRole` \| `InstanceProfile`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-instancerole)
++ [`Build` / `Iam` / `CleanupLambdaRole`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-cleanuplambdarole)
++ [`Build` / `Iam` / `AdditionalIamPolicies`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-additionaliampolicies)
++ [`Build` / `Iam` / `PermissionsBoundary`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary)
+
+#### `Build` / `Iam` / `InstanceRole` \| `InstanceProfile`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-instancerole"></a>
 
 This option allows to override the IAM role that is assigned to the EC2 instance launched by EC2 Image Builder to create a custom AMI\.
 
 Here is the minimal set of policies to be used as part of this role:
-+  `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy
-+  `arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilder` managed IAM policy
-+ additional IAM policy:
++ `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy\. For more information, see [AWS managed policies for AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/security_iam_service-with-iam.html#managed-policies) in the *AWS Systems Manager User Guide*\.
++ `arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilder` managed IAM policy\. For more information, see [`EC2InstanceProfileForImageBuilder` policy](https://docs.aws.amazon.com/imagebuilder/latest/userguide/security-iam-awsmanpol.html#sec-iam-manpol-EC2InstanceProfileForImageBuilder) in the *Image Builder User Guide*\.
++ Additional IAM policy:
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "ec2:CreateTags",
-                "ec2:ModifyImageAttribute"
-            ],
-            "Resource": "arn:aws:ec2:<REGION>::image/*",
-            "Effect": "Allow"
-        }
-    ]
-}
-```
+  ```
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": [
+                  "ec2:CreateTags",
+                  "ec2:ModifyImageAttribute"
+              ],
+              "Resource": "arn:aws:ec2:<REGION>::image/*",
+              "Effect": "Allow"
+          }
+      ]
+  }
+  ```
 
-**`Build` / `Iam` / `CleanupLambdaRole`**
+#### `Build` / `Iam` / `CleanupLambdaRole`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-cleanuplambdarole"></a>
 
 This option overrides the role attached to all AWS Lambda functions that are used during the custom image build process\. AWS Lambda needs to be configured as the principal allowed to assume the role\.
 
 Here is the minimal set of policies to be used as part of this role:
-+  `arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole` managed IAM policy
-+ additional IAM policy:
++ `arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole` managed IAM policy\. For more information, see [AWS managed policies for Lambda features](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html#permissions-executionrole-features) in the *AWS Lambda Developer Guide*\.
++ Additional IAM policy:
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "iam:DetachRolePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy"
-            ],
-            "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "iam:DeleteInstanceProfile",
-                "iam:RemoveRoleFromInstanceProfile"
-            ],
-            "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "imagebuilder:DeleteInfrastructureConfiguration",
-            "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:infrastructure-configuration/parallelclusterimage-*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "imagebuilder:DeleteComponent"
-            ],
-            "Resource": [
-                "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:component/parallelclusterimage-*/*"
-            ],
-            "Effect": "Allow"
-        },
-        {
-            "Action": "imagebuilder:DeleteImageRecipe",
-            "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:image-recipe/parallelclusterimage-*/*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "imagebuilder:DeleteDistributionConfiguration",
-            "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:distribution-configuration/parallelclusterimage-*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "imagebuilder:DeleteImage",
-            "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:image/parallelclusterimage-*/*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "cloudformation:DeleteStack",
-            "Resource": "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/*/*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "ec2:CreateTags",
-            "Resource": "arn:aws:ec2:<REGION>::image/*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "tag:TagResources",
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "lambda:DeleteFunction",
-                "lambda:RemovePermission"
-            ],
-            "Resource": "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:ParallelClusterImage-*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": "logs:DeleteLogGroup",
-            "Resource": "arn:aws:logs:<REGION>:<AWS ACCOUNT ID>:log-group:/aws/lambda/ParallelClusterImage-*:*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "SNS:GetTopicAttributes",
-                "SNS:DeleteTopic",
-                "SNS:GetSubscriptionAttributes",
-                "SNS:Unsubscribe"
-            ],
-            "Resource": "arn:aws:sns:<REGION>:<AWS ACCOUNT ID>:ParallelClusterImage-*",
-            "Effect": "Allow"
-        }
-    ]
-}
-```
+  ```
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Action": [
+                  "iam:DetachRolePolicy",
+                  "iam:DeleteRole",
+                  "iam:DeleteRolePolicy"
+              ],
+              "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "iam:DeleteInstanceProfile",
+                  "iam:RemoveRoleFromInstanceProfile"
+              ],
+              "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "imagebuilder:DeleteInfrastructureConfiguration",
+              "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:infrastructure-configuration/parallelclusterimage-*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "imagebuilder:DeleteComponent"
+              ],
+              "Resource": [
+                  "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:component/parallelclusterimage-*/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Action": "imagebuilder:DeleteImageRecipe",
+              "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:image-recipe/parallelclusterimage-*/*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "imagebuilder:DeleteDistributionConfiguration",
+              "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:distribution-configuration/parallelclusterimage-*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "imagebuilder:DeleteImage",
+              "Resource": "arn:aws:imagebuilder:<REGION>:<AWS ACCOUNT ID>:image/parallelclusterimage-*/*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "cloudformation:DeleteStack",
+              "Resource": "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/*/*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "ec2:CreateTags",
+              "Resource": "arn:aws:ec2:<REGION>::image/*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "tag:TagResources",
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "lambda:DeleteFunction",
+                  "lambda:RemovePermission"
+              ],
+              "Resource": "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:ParallelClusterImage-*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "logs:DeleteLogGroup",
+              "Resource": "arn:aws:logs:<REGION>:<AWS ACCOUNT ID>:log-group:/aws/lambda/ParallelClusterImage-*:*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "SNS:GetTopicAttributes",
+                  "SNS:DeleteTopic",
+                  "SNS:GetSubscriptionAttributes",
+                  "SNS:Unsubscribe"
+              ],
+              "Resource": "arn:aws:sns:<REGION>:<AWS ACCOUNT ID>:ParallelClusterImage-*",
+              "Effect": "Allow"
+          }
+      ]
+  }
+  ```
 
-**`Build` / `Iam` / `AdditionalIamPolicies`**
+#### `Build` / `Iam` / `AdditionalIamPolicies`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-additionaliampolicies"></a>
 
 This configuration section allows to attach additional managed IAM policies to the role associated with the EC2 instance used by EC2 Image Builder to produce the custom AMI\.
 
-To use this option make sure the AWS ParallelCluster User is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
+To use this option make sure the AWS ParallelCluster user is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
 
-**`Build` / `Iam` / `PermissionsBoundary`**
+#### `Build` / `Iam` / `PermissionsBoundary`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary"></a>
 
 This parameter forces AWS ParallelCluster to attach the given IAM policy as a `PermissionsBoundary` to all IAM roles that are created as part of custom AMI build\.
 

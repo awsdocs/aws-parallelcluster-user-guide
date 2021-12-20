@@ -33,8 +33,8 @@ Steps:
 
    ```
    Build:
-     InstanceType: {BUILD_INSTANCE_TYPE}
-     ParentImage: {BASE_AMI_ID}
+     InstanceType: <BUILD_INSTANCE_TYPE>
+     ParentImage: <BASE_AMI_ID>
    ```
 
 1. Use the command [`pcluster build-image`](pcluster.build-image-v3.md) to build an AWS ParallelCluster AMI starting from the one that you provide as base:
@@ -42,6 +42,8 @@ Steps:
    ```
    pcluster build-image --image-id IMAGE_ID --image-configuration IMAGE_CONFIG.yaml --region REGION
    ```
+**Warning**  
+`pcluster build-image` uses the default VPC\. If the default VPC has been deleted, perhaps by using AWS Control Tower or AWS Landing Zone, then the subnet ID must be specified in the image configuration file\. For more information, see [SubnetId](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId)\.
 
    For other parameters, see pcluster build\-image command\. The previous command will do the following:
    + Create a CloudFormation stack based on the image configuration\. The stack will create all the EC2 ImageBuilder resources required for the build\.

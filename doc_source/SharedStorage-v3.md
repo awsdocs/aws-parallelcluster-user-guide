@@ -94,7 +94,7 @@ EbsSettings:
 ### `EbsSettings` Properties<a name="SharedStorage-v3-EbsSettings.properties"></a>
 
 `VolumeType` \(**Optional**, `String`\)  
-Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `stl`, and `standard`\. The default value is `gp2`\.  
+Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `st1`, and `standard`\. The default value is `gp2`\.  
 For more information, see [Amazon EBS volume types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 

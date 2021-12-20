@@ -39,7 +39,8 @@ Build:
 Specifies the instance type for the instance used to build the image\.
 
 `SubnetId` \(**Optional**, `String`\)  
-Specifies the ID of an existing subnet in which to provision the instance to build the image\. The provided subnet requires internet access\. 
+Specifies the ID of an existing subnet in which to provision the instance to build the image\. The provided subnet requires internet access\.  
+`pcluster build-image` uses the default VPC\. If the default VPC has been deleted, perhaps by using AWS Control Tower or AWS Landing Zone, then the subnet ID must be specified\.
 
 `ParentImage` \(**Required**, `String`\)  
 Specifies the base image\. The parent image can be either a non AWS ParallelCluster AMI or an official AWS ParallelCluster AMI for the same version\. You can't use a AWS ParallelCluster official or custom AMI from a different version of AWS ParallelCluster\. The format must either be the ARN of a image `arn:Partition:imagebuilder:Region:Account:image/ImageName/ImageVersion` or an AMI ID `ami-12345678`\.

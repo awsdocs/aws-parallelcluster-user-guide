@@ -22,7 +22,7 @@
 
 Defines configuration settings for an attached FSx for Lustre file system\. For more information about FSx for Lustre, see [Amazon FSx CreateFileSystem](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystem.html)\.
 
-FSx for Lustre is supported if the [`base_os`](cluster-definition.md#base-os) is `alinux2`, `centos7`, `centos8`, `ubuntu1804`, or `ubuntu2004`\.
+FSx for Lustre is supported if the [`base_os`](cluster-definition.md#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`\.
 
 When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. For detailed instructions, see [Installing the lustre client](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/install-lustre-client.html) in the *FSx for Lustre User Guide*\.
 
@@ -30,7 +30,7 @@ When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. F
 FSx for Lustre isn't currently supported when using `awsbatch` as a scheduler\.
 
 **Note**  
-Support for FSx for Lustre on `ubuntu2004` was added in AWS ParallelCluster version 2\.11\.0\. Support for FSx for Lustre on `centos8` was added in AWS ParallelCluster version 2\.10\.0\. Support for FSx for Lustre on `alinux2`, `ubuntu1604`, and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for FSx for Lustre on `centos7` was added in AWS ParallelCluster version 2\.4\.0\.
+Support for FSx for Lustre on `centos8` was removed in AWS ParallelCluster version 2\.10\.4\. Support for FSx for Lustre on `ubuntu2004` was added in AWS ParallelCluster version 2\.11\.0\. Support for FSx for Lustre on `centos8` was added in AWS ParallelCluster version 2\.10\.0\. Support for FSx for Lustre on `alinux2`, `ubuntu1604`, and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for FSx for Lustre on `centos7` was added in AWS ParallelCluster version 2\.4\.0\.
 
 If using an existing file system, it must be associated to a security group that allows inbound TCP traffic to port `988`\. Setting the source to `0.0.0.0/0` on a security group rule provides client access from all the IP ranges within your VPC security group for the protocol and port range for that rule\. To further limit access to your file systems, we recommend using more restrictive sources for your security group rules\. For example, you can use more specific CIDR ranges, IP addresses, or security group IDs\. This is done automatically when not using [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id)\.
 
