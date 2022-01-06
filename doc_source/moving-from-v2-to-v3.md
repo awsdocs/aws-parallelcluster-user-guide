@@ -160,7 +160,7 @@ AWS ParallelCluster 2:
 
 ```
 [cluster default]
-#!! additional_iam_policies = arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess,arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess
+additional_iam_policies = arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess,arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess
 ec2_iam_role = ec2_iam_role
 iam_lambda_role = lambda_iam_role
 ...
