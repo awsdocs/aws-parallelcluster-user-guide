@@ -777,14 +777,16 @@ AWS ParallelCluster exposes a series of configuration options to control and cus
 ### Cluster configuration<a name="iam-roles-in-parallelcluster-v3-cluster-config"></a>
 
 **Topics**
-+ [`HeadNode` / `Iam` / `InstanceRole` \| `InstanceProfile`](#iam-roles-in-parallelcluster-v3-cluster-config-headnode-instanceprofile)
-+ [`HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `Iam` / `S3Access`](#iam-roles-in-parallelcluster-v3-cluster-config-headnode-s3access)
-+ [`HeadNode` / `Iam` / `AdditionalIamPolicies` or `Scheduling` / `SlurmQueues` / `Iam` / `AdditionalIamPolicies`](#iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies)
-+ [`Iam` / [Roles](Iam-v3.md#yaml-Iam-Roles) / `LambdaFunctionsRole`](#iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole)
-+ [`Scheduling` / `SlurmQueues` / `Iam` / `InstanceRole` \| `InstanceProfile`](#iam-roles-in-parallelcluster-v3-cluster-config-slurmqueues-instanceprofile)
-+ [`Iam` / `PermissionsBoundary`](#iam-roles-in-parallelcluster-v3-cluster-config-permissionsboundary)
++ [Head node IAM role](#iam-roles-in-parallelcluster-v3-cluster-config-headnode-instanceprofile)
++ [Amazon S3 access](#iam-roles-in-parallelcluster-v3-cluster-config-headnode-s3access)
++ [Additional IAM policies](#iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies)
++ [AWS Lambda functions role](#iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole)
++ [Compute nodes IAM role](#iam-roles-in-parallelcluster-v3-cluster-config-slurmqueues-instanceprofile)
++ [Permissions boundary](#iam-roles-in-parallelcluster-v3-cluster-config-permissionsboundary)
 
-#### `HeadNode` / `Iam` / `InstanceRole` \| `InstanceProfile`<a name="iam-roles-in-parallelcluster-v3-cluster-config-headnode-instanceprofile"></a>
+#### Head node IAM role<a name="iam-roles-in-parallelcluster-v3-cluster-config-headnode-instanceprofile"></a>
+
+`HeadNode` / `Iam` / `InstanceRole` \| `InstanceProfile`
 
 This option allows to override the IAM role that is assigned to the head node of the cluster\. For additional details, please refer to the `InstanceProfile` reference\.
 
@@ -961,19 +963,25 @@ Here is the minimal set of policies to be used as part of this role when the sch
   }
   ```
 
-#### `HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `Iam` / `S3Access`<a name="iam-roles-in-parallelcluster-v3-cluster-config-headnode-s3access"></a>
+#### Amazon S3 access<a name="iam-roles-in-parallelcluster-v3-cluster-config-headnode-s3access"></a>
+
+`HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `Iam` / `S3Access`
 
 This configuration sections allow to customize the Amazon S3 access by granting additional Amazon S3 policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\. For more information, see the reference documentation for each of the configuration parameter\.
 
 This parameter can be only used when the AWS ParallelCluster user is configured in [Privileged IAM access mode](#iam-roles-in-parallelcluster-v3-privileged-iam-access) or [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsboundary-mode)\.
 
-#### `HeadNode` / `Iam` / `AdditionalIamPolicies` or `Scheduling` / `SlurmQueues` / `Iam` / `AdditionalIamPolicies`<a name="iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies"></a>
+#### Additional IAM policies<a name="iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies"></a>
+
+`HeadNode` / `Iam` / `AdditionalIamPolicies` or `Scheduling` / `SlurmQueues` / `Iam` / `AdditionalIamPolicies`
 
 This configuration sections allow to attach additional managed IAM policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\.
 
 To use this option make sure the AWS ParallelCluster user is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
 
-#### `Iam` / [Roles](Iam-v3.md#yaml-Iam-Roles) / `LambdaFunctionsRole`<a name="iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole"></a>
+#### AWS Lambda functions role<a name="iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole"></a>
+
+`Iam` / [Roles](Iam-v3.md#yaml-Iam-Roles) / `LambdaFunctionsRole`
 
 This option overrides the role attached to all AWS Lambda functions that are used during the cluster creation process\. AWS Lambda needs to be configured as the principal allowed to assume the role\.
 
@@ -1028,7 +1036,9 @@ Here is the minimal set of policies to be used as part of this role:
 }
 ```
 
-#### `Scheduling` / `SlurmQueues` / `Iam` / `InstanceRole` \| `InstanceProfile`<a name="iam-roles-in-parallelcluster-v3-cluster-config-slurmqueues-instanceprofile"></a>
+#### Compute nodes IAM role<a name="iam-roles-in-parallelcluster-v3-cluster-config-slurmqueues-instanceprofile"></a>
+
+`Scheduling` / `SlurmQueues` / `Iam` / `InstanceRole` \| `InstanceProfile`
 
 This option allows to override the IAM role that is assigned to the compute nodes of the cluster\. For more information, see `InstanceProfile`\.
 
@@ -1064,7 +1074,9 @@ Here is the minimal set of policies to be used as part of this role:
   }
   ```
 
-#### `Iam` / `PermissionsBoundary`<a name="iam-roles-in-parallelcluster-v3-cluster-config-permissionsboundary"></a>
+#### Permissions boundary<a name="iam-roles-in-parallelcluster-v3-cluster-config-permissionsboundary"></a>
+
+`Iam` / `PermissionsBoundary`
 
 This parameter forces AWS ParallelCluster to attach the given IAM policy as a `PermissionsBoundary` to all IAM roles that are created as part of a cluster deployment\.
 
@@ -1073,12 +1085,14 @@ See [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsbou
 ### Custom Image configuration<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration"></a>
 
 **Topics**
-+ [`Build` / `Iam` / `InstanceRole` \| `InstanceProfile`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-instancerole)
-+ [`Build` / `Iam` / `CleanupLambdaRole`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-cleanuplambdarole)
-+ [`Build` / `Iam` / `AdditionalIamPolicies`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-additionaliampolicies)
-+ [`Build` / `Iam` / `PermissionsBoundary`](#iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary)
++ [Instance role for EC2 Image Builder](#iam-roles-in-parallelcluster-v3-custom-image-configuration-instancerole)
++ [AWS Lambda cleanup role](#iam-roles-in-parallelcluster-v3-custom-image-configuration-cleanuplambdarole)
++ [Additional IAM policies](#iam-roles-in-parallelcluster-v3-custom-image-configuration-additionaliampolicies)
++ [Permissions boundary](#iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary)
 
-#### `Build` / `Iam` / `InstanceRole` \| `InstanceProfile`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-instancerole"></a>
+#### Instance role for EC2 Image Builder<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-instancerole"></a>
+
+`Build` / `Iam` / `InstanceRole` \| `InstanceProfile`
 
 This option allows to override the IAM role that is assigned to the EC2 instance launched by EC2 Image Builder to create a custom AMI\.
 
@@ -1103,7 +1117,9 @@ Here is the minimal set of policies to be used as part of this role:
   }
   ```
 
-#### `Build` / `Iam` / `CleanupLambdaRole`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-cleanuplambdarole"></a>
+#### AWS Lambda cleanup role<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-cleanuplambdarole"></a>
+
+`Build` / `Iam` / `CleanupLambdaRole`
 
 This option overrides the role attached to all AWS Lambda functions that are used during the custom image build process\. AWS Lambda needs to be configured as the principal allowed to assume the role\.
 
@@ -1203,13 +1219,17 @@ Here is the minimal set of policies to be used as part of this role:
   }
   ```
 
-#### `Build` / `Iam` / `AdditionalIamPolicies`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-additionaliampolicies"></a>
+#### Additional IAM policies<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-additionaliampolicies"></a>
+
+`Build` / `Iam` / `AdditionalIamPolicies`
 
 This configuration section allows to attach additional managed IAM policies to the role associated with the EC2 instance used by EC2 Image Builder to produce the custom AMI\.
 
 To use this option make sure the AWS ParallelCluster user is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
 
-#### `Build` / `Iam` / `PermissionsBoundary`<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary"></a>
+#### Permissions boundary<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary"></a>
+
+`Build` / `Iam` / `PermissionsBoundary`
 
 This parameter forces AWS ParallelCluster to attach the given IAM policy as a `PermissionsBoundary` to all IAM roles that are created as part of custom AMI build\.
 

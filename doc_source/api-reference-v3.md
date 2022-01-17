@@ -14,9 +14,11 @@
 
  The OpenAPI specification file describing the AWS ParallelCluster API can be downloaded from: 
 
- `https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/ParallelCluster.openapi.yaml` 
+```
+https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/ParallelCluster.openapi.yaml
+```
 
- Starting from the OpenAPI specification file, you can generate documentation for the AWS ParallelCluster API by using one of the many available tools such as [Swagger UI](https://swagger.io/tools/swagger-ui/) or [Redoc](https://github.com/Redocly/redoc)\. 
+Starting from the OpenAPI specification file, you can generate documentation for the AWS ParallelCluster API by using one of the many available tools such as [Swagger UI](https://swagger.io/tools/swagger-ui/) or [Redoc](https://github.com/Redocly/redoc)\. 
 
  **How to deploy AWS ParallelCluster API** 
 
@@ -24,9 +26,11 @@
 
  The template used to deploy the API is available at the following URL:
 
- `https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/parallelcluster-api.yaml` 
+```
+https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/parallelcluster-api.yaml
+```
 
- where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.0\.2\)\. 
+ where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.0\.3\)\. 
 
  The Docker image used to deploy the AWS Lambda function implementing AWS ParallelCluster features is available at:  [https://gallery\.ecr\.aws/parallelcluster/pcluster\-api](https://gallery.ecr.aws/parallelcluster/pcluster-api) 
 
@@ -46,7 +50,7 @@ Run the following command to deploy the API
 ```
 REGION=<region>
 API_STACK_NAME=<stack-name>  # This can be any name
-VERSION=3.0.2
+VERSION=3.0.3
 aws cloudformation create-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \
@@ -90,7 +94,7 @@ aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME} -
 ```
 REGION=<region>
 API_STACK_NAME=<stack-name>  # This needs to correspond to the existing API stack name
-VERSION=3.0.2
+VERSION=3.0.3
 aws cloudformation update-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \  

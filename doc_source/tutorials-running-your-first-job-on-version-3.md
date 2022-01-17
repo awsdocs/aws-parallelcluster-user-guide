@@ -11,7 +11,7 @@ $ node --version
 v16.8.0
 $ pcluster version
 {
-  "version": "3.0.2"
+  "version": "3.0.3"
 }
 ```
 
@@ -26,6 +26,9 @@ $ pcluster create-cluster \
     --cluster-name hello-world \
     --cluster-configuration hello-world.yaml
 ```
+
+**Note**  
+The AWS Region to use must be specified for most `pcluster` commands\. If it's not specified in the `AWS_DEFAULT_REGION` environment variable, or the `region` setting in the `[default]` section of the `~/.aws/config` file, then the `--region` parameter must be provided on the `pcluster` command line\.
 
 If the output gives you a message about configuration, you need to run the following to configure AWS ParallelCluster: 
 

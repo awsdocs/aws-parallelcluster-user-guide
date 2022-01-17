@@ -257,9 +257,9 @@ Sets the storage capacity of the FSx for Lustre file system, in GiB\. `StorageCa
 `DeploymentType` \(**Optional**, `String`\)  
 Specifies the deployment type of the FSx for Lustre file system\. Supported values are `SCRATCH_1`, `SCRATCH_2`, and `PERSISTENT_1`\. The default value is `SCRATCH_1`\.  
  Choose `SCRATCH_1` and `SCRATCH_2` deployment types when you need temporary storage and shorter\-term processing of data\. The `SCRATCH_2` deployment type provides in\-transit encryption of data and higher burst throughput capacity than `SCRATCH_1`\.  
-Choose `PERSISTENT_1` deployment type for longer\-term storage and workloads and encryption of data in transit\. To learn more about deployment types, see [ FSx for Lustre Deployment Options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/lustre-deployment-types.html) in the *FSx for Lustre User Guide*\.  
+Choose `PERSISTENT_1` deployment type for longer\-term storage and workloads and encryption of data in transit\. To learn more about deployment types, see [ FSx for Lustre Deployment Options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/lustre-deployment-types.html) in the *Amazon FSx for Lustre User Guide*\.  
 Encryption of data in\-transit is automatically enabled when you access a `SCRATCH_2` or `PERSISTENT_1` file system from Amazon EC2 instances that [support this feature](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html)\. \(Default = `SCRATCH_1`\)   
-Encryption of data in\-transit for `SCRATCH_2` and `PERSISTENT_1` deployment types is supported when accessed from supported instance types in supported AWS Regions\. To learn more, [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *FSx for Lustre User Guide*\.  
+Encryption of data in\-transit for `SCRATCH_2` and `PERSISTENT_1` deployment types is supported when accessed from supported instance types in supported AWS Regions\. To learn more, [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `ImportedFileChunkSize` \(**Optional**, `Integer`\)  
@@ -286,7 +286,7 @@ The preferred start time to perform weekly maintenance, formatted `"d:HH:MM"` in
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `AutomaticBackupRetentionDays` \(**Optional**, `Integer`\)  
-The number of days to retain automatic backups\. Setting this to 0 disables automatic backups\. The supported range is 0\-90\. The default is 0\. Only valid for use with `PERSISTENT_1` deployment types\. For more information, see [Working with backups](https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-backups-fsx.html) in the *FSx for Lustre User Guide*\.  
+The number of days to retain automatic backups\. Setting this to 0 disables automatic backups\. The supported range is 0\-90\. The default is 0\. Only valid for use with `PERSISTENT_1` deployment types\. For more information, see [Working with backups](https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-backups-fsx.html) in the *Amazon FSx for Lustre User Guide*\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `CopyTagsToBackups` \(**Optional**, `Boolean`\)  
@@ -324,11 +324,11 @@ When you create your FSx for Lustre file system, your existing Amazon S3 objects
 +  `NEW` \- Automatic import is on\. FSx for Lustre automatically imports directory listings of any new objects added to the linked Amazon S3 bucket that do not currently exist in the FSx for Lustre file system\. 
 +  `NEW_CHANGED` \- Automatic import is on\. FSx for Lustre automatically imports file and directory listings of any new objects added to the Amazon S3 bucket and any existing objects that are changed in the Amazon S3 bucket after you choose this option\. 
 If `AutoImportPolicy` is not specified, automatic import is off\. FSx for Lustre only updates file and directory listings from the linked Amazon S3 bucket when the file system is created\. FSx for Lustre does not update file and directory listings for any new or changed objects after choosing this option\.  
-For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *FSx for Lustre User Guide*\.  
+For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *Amazon FSx for Lustre User Guide*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `DriveCacheType` \(**Optional**, `String`\)  
-Specifies that the file system has an SSD drive cache\. This can only be set if the `StorageType` setting is set to `HDD`, and the `DeploymentType` setting is set to `PERSISTENT_1`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *FSx for Lustre User Guide*\.  
+Specifies that the file system has an SSD drive cache\. This can only be set if the `StorageType` setting is set to `HDD`, and the `DeploymentType` setting is set to `PERSISTENT_1`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *Amazon FSx for Lustre User Guide*\.  
 The only valid value is `READ`\. To disable the SSD drive cache, don’t specify the `DriveCacheType` setting\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 

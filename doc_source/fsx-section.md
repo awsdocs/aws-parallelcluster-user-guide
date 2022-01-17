@@ -24,7 +24,7 @@ Defines configuration settings for an attached FSx for Lustre file system\. For 
 
 FSx for Lustre is supported if the [`base_os`](cluster-definition.md#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`\.
 
-When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. For detailed instructions, see [Installing the lustre client](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/install-lustre-client.html) in the *FSx for Lustre User Guide*\.
+When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. For detailed instructions, see [Installing the lustre client](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/install-lustre-client.html) in the *Amazon FSx for Lustre User Guide*\.
 
 **Note**  
 FSx for Lustre isn't currently supported when using `awsbatch` as a scheduler\.
@@ -66,7 +66,7 @@ FSx for Lustre automatically imports directory listings of any new objects added
 `NEW_CHANGED`  
 FSx for Lustre automatically imports file and directory listings of any new objects added to the S3 bucket and any existing objects that are changed in the S3 bucket\. 
 
-This corresponds to the [AutoImportPolicy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-autoimportpolicy) property\. For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *FSx for Lustre User Guide* When the [`auto_import_policy`](#fsx-auto-import-policy) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\.
+This corresponds to the [AutoImportPolicy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-autoimportpolicy) property\. For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *Amazon FSx for Lustre User Guide* When the [`auto_import_policy`](#fsx-auto-import-policy) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\.
 
 If the `auto_import_policy` setting isn't specified, automatic imports are disabled\. FSx for Lustre only updates file and directory listings from the linked S3 bucket when the file system is created\.
 
@@ -128,7 +128,7 @@ Support for [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-st
 
 ## `data_compression_type`<a name="fsx-data-compression-type"></a>
 
-**\(Optional\)** Specifies the FSx for Lustre data compression type\. This corresponds to the [DataCompressionType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-datacompressiontype) property\. For more information, see [FSx for Lustre data compression](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-compression.html) in the *FSx for Lustre User Guide*\.
+**\(Optional\)** Specifies the FSx for Lustre data compression type\. This corresponds to the [DataCompressionType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-datacompressiontype) property\. For more information, see [FSx for Lustre data compression](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-compression.html) in the *Amazon FSx for Lustre User Guide*\.
 
 The only valid value is `LZ4`\. To disable data compression, remove the `data\_compression\_type` parameter\.
 
@@ -143,7 +143,7 @@ Support for [`data_compression_type`](#fsx-data-compression-type) was added in A
 
 ## `deployment_type`<a name="fsx-deployment-type"></a>
 
-**\(Optional\)** Specifies the FSx for Lustre deployment type\. This corresponds to the [DeploymentType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-deploymenttype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *FSx for Lustre User Guide*\. Choose a scratch deployment type for temporary storage and shorter\-term processing of data\. `SCRATCH_2` is the latest generation of scratch file systems\. It offers higher burst throughput over baseline throughput and the in\-transit encryption of data\.
+**\(Optional\)** Specifies the FSx for Lustre deployment type\. This corresponds to the [DeploymentType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-deploymenttype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *Amazon FSx for Lustre User Guide*\. Choose a scratch deployment type for temporary storage and shorter\-term processing of data\. `SCRATCH_2` is the latest generation of scratch file systems\. It offers higher burst throughput over baseline throughput and the in\-transit encryption of data\.
 
 The valid values are `SCRATCH_1`, `SCRATCH_2`, and `PERSISTENT_1`\.
 
@@ -151,7 +151,7 @@ The valid values are `SCRATCH_1`, `SCRATCH_2`, and `PERSISTENT_1`\.
 The default deployment type for FSx for Lustre\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200, 2400, and any multiple of 3600\. Support for `SCRATCH_1` was added in AWS ParallelCluster version 2\.4\.0\.
 
 `SCRATCH_2`  
-The latest generation of scratch file systems\. It supports up to six times the baseline throughput for spiky workloads\. It also supports in\-transit encryption of data for supported instance types in supported Regions\. For more information, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `SCRATCH_2` was added in AWS ParallelCluster version 2\.6\.0\.
+The latest generation of scratch file systems\. It supports up to six times the baseline throughput for spiky workloads\. It also supports in\-transit encryption of data for supported instance types in supported Regions\. For more information, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `SCRATCH_2` was added in AWS ParallelCluster version 2\.6\.0\.
 
 `PERSISTENT_1`  
 Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone, It supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `PERSISTENT_1` was added in AWS ParallelCluster version 2\.6\.0\.
@@ -169,7 +169,7 @@ Support for [`deployment_type`](#fsx-deployment-type) was added in AWS ParallelC
 
 ## `drive_cache_type`<a name="fsx-drive-cache-type"></a>
 
-**\(Optional\)** Specifies that the file system has an SSD drive cache\. This can only be set if the [`storage_type`](#fsx-storage-type) setting is set to `HDD`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *FSx for Lustre User Guide*\.
+**\(Optional\)** Specifies that the file system has an SSD drive cache\. This can only be set if the [`storage_type`](#fsx-storage-type) setting is set to `HDD`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *Amazon FSx for Lustre User Guide*\.
 
 The only valid value is `READ`\. To disable the SSD drive cache, don’t specify the `drive_cache_type` setting\.
 
@@ -184,7 +184,7 @@ Support for [`drive_cache_type`](#fsx-drive-cache-type) was added in AWS Paralle
 
 ## `export_path`<a name="fsx-export-path"></a>
 
-**\(Optional\)** Specifies the Amazon S3 path where the root of your file system is exported\. When the [`export_path`](#fsx-export-path) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ExportPath](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-exportpath) property\. File data and metadata isn't automatically exported to the `export_path`\. For information about exporting data and metadata, see [Using Data Repository Tasks to Export Data and Metadata Changes](https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task.html) in the *FSx for Lustre User Guide*\.
+**\(Optional\)** Specifies the Amazon S3 path where the root of your file system is exported\. When the [`export_path`](#fsx-export-path) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ExportPath](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-exportpath) property\. File data and metadata isn't automatically exported to the `export_path`\. For information about exporting data and metadata, see [Using Data Repository Tasks to Export Data and Metadata Changes](https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task.html) in the *Amazon FSx for Lustre User Guide*\.
 
 The default value is `s3://import-bucket/FSxLustre[creation-timestamp]`, where `import-bucket` is the bucket provided in the [`import_path`](#fsx-import-path) parameter\.
 
@@ -242,7 +242,7 @@ Support for [`fsx_kms_key_id`](#fsx-kms-key-id) was added in AWS ParallelCluster
 
 **\(Optional\)** Specifies the S3 bucket to load data from into the file system and serve as the export bucket\. For more information, see [`export_path`](#fsx-export-path)\. If you specify the [`import_path`](#fsx-import-path) parameter, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ImportPath](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-ImportPath) parameter in the *Amazon FSx API Reference*\.
 
-Import occurs on cluster creation\. For more information, see [Importing data from your data repository](https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files.html) in the *FSx for Lustre User Guide*\. On import, only file metadata \(name, ownership, timestamp, and permissions\) is imported\. File data isn't imported from the S3 bucket until the file is first accessed\. For details on preloading the file contents, see [Preloading files into your file system](https://docs.aws.amazon.com/fsx/latest/LustreGuide/preload-file-contents-hsm.html) in the *FSx for Lustre User Guide*\.
+Import occurs on cluster creation\. For more information, see [Importing data from your data repository](https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files.html) in the *Amazon FSx for Lustre User Guide*\. On import, only file metadata \(name, ownership, timestamp, and permissions\) is imported\. File data isn't imported from the S3 bucket until the file is first accessed\. For details on preloading the file contents, see [Preloading files into your file system](https://docs.aws.amazon.com/fsx/latest/LustreGuide/preload-file-contents-hsm.html) in the *Amazon FSx for Lustre User Guide*\.
 
 If a value isn't provided, the file system is empty\.
 
