@@ -1002,7 +1002,7 @@ Here is the minimal set of policies to be used as part of this role:
     {
       "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
       "Effect": "Allow",
-      "Resource": "arn:aws:logs:*:*:*"
+      "Resource": "arn:aws:logs:<REGION>:<AWS ACCOUNT ID>:log-group:/aws/lambda/pcluster-*"
     },
     {
       "Action": "ec2:DescribeInstances",
