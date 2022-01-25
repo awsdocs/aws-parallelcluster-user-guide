@@ -888,7 +888,6 @@ Note that in case `Scheduling / SlurmQueues / Iam / InstanceRole` is used to ove
 Here is the minimal set of policies to be used as part of this role when the scheduler is AWS Batch:
 + `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy\. For more information, see [Create IAM roles and users for use with the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent.html) in the *Amazon CloudWatch User Guide*\.
 + `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy\. For more information, see [AWS managed policies for AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/security_iam_service-with-iam.html#managed-policies) in the *AWS Systems Manager User Guide*\.
-+  `arn:aws:iam::aws:policy/AWSBatchFullAccess` managed IAM policy\. For more information, see [AWS managed policy: `BatchFullAccess`](https://docs.aws.amazon.com/batch/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-BatchFullAccess) in the *AWS Batch User Guide*\.
 + Additional IAM policy:
 
   ```
@@ -933,6 +932,34 @@ Here is the minimal set of policies to be used as part of this role when the sch
           },
           {
               "Action": [
+                  "batch:DescribeJobQueues",
+                  "batch:DescribeJobs",
+                  "batch:ListJobs",
+                  "batch:DescribeComputeEnvironments"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "batch:SubmitJob",
+                  "batch:TerminateJob",
+                  "logs:GetLogEvents",
+                  "ecs:ListContainerInstances",
+                  "ecs:DescribeContainerInstances",
+              ],
+              "Resource": [
+                  "arn:aws:logs:<REGION>:<AWS ACCOUNT ID>:log-group:/aws/batch/job:log-stream:PclusterJobDefinition*",
+                  "arn:aws:ecs:<REGION>:<AWS ACCOUNT ID>:container-instance/AWSBatch-PclusterComputeEnviron*",
+                  "arn:aws:ecs:<REGION>:<AWS ACCOUNT ID>:cluster/AWSBatch-Pcluster*",
+                  "arn:aws:batch:<REGION>:<AWS ACCOUNT ID>:job-queue/PclusterJobQueue*",
+                  "arn:aws:batch:<REGION>:<AWS ACCOUNT ID>:job-definition/PclusterJobDefinition*:*",
+                  "arn:aws:batch:<REGION>:<AWS ACCOUNT ID>:job/*"
+              ],
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
                   "ec2:DescribeInstances",
                   "ec2:DescribeInstanceStatus",
                   "ec2:CreateTags",
@@ -948,13 +975,6 @@ Here is the minimal set of policies to be used as part of this role when the sch
                   "cloudformation:DescribeStackResource",
                   "cloudformation:DescribeStacks",
                   "cloudformation:SignalResource"
-              ],
-              "Resource": "*",
-              "Effect": "Allow"
-          },
-          {
-              "Action": [
-                  "route53:ChangeResourceRecordSets"
               ],
               "Resource": "*",
               "Effect": "Allow"
