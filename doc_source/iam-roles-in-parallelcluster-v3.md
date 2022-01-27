@@ -856,12 +856,21 @@ Here is the minimal set of policies to be used as part of this role when the sch
               "Action": [
                   "ec2:DescribeInstances",
                   "ec2:DescribeInstanceStatus",
-                  "ec2:CreateTags",
                   "ec2:DescribeVolumes",
-                  "ec2:AttachVolume",
                   "ec2:DescribeInstanceAttribute"
               ],
               "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "ec2:CreateTags",
+                  "ec2:AttachVolume"
+              ],
+              "Resource": [
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:instance/*",
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:volume/*"
+              ],
               "Effect": "Allow"
           },
           {
@@ -962,12 +971,21 @@ Here is the minimal set of policies to be used as part of this role when the sch
               "Action": [
                   "ec2:DescribeInstances",
                   "ec2:DescribeInstanceStatus",
-                  "ec2:CreateTags",
                   "ec2:DescribeVolumes",
-                  "ec2:AttachVolume",
                   "ec2:DescribeInstanceAttribute"
               ],
               "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "ec2:CreateTags",
+                  "ec2:AttachVolume"
+              ],
+              "Resource": [
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:instance/*",
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:volume/*"
+              ],
               "Effect": "Allow"
           },
           {
