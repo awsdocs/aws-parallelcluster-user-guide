@@ -321,8 +321,9 @@ If this option is specified, only the `MountDir` and `FileSystemId` settings in 
 
 `AutoImportPolicy` \(**Optional**, `String`\)  
 When you create your FSx for Lustre file system, your existing Amazon S3 objects appear as file and directory listings\. Use this property to choose how FSx for Lustre keeps your file and directory listings up to date as you add or modify objects in your linked Amazon S3 bucket\. `AutoImportPolicy` can have the following values:  
-+  `NEW` \- Automatic import is on\. FSx for Lustre automatically imports directory listings of any new objects added to the linked Amazon S3 bucket that do not currently exist in the FSx for Lustre file system\. 
-+  `NEW_CHANGED` \- Automatic import is on\. FSx for Lustre automatically imports file and directory listings of any new objects added to the Amazon S3 bucket and any existing objects that are changed in the Amazon S3 bucket after you choose this option\. 
++ `NEW` \- Automatic import is on\. FSx for Lustre automatically imports directory listings of any new objects added to the linked Amazon S3 bucket that do not currently exist in the FSx for Lustre file system\. 
++ `NEW_CHANGED` \- Automatic import is on\. FSx for Lustre automatically imports file and directory listings of any new objects added to the Amazon S3 bucket and any existing objects that are changed in the Amazon S3 bucket after you choose this option\.
++ `NEW_CHANGED_DELETED` \- Automatic import is on\. FSx for Lustre automatically imports file and directory listings of any new objects added to the Amazon S3 bucket, any existing objects that are changed in the Amazon S3 bucket and any objects that were deleted in the Amazon S3 bucket after you choose this option\.
 If `AutoImportPolicy` is not specified, automatic import is off\. FSx for Lustre only updates file and directory listings from the linked Amazon S3 bucket when the file system is created\. FSx for Lustre does not update file and directory listings for any new or changed objects after choosing this option\.  
 For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *Amazon FSx for Lustre User Guide*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
