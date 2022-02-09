@@ -126,3 +126,10 @@ Hello World from queue1-dy-queue1t2micro-1
 ```
 
  The output also shows that our job ran successfully on instance `queue1-dy-queue1t2micro-1`\. 
+ 
+ Note that in the setup described here, only the home directory is shared between the compute nodes and the login node,
+ thus installing software using the package manager on the login node, does not make it available to the compute nodes\.
+ If your application requires other software or libraries:
+ - create an image with these
+ - install the software somewhere in the home directory
+ - create a parallel shared file system for your cluster and install the software there
