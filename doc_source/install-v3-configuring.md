@@ -204,7 +204,7 @@ When `awsbatch` is selected as the scheduler, `alinux2` is used as the operating
 Head node instance type [t2.micro]:
 ```
 
-Choose the queue configuration\. Note: The AWS Batch scheduler only contain single queue\. The minimum and maximum size of the cluster of compute nodes is entered\. This is measured in vCPUs\.
+Choose the queue configuration\. Note: The AWS Batch scheduler only contain single queue\. The maximum size of the cluster of compute nodes is entered\. This is measured in vCPUs\.
 
 ```
 Number of queues [1]:
