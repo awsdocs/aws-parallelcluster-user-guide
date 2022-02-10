@@ -5,11 +5,11 @@ You can verify that AWS ParallelCluster installed correctly by running ``pcluste
 ```
 $ pcluster version
 {
-"version": "3.0.3"
+"version": "3.1.1"
 }
 ```
 
-AWS ParallelCluster is updated regularly\. To update to the latest version of AWS ParallelCluster, run the installation command again\. For details about the latest version of AWS ParallelCluster, see the [AWS ParallelCluster release notes](https://github.com/aws/aws-parallelcluster/blob/v2.11.2/CHANGELOG.md)\.
+AWS ParallelCluster is updated regularly\. To update to the latest version of AWS ParallelCluster, run the installation command again\. For more information about the latest version of AWS ParallelCluster, see the [AWS ParallelCluster release notes](https://github.com/aws/aws-parallelcluster/blob/v2.11.2/CHANGELOG.md)\.
 
 ```
 $ pip3 install aws-parallelcluster --upgrade --user

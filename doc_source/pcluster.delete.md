@@ -29,10 +29,10 @@ Specifies the AWS Region to use\. Defaults to the Region specified by using the 
 
 When the command is called and begins polling for the status of that call, it's safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
 
-If [`pcluster configure`](pcluster.configure.md) created a new VPC, you can delete that VPC by deleting the AWS CloudFormation stack it created\. The name will start with "parallelclusternetworking\-" and contain the creation time in a "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
+To delete the network resources in the VPC, you can delete the CloudFormation networking stack\. The stack name starts with "parallelclusternetworking\-" and contains the creation time in "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
 
 ```
-$ aws --region us-east-2 cloudformation list-stacks \
+$ aws --region us-east-1 cloudformation list-stacks \
    --stack-status-filter "CREATE_COMPLETE" \
    --query "StackSummaries[].StackName" | \
    grep -e "parallelclusternetworking-"
@@ -42,6 +42,12 @@ $ aws --region us-east-2 cloudformation list-stacks \
 The stack can be deleted using the [delete\-stack](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack) command\.
 
 ```
-$ aws --region us-west-2 cloudformation delete-stack \
+$ aws --region us-east-1 cloudformation delete-stack \
    --stack-name parallelclusternetworking-pubpriv-20191029205804
+```
+
+The VPC that [`pcluster configure`](pcluster.configure-v3.md) creates for you is not created in the CloudFormation networking stack\. You can delete that VPC manually in the console or by using the AWS CLI\.
+
+```
+$ aws --region us-east-1 ec2 delete-vpc --vpc-id vpc-0b4ad9c4678d3c7ad
 ```

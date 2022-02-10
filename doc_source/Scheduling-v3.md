@@ -16,6 +16,7 @@ Scheduling:
     Dns:
       DisableManagedDns: boolean
       HostedZoneId: string
+      UseEc2Hostnames: string
   SlurmQueues:
     - Name: string
       ComputeSettings:
@@ -45,8 +46,6 @@ Scheduling:
       ComputeResources:
         - Name: string
           InstanceType: string
-        - Name: string
-          InstanceType: string
           MinCount: integer
           MaxCount: integer
           SpotPrice: float
@@ -59,11 +58,9 @@ Scheduling:
           Script: string
           Args:
             - string
-            - string
         OnNodeConfigured:
           Script: string
           Args:
-            - string
             - string
       Iam:
         InstanceProfile: string
@@ -74,46 +71,6 @@ Scheduling:
             KeyName: boolean
         AdditionalIamPolicies:
           - Policy: string
-      Image:
-        CustomAmi: string
-    - Name: string
-      ComputeSettings:
-        LocalStorage:
-          RootVolume:
-            Size: integer
-            Encrypted: boolean
-            VolumeType: string
-            Iops: integer
-            Throughput: string
-          EphemeralVolume:
-            MountDir: string
-      Networking:
-        SubnetIds:
-          - string
-        AssignPublicIp: boolean
-        SecurityGroups:
-          - string
-        AdditionalSecurityGroups:
-          - string
-        PlacementGroup:
-          Enabled: boolean
-          Id: string
-        Proxy:
-          HttpProxyAddress: string
-      ComputeResources:
-        - Name: string
-          InstanceType: string
-        - Name: string
-          InstanceType: string
-          MinCount: integer
-          MaxCount: integer
-          SpotPrice: float
-          DisableSimultaneousMultithreading: boolean
-          Efa:
-            Enabled: boolean
-            GdrSupport: boolean
-      Iam:
-        InstanceProfile: string
       Image:
         CustomAmi: string
 ```
@@ -135,8 +92,6 @@ Scheduling:
       ComputeResources:  # this maps to a Batch compute environment (initially we support only 1)
         - Name: string
           InstanceTypes:
-            - string
-            - string
             - string
           MinvCpus: integer
           DesiredvCpus: integer
@@ -169,8 +124,6 @@ AwsBatchQueues:
     ComputeResources:  # this maps to a Batch compute environment (initially we support only 1)
       - Name: string
         InstanceTypes:
-          - string
-          - string
           - string
         MinvCpus: integer
         DesiredvCpus: integer
@@ -234,8 +187,6 @@ List of security groups to use for the AWS Batch queue\.
 ComputeResources:  # this maps to a Batch compute environment (initially we support only 1)
   - Name: string
     InstanceTypes:
-      - string
-      - string
       - string
     MinvCpus: integer
     DesiredvCpus: integer
@@ -303,8 +254,6 @@ SlurmQueues:
     ComputeResources:
       - Name: string
         InstanceType: string
-      - Name: string
-        InstanceType: string
         MinCount: integer
         MaxCount: integer
         SpotPrice: float
@@ -317,11 +266,9 @@ SlurmQueues:
         Script: string
         Args:
           - string
-          - string
       OnNodeConfigured:
         Script: string
         Args:
-          - string
           - string
     Iam:
       InstanceProfile: string
@@ -332,46 +279,6 @@ SlurmQueues:
           KeyName: boolean
       AdditionalIamPolicies:
         - Policy: string
-    Image:
-      CustomAmi: string
-  - Name: string
-    ComputeSettings:
-      LocalStorage:
-        RootVolume:
-          Size: integer
-          Encrypted: boolean
-          VolumeType: string
-          Iops: integer
-          Throughput: string
-        EphemeralVolume:
-          MountDir: string
-    Networking:
-      SubnetIds:
-        - string
-      AssignPublicIp: boolean
-      SecurityGroups:
-        - string
-      AdditionalSecurityGroups:
-        - string
-      PlacementGroup:
-        Enabled: boolean
-        Id: string
-      Proxy:
-        HttpProxyAddress: string
-    ComputeResources:
-      - Name: string
-        InstanceType: string
-      - Name: string
-        InstanceType: string
-        MinCount: integer
-        MaxCount: integer
-        SpotPrice: float
-        DisableSimultaneousMultithreading: boolean
-        Efa:
-          Enabled: boolean
-          GdrSupport: boolean
-    Iam:
-      InstanceProfile: string
     Image:
       CustomAmi: string
 ```
@@ -414,7 +321,7 @@ Networking:
 ##### `Networking` Properties<a name="Scheduling-v3-SlurmQueues-Networking.properties"></a>
 
 `SubnetIds` \(**Required**, `[String]`\)  
-Specifies the ID of an existing subnet in which to provision the Slurm queue\. Currently only one subnet is supported and all Slurm queues must use the same subnet\.  
+Specifies the IDs of existing subnets in which to provision the Slurm queue\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `AssignPublicIp` \(**Optional**, `String`\)  
@@ -482,8 +389,6 @@ The AMI to use for the Slurm queue instead of the default [published AMIs](https
 ComputeResources:
   - Name: string
     InstanceType: string
-  - Name: string
-    InstanceType: string
     MinCount: integer
     MaxCount: integer
     SpotPrice: float
@@ -530,7 +435,7 @@ Efa:
   GdrSupport: boolean
 ```  
 `Enabled` \(**Optional**, `Boolean`\)  
-Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. A cluster placement group should be used to minimize latencies between instances\. The default value is false\.  
+Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge` for Arm\-based Graviton2 instances\) on specific operating systems `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. A cluster placement group should be used to minimize latencies between instances\. The default value is false\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `GdrSupport` \(**Optional**, `Boolean`\)  
 **\(Optional\)** Starting with AWS ParallelCluster version 3\.0\.2, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is always enabled if it's supported by the instance type for the Slurm compute resource and the operating system\.  
@@ -613,7 +518,7 @@ Defines the throughput for `gp3` volume types, in MiB/s\. This setting is valid 
 The ratio of `Throughput` to `Iops` can be no more than 0\.25\. The maximum throughput of 1000 MiB/s requires that the `Iops` setting is at least 4000\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `EphemeralVolume` \(**Optional**, `Boolean`\)  
-Specifies the settings for the ephemeral volume\. The ephemeral volume is created by by combining all instance store volumes into a single logical volume formatted with the `ext4` file system\. The default is `/scratch`\. If the instance type does not have any instance store volumes then no ephemeral volume will be created\. For more information, see [Instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\.  
+Specifies the settings for the ephemeral volume\. The ephemeral volume is created by combining all instance store volumes into a single logical volume formatted with the `ext4` file system\. The default is `/scratch`\. If the instance type does not have any instance store volumes then no ephemeral volume will be created\. For more information, see [Instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\.  
 
 ```
 EphemeralVolume:
@@ -634,11 +539,9 @@ CustomActions:
     Script: string
     Args:
       - string
-      - string
   OnNodeConfigured:
     Script: string
     Args:
-      - string
       - string
 ```
 
@@ -735,6 +638,7 @@ SlurmSettings:
   Dns:
     DisableManagedDns: boolean
     HostedZoneId: string
+    UseEc2Hostnames: string
 ```
 
 **Topics**
@@ -756,6 +660,7 @@ The default value is `10`\.
 Dns:
   DisableManagedDns: boolean
   HostedZoneId: string
+  UseEc2Hostnames: string
 ```
 
 #### `Dns` Properties<a name="Scheduling-v3-SlurmSettings-Dns.properties"></a>
@@ -767,4 +672,8 @@ A name resolution system is required for the cluster to operate properly\. If `D
 
 `HostedZoneId` \(**Optional**, `String`\)  
 Defines a custom Route 53 hosted zone id to use for DNS name resolution for the cluster\.  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+
+`UseEc2Hostnames` \(**Optional**, `String`\)  
+Specifies the use of default EC2 hostnames\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

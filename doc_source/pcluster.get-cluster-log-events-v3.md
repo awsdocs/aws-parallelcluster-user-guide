@@ -19,13 +19,13 @@ pcluster get-cluster-log-events [-h] --cluster-name CLUSTER_NAME
 `-h, --help`  
 Shows the help text for `pcluster get-cluster-log-events`\.
 
-`--cluster-name CLUSTER_NAME`  
+`--cluster-name, -n CLUSTER_NAME`  
 Specifies the name of the cluster\.
 
 `--log-stream-name LOG_STREAM_NAME`  
 Specifies the name of the log stream\.
 
-`--region REGION`  
+`--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--next-token NEXT_TOKEN`  

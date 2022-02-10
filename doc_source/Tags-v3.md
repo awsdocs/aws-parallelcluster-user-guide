@@ -6,11 +6,9 @@
 Tags:
   - Key: string
     Value: string
-  - Key: string
-    Value: string
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ## `Tags` Properties<a name="Tags-v3.properties"></a>
 
@@ -20,4 +18,4 @@ Defines the name of the tag\.
 
 `Value` \(**Required**, `String`\)  
 Defines the value of the tag\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

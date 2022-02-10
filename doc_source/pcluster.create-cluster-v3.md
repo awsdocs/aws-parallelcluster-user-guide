@@ -18,7 +18,7 @@ pcluster create-cluster [-h] [--region REGION]
 `-h, --help`  
 Shows the help text for `pcluster create-cluster`\.
 
-`--region REGION`  
+`--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the [`Region`](cluster-configuration-file-v3.md#yaml-Region) setting in the cluster configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--suppress-validators SUPPRESS_VALIDATORS [SUPPRESS_VALIDATORS ...]`  
@@ -34,10 +34,10 @@ Specifies that the command will only perform validation without creating any res
 `--rollback-on-failure ROLLBACK_ON_FAILURE`  
 When `true`, automatically initiates a cluster stack rollback on failures\. \(Defaults to `true`\.\)
 
-`--cluster-name CLUSTER_NAME`  
+`--cluster-name, -n CLUSTER_NAME`  
 Specifies the name of the cluster to be created\.
 
-`--cluster-configuration CLUSTER_CONFIGURATION`  
+`--cluster-configuration, -c CLUSTER_CONFIGURATION`  
 Specifies the YAML cluster configuration file\.
 
 `--debug`  

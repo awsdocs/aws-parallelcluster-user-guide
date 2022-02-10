@@ -17,17 +17,10 @@ Build:
   Components:
     - Type: string
       Value: string
-    - Type: string
-      Value: string
-    - Type: string
-      Value: string
   Tags:
     - Key: string
       Value: string
-    - Key: string
-      Value: string
   SecurityGroupIds:
-    - string
     - string
   UpdateOsPackages:
     Enabled: boolean
@@ -96,8 +89,6 @@ The ARN of the IAM policy to use as permissions boundary for all roles created b
 Components:
   - Type: string
     Value: string
-  - Type: string
-    Value: string
 ```
 
 `Type` \(**Optional**, `String`\)  
@@ -114,8 +105,6 @@ Specifies the value of the type\-value pair for the component\. When type is `ar
 
 ```
 Tags:
-  - Key: string
-    Value: string
   - Key: string
     Value: string
 ```

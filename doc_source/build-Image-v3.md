@@ -12,8 +12,6 @@ Image:
   Tags:
     - Key: string
       Value: string
-    - Key: string
-      Value: string
 ```
 
 ## `Image` Properties<a name="build-Image-v3.properties"></a>
@@ -29,8 +27,6 @@ Specifies the name of the AMI\. If not specified, the name used when calling the
 
 ```
 Tags:
-  - Key: string
-    Value: string
   - Key: string
     Value: string
 ```
@@ -55,7 +51,7 @@ RootVolume:
 ```
 
 `Size` \(**Optional**, `Integer`\)  
-Specifies the size of the root volume for the image, in GiB\. The default size is the size of the [`ParentIImage`](Build-v3.md#yaml-build-image-Build-ParentImage) plus 27 GiB\.
+Specifies the size of the root volume for the image, in GiB\. The default size is the size of the [`ParentImage`](Build-v3.md#yaml-build-image-Build-ParentImage) plus 27 GiB\.
 
 `Encrypted` \(**Optional**, `Boolean`\)  
 Specifies if the volume is encrypted\. The default value is `false`\.

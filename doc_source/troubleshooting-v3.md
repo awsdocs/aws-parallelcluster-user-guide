@@ -10,6 +10,7 @@ The AWS ParallelCluster community maintains a Wiki page that provides many troub
 + [Directories that cannot be replaced](#troubleshooting-v3-dirs-must-keep)
 + [Troubleshooting issues in NICE DCV](#troubleshooting-v3-nice-dcv)
 + [Troubleshooting issues in clusters with AWS Batch integration](#troubleshooting-v3-batch)
++ [Troubleshooting multi\-user integration with Active Directory](#troubleshooting-v3-multi-user)
 + [Additional support](#troubleshooting-v3-additional-support)
 
 ## Retrieving and preserving logs<a name="troubleshooting-v3-get-logs"></a>
@@ -35,13 +36,25 @@ $ pcluster export-cluster-logs --cluster-name mycluster --region eu-west-1 \
 }
 ```
 
-The archive contains the Amazon CloudWatch Logs streams and AWS CloudFormation stack events from the Head Node and Compute Nodes for the last 14 days, unless specified explicitly in the configuration or in the parameters for the `export-cluster-logs` command\. Please note the command execution may take a while depending on the number of nodes in the cluster and log streams available in CloudWatch Logs\. See [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md) for more details about the available log streams\.
+The archive contains the Amazon CloudWatch Logs streams and AWS CloudFormation stack events from the Head Node and Compute Nodes for the last 14 days, unless specified explicitly in the configuration or in the parameters for the `export-cluster-logs` command\. Please note take the command execution may to run depending on the number of nodes in the cluster and log streams available in CloudWatch Logs\. For more information about the available log streams, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
 
-Starting from 3\.0\.0, AWS ParallelCluster preserves CloudWatch Logs by default on cluster deletion\. If you want to delete a cluster and preserve its logs, make sure the cluster configuration does not have `Monitoring > Logs > CloudWatch > DeletionPolicy` set to `Delete`\. Otherwise, change the field to `Retain` and run the `pcluster update-cluster` command\. Then, run `pcluster delete-cluster --cluster-name <cluster_name>` to delete the cluster yet retain the log group that’s stored in Amazon CloudWatch\.
+Starting from 3\.0\.0, AWS ParallelCluster preserves CloudWatch Logs by default when a cluster is deleted\. If you want to delete a cluster and preserve its logs, make sure that `Monitoring > Logs > CloudWatch > DeletionPolicy` isn't set to `Delete` in the cluster configuration\. Otherwise, change the value for this field to `Retain` and run the `pcluster update-cluster` command\. Then, run `pcluster delete-cluster --cluster-name <cluster_name>` to delete the cluster yet retain the log group that’s stored in Amazon CloudWatch\.
+
+If compute nodes self terminate after launching and there aren't any compute node logs for it in CloudWatch, submit a job that triggers a cluster scaling action\. Wait for the instance to fail and retrieve the instance console log\.
+
+Log in to the cluster head node and get the compute node `instance-id` from the `/var/log/parallelcluster/slurm_resume.log` file\.
+
+Retrieve the instance console log with the following command\.
+
+```
+aws ec2 get-console-output --instance-id i-abcdef01234567890
+```
+
+The console output log can help you debug the root cause of a compute node failure when the compute node log isn't available\.
 
 ## Troubleshooting cluster deployment issues<a name="troubleshooting-v3-cluster-deployment"></a>
 
-If your cluster fails to be created and rolls back stack creation, you can look through the log files to diagnose the issue\. The failure message should look like the following:
+If your cluster fails to be created and rolls back stack creation, you can look through the log files to diagnose the issue\. The failure message likely looks like the following output:
 
 ```
 $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
@@ -52,7 +65,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
     "region": "eu-west-1",
-    "version": "3.0.3",
+    "version": "3.1.1",
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -103,7 +116,7 @@ $ pcluster get-cluster-stack-events --cluster-name mycluster --region eu-west-1 
 ]
 ```
 
-In the previous example the failure was in the `HeadNode` setup, to debug this kind of issue you can list the log streams available from the head node with the ``pcluster list-cluster-log-streams`` by filtering for `node-type` and then analyzing the log streams content\.
+In the previous example, the failure was in the `HeadNode` setup\. To debug this kind of issue, you can list the log streams available from the head node with the ``pcluster list-cluster-log-streams`` by filtering for `node-type`, and then analyzing the log streams content\.
 
 ```
 $ pcluster list-cluster-log-streams --cluster-name mycluster --region eu-west-1 \
@@ -130,8 +143,8 @@ $ pcluster list-cluster-log-streams --cluster-name mycluster --region eu-west-1 
 }
 ```
 
-The two primary log streams that you can use to pinpoint initialization errors are:
-+  `cfn-init` is the log for the `cfn-init` script\. First check this log stream\. You're likely to see an error like `Command chef failed` in this log\. Look at the lines immediately before this line for more specifics connected with the error message\. For more information, see [cfn\-init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-init.html)\.
+The two primary log streams that you can use to pinpoint initialization errors are the following:
++  `cfn-init` is the log for the `cfn-init` script\. First check this log stream\. You're likely to see the `Command chef failed` error in this log\. Look at the lines immediately before this line for more specifics connected with the error message\. For more information, see [cfn\-init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-init.html)\.
 +  `cloud-init` is the log for [cloud\-init](https://cloudinit.readthedocs.io/)\. If you don't see anything in `cfn-init`, then try checking this log next\.
 
 You can retrieve the content of the log stream by using the ``pcluster get-cluster-log-events`` \(note the `--limit 5` option to limit the number of retrieved events\):
@@ -168,9 +181,9 @@ $ pcluster get-cluster-log-events --cluster-name mycluster \
 }
 ```
 
-In the previous example the failure is due to a `runpostinstall` failure, so strictly related to the content of the custom bootstrap script used in the `OnNodeConfigured` configuration parameter of the ``CustomActions``\.
+In the previous example, the failure is due to a `runpostinstall` failure, so strictly related to the content of the custom bootstrap script used in the `OnNodeConfigured` configuration parameter of the ``CustomActions``\.
 
-The head node log streams are available in the CloudWatch Dashboard created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch)\. If there are no log streams available, the failure might be caused by ``CustomActions`` custom bootstrap script or AMIs related issue\. To diagnose the creation issue in this case, create the cluster again using ``pcluster create-cluster``, including the `--rollback-on-failure` parameter set to `false`\. Then, SSH into the cluster:
+The head node log streams are available in the CloudWatch Dashboard created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch)\. If there are no log streams available, the failure might be caused by the ``CustomActions`` custom bootstrap script or an AMIs related issue\. To diagnose the creation issue in this case, create the cluster again using ``pcluster create-cluster``, including the `--rollback-on-failure` parameter set to `false`\. Then, SSH into the cluster:
 
 ```
 $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
@@ -181,7 +194,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
     "region": "eu-west-1",
-    "version": "3.0.3",
+    "version": "3.1.1",
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -198,7 +211,7 @@ After you're logged into the head node, you should find three primary log files 
 
 This section is relevant to clusters that were installed using AWS ParallelCluster version 3\.0\.0 and later with the Slurm job scheduler\. For more information about configuring multiple queues, see [Configuration of Multiple Queues](configuration-of-multiple-queues-v3.md)\.
 
-If one of your running clusters is experiencing issues, you should place the cluster in a `STOPPED` state by running the following command before you begin to troubleshoot\. This prevents incurring any unexpected costs\.
+If one of your running clusters is experiencing issues, place the cluster in a `STOPPED` state by running the following command before you begin to troubleshoot\. This prevents incurring any unexpected costs\.
 
 ```
 $ pcluster update-compute-fleet --cluster-name mycluster \
@@ -212,14 +225,14 @@ $ pcluster list-cluster-log-streams --cluster-name mycluster --region eu-west-1 
  --filters 'Name=private-dns-name,Values=ip-10-0-0-101'
 ```
 
-Then you can retrieve the content of the log stream to analyze it by using the ``pcluster get-cluster-log-events`` command and passing the `--log-stream-name` corresponding to one of the key logs mentioned in the following section\.
+Then, you can retrieve the content of the log stream to analyze it by using the ``pcluster get-cluster-log-events`` command and passing the `--log-stream-name` corresponding to one of the key logs mentioned in the following section\.
 
 ```
 $ pcluster get-cluster-log-events --cluster-name mycluster \
 --region eu-west-1 --log-stream-name ip-10-0-0-13.i-04e91cc1f4ea796fe.cfn-init
 ```
 
-Note: The head and compute node log streams are also available in the CloudWatch Dashboard created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch)\. 
+Note: The head and compute node log streams are also available in the CloudWatch Dashboard that was created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch)\. 
 
 ### Key logs for debugging<a name="troubleshooting-v3-key-logs"></a>
 
@@ -249,9 +262,9 @@ Applicable logs:
 +  `/var/log/parallelcluster/slurm_resume.log` 
 +  `/var/log/slurmctld.log` 
 
-Check the `/var/log/cfn-init.log` and `/var/log/chef-client.log` logs or corresponding log streams\. These logs should contain all the actions that were run when the head node is set up\. Most errors that occur during setup should have error messages located in the `/var/log/chef-client.log` log\. If `OnNodeStart` or `OnNodeConfigured` scripts are specified in the configuration of the cluster, double check that the script runs successfully through log messages\.
+Check the `/var/log/cfn-init.log` and `/var/log/chef-client.log` logs or corresponding log streams\. These logs contain all the actions that were run when the head node is set up\. Most errors that occur during setup should have error messages located in the `/var/log/chef-client.log` log\. If `OnNodeStart` or `OnNodeConfigured` scripts are specified in the configuration of the cluster, double check that the script runs successfully through log messages\.
 
-When a cluster is created, the head node needs to wait for the compute nodes to join the cluster before it can join the cluster\. As such, if the compute nodes fail to join the cluster, then the head node also fails\. You can follow one of these sets of procedures, depending on the type of compute notes you use, to troubleshoot this type of issue:
+When a cluster is created, the head node must wait for the compute nodes to join the cluster before it can join the cluster\. As such, if the compute nodes fail to join the cluster, then the head node also fails\. You can follow one of these sets of procedures, depending on the type of compute notes you use, to troubleshoot this type of issue:
 
 #### Compute nodes<a name="troubleshooting-v3-node-init.compute-node"></a>
 + Applicable logs:
@@ -263,7 +276,7 @@ When a cluster is created, the head node needs to wait for the compute nodes to 
 **Dynamic compute nodes:**
 + Search the `ResumeProgram` log \(`/var/log/parallelcluster/slurm_resume.log`\) for your compute node name to see if `ResumeProgram` was ever called with the node\. \(If `ResumeProgram` wasn’t ever called, you can check the `slurmctld` log \(`/var/log/slurmctld.log`\) to determine if Slurm ever tried to call `ResumeProgram` with the node\)\.
 + Note that incorrect permissions for `ResumeProgram` might cause `ResumeProgram` to fail silently\. If you’re using a custom AMI with modification to `ResumeProgram` setup, check that the `ResumeProgram` is owned by the `slurm` user and has the `744` \(`rwxr--r--`\) permission\.
-+ If `ResumeProgram` is called, check to see if an instance is launched for the node\. If no instance was launched, you should be able to see an error message that describes the launch failure\.
++ If `ResumeProgram` is called, check to see if an instance is launched for the node\. If no instance was launched, you can see an error message that describes the launch failure\.
 + If the instance is launched, then there might have been a problem during the setup process\. You should see the corresponding private IP address and instance ID from the `ResumeProgram` log\. Moreover, you can look at corresponding setup logs for the specific instance\. For more information about troubleshooting a setup error with a compute node, see the next section\.
 
  **Static compute nodes:** 
@@ -347,6 +360,277 @@ AWS Batch manages the scaling and compute aspects of your services\. If you enco
 ### Job failures<a name="troubleshooting-v3-batch-job-fail"></a>
 
 If a job fails, you can run the [`awsbout`](awsbatchcli_awsbout.md) command to retrieve the job output\. You can also run the [`awsbstat`](awsbatchcli.awsbstat-v3.md) command to obtain a link to the job logs stored by Amazon CloudWatch\.
+
+## Troubleshooting multi\-user integration with Active Directory<a name="troubleshooting-v3-multi-user"></a>
+
+This section is relevant to clusters integrated with an Active Directory \(AD\)\.
+
+If the Active Directory \(AD\) integration feature isn't working as expected the SSSD logs can provide useful diagnostic information\. These logs are located in `/var/log/sssd` on cluster nodes\. By default, they're also stored in a cluster’s Amazon CloudWatch log group\.
+
+**Topics**
++ [AD specific troubleshooting](#troubleshooting-v3-multi-ad-specific)
++ [Enable debug mode](#troubleshooting-v3-multi-user-debug)
++ [How to move from LDAPS to LDAP](#troubleshooting-v3-multi-user-ldaps-ldap)
++ [How to disable LDAPS server certificate verification](#troubleshooting-v3-multi-user-ldaps-verify)
++ [How to log in with a SSH key rather than password](#troubleshooting-v3-multi-user-ssh-login)
++ [How to reset a user password](#troubleshooting-v3-multi-user-reset-passwd)
++ [How to verify the joined domain](#troubleshooting-v3-multi-user-domain-verify)
++ [How to troubleshoot issues with certificates](#troubleshooting-v3-multi-user-certificates)
++ [How to verify that the integration with AD is working](#troubleshooting-v3-multi-user-ad-verify)
++ [How to troubleshoot logging in to compute nodes](#troubleshooting-v3-multi-user-ad-compute-node-login)
++ [Known issues with StarCCM\+ jobs in a multi\-user environment](#troubleshooting-v3-multi-user-ad-starccm)
++ [Known issues with user name resolution](#troubleshooting-v3-multi-user-name-resolution)
+
+### AD specific troubleshooting<a name="troubleshooting-v3-multi-ad-specific"></a>
+
+This section is relevant to troubleshooting specific to an AD type\.
+
+#### Simple AD<a name="troubleshooting-v3-multi-user-simple-ad"></a>
++ The `DomainReadOnlyUser` value must match the Simple AD directory base search for users:
+
+  `cn=ReadOnlyUser,cn=Users,dc=corp,dc=pcluster,dc=com`
+
+  Note `cn` for `Users`\.
++ Default administrator user is `Administrator`\.
++ `Ldapsearch` requires Netbios name before the username\.
+
+  `Ldapsearch` syntax must be as follows:
+
+  ```
+  $ ldapsearch -x -D "corp\\Administrator" -w "Password" -H ldap://192.0.2.103 \
+     -b "cn=Users,dc=corp,dc=pcluster,dc=com"
+  ```
+
+#### AWS Managed Microsoft AD<a name="troubleshooting-v3-multi-users-ms-ad"></a>
++ The `DomainReadOnlyUser` value must match the AWS Managed Microsoft AD directory base search for users:
+
+  `cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com`
++ Default administrator user is `Admin`\.
++ `Ldapsearch` syntax must be as follows:
+
+  ```
+  $ ldapsearch -x -D "Admin" -w "Password" -H ldap://192.0.2.103 \
+     -b "ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
+  ```
+
+### Enable debug mode<a name="troubleshooting-v3-multi-user-debug"></a>
+
+Debug logs from SSSD can be useful to troubleshoot issues\. To enable debug mode, you must update the cluster with the following changes made to the cluster configuration:
+
+```
+DirectoryService:
+  AdditionalSssdConfigs:
+    debug_level: "0x1ff"
+```
+
+### How to move from LDAPS to LDAP<a name="troubleshooting-v3-multi-user-ldaps-ldap"></a>
+
+Moving from LDAPS \(LDAP with TLS/SSL\) to LDAP is discouraged because LDAP alone doesn't provide any encryption\. Nevertheless, it can be useful for testing purposes and troubleshooting\.
+
+You can restore the cluster to its previous configuration by updating the cluster with the previous configuration definition\.
+
+To move from LDAPS to LDAP, you must update the cluster with the following changes in the cluster configuration:
+
+```
+DirectoryService:
+  LdapTlsReqCert: never
+  AdditionalSssdConfigs:
+    ldap_auth_disable_tls_never_use_in_production: True
+```
+
+### How to disable LDAPS server certificate verification<a name="troubleshooting-v3-multi-user-ldaps-verify"></a>
+
+It can be useful to temporarily disable LDAPS server certificate verification on the head node, for testing or troubleshooting purposes\.
+
+You can restore the cluster to its previous configuration by updating the cluster with the previous configuration definition\.
+
+To disable the LDAPS server certificate verification, you must update the cluster with the following changes in the cluster configuration:
+
+```
+DirectoryService:
+  LdapTlsReqCert: never
+```
+
+### How to log in with a SSH key rather than password<a name="troubleshooting-v3-multi-user-ssh-login"></a>
+
+The SSH key is created in `/home/$user/.ssh/id_rsa` after the first time you log in with a password\. To log in with the SSH key, you must log in with your password, copy the SSH key locally, and then use it to SSH password\-less as usual:
+
+```
+$ ssh -i $LOCAL_PATH_TO_SSH_KEY $username@$head_node_ip
+```
+
+### How to reset a user password<a name="troubleshooting-v3-multi-user-reset-passwd"></a>
+
+Run the following command with a user and role having write permission on the directory:
+
+```
+$ aws ds reset-user-password \
+  --directory-id "d-abcdef01234567890" \
+  --user-name "USER_NAME" \
+  --new-password "NEW_PASSWORD" \
+  --region "region-id"
+```
+
+For more information, see [Reset a user password](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_manage_users_groups_reset_password.html) in the *AWS Directory Service Administration Guide*\.
+
+### How to verify the joined domain<a name="troubleshooting-v3-multi-user-domain-verify"></a>
+
+The following command must run from an instance that's joined to the domain, not the head node\.
+
+```
+$ realm list corp.pcluster.com \
+  type: kerberos \
+  realm-name: CORP.PCLUSTER.COM \
+  domain-name: corp.pcluster.com \
+  configured: kerberos-member \
+  server-software: active-directory \
+  client-software: sssd \
+  required-package: oddjob \
+  required-package: oddjob-mkhomedir \
+  required-package: sssd \
+  required-package: adcli \
+  required-package: samba-common-tools \
+  login-formats: %U \
+  login-policy: allow-realm-logins
+```
+
+### How to troubleshoot issues with certificates<a name="troubleshooting-v3-multi-user-certificates"></a>
+
+When LDAPS communication isn't working, it can be due to errors in the TLS communication, which in turn can be due to issues with certificates\.
+
+**Notes about Certificates:**
++ The certificate specified in cluster config `LdapTlsCaCert` must be a bundle of PEM certificates containing the certificates for the whole certificate of authority \(CA\) chain that issued certificates for the domain controllers\.
++ A bundle of PEM certificates is a file made of the concatenation of PEM certificates\.
++ A certificate in PEM format \(typically used in Linux\) is equivalent to a certificate in Base64 DER format \(typically exported by Windows\)\.
++ If the certificate for domain controllers is issued by a subordinate CA, then the certificate bundle must contain the certificate of both the subordinate and root CA\.
+
+**Troubleshooting verification steps:**
+
+The following verification steps assume that the commands are run from within the cluster head node and that the domain controller is reachable at `SERVER:PORT`\.
+
+To troubleshoot an issue that's related to certificates, follow these verification steps:
+
+**Verification steps:**
+
+1. **Check the connection to the AD domain controllers:**
+
+   Verify that you can connect to a domain controller\. If this steps succeeds, then the SSL connection to the domain controller succeeds and the certificate is verified\. Your issue isn't related to certificates\.
+
+   If this step fails, go ahead with next verification\.
+
+   ```
+   $ openssl s_client -connect SERVER:PORT -CAfile PATH_TO_CA_BUNDLE_CERTIFICATE
+   ```
+
+1. **Check the certificate verification:**
+
+   Verify that the local CA certificate bundle can validate the certificate provided by the domain controller\. If this step succeeds, then your issue isn't related to certificates, but to other networking issues\.
+
+   If this step fails, go ahead with next verification\.
+
+   ```
+   $ openssl verify -verbose -CAfile PATH_TO_CA_BUNDLE_CERTIFICATE PATH_TO_A_SERVER_CERTIFICATE
+   ```
+
+1. **Check the certificate provided by the AD domain controllers:**
+
+   Verify that the content of the certificate provided by the domain controllers is as expected\. If this step succeeds, you probably have issues with the CA certificate used to verify controllers, go to the next troubleshooting step\.
+
+   If this step fails, you must correct the certificate issued for the domain controllers and re\-execute the troubleshooting steps\.
+
+   ```
+   $ openssl s_client -connect SERVER:PORT -showcerts
+   ```
+
+1. **Check the content of a certificate:**
+
+   Verify that the content of the certificate that's provided by the domain controllers is as expected\. If this step succeeds, you probably have issues with the CA certificate used to verify controller’s, go to the next troubleshooting step\.
+
+   If this step fails, you must correct the certificate issued for the domain controllers and rerun the troubleshooting steps\.
+
+   ```
+   $ openssl s_client -connect SERVER:PORT -showcerts
+   ```
+
+1. **Check the content of the local CA certificate bundle:**
+
+   Verify that the content of the local CA certificate bundle used to validate domain controllers certificate is as expected\. If this step succeeds, you probably have issues with the certificate that are provided by the domain controllers\.
+
+   If this step fails, you must correct CA certificate bundle issued for the domain controllers and rerun the troubleshooting steps\.
+
+   ```
+   $ openssl x509 -in PATH_TO_A_CERTIFICATE -text
+   ```
+
+### How to verify that the integration with AD is working<a name="troubleshooting-v3-multi-user-ad-verify"></a>
+
+If the following two checks succeed, the integration with the Active Directory \(AD\) is working\.
+
+**Checks:**
+
+1. **You can discover users defined in the directory:**
+
+   From within the cluster head node, as an `ec2-user`:
+
+   ```
+   $ getent passwd $ANY_AD_USER
+   ```
+
+1. **You can SSH into the head node providing the user password:**
+
+   ```
+   $ ssh $ANY_AD_USER@$HEAD_NODE_IP
+   ```
+
+If check one fails, we expect check two to fail also\.
+
+Additional troubleshooting checks:
++ Verify that the user exists in the directory\.
++ Enable [debug logging](#troubleshooting-v3-multi-user-debug)\.
++ Consider temporarily disabling encryption by [moving from LDAPS to LDAP](#troubleshooting-v3-multi-user-ldaps-ldap) to rule out LDAPS issues\.
+
+### How to troubleshoot logging in to compute nodes<a name="troubleshooting-v3-multi-user-ad-compute-node-login"></a>
+
+This section is relevant to logging in to compute nodes in clusters integrated with AD\.
+
+With AWS ParallelCluster, password logins to cluster compute nodes are disabled by design\.
+
+All users must use their own SSH key to log in to compute nodes\.
+
+Users can retrieve their SSH key in the head node after first login, if [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) is enabled in the cluster configuration\.
+
+When users log in to the head node for the first time, they can retrieve SSH keys that are automatically generated for them as directory users\. Home directories for the user are also created\. This can also happen the first time a sudo\-user switches to a user in the head node\.
+
+If a user hasn't logged into the head node, SSH keys aren't generated and the user won't be able to log in to compute nodes\.
+
+### Known issues with StarCCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
+
+This section is relevant to StarCCM\+ jobs in a multi\-user environment\.
+
+If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
+
+Due to a known Slurm bug that causes errors in user name resolution, the job will fail with an error like `error setting up the bootstrap proxies`\.
+
+To solve this issue, you must force IntelMPI to use Slurm for the MPI boostrap method\. To do this you need to export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
+
+### Known issues with user name resolution<a name="troubleshooting-v3-multi-user-name-resolution"></a>
+
+This section is relevant to retrieving user names within jobs\.
+
+Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), user names can get set to "nobody" in compute nodes if you run a job without `srun`\.
+
+For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the expected user name is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `"nobody"` can be returned as the user name\.
+
+You can use the following workarounds\.
+
+1. Launch your job with ``srun`` instead of ``sbatch``, if possible\.
+
+1. Enable SSSD enumeration by setting the [AdditionalSssdConfigs](DirectoryService-v3.md#yaml-DirectoryService-AdditionalSssdConfigs) in cluster configuration as follows\.
+
+   ```
+   AdditionalSssdConfigs:
+     enumerate: true
+   ```
 
 ## Additional support<a name="troubleshooting-v3-additional-support"></a>
 
