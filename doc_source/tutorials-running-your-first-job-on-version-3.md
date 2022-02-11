@@ -125,11 +125,12 @@ $ cat slurm-2.out
 Hello World from queue1-dy-queue1t2micro-1
 ```
 
- The output also shows that our job ran successfully on instance `queue1-dy-queue1t2micro-1`\. 
- 
- Note that in the setup described here, only the home directory is shared between the compute nodes and the login node,
- thus installing software using the package manager on the login node, does not make it available to the compute nodes\.
- If your application requires other software or libraries:
- - create an image with these
- - install the software somewhere in the home directory
- - create a parallel shared file system for your cluster and install the software there
+The output also shows that our job ran successfully on instance `queue1-dy-queue1t2micro-1`\. 
+
+In the cluster you just created, only the home directory is shared among all nodes of the cluster.
+
+If your application requires shared software, libraries, or data, consider the following options:
+
+- Build a ParallelCluster enabled custom AMI that includes your software as described in [Building Customer AMIs](https://docs.aws.amazon.com/parallelcluster/latest/ug/building-custom-ami-v3.html).
+- Use the [StorageSettings](https://docs.aws.amazon.com/parallelcluster/latest/ug/SharedStorage-v3.html) option in the ParallelCluster configuration file to specify a shared filesystem and store your installed software in the specified mount location.
+- Use [Custom Bootstrap Actions](https://docs.aws.amazon.com/parallelcluster/latest/ug/custom-bootstrap-actions-v3.html) to automate the bootstrap procedure of each node of your cluster.
