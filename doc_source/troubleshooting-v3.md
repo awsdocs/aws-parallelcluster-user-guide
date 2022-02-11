@@ -609,21 +609,21 @@ This section is relevant to StarCCM\+ jobs in a multi\-user environment\.
 
 If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
 
-Due to a known Slurm bug that causes errors in user name resolution, the job will fail with an error like `error setting up the bootstrap proxies`\.
+Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error message like "`error setting up the bootstrap proxies`"\.
 
-To solve this issue, you must force IntelMPI to use Slurm for the MPI boostrap method\. To do this you need to export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
+To prevent this from occurring, force IntelMPI to use Slurm as MPI bootstrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
 
-### Known issues with user name resolution<a name="troubleshooting-v3-multi-user-name-resolution"></a>
+### Known issues with username resolution<a name="troubleshooting-v3-multi-user-name-resolution"></a>
 
-This section is relevant to retrieving user names within jobs\.
+This section is relevant to retrieving usernames within jobs\.
 
-Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), user names can get set to "nobody" in compute nodes if you run a job without `srun`\.
+Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), the username retrieved within a job process might be "`nobody`" if you run a job without `srun`\.
 
-For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the expected user name is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `"nobody"` can be returned as the user name\.
+For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, "`nobody`" might be returned as username\.
 
 You can use the following workarounds\.
 
-1. Launch your job with ``srun`` instead of ``sbatch``, if possible\.
+1. Launch your job with `srun` instead of `sbatch`, if possible\.
 
 1. Enable SSSD enumeration by setting the [AdditionalSssdConfigs](DirectoryService-v3.md#yaml-DirectoryService-AdditionalSssdConfigs) in cluster configuration as follows\.
 
@@ -631,6 +631,7 @@ You can use the following workarounds\.
    AdditionalSssdConfigs:
      enumerate: true
    ```
+Depending on the size of the directory, enabling enumeration might impact the job run time performance.
 
 ## Additional support<a name="troubleshooting-v3-additional-support"></a>
 
