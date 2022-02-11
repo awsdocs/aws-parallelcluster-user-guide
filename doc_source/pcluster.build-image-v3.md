@@ -31,13 +31,13 @@ Only perform the requested validation without creating any resources\. It can be
 `--rollback-on-failure ROLLBACK_ON_FAILURE`  
 When set, will automatically initiate an image stack rollback on failure\. \(Defaults to `false`\.\)
 
-`--region REGION`  
+`--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the [Region](image-builder-configuration-file-v3.md#yaml-build-image-Region) setting in the image configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
-`--image-configuration IMAGE_CONFIGURATION`  
+`--image-configuration, -c IMAGE_CONFIGURATION`  
 Specifies the image configuration file as a YAML document\.
 
-`--image-id IMAGE_ID`  
+`--image-id, i IMAGE_ID`  
 Specifies the id of the image that will be built\.
 
 `--debug`  

@@ -13,10 +13,10 @@ pcluster delete-cluster-instances [-h] --cluster-name CLUSTER_NAME
 `-h, --help`  
 Shows the help text for `pcluster delete-cluster-instances`\.
 
-`--cluster-name CLUSTER_NAME`  
+`--cluster-name, -n CLUSTER_NAME`  
 Specifies the name of the cluster\.
 
-`--region REGION`  
+`--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--force FORCE`  

@@ -59,7 +59,7 @@ HeadNode:
 ```
 
 **Topics**
-+ [`HeadNode` Properties](#HeadNode-v3.properties)
++ [`HeadNode` properties](#HeadNode-v3.properties)
 + [`Networking`](#HeadNode-v3-Networking)
 + [`Ssh`](#HeadNode-v3-Ssh)
 + [`LocalStorage`](#HeadNode-v3-LocalStorage)
@@ -68,7 +68,7 @@ HeadNode:
 + [`Iam`](#HeadNode-v3-Iam)
 + [`Imds`](#HeadNode-v3-Imds)
 
-## `HeadNode` Properties<a name="HeadNode-v3.properties"></a>
+## `HeadNode` properties<a name="HeadNode-v3.properties"></a>
 
 `InstanceType` \(**Required**, `String`\)  
 Specifies the instance type for the head node\.  
@@ -98,7 +98,7 @@ Networking:
     HttpProxyAddress: string
 ```
 
-### `Networking` Properties<a name="HeadNode-v3-Networking.properties"></a>
+### `Networking` properties<a name="HeadNode-v3-Networking.properties"></a>
 
 `SubnetId` \(**Required**, `String`\)  
 Specifies the ID of an existing subnet in which to provision the head node\.  
@@ -109,7 +109,7 @@ Creates or assigns an Elastic IP address to the head node\. Supported values are
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `SecurityGroups` \(**Optional**, `[String]`\)  
-List of Amazon VPC security group ids to use for the head node\.These replace the security groups that AWS ParallelCluster would create\.  
+List of Amazon VPC security group ids to use for the head node\. These replace the security groups that AWS ParallelCluster creates if this property is not included\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `AdditionalSecurityGroups` \(**Optional**, `[String]`\)  
@@ -143,7 +143,7 @@ Ssh:
 ### `Ssh` Properties<a name="HeadNode-v3-Ssh.properties"></a>
 
 `KeyName` \(**Optional**, `String`\)  
- Names an existing Amazon EC2 key pair with which to enable SSH access to the head node\.  
+Names an existing Amazon EC2 key pair to enable SSH access to the head node\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `AllowedIps` \(**Optional**, `String`\)  
@@ -242,11 +242,11 @@ Dcv:
 ```
 
 **Important**  
-By default the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, you can connect to a NICE DCV port only if you have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the `AllowedIps` setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the `Port` setting to set a nonstandard port\.
+By default, the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, you can connect to a NICE DCV port only if you have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the `AllowedIps` setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the `Port` setting to set a nonstandard port\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-### `Dcv` Properties<a name="HeadNode-v3-Dcv.properties"></a>
+### `Dcv` properties<a name="HeadNode-v3-Dcv.properties"></a>
 
 `Enabled` \(**Required**, `Boolean`\)  
 Specifies whether NICE DCV is enabled on the head node\. The default value is `false`\.  
@@ -281,7 +281,7 @@ CustomActions:
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-### `CustomActions` Properties<a name="HeadNode-v3-CustomActions.properties"></a>
+### `CustomActions` properties<a name="HeadNode-v3-CustomActions.properties"></a>
 
 `OnNodeStart` \(**Optional**, `String`\)  
 Specifies a script to run on the head node before any of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.    
@@ -317,15 +317,15 @@ Iam:
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
-### `Iam` Properties<a name="HeadNode-v3-Iam.properties"></a>
+### `Iam` properties<a name="HeadNode-v3-Iam.properties"></a>
 
 `InstanceProfile` \(**Optional**, `String`\)  
-Specifies an instance profile to override the default head node instance profile\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:instance-profile/InstanceProfileName`\.  
+Specifies an instance profile to override the default head node instance profile\. You can't specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:instance-profile/InstanceProfileName`\.  
 If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `InstanceRole` \(**Optional**, `String`\)  
-Specifies an instance role to override the default head node instance role\. You cannot specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:role/RoleName`\.  
+Specifies an instance role to override the default head node instance role\. You can't specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:role/RoleName`\.  
 If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
@@ -355,7 +355,7 @@ Indicates whether write access is enabled for the bucket\. The default value is 
 
 `AdditionalIamPolicies` \(**Optional**\)  
 Specifies a list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used for the head node in addition to the permissions required by AWS ParallelCluster\.  
-An IAM policy name and its ARN are different\. Names can't be used\.If the `InstanceProfile` or `InstanceRole` setting is specified, this setting is ignored\. We recommend that you use `AdditionalIamPolicies` because `AdditionalIamPolicies` are added to the permissions that AWS ParallelCluster requires, and the `InstanceRole` must include all permissions required\. The permissions required often change from release to release as features are added\.  
+An IAM policy name and its ARN are different\. Names can't be used\. If the `InstanceProfile` or `InstanceRole` setting is specified, this setting is ignored\. We recommend that you use `AdditionalIamPolicies` because `AdditionalIamPolicies` are added to the permissions that AWS ParallelCluster requires, and the `InstanceRole` must include all permissions required\. The permissions required often change from release to release as features are added\.  
 There is no default value\.  
 
 ```
@@ -380,6 +380,25 @@ Imds:
 ### `Imds` Properties<a name="HeadNode-v3-Imds.properties"></a>
 
 `Secured` \(**Optional**, `Boolean`\)  
-If `true`, restrict access to IMDS \(and thus instance credentials\) to users with superuser permissions\. The default is `true`\.
+If `true`, restricts access to the head node's IMDS \(and the instance profile credentials\) to a subset of superusers\.  
+This only restricts cluster head node IMDS access through the IPv4 IMDS endpoint\.
+If `false`, every user in the head node has access to the head node's IMDS\.  
+
+The following users are permitted access to the head node's IMDS:
++ root user
++ cluster administrative user \(`pc-cluster-admin` by default\)
++ operating system specific default user \(`ec2-user` on Amazon Linux 2, `ubuntu` on Ubuntu 18\.04, `centos` on CentOS 7\)
+The default is `true`\.  
+The `default` users are responsible for ensuring a cluster has the permissions it needs to interact with AWS resources\. If you disable `default` user IMDS access, AWS ParallelCluster can't manage the compute nodes and stops working\. Don't disable `default` user IMDS access\.  
+When a user is granted access to the head node's IMDS, they can use the permissions included in the [head node's instance profile](iam-roles-in-parallelcluster-v3.md)\. For example, they can use these permissions to launch EC2 instances or to read the password for an AD domain that the cluster is configured to use for authentication\.  
+To restrict IMDS access, AWS ParallelCluster manages a chain of `iptables`\.  
+Cluster users with `sudo` access can selectively enable or disable access to the head node's IMDS for other individual users, including `default` users, by running the command:  
+
+```
+$ sudo /opt/parallelcluster/scripts/imds/imds-access.sh --allow <USERNAME>
+```
+You can disable user IMDS access with the `--deny` option for this command\.  
+If you unknowingly disable `default` user IMDS access, you can restore the permission by using the `--allow` option\.  
+Any customization of `iptables` rules can interfere with the mechanism used to restrict IMDS access on the head node\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

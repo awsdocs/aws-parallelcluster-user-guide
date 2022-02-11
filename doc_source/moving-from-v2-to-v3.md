@@ -2,23 +2,23 @@
 
 ## Custom Bootstrap Actions<a name="custom_bootstrap_actions"></a>
 
-AWS ParallelCluster 3 allows you to specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling/SlurmQueues`](Scheduling-v3.md) sections\. Please refer to [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md) for more information\. 
+With AWS ParallelCluster 3, you can specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling/SlurmQueues`](Scheduling-v3.md) sections\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\. 
 
- Custom bootstrap actions scripts developed for AWS ParallelCluster 2 need to be adapted to be used in AWS ParallelCluster 3:
-+ Using `/etc/parallelcluster/cfnconfig` and `cfn_node_type` to differentiate between head and compute nodes is not recommended\. Instead, we recommend to specify two different scripts in the `HeadNode` and `Scheduling/SlurmQueues sections`\.
-+ If you prefer to continue loading `/etc/parallelcluster/cfnconfig` for use in your bootstrap actions script, note the value of `cfn_node_type` has been changed from "MasterServer" to "HeadNode" \(see: [Inclusive language](#inclusive_language)\)\.
-+ On AWS ParallelCluster 2 the first input argument to bootstrap action scripts was the S3 URL to the script and was reserved\. In AWS ParallelCluster 3, only the arguments configured in the configuration are passed to the scripts\.
+ Custom bootstrap actions scripts that are developed for AWS ParallelCluster 2 must be adapted to be used in AWS ParallelCluster 3:
++ We don't recommend using `/etc/parallelcluster/cfnconfig` and `cfn_node_type` to differentiate between head and compute nodes\. Instead, we recommend that you specify two different scripts in the `HeadNode` and `Scheduling/SlurmQueues sections`\.
++ If you prefer to continue loading `/etc/parallelcluster/cfnconfig` for use in your bootstrap actions script, note the value of `cfn_node_type` is changed from "MasterServer" to "HeadNode" \(see: [Inclusive language](#inclusive_language)\)\.
++ On AWS ParallelCluster 2, the first input argument to bootstrap action scripts was the S3 URL to the script and was reserved\. In AWS ParallelCluster 3, only the arguments configured in the configuration are passed to the scripts\.
 
 **Warning**  
-Using internal variables provided through the `/etc/parallelcluster/cfnconfig` file is not officially supported\. This file may be removed as part of a future release\.
+Using internal variables provided through the `/etc/parallelcluster/cfnconfig` file isn't officially supported\. This file might be removed as part of a future release\.
 
 ## AWS ParallelCluster 2\.x and 3\.x use different configuration file syntax<a name="pcluster_use_different_config_file_syntax"></a>
 
  ******** 
 
-AWS ParallelCluster 3\.x configuration uses YAML syntax, its the full reference can be found at [Configuration files](configuration-v3.md)\.
+AWS ParallelCluster 3\.x configuration uses YAML syntax, it's the full reference can be found at [Configuration files](configuration-v3.md)\.
 
- In addition to requiring a YAML file format, a number of configuration sections, settings, and parameter values have been updated in AWS ParallelCluster 3\.x\. Here we note key changes to the AWS ParallelCluster configuration along with side\-by\-side examples illustrating these differences across each version of AWS ParallelCluster\.
+In addition to requiring a YAML file format, a number of configuration sections, settings, and parameter values have been updated in AWS ParallelCluster 3\.x\. In this section, we note key changes to the AWS ParallelCluster configuration along with side\-by\-side examples illustrating these differences across each version of AWS ParallelCluster\.
 
 **Example of multiple scheduler queues configuration with hyperthreading enabled and disabled**
 
@@ -193,9 +193,9 @@ Scheduling:
 ```
 
  Notes: 
-+ For AWS ParallelCluster 2 the IAM settings are applied to all the instances of a cluster and `additional_iam_policies` cannot be used in conjunction with `ec2_iam_role` 
-+ For AWS ParallelCluster 3 you can have different IAM settings for head and compute nodes and even specify different IAM settings for each compute queue\. 
-+ For AWS ParallelCluster 3 you can use an IAM instance profile as an alternative to an IAM role\. `InstanceProfile`, `InstanceRole` or `AdditionalIamPolicies` can not be configured together\. 
++ For AWS ParallelCluster 2 the IAM settings are applied to all the instances of a cluster and `additional_iam_policies` can't be used in conjunction with `ec2_iam_role` 
++ For AWS ParallelCluster 3, you can have different IAM settings for head and compute nodes and even specify different IAM settings for each compute queue\. 
++ For AWS ParallelCluster 3, you can use an IAM instance profile as an alternative to an IAM role\. `InstanceProfile`, `InstanceRole` or `AdditionalIamPolicies` can't be configured together\. 
 
 **Example of custom bootstrap actions**
 
@@ -291,36 +291,36 @@ Scheduling:
 
 ## Inclusive language<a name="inclusive_language"></a>
 
- AWS ParallelCluster 3 uses the words “head node“ in places where ”master“ was used in AWS ParallelCluster 2\. This includes: 
-+  variable exported in the AWS Batch job environment changed: from `MASTER_IP` to `PCLUSTER_HEAD_NODE_IP`\. 
-+  all AWS CloudFormation outputs changed from `Master*` to `HeadNode*` 
-+  all NodeType and tags changed from `Master` to `HeadNode`\. 
+ AWS ParallelCluster 3 uses the words "head node" in places where "master" was used in AWS ParallelCluster 2\. This includes the following: 
++  Variable exported in the AWS Batch job environment changed: from `MASTER_IP` to `PCLUSTER_HEAD_NODE_IP`\. 
++  All AWS CloudFormation outputs changed from `Master*` to `HeadNode*` 
++  All NodeType and tags changed from `Master` to `HeadNode`\. 
 
 ## Scheduler Support<a name="scheduler_support"></a>
 
- AWS ParallelCluster 3\.x does not support Son of Grid Engine \(SGE\) and Torque schedulers\. 
+ AWS ParallelCluster 3\.x doesn't support Son of Grid Engine \(SGE\) and Torque schedulers\. 
 
- The AWS Batch commands `awsbhosts`, `awsbkill`, `awsbout`, `awsbqueues`, `awsbstat` and `awsbsub` are distributed as a separate `aws-parallelcluster-awsbatch-cli` PyPI package\. This package is installed by AWS ParallelCluster on the head node\. While you can still use these AWS Batch commands from the cluster's head node, if you wish to use AWS Batch commands from a location other than the head node, you must first install the `aws-parallelcluster-awsbatch-cli` PyPI package\. 
+ The AWS Batch commands `awsbhosts`, `awsbkill`, `awsbout`, `awsbqueues`, `awsbstat`, and `awsbsub` are distributed as a separate `aws-parallelcluster-awsbatch-cli` PyPI package\. This package is installed by AWS ParallelCluster on the head node\. You can still use these AWS Batch commands from the cluster's head node\. However, if you wish to use AWS Batch commands from a location other than the head node, you must first install the `aws-parallelcluster-awsbatch-cli` PyPI package\. 
 
 ## AWS ParallelCluster CLI<a name="parallelcluster_cli"></a>
 
- The AWS ParallelCluster command line interface \(CLI\) has been changed and the new syntax is described in [AWS ParallelCluster CLI commands](commands-v3.md)\. The output format for the CLI is a [JSON](https://json.org/) string\. 
+The AWS ParallelCluster command line interface \(CLI\) has been changed\. The new syntax is described in [AWS ParallelCluster CLI commands](commands-v3.md)\. The output format for the CLI is a [JSON](https://json.org/) string\. 
 
  **Configuring a new cluster** 
 
- The `pcluster configure` command includes different parameters in AWS ParallelCluster 3 as compared to AWS ParallelCluster 2, please refer to [`pcluster configure`](pcluster.configure-v3.md) for more information\. 
+The `pcluster configure` command includes different parameters in AWS ParallelCluster 3 as compared to AWS ParallelCluster 2\. For more information, see [`pcluster configure`](pcluster.configure-v3.md)\. 
 
- Note also that the configuration file syntax has changed from AWS ParallelCluster 2, see [Cluster configuration file](cluster-configuration-file-v3.md) for a full reference of the cluster configuration settings 
+Note also that the configuration file syntax has changed from AWS ParallelCluster 2\. For a full reference of the cluster configuration settings, see [Cluster configuration file](cluster-configuration-file-v3.md)\. 
 
  **Creating a new cluster** 
 
 AWS ParallelCluster 2's `pcluster create` command has been replaced by the [`pcluster create-cluster`](pcluster.create-cluster-v3.md) command\. 
 
- Please note the default behavior in AWS ParallelCluster 2\.x, without the `-nw` option, is to wait on cluster creation events, while AWS ParallelCluster 3\.x command returns immediately\. The progress of the cluster creation can be monitored using [`pcluster describe-cluster`](pcluster.describe-cluster-v3.md) 
+Note the default behavior in AWS ParallelCluster 2\.x, without the `-nw` option, is to wait on cluster creation events, while AWS ParallelCluster 3\.x command returns immediately\. The progress of the cluster creation can be monitored using [`pcluster describe-cluster`](pcluster.describe-cluster-v3.md) 
 
  An AWS ParallelCluster 3 configuration file contains a single cluster definition, so the `-t` parameter is no more needed\. 
 
- Example: 
+ The following is an example configuration file\. 
 
 ```
 # AWS ParallelCluster v2
@@ -342,7 +342,7 @@ $ pcluster create-cluster \
 
  The `pcluster list` AWS ParallelCluster 2\.x command must be replaced with [`pcluster list-clusters`](pcluster.list-clusters-v3.md) command\. 
 
- Note: you need AWS ParallelCluster v2 CLI to list clusters created with 2\.x versions of AWS ParallelCluster\. See [Install AWS ParallelCluster in a virtual environment \(recommended\)](install-v3-virtual-environment.md) for how to install multiple versions of AWS ParallelCluster using virtual environments\. 
+ Note: You need AWS ParallelCluster v2 CLI to list clusters created with 2\.x versions of AWS ParallelCluster\. See [Install AWS ParallelCluster in a virtual environment \(recommended\)](install-v3-virtual-environment.md) for how to install multiple versions of AWS ParallelCluster using virtual environments\. 
 
 ```
 # AWS ParallelCluster v2
@@ -417,3 +417,7 @@ $ pcluster ssh \
     --cluster-name CLUSTER_NAME \
     -i ~/.ssh/id_rsa
 ```
+
+## IMDS configuration update<a name="imds-update"></a>
+
+Starting with version 3\.0\.0, AWS ParallelCluster introduced support for restricting access to the head node’s IMDS \(and the instance profile credentials\) to a subset of superusers, by default\. For more information, see [`Imds` Properties](HeadNode-v3.md#HeadNode-v3-Imds.properties)\.

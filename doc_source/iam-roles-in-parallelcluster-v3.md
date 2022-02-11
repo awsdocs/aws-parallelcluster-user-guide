@@ -555,7 +555,10 @@ Based on the additional IAM policies granted to the AWS ParallelCluster user we 
 
 With this mode AWS ParallelCluster takes care of automating the creation of all necessary IAM resources\. The advantage of delegating the creation of IAM resources to AWS ParallelCluster consists in the fact that IAM policies are scoped down to enable access to cluster resources only\.
 
-To enable such mode add the following policy to the AWS ParallelCluster user role\.
+To enable Privileged IAM access mode, add the following policy to the AWS ParallelCluster user role\.
+
+**Note**  
+If you configure [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) or [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) parameters, you must provide the user permission to attach and detach role policies for each additional policy as shown in the following policy\. Add the additional policy ARNs to the condition for attaching and detaching role policies\.
 
 **Warning**  
 This mode enables the user to have IAM admin privileges in the AWS account
@@ -639,7 +642,7 @@ When building a custom image the following parameters are required:
 + `Build` / ``Iam`` / `InstanceRole` \| `InstanceProfile` 
 + `Build` / ``Iam`` / `CleanupLambdaRole`
 
-The IAM roles passed as part of the above listed parameters have to be created on the `/parallelcluster/` path prefix\. If this is not possible the AWS ParallelCluster user policy needs to be update to grant `iam:PassRole` permission on the specific custom roles, like in the example below\.
+The IAM roles passed as part of the above listed parameters have to be created on the `/parallelcluster/` path prefix\. If this is not possible the AWS ParallelCluster user policy needs to be updated to grant `iam:PassRole` permission on the specific custom roles, like in the example below\.
 
 ```
 {
@@ -676,6 +679,9 @@ This mode delegates to AWS ParallelCluster the creation of IAM roles, however su
 The following policy needs to be added to the AWS ParallelCluster user role\.
 
 In the policy, replace *<permissions\-boundary\-arn>* with the IAM policy ARN to be enforced as permissions boundary\.
+
+**Note**  
+If you configure the [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) or [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) parameters, you must grant the user permission to attach and detach role policies for each additional policy as shown in the following policy\. Add the additional policy ARNs to the condition for attaching and detaching role policies\.
 
 ```
 {
@@ -762,9 +768,7 @@ In the policy, replace *<permissions\-boundary\-arn>* with the IAM policy ARN to
 }
 ```
 
-where `<permissions-boundary-arn>` is the IAM policy ARN to be enforced as permissions boundary\.
-
-When this mode is enabled the permissions boundary ARN has to be specified when creating/updating a cluster through the `Iam` / `PermissionsBoundary` config parameter and when building a custom image through the `Build / Iam / PermissionBoundary` parameter\.
+When this mode is enabled, the permissions boundary ARN must be specified when creating/updating a cluster through the `Iam` / `PermissionsBoundary` config parameter and when building a custom image through the `Build / Iam / PermissionBoundary` parameter\.
 
 ## AWS ParallelCluster parameters to control IAM permissions<a name="iam-roles-in-parallelcluster-v3-params-for-iam"></a>
 
@@ -856,12 +860,21 @@ Here is the minimal set of policies to be used as part of this role when the sch
               "Action": [
                   "ec2:DescribeInstances",
                   "ec2:DescribeInstanceStatus",
-                  "ec2:CreateTags",
                   "ec2:DescribeVolumes",
-                  "ec2:AttachVolume",
                   "ec2:DescribeInstanceAttribute"
               ],
               "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "ec2:CreateTags",
+                  "ec2:AttachVolume"
+              ],
+              "Resource": [
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:instance/*",
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:volume/*"
+              ],
               "Effect": "Allow"
           },
           {
@@ -878,6 +891,11 @@ Here is the minimal set of policies to be used as part of this role when the sch
               ],
               "Resource": "*",
               "Effect": "Allow"
+          },
+          {
+              "Action": "secretsmanager:GetSecretValue",
+              "Resource": "arn:aws::secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET_ID>",
+              "Effect": "Allow"
           }
       ]
   }
@@ -888,7 +906,6 @@ Note that in case `Scheduling / SlurmQueues / Iam / InstanceRole` is used to ove
 Here is the minimal set of policies to be used as part of this role when the scheduler is AWS Batch:
 + `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy\. For more information, see [Create IAM roles and users for use with the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent.html) in the *Amazon CloudWatch User Guide*\.
 + `arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore` managed IAM policy\. For more information, see [AWS managed policies for AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/security_iam_service-with-iam.html#managed-policies) in the *AWS Systems Manager User Guide*\.
-+  `arn:aws:iam::aws:policy/AWSBatchFullAccess` managed IAM policy\. For more information, see [AWS managed policy: `BatchFullAccess`](https://docs.aws.amazon.com/batch/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-BatchFullAccess) in the *AWS Batch User Guide*\.
 + Additional IAM policy:
 
   ```
@@ -931,16 +948,53 @@ Here is the minimal set of policies to be used as part of this role when the sch
               ],
               "Effect": "Allow"
           },
+          
+              "Action": [
+                  "batch:DescribeJobQueues",
+                  "batch:DescribeJobs",
+                  "batch:ListJobs",
+                  "batch:DescribeComputeEnvironments"
+              ],
+              "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "batch:SubmitJob",
+                  "batch:TerminateJob",
+                  "logs:GetLogEvents",
+                  "ecs:ListContainerInstances",
+                  "ecs:DescribeContainerInstances",
+              ],
+              "Resource": [
+                  "arn:aws:logs:<REGION>:<AWS ACCOUNT ID>:log-group:/aws/batch/job:log-stream:PclusterJobDefinition*",
+                  "arn:aws:ecs:<REGION>:<AWS ACCOUNT ID>:container-instance/AWSBatch-PclusterComputeEnviron*",
+                  "arn:aws:ecs:<REGION>:<AWS ACCOUNT ID>:cluster/AWSBatch-Pcluster*",
+                  "arn:aws:batch:<REGION>:<AWS ACCOUNT ID>:job-queue/PclusterJobQueue*",
+                  "arn:aws:batch:<REGION>:<AWS ACCOUNT ID>:job-definition/PclusterJobDefinition*:*",
+                  "arn:aws:batch:<REGION>:<AWS ACCOUNT ID>:job/*"
+              ],
+              "Effect": "Allow"
+          },
           {
               "Action": [
                   "ec2:DescribeInstances",
                   "ec2:DescribeInstanceStatus",
-                  "ec2:CreateTags",
                   "ec2:DescribeVolumes",
-                  "ec2:AttachVolume",
                   "ec2:DescribeInstanceAttribute"
               ],
               "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": [
+                  "ec2:CreateTags",
+                  "ec2:AttachVolume"
+              ],
+              "Resource": [
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:instance/*",
+                  "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:volume/*"
+              ],
               "Effect": "Allow"
           },
           {
@@ -953,10 +1007,8 @@ Here is the minimal set of policies to be used as part of this role when the sch
               "Effect": "Allow"
           },
           {
-              "Action": [
-                  "route53:ChangeResourceRecordSets"
-              ],
-              "Resource": "*",
+              "Action": "secretsmanager:GetSecretValue",
+              "Resource": "arn:aws::secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET_ID>",
               "Effect": "Allow"
           }
       ]
@@ -965,7 +1017,7 @@ Here is the minimal set of policies to be used as part of this role when the sch
 
 #### Amazon S3 access<a name="iam-roles-in-parallelcluster-v3-cluster-config-headnode-s3access"></a>
 
-`HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `Iam` / `S3Access`
+`HeadNode` / `Iam` / `S3Access` or `Scheduling` / `SlurmQueues` / `S3Access`
 
 This configuration sections allow to customize the Amazon S3 access by granting additional Amazon S3 policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\. For more information, see the reference documentation for each of the configuration parameter\.
 
@@ -973,10 +1025,11 @@ This parameter can be only used when the AWS ParallelCluster user is configured 
 
 #### Additional IAM policies<a name="iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies"></a>
 
-`HeadNode` / `Iam` / `AdditionalIamPolicies` or `Scheduling` / `SlurmQueues` / `Iam` / `AdditionalIamPolicies`
+`HeadNode` / `Iam` / `AdditionalIamPolicies` or `SlurmQueues` / `Iam` / `AdditionalIamPolicies`
 
-This configuration sections allow to attach additional managed IAM policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\.
+Use this option to attach additional managed IAM policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\.
 
+**Note**  
 To use this option make sure the AWS ParallelCluster user is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
 
 #### AWS Lambda functions role<a name="iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole"></a>
@@ -1002,7 +1055,7 @@ Here is the minimal set of policies to be used as part of this role:
     {
       "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
       "Effect": "Allow",
-      "Resource": "arn:aws:logs:*:*:*"
+      "Resource": "arn:aws:logs:<REGION>:<AWS ACCOUNT ID>:log-group:/aws/lambda/pcluster-*"
     },
     {
       "Action": "ec2:DescribeInstances",
@@ -1031,6 +1084,11 @@ Here is the minimal set of policies to be used as part of this role:
         "arn:aws:s3:::parallelcluster-*-v1-do-not-delete",
         "arn:aws:s3:::parallelcluster-*-v1-do-not-delete/*"
       ]
+    },
+    {
+        "Action": "secretsmanager:GetSecretValue",
+        "Resource": "arn:aws::secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET_ID>",
+        "Effect": "Allow"
     }
   ]
 }
@@ -1038,7 +1096,7 @@ Here is the minimal set of policies to be used as part of this role:
 
 #### Compute nodes IAM role<a name="iam-roles-in-parallelcluster-v3-cluster-config-slurmqueues-instanceprofile"></a>
 
-`Scheduling` / `SlurmQueues` / `Iam` / `InstanceRole` \| `InstanceProfile`
+`Scheduling` / `SlurmQueues` / `Iam` / ` InstanceRole` \| `InstanceProfile`
 
 This option allows to override the IAM role that is assigned to the compute nodes of the cluster\. For more information, see `InstanceProfile`\.
 
@@ -1068,6 +1126,11 @@ Here is the minimal set of policies to be used as part of this role:
           {
               "Action": "ec2:DescribeInstanceAttribute",
               "Resource": "*",
+              "Effect": "Allow"
+          },
+          {
+              "Action": "secretsmanager:GetSecretValue",
+              "Resource": "arn:aws::secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET_ID>",
               "Effect": "Allow"
           }
       ]
@@ -1223,8 +1286,9 @@ Here is the minimal set of policies to be used as part of this role:
 
 `Build` / `Iam` / `AdditionalIamPolicies`
 
-This configuration section allows to attach additional managed IAM policies to the role associated with the EC2 instance used by EC2 Image Builder to produce the custom AMI\.
+You use this option to attach additional managed IAM policies to the role associated with the EC2 instance used by EC2 Image Builder to produce the custom AMI\.
 
+**Note**  
 To use this option make sure the AWS ParallelCluster user is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
 
 #### Permissions boundary<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary"></a>

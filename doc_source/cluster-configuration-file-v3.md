@@ -14,6 +14,7 @@ These objects are used for the AWS ParallelCluster version 3 cluster configurati
 + [`Monitoring` section](Monitoring-v3.md)
 + [`Tags` section](Tags-v3.md)
 + [`AdditionalPackages` section](AdditionalPackages-v3.md)
++ [`DirectoryService` section](DirectoryService-v3.md)
 
 ## Cluster configuration file properties<a name="cluster-configuration-file-v3.properties"></a>
 

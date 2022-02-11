@@ -7,7 +7,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
 
 **To install AWS ParallelCluster in a virtual environment**
 
-1. If `virtualenv` is not installed, install `virtualenv` using `pip3`\. If `python3 -m virtualenv help` displays help information, go to step 2\.
+1. If `virtualenv` isn't installed, install `virtualenv` using `pip3`\. If `python3 -m virtualenv help` displays help information, go to step 2\.
 
    ```
    $ python3 -m pip install --upgrade pip
@@ -40,7 +40,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
    (apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster"
    ```
 
-1. Install Node Version Manager and Node\.js \(required due to AWS Cloud Development Kit \(CDK\) usage for template generation\)\.
+1. Install Node Version Manager and Node\.js\. It's required due to AWS Cloud Development Kit \(CDK\) usage for template generation\.
 
    ```
    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
@@ -55,7 +55,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
    ```
    $ pcluster version
    {
-     "version": "3.0.3"
+     "version": "3.1.1"
    }
    ```
 
