@@ -617,9 +617,10 @@ To prevent this from occurring, force IntelMPI to use Slurm as MPI bootstrap met
 
 This section is relevant to retrieving usernames within jobs\.
 
-Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), the username retrieved within a job process might be "`nobody`" if you run a job without `srun`\.
+Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), the username retrieved within a job process might be `nobody` if you run a job without `srun`\.
 
-For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, "`nobody`" might be returned as username\.
+For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `nobody` might be returned as username\.
+For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `nobody` might be returned as username\.
 
 You can use the following workarounds\.
 
