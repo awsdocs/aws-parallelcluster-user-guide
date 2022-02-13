@@ -603,9 +603,9 @@ When users log in to the head node for the first time, they can retrieve SSH key
 
 If a user hasn't logged into the head node, SSH keys aren't generated and the user won't be able to log in to compute nodes\.
 
-### Known issues with StarCCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
+### Known issues with Simcenter STAR-CCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
 
-This section is relevant to StarCCM\+ jobs in a multi\-user environment\.
+This section is relevant to jobs launched by Simcenter STAR-CCM\+, Computational Fluid Dynamics software from Siemens, in a multi\-user environment\.
 
 If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
 
