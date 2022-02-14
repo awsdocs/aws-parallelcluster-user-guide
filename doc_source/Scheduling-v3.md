@@ -550,14 +550,14 @@ CustomActions:
 ##### `CustomActions` Properties<a name="Scheduling-v3-SlurmQueues-CustomActions.properties"></a>
 
 `OnNodeStart` \(**Optional**, `String`\)  
-Specifies a script to run on the nodes in the Slurm queue before any of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.    
+Specifies a script to run on the nodes in the Slurm queue before any node deployment bootstrap action is started\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
 List of arguments to pass to the script\.
 
 `OnNodeConfigured` \(**Optional**, `String`\)  
-Specifies a script to run on the nodes in the Slurm queue after all of the `boot_as_*` scripts are run\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.    
+Specifies a script to run on the nodes in the Slurm queue after all of the node bootstrap actions are complete\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://`or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
