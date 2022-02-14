@@ -690,7 +690,7 @@ post_install_args = "argument-1 argument-2"
 
 ## `pre_install`<a name="pre-install"></a>
 
-**\(Optional\)** Specifies the URL of a pre\-install script that is run before any node deployment bootstrap action is started\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.
+**\(Optional\)** Specifies the URL of a pre\-install script that's run before any node deployment bootstrap action is started\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.
 
 When using `awsbatch` as the scheduler, the pre\-install script is run only on the head node\.
 
