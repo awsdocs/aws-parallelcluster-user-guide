@@ -605,7 +605,7 @@ If a user hasn't logged into the head node, SSH keys aren't generated and the us
 
 ### Known issues with Simcenter STAR-CCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
 
-This section is relevant to jobs launched by Simcenter STAR-CCM\+, Computational Fluid Dynamics software from Siemens, in a multi\-user environment\.
+This section is relevant to jobs launched in a multi\-user environment, by Simcenter STAR-CCM\+ computational fluid dynamics software from Siemens.
 
 If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
 
