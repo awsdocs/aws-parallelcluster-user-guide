@@ -12,7 +12,7 @@ pcluster delete-image [-h] --image-id IMAGE_ID [--region REGION]
 `-h, --help`  
 Shows the help text for `pcluster delete-image`\.
 
-`--image-id, i IMAGE_ID`  
+`--image-id, -i IMAGE_ID`
 Specifies the id of the image that will be deleted\.
 
 `--region, -r REGION`  

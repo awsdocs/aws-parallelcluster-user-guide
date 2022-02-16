@@ -14,7 +14,7 @@ pcluster get-image-stack-events [-h] --image-id IMAGE_ID
 `-h, --help`  
 Shows the help text for `pcluster get-image-stack-events`\.
 
-`--image-id, i IMAGE_ID`  
+`--image-id, -i IMAGE_ID`
 Specifies the ID of the image\.
 
 `--region, -r REGION`  
