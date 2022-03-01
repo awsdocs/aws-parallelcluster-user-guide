@@ -378,8 +378,11 @@ If the Active Directory \(AD\) integration feature isn't working as expected the
 + [How to troubleshoot issues with certificates](#troubleshooting-v3-multi-user-certificates)
 + [How to verify that the integration with AD is working](#troubleshooting-v3-multi-user-ad-verify)
 + [How to troubleshoot logging in to compute nodes](#troubleshooting-v3-multi-user-ad-compute-node-login)
-+ [Known issues with StarCCM\+ jobs in a multi\-user environment](#troubleshooting-v3-multi-user-ad-starccm)
-+ [Known issues with user name resolution](#troubleshooting-v3-multi-user-name-resolution)
++ [Known issues with SimCenter StarCCM\+ jobs in a multi\-user environment](#troubleshooting-v3-multi-user-ad-starccm)
++ [Known issues with username resolution](#troubleshooting-v3-multi-user-name-resolution)
++ [How to troubleshoot logging in to compute nodes](#troubleshooting-v3-multi-user-ad-compute-node-login)
++ [Known issues with SimCenter StarCCM\+ jobs in a multi\-user environment](#troubleshooting-v3-multi-user-ad-starccm)
++ [How to resolve home directory create issues](#troubleshooting-v3-multi-home-directory)
 
 ### AD specific troubleshooting<a name="troubleshooting-v3-multi-ad-specific"></a>
 
@@ -603,15 +606,15 @@ When users log in to the head node for the first time, they can retrieve SSH key
 
 If a user hasn't logged into the head node, SSH keys aren't generated and the user won't be able to log in to compute nodes\.
 
-### Known issues with Simcenter STAR-CCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
+### Known issues with SimCenter StarCCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
 
-This section is relevant to jobs launched in a multi\-user environment, by Simcenter STAR-CCM\+ computational fluid dynamics software from Siemens.
+This section is relevant to jobs launched in a multi\-user environment by Simcenter StarCCM\+ computational fluid dynamics software from Siemens\.
 
 If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
 
-Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error message like "`error setting up the bootstrap proxies`"\.
+Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error like `error setting up the bootstrap proxies`\.
 
-To prevent this from occurring, force IntelMPI to use Slurm as MPI bootstrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
+To prevent this from occurring, force IntelMPI to use Slurm as MPI boostrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
 
 ### Known issues with username resolution<a name="troubleshooting-v3-multi-user-name-resolution"></a>
 
@@ -619,12 +622,11 @@ This section is relevant to retrieving usernames within jobs\.
 
 Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), the username retrieved within a job process might be `nobody` if you run a job without `srun`\.
 
-For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `nobody` might be returned as username\.
-For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `nobody` might be returned as username\.
+For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `nobody` might be returned as the username\.
 
 You can use the following workarounds\.
 
-1. Launch your job with `srun` instead of `sbatch`, if possible\.
+1. Launch your job with `'srun'` instead of `'sbatch'`, if possible\.
 
 1. Enable SSSD enumeration by setting the [AdditionalSssdConfigs](DirectoryService-v3.md#yaml-DirectoryService-AdditionalSssdConfigs) in cluster configuration as follows\.
 
@@ -632,7 +634,66 @@ You can use the following workarounds\.
    AdditionalSssdConfigs:
      enumerate: true
    ```
-Depending on the size of the directory, enabling enumeration might impact the job run time performance.
+
+### How to troubleshoot logging in to compute nodes<a name="troubleshooting-v3-multi-user-ad-compute-node-login"></a>
+
+This section is relevant to logging in to compute nodes in clusters integrated with AD\.
+
+With AWS ParallelCluster, password logins to cluster compute nodes are disabled by design\.
+
+All users must use their own SSH key to log in to compute nodes\.
+
+Users can retrieve their SSH key in the head node after first login, if [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) is enabled in the cluster configuration\.
+
+When users log in to the head node for the first time, they can retrieve SSH keys that are automatically generated for them as directory users\. Home directories for the user are also created\. This can also happen the first time a sudo\-user switches to a user in the head node\.
+
+If a user hasn't logged into the head node, SSH keys aren't generated and the user won't be able to log in to compute nodes\.
+
+### Known issues with SimCenter StarCCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
+
+This section is relevant to jobs launched in a multi\-user environment by Simcenter StarCCM\+ computational fluid dynamics software from Siemens\.
+
+If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
+
+Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error like `error setting up the bootstrap proxies`\.
+
+To prevent this from occurring, force IntelMPI to use Slurm as MPI boostrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
+
+### How to resolve home directory create issues<a name="troubleshooting-v3-multi-home-directory"></a>
+
+This section is relevant to home directory creation issues\.
+
+If you see errors like the one shown in the following example, a home directory wasn't created for you when you first logged in to the head node\. Or, a home directory wasn't created for you when you first switched from a sudoer to an AD user in the head node\.
+
+```
+$ ssh AD_USER@$HEAD_NODE_IP
+/opt/parallelcluster/scripts/generate_ssh_key.sh failed: exit code 1
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+Could not chdir to home directory /home/PclusterUser85: No such file or directory
+```
+
+The home directory create failure can be caused by the `oddjob` and `oddjob-mkhomedir` packages installed in the cluster head node\.
+
+Without a home directory and SSH key, the user can't submit jobs or SSH into the cluster nodes\.
+
+If you need the `oddjob` packages in your system, verify that the `oddjobd` service is running and refresh the PAM config files to make sure that the home directory is created\. To do this, run the commands in the head node as shown in the following example\.
+
+```
+sudo systemctl start oddjobd
+sudo authconfig --enablemkhomedir --updateall
+```
+
+If you don't need the `oddjob` packages in your system, uninstall them and refresh the PAM config files to make sure that the home directory is created\. To do this, run the commands in the head node as shown in the following example\.
+
+```
+sudo yum remove -y oddjob oddjob-mkhomedir
+sudo authconfig --enablemkhomedir --updateall
+```
 
 ## Additional support<a name="troubleshooting-v3-additional-support"></a>
 

@@ -4,39 +4,49 @@ This section applies only to HPC clusters that are deployed with one of the supp
 
 For HPC clusters that are based on AWS Batch, AWS ParallelCluster relies on the capabilities provided by the AWS Batch for the compute node management\.
 
-**Topics**
-+ [General overview](#general-overview)
-+ [`jobwatcher`](#jobwatcher)
-+ [`sqswatcher`](#sqswatcher)
-+ [`nodewatcher`](#nodewatcher)
-+ [`clustermgtd`](#clustermgtd)
-+ [`computemgtd`](#computemgtd)
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\. You can continue using them in versions up to and including 2\.11\.4, but they aren't eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\.
 
-## General overview<a name="general-overview"></a>
+**Topics**
++ [`SGE and Torque integration processes`](#sge-torque-processes)
++ [`Slurm integration processes`](#slurm-processes)
+
+## `SGE and Torque integration processes`<a name="sge-torque-processes"></a>
+
+**Note**  
+This section only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE and Torque schedulers, Amazon SNS, and Amazon SQS\.
+
+### General overview<a name="general-overview"></a>
 
 A cluster's lifecycle begins after it is created by a user\. Typically, a cluster is created from the Command Line Interface \(CLI\)\. After it's created, a cluster exists until it's deleted\. AWS ParallelCluster daemons run on the cluster nodes, mainly to manage the HPC cluster elasticity\. The following diagram shows a user workflow and the cluster lifecycle\. The sections that follow describe the AWS ParallelCluster daemons that are used to manage the cluster\.
 
 ![\[Cluster lifecycle\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/workflow.png)
 
-## `jobwatcher`<a name="jobwatcher"></a>
+With SGE and Torque schedulers, AWS ParallelCluster uses `nodewatcher`, `jobwatcher`, and `sqswatcher` processes\.
 
-When a cluster is running, a process owned by the root user monitors the configured scheduler \(SGE, Slurm, or Torque\)\. Each minute it evaluates the queue in order to decide when to scale up\.
+### `jobwatcher`<a name="jobwatcher"></a>
+
+When a cluster is running, a process owned by the root user monitors the configured scheduler \(SGE or Torque\)\. Each minute it evaluates the queue in order to decide when to scale up\.
 
 ![\[jobwatcher workflow\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/jobwatcher.png)
 
-## `sqswatcher`<a name="sqswatcher"></a>
+### `sqswatcher`<a name="sqswatcher"></a>
 
 The `sqswatcher` process monitors for Amazon SQS messages that are sent by Auto Scaling to notify you of state changes within the cluster\. When an instance comes online, it submits an "instance ready" message to Amazon SQS\. This message is picked up by `sqs_watcher`, running on the head node\. These messages are used to notify the queue manager when new instances come online or are terminated, so they can be added or removed from the queue\.
 
 ![\[sqswatcher workflow\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/sqswatcher.png)
 
-## `nodewatcher`<a name="nodewatcher"></a>
+### `nodewatcher`<a name="nodewatcher"></a>
 
 The `nodewatcher` process runs on each node in the compute fleet\. After the `scaledown_idletime` period, as defined by the user, the instance is terminated\.
 
 ![\[nodewatcher workflow\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/nodewatcher.png)
 
-## `clustermgtd`<a name="clustermgtd"></a>
+## `Slurm integration processes`<a name="slurm-processes"></a>
+
+With Slurm schedulers, AWS ParallelCluster uses `clustermgtd` and `computemgt` processes\.
+
+### `clustermgtd`<a name="clustermgtd"></a>
 
 Clusters that run in heterogeneous mode \(indicated by specifying a [`queue_settings`](cluster-definition.md#queue-settings) value\) have a cluster management daemon \(`clustermgtd`\) process that runs on the head node\. These tasks are performed by the cluster management daemon\.
 + Inactive partition clean\-up
@@ -48,6 +58,6 @@ Clusters that run in heterogeneous mode \(indicated by specifying a [`queue_sett
 + Scheduled maintenance events management
 + Unhealthy Scheduler nodes management \(failing Scheduler health checks\)
 
-## `computemgtd`<a name="computemgtd"></a>
+### `computemgtd`<a name="computemgtd"></a>
 
 Clusters that run in heterogeneous mode \(indicated by specifying a [`queue_settings`](cluster-definition.md#queue-settings) value\) have compute management daemon \(`computemgtd`\) processes that run on each of the compute node\. Every five \(5\) minutes, the compute management daemon confirms that the head node can be reached and is healthy\. If five \(5\) minutes pass during which the head node cannot be reached or is not healthy, the compute node is shut down\.

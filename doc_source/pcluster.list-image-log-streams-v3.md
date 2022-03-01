@@ -14,7 +14,7 @@ pcluster list-image-log-streams [-h] --image-id IMAGE_ID
 `-h, --help`  
 Shows the help text for `pcluster list-image-log-streams`\.
 
-`--image-id, -i IMAGE_ID`
+`--image-id, -i IMAGE_ID`  
 Specifies the ID of the image\.
 
 `--region, -r REGION`  

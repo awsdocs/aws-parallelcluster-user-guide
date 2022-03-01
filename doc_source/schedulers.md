@@ -2,8 +2,8 @@
 
 AWS ParallelCluster supports several schedulers, set using the [`scheduler`](cluster-definition.md#scheduler) setting\.
 
-**Warning**  
-Starting on December 31, 2021, AWS will no longer include SGE and Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support SGE and Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for either SGE or Torque\.
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\. You can continue using them in versions up to and including 2\.11\.4, but they aren't eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\.
 
 **Topics**
 + [Son of Grid Engine](schedulers.sge.md)

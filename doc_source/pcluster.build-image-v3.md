@@ -37,7 +37,7 @@ Specifies the AWS Region to use\. The Region must be specified, using the [Regio
 `--image-configuration, -c IMAGE_CONFIGURATION`  
 Specifies the image configuration file as a YAML document\.
 
-`--image-id, -i IMAGE_ID`
+`--image-id, -i IMAGE_ID`  
 Specifies the id of the image that will be built\.
 
 `--debug`  

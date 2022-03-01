@@ -26,6 +26,9 @@ The following Amazon Web Services \(AWS\) services are used by AWS ParallelClust
 
 ## AWS Auto Scaling<a name="aws-auto-scaling"></a>
 
+**Note**  
+This section only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of AWS Auto Scaling\.
+
 AWS Auto Scaling is a service that monitors your applications and automatically adjusts capacity based on your specific and changing service requirements\. This service manages your ComputeFleet instances as an Auto Scaling group\. The group can be elastically driven by your changing workload or statically fixed by your initial instance configurations\.
 
 AWS Auto Scaling is used with ComputeFleet instances but is not used with AWS Batch clusters\.
@@ -138,6 +141,9 @@ For more information about Route 53, see [https://aws\.amazon\.com/route53/](ht
 
 ## Amazon Simple Notification Service<a name="amazon-simple-notification-service-sns"></a>
 
+**Note**  
+This section only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of Amazon Simple Notification Service\.
+
 Amazon Simple Notification Service \(Amazon SNS\) receives notifications from Auto Scaling\. These events are called lifecycle events and are generated when an instance launches or terminates in an Auto Scaling group\. Within AWS ParallelCluster, the Amazon SNS topic for the Auto Scaling group is subscribed to an Amazon SQS queue\.
 
 Amazon SNS is not used with AWS Batch clusters\.
@@ -145,6 +151,9 @@ Amazon SNS is not used with AWS Batch clusters\.
 For more information about Amazon SNS, see [https://aws\.amazon\.com/sns/](http://aws.amazon.com/sns/) and [https://docs\.aws\.amazon\.com/sns/](https://docs.aws.amazon.com/sns/)\.
 
 ## Amazon Simple Queue Service<a name="amazon-simple-queuing-service-sqs"></a>
+
+**Note**  
+This section only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of Amazon Simple Queue Service\.
 
 Amazon Simple Queue Service \(Amazon SQS\) holds notification sent from Auto Scaling, notifications sent through Amazon SNS, and notifications sent from the compute nodes\. Amazon SQS decouples the sending of notifications from the receiving of notifications\. This allows the head node to handle notifications through a polling process\. In this process, the head node runs Amazon SQSwatcher and polls the queue\. Auto Scaling and the compute nodes post messages to the queue\.
 

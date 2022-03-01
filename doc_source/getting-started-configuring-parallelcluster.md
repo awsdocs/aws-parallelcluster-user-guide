@@ -18,13 +18,13 @@ The Region where the cluster is launched must have at least one Amazon EC2 key p
 $ pcluster configure
 ```
 
-The configure wizard prompts you for all of the information that's needed to create your cluster\. The details of the sequence differ when using AWS Batch as the scheduler compared to using SGE, Slurm, or Torque\.
+The configure wizard prompts you for all of the information that's needed to create your cluster\. The details of the sequence differ when using AWS Batch as the scheduler compared to using Slurm\.
 
-**Warning**  
-Starting on December 31, 2021, AWS will no longer include SGE and Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support SGE and Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for either SGE or Torque\.
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\. You can continue using them in versions up to and including 2\.11\.4, but they aren't eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\.
 
 ------
-#### [ SGE, Slurm, or Torque ]
+#### [ Slurm ]
 
 From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
 
@@ -60,23 +60,20 @@ Choose the scheduler to use with your cluster\.
 
 ```
 Allowed values for Scheduler:
-1. sge
-2. torque
-3. slurm
-4. awsbatch
-Scheduler [sge]:
+1. slurm
+2. awsbatch
+Scheduler [slurm]:
 ```
 
 Choose the operating system\.
 
 ```
 Allowed values for Operating System:
-1. alinux
-2. alinux2
-3. centos7
-4. ubuntu1804
-5. ubuntu2004
-Operating System [alinux]:
+1. alinux2
+2. centos7
+3. ubuntu1804
+4. ubuntu2004
+Operating System [alinux2]:
 ```
 
 **Note**  
@@ -176,11 +173,9 @@ Choose the scheduler to use with your cluster\.
 
 ```
 Allowed values for Scheduler:
-1. sge
-2. torque
-3. slurm
-4. awsbatch
-Scheduler [sge]:
+1. slurm
+2. awsbatch
+Scheduler [awsbatch]:
 ```
 
 When `awsbatch` is selected as the scheduler, `alinux2` is used as the operating system\.

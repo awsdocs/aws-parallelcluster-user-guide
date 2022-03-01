@@ -31,7 +31,11 @@ This list contains the path of the logs and the *logIdentifier* used for those l
 + `/var/log/sqswatcher` \(`sqswatcher`\)
 + `/var/log/supervisord.log` \(`supervisord`\)
 + `/var/log/syslog` \(`syslog`\)
-+ `/var/spool/sge/*/messages` \(`sge-exec-daemon`\)
++ 
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
+
+  `/var/spool/sge/*/messages` \(`sge-exec-daemon`\)
 + `/var/spool/torque/client_logs/*` \(`torque-client`\)
 + `/var/spool/torque/server_logs/*` \(`torque-server`\)
 

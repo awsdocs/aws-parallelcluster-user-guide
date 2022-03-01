@@ -156,7 +156,7 @@ For example, in the [IntelMPI official documentation](https://www.intel.com/cont
 **Note**  
 Known issue  
 In the case where your MPI application relies on SSH as mechanism to spawn MPI jobs, it's possible to incur in a [known bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes the wrong resolution of the directory user name to "nobody"\.  
-Either configure your application to use Slurm as the MPI bootstrapping method or refer to [Known issues with user name resolution](troubleshooting-v3.md#troubleshooting-v3-multi-user-name-resolution) in the Troubleshooting section for further details and possible workarounds\.
+Either configure your application to use Slurm as the MPI bootstrapping method or refer to [Known issues with username resolution](troubleshooting-v3.md#troubleshooting-v3-multi-user-name-resolution) in the Troubleshooting section for further details and possible workarounds\.
 
 ## Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations<a name="examples-addir-v3"></a>
 
