@@ -18,7 +18,7 @@ pcluster get-image-log-events [-h] --image-id IMAGE_ID
 `-h, --help`  
 Shows the help text for `pcluster get-image-log-events`\.
 
-`--image-id, -i IMAGE_ID`
+`--image-id, -i IMAGE_ID`  
 Specifies the Id of the image\.
 
 `--log-stream-name LOG_STREAM_NAME`  

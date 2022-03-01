@@ -65,6 +65,9 @@ The output shows that we have two compute nodes in our cluster, both with two th
 
 ## Running your first job using SGE<a name="running-your-first-job-using-sge"></a>
 
+**Note**  
+This example only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
+
 Next, we create a job that sleeps for a little while and then outputs its own hostname\.
 
 Create a file called `hellojob.sh`, with the following contents\.

@@ -38,7 +38,7 @@ Specifies the start of the time range, expressed in ISO 8601 format \(`YYYY-MM-D
 `--end-time END_TIME`  
 Specifies the end of the time range to collect log events, expressed in ISO 8601 format \(`YYYY-MM-DDThh:mm:ssZ`, for example `2021-01-01T20:00:00Z`'\)\. Events with a timestamp equal to or later than this time are not included\. Time elements \(e\.g\. minutes and seconds\) may be omitted\. The default value is the current time\.
 
-`--image-id, -i IMAGE_ID`
+`--image-id, -i IMAGE_ID`  
 The image ID whose logs will be exported\.
 
 `--bucket BUCKET`  

@@ -321,7 +321,7 @@ Networking:
 ##### `Networking` Properties<a name="Scheduling-v3-SlurmQueues-Networking.properties"></a>
 
 `SubnetIds` \(**Required**, `[String]`\)  
-Specifies the IDs of existing subnets in which to provision the Slurm queue\.  
+Specifies the IDs of existing subnets in which to provision the Slurm queue\. Currently only one subnet is supported\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `AssignPublicIp` \(**Optional**, `String`\)  
@@ -377,7 +377,7 @@ Image:
 ##### `Image` Properties<a name="Scheduling-v3-SlurmQueues-Image.properties"></a>
 
 `CustomAmi` \(**Optional**, `String`\)  
-The AMI to use for the Slurm queue instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.4/amis.txt)\.
+The AMI to use for the Slurm queue instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.5/amis.txt)\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 

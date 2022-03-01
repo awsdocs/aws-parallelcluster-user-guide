@@ -9,6 +9,7 @@
 + [Directories that cannot be replaced](#directories-cannot-be-replaced)
 + [Troubleshooting issues in NICE DCV](#nice-dcv-troubleshooting)
 + [Troubleshooting issues in clusters with AWS Batch integration](#clusters-with-aws-batch-integration)
++ [Troubleshooting when a resource fails to create](#troubleshooting-resource-fails-to-create)
 + [Additional support](#getting-support)
 
 The AWS ParallelCluster community maintains a Wiki page that provides many troubleshooting tips on the [AWS ParallelCluster GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki/)\. For a list of known issues, see [Known issues](https://github.com/aws/aws-parallelcluster/wiki#known-issues-)\.
@@ -155,6 +156,9 @@ This section continues to explore how you can troubleshoot node related issues, 
 
 ## Troubleshooting issues in single queue mode clusters<a name="troubleshooting-issues-in-single-queue-clusters"></a>
 
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
+
  This section applies to clusters that don’t have multiple queue mode with one of the following two configurations:
 + Launched using a AWS ParallelCluster version earlier than 2\.9\.0 and SGE, Torque, or Slurm job schedulers\.
 + Launched using AWS ParallelCluster version 2\.9\.0 or later and SGE or Torque job schedulers\.
@@ -237,12 +241,14 @@ This includes the default user home folder \(`/home/ec2_user` on Amazon Linux, `
 This includes Intel MPI, Intel Parallel Studio, and related files\.
 
 `/opt/sge`  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 This includes Son of Grid Engine and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = sge`\.\)
 
 `/opt/slurm`  
 This includes Slurm Workload Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = slurm`\.\)
 
 `/opt/torque`  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 This includes Torque Resource Manager and related files\. \(Conditional, only if [`scheduler`](cluster-definition.md#scheduler)` = torque`\.\)
 
 ## Troubleshooting issues in NICE DCV<a name="nice-dcv-troubleshooting"></a>
@@ -270,6 +276,58 @@ AWS Batch manages the scaling and compute aspects of your services\. If you enco
 ### Job failures<a name="job-failures"></a>
 
 If a job fails, you can run the ``awsbout`` command to retrieve the job output\. You can also run the ``awsbstat` -d` command to obtain a link to the job logs stored by Amazon CloudWatch\.
+
+## Troubleshooting when a resource fails to create<a name="troubleshooting-resource-fails-to-create"></a>
+
+This section is relevant to cluster resources when they fail to create\.
+
+When a resource fails to create, ParallelCluster returns an error message like the following\.
+
+```
+pcluster create -c config my-cluster
+Beginning cluster creation for cluster: my-cluster
+WARNING: The instance type 'p4d.24xlarge' cannot take public IPs. Please make sure that the subnet with 
+id 'subnet-1234567890abcdef0' has the proper routing configuration to allow private IPs reaching the 
+Internet (e.g. a NAT Gateway and a valid route table).
+WARNING: The instance type 'p4d.24xlarge' cannot take public IPs. Please make sure that the subnet with
+id 'subnet-1234567890abcdef0' has the proper routing configuration to allow private IPs reaching the Internet 
+(e.g. a NAT Gateway and a valid route table).
+Info: There is a newer version 3.0.3 of AWS ParallelCluster available.
+Creating stack named: parallelcluster-my-cluster
+Status: parallelcluster-my-cluster - ROLLBACK_IN_PROGRESS                   
+Cluster creation failed.  Failed events:
+- AWS::CloudFormation::Stack MasterServerSubstack Embedded stack 
+arn:aws:cloudformation:region-id:123456789012:stack/parallelcluster-my-cluster-MasterServerSubstack-ABCDEFGHIJKL/a1234567-b321-c765-d432-dcba98766789 
+was not successfully created: 
+The following resource(s) failed to create: [MasterServer]. 
+- AWS::CloudFormation::Stack parallelcluster-my-cluster-MasterServerSubstack-ABCDEFGHIJKL The following resource(s) failed to create: [MasterServer]. 
+- AWS::EC2::Instance MasterServer You have requested more vCPU capacity than your current vCPU limit of 0 allows for the instance bucket that the 
+specified instance type belongs to. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit.  
+(Service: AmazonEC2; Status Code: 400; Error Code: VcpuLimitExceeded; Request ID: a9876543-b321-c765-d432-dcba98766789; Proxy: null)
+}
+```
+
+As an example, if you see the status message shown in the previous command response, you must use instance types that won't exceed your current vCPU limit or request more vCPU capacity\.
+
+You can also use the CloudFormation console to see information about the `"Cluster creation failed"` status\.
+
+View CloudFormation error messages from the console\.
+
+1. Log in to the AWS Management Console and navigate to [https://console\.aws\.amazon\.com/cloudformation](https://console.aws.amazon.com/cloudformation/)\.
+
+1. Select the stack named parallelcluster\-*cluster\_name*\.
+
+1. Choose the **Events** tab\.
+
+1. Check the **Status** for the resource that failed to create by scrolling through the list of resource events by **Logical ID**\. If a subtask failed to create, work backwards to find the failed resource event\.
+
+1. An example of a AWS CloudFormation error message:
+
+   ```
+   2022-02-07 11:59:14 UTC-0800	MasterServerSubstack	CREATE_FAILED	Embedded stack 
+   arn:aws:cloudformation:region-id:123456789012:stack/parallelcluster-my-cluster-MasterServerSubstack-ABCDEFGHIJKL/a1234567-b321-c765-d432-dcba98766789
+   was not successfully created: The following resource(s) failed to create: [MasterServer].
+   ```
 
 ## Additional support<a name="getting-support"></a>
 

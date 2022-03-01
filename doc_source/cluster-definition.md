@@ -215,7 +215,7 @@ compute_root_volume_size = 35
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.4/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.5/amis.txt)\.
 
 There is no default value\.
 
@@ -482,6 +482,9 @@ fsx_settings = fs
 
 **\(Optional\)** Defines the name of an existing AWS Lambda execution role\. This role is attached to all Lambda functions in the cluster\. For more information, see [AWS Lambda execution role](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html) in the *AWS Lambda Developer Guide*\.
 
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
+
 An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to `iam_lambda_role`\. If both [`ec2_iam_role`](#ec2-iam-role)and `iam_lambda_role` are defined, and the [`scheduler`](#scheduler) is `sge`, `slurm`, or `torque`, then there will be no roles created\. If the [`scheduler`](#scheduler) is `awsbatch`, then there will be roles created during [`pcluster start`](pcluster.start.md)\. For example policies, see [`ParallelClusterLambdaPolicy` using SGE, Slurm, or Torque](iam.md#parallelcluster-lambda-policy) and [`ParallelClusterLambdaPolicy` using `awsbatch`](iam.md#parallelcluster-lambda-policy-batch)\.
 
 There is no default value\.
@@ -498,6 +501,9 @@ Support for `iam_lambda_role` was added in AWS ParallelCluster version 2\.10\.1\
 ## `initial_queue_size`<a name="configuration-initial-queue-size"></a>
 
 **\(Optional\)** Sets the initial number of Amazon EC2 instances to launch as compute nodes in the cluster\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be removed and replaced by the [`initial_count`](compute-resource-section.md#compute-resource-initial-count) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
+
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 
 This setting is applicable only for traditional schedulers \(SGE, Slurm, and Torque\)\. If the [`maintain_initial_size`](#maintain-initial-size) setting is `true`, then the [`initial_queue_size`](#configuration-initial-queue-size) setting must be at least one \(1\)\.
 
@@ -525,6 +531,9 @@ Before AWS ParallelCluster version 2\.11\.0, `key_name` was a required setting\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 ## `maintain_initial_size`<a name="maintain-initial-size"></a>
+
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 
 **\(Optional\)** Maintains the initial size of the Auto Scaling group for traditional schedulers \(SGE, Slurm, and Torque\)\.
 
@@ -578,6 +587,9 @@ master_root_volume_size = 35
 
 **\(Optional\)** Sets the maximum number of Amazon EC2 instances that can be launched in the cluster\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be removed and replaced by the [`max_count`](compute-resource-section.md#compute-resource-max-count) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
+
 This setting is applicable only for traditional schedulers \(SGE, Slurm, and Torque\)\.
 
 If the scheduler is `awsbatch`, use [`max_vcpus`](#max-vcpus) instead\.
@@ -605,6 +617,9 @@ max_vcpus = 20
 ## `min_vcpus`<a name="min-vcpus"></a>
 
 **\(Optional\)** Maintains the initial size of the Auto Scaling group for the `awsbatch` scheduler\.
+
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 
 If the scheduler is SGE, Slurm, or Torque, use [`maintain_initial_size`](#maintain-initial-size) instead\.
 
@@ -662,7 +677,7 @@ placement_group = DYNAMIC
 
 ## `post_install`<a name="post-install"></a>
 
-**\(Optional\)** Specifies the URL of a post\-install script that's run after all the node bootstrap actions are complete\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.
+**\(Optional\)** Specifies the URL of a post\-install script that's run after all of the node bootstrap actions are complete\. For more information, see [Custom Bootstrap Actions](pre_post_install.md)\.
 
 When using `awsbatch` as the scheduler, the post\-install script is run only on the head node\.
 
@@ -820,16 +835,15 @@ Valid options are the following values:
 AWS Batch
 
 `sge`  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 Son of Grid Engine \(SGE\)
 
 `slurm`  
 Slurm Workload Manager \(Slurm\)
 
 `torque`  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 Torque Resource Manager \(Torque\)
-
-**Warning**  
-Starting on December 31, 2021, AWS will no longer include SGE and Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support SGE and Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for either SGE or Torque\.
 
 For more information about the `awsbatch` scheduler, see [networking setup](networking.md#awsbatch-networking)\.
 
@@ -873,6 +887,9 @@ spot_bid_percentage = 85
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
 ## `spot_price`<a name="spot-price"></a>
+
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 
 **\(Optional\)** Sets the maximum Spot price for the ComputeFleet on traditional schedulers \(SGE, Slurm, and Torque\)\. Used only when the [`cluster_type`](#cluster-type) setting is set to `spot`\. If you don't specify a value, you are charged the Spot price, capped at the On\-Demand price\. If the [`queue_settings`](#queue-settings) setting is defined, then this setting must be removed and replaced by the [`spot_price`](compute-resource-section.md#compute-resource-spot-price) settings in the [`[compute_resource]` sections](compute-resource-section.md)\.
 
@@ -922,7 +939,7 @@ Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templa
 This is an advanced parameter\. Any change to this setting is done at your own risk\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.4.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.5.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

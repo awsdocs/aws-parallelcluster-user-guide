@@ -2,6 +2,9 @@
 
 The following example configurations demonstrate AWS ParallelCluster configurations using Slurm, Torque, and AWS Batch schedulers\.
 
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
+
 **Contents**
 + [Slurm Workload Manager \(`slurm`\)](#example.slurm)
 + [Son of Grid Engine \(`sge`\) and Torque Resource Manager \(`torque`\)](#example.torque)
@@ -51,6 +54,9 @@ max_count = 5                       # optional, defaults to 10
 
 ## Son of Grid Engine \(`sge`\) and Torque Resource Manager \(`torque`\)<a name="example.torque"></a>
 
+**Note**  
+This example only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
+
 The following example launches a cluster with the `torque` or `sge` scheduler\. To use SGE, change `scheduler = torque` to `scheduler = sge`\. The example configuration allows a maximum of 5 concurrent nodes, and scales down to two when no jobs have run for 10 minutes\.
 
 ```
@@ -67,7 +73,7 @@ master_subnet_id = <your subnet>
 vpc_id = <your VPC>
 
 [cluster torque]
-key_name = <your EC2 keypair name>
+key_name = <your EC2 keypair name>but they aren't eligible for future updates
 base_os = alinux2                   # optional, defaults to alinux2
 scheduler = torque                  # optional, defaults to sge
 master_instance_type = t3.micro     # optional, defaults to t3.micro
@@ -77,8 +83,8 @@ maintain_initial_size = true        # optional, defaults to false
 max_queue_size = 5                  # optional, defaults to 10
 ```
 
-**Warning**  
-Starting on December 31, 2021, AWS will no longer include SGE and Torque support for all released versions of AWS ParallelCluster\. Previous versions of AWS ParallelCluster that support SGE and Torque will still be available for download and use\. However, these versions will not be eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\. Moreover, future releases of AWS ParallelCluster made before and after December 31, 2021 will not include support for either SGE or Torque\.
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\. If you use these versions, you can continue using them, or troubleshooting support from the AWS service and AWS Support teams\.
 
 ## AWS Batch \(`awsbatch`\)<a name="example.awsbatch"></a>
 

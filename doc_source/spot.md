@@ -23,12 +23,14 @@ The job fails with a state code of `NODE_FAIL`, and the job is requeued \(unless
 This behavior changed in AWS ParallelCluster version 2\.9\.0\. Earlier versions terminated the job with a state code of `NODE_FAIL` and the node was removed from the scheduler queue\.
 
 SGE  
+This only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 The job is terminated\. If the job has enabled the rerun flag \(using either `qsub -r yes` or `qalter -r yes`\) or the queue has the `rerun` configuration set to `TRUE`, then the job is rescheduled\. The compute instance is removed from the scheduler queue\. This behavior comes from these SGE configuration parameters:  
 + `reschedule_unknown 00:00:30`
 + `ENABLE_FORCED_QDEL_IF_UNKNOWN`
 + `ENABLE_RESCHEDULE_KILL=1`
 
 Torque  
+This only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 The job is removed from the system and the node is removed from the scheduler\. The job isn't rerun\. If multiple jobs are running on the instance when it is interrupted, Torque might time out during node removal\. An error might display in the [`sqswatcher`](processes.md#sqswatcher) log file\. This doesn't affect scaling logic, and a proper cleanup is performed by subsequent retries\.
 
 ## Scenario 3: Spot Instance running multi\-node jobs is interrupted<a name="multi-node"></a>
@@ -40,6 +42,7 @@ The job fails with a state code of `NODE_FAIL`, and the job is requeued \(unless
 This behavior changed in AWS ParallelCluster version 2\.9\.0\. Earlier versions terminated the job with a state code of `NODE_FAIL` and the node was removed from the scheduler queue\. Other nodes that were running the terminated jobs might be scaled down after the configured [`scaledown_idletime`](scaling-section.md#scaledown-idletime) time has passed\.
 
 SGE  
+This only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 The job isn't terminated and continues to run on the remaining nodes\. The compute node is removed from the scheduler queue, but will appear in the hosts list as an orphaned and unavailable node\.  
 The user must delete the job when this occurs \(`qdel <jobid>`\)\. The node still displays in the hosts list \(`qhost`\), although this doesn't affect AWS ParallelCluster\. To remove the host from the list, run the following command after replacing the instance\.  
 
@@ -48,6 +51,7 @@ sudo -- bash -c 'source /etc/profile.d/sge.sh; qconf -dattr hostgroup hostlist <
 ```
 
 Torque  
+This only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 The job is removed from the system and the node is removed from the scheduler\. The job isn't rerun\. If multiple jobs are running on the instance when it is interrupted, Torque might time out during node removal\. An error might display in the [`sqswatcher`](processes.md#sqswatcher) log file\. This doesn't affect scaling logic, and a proper cleanup is performed by subsequent retries\.
 
 For more information about Spot Instances, see [Spot Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.

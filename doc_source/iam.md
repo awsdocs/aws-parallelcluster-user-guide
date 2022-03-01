@@ -4,6 +4,11 @@ AWS ParallelCluster uses AWS Identity and Access Management \(IAM\) roles for Am
 
 AWS ParallelCluster uses multiple AWS services to deploy and operate a cluster\. See the complete list in the [AWS Services used in AWS ParallelCluster](aws-services.md) section\.
 
+**Topics**
++ [Default settings for cluster creation](#defaults)
++ [Using an existing IAM role for Amazon EC2](#using-an-existing-ec2-iam-role)
++ [AWS ParallelCluster example instance and user policies](#example-parallelcluser-policies)
+
 ## Default settings for cluster creation<a name="defaults"></a>
 
 When you use the default settings for cluster creation, an IAM role for Amazon EC2 is created by the cluster\. The user that creates the cluster must have the right level of permissions to create all of the resources required to launch the cluster\. This includes an IAM role for Amazon EC2\. Typically, the IAM user must have the permissions of an *AdministratorAccess* managed policy\. For information about managed policies, see [AWS managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies) in the *IAM User Guide*\.
@@ -28,7 +33,182 @@ The following example policies include Amazon Resource Names \(ARNs\) for the re
 
 ### `ParallelClusterInstancePolicy` using SGE, Slurm, or Torque<a name="parallelclusterinstancepolicy"></a>
 
-The following example sets the `ParallelClusterInstancePolicy` using SGE, Slurm, or Torque as the scheduler\.
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\. You can continue using them in versions up to and including 2\.11\.4, but they aren't eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\.
+
+**Topics**
++ [`ParallelClusterInstancePolicy` using Slurm](#parallelclusterinstancepolicy-slurm)
++ [`ParallelClusterInstancePolicy` using SGE or Torque](#parallelclusterinstancepolicy-sge-torque)
+
+#### `ParallelClusterInstancePolicy` using Slurm<a name="parallelclusterinstancepolicy-slurm"></a>
+
+The following example sets the `ParallelClusterInstancePolicy` using Slurm as the scheduler\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:DescribeVolumes",
+                "ec2:AttachVolume",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeInstances",
+                "ec2:DescribeRegions",
+                "ec2:TerminateInstances",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:CreateTags"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "EC2"
+        },
+        {
+            "Action": "ec2:RunInstances",
+            "Resource": [
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:subnet/<COMPUTE SUBNET ID>",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:network-interface/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:instance/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:volume/*",
+                "arn:aws:ec2:<REGION>::image/<IMAGE ID>",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:key-pair/<KEY NAME>",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:security-group/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:launch-template/*",
+                "arn:aws:ec2:<REGION>:<AWS ACCOUNT ID>:placement-group/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "EC2RunInstances"
+        },
+        {
+            "Action": [
+                "dynamodb:ListTables"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "DynamoDBList"
+        },
+        {
+            "Action": [
+                "cloudformation:DescribeStacks",
+                "cloudformation:DescribeStackResource",
+                "cloudformation:SignalResource"
+            ],
+            "Resource": [
+                "arn:aws:cloudformation:<REGION>:<AWS ACCOUNT ID>:stack/parallelcluster-*/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "CloudFormation"
+        },
+        {
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*"
+            ],
+            "Effect": "Allow",
+            "Sid": "DynamoDBTable"
+        },
+        {
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<REGION>-aws-parallelcluster/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "S3GetObj"
+        },
+        {
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "IAMPassRole",
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": [
+                        "ec2.amazonaws.com"
+                    ]
+                }
+            }
+        },
+        {
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::dcv-license.<REGION>/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "DcvLicense"
+        },
+        {
+            "Action": [
+                "s3:GetObject",
+                "s3:GetObjectVersion"
+            ],
+            "Resource": [
+                "arn:aws:s3:::parallelcluster-*/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "GetClusterConfig"
+        },
+        {
+            "Action": [
+                "fsx:DescribeFileSystems"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "FSx"
+        },
+        {
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "CWLogs"
+        },
+        {
+            "Action": [
+                "route53:ChangeResourceRecordSets"
+            ],
+            "Resource": [
+                "arn:aws:route53:::hostedzone/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "Route53"
+        }
+    ]
+}
+```
+
+#### `ParallelClusterInstancePolicy` using SGE or Torque<a name="parallelclusterinstancepolicy-sge-torque"></a>
+
+The following example sets the `ParallelClusterInstancePolicy` using SGE or Torque as the scheduler\.
+
+**Note**  
+This policy only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 
 ```
 {
@@ -666,6 +846,9 @@ To:
 ```
 
 ### `ParallelClusterUserPolicy` using SGE or Torque<a name="parallelclusteruserpolicy-sge-torque"></a>
+
+**Note**  
+This section only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 
 The following example sets the `ParallelClusterUserPolicy`, using SGE or Torque as the scheduler\. In this example, “*<RESOURCES S3 BUCKET>*” is the value of the [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) setting; if [`cluster_resource_bucket`](cluster-definition.md#cluster-resource-bucket-section) is not specified then “*<RESOURCES S3 BUCKET>*” is “parallelcluster\-\*”\.
 
@@ -1388,6 +1571,9 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
 ### `ParallelClusterLambdaPolicy` using SGE, Slurm, or Torque<a name="parallelcluster-lambda-policy"></a>
 
 The following example sets the `ParallelClusterLambdaPolicy`, using SGE, Slurm, or Torque as the scheduler\.
+
+**Note**  
+Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 
 ```
 {

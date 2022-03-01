@@ -298,7 +298,7 @@ Scheduling:
 
 ## Scheduler Support<a name="scheduler_support"></a>
 
- AWS ParallelCluster 3\.x doesn't support Son of Grid Engine \(SGE\) and Torque schedulers\. 
+ AWS ParallelCluster 3\.x doesn't support Son of Grid Engine \(SGE\) and Torque schedulers\.
 
  The AWS Batch commands `awsbhosts`, `awsbkill`, `awsbout`, `awsbqueues`, `awsbstat`, and `awsbsub` are distributed as a separate `aws-parallelcluster-awsbatch-cli` PyPI package\. This package is installed by AWS ParallelCluster on the head node\. You can still use these AWS Batch commands from the cluster's head node\. However, if you wish to use AWS Batch commands from a location other than the head node, you must first install the `aws-parallelcluster-awsbatch-cli` PyPI package\. 
 
