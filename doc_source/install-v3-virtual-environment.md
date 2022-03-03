@@ -55,7 +55,7 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
    ```
    $ pcluster version
    {
-     "version": "3.1.1"
+     "version": "3.1.2"
    }
    ```
 
