@@ -48,7 +48,7 @@ ldaps://abcdef01234567890.corp.pcluster.com  # LDAPS with support for certificat
 ```
 If you use LDAPS with certificate verification, the URIs must be hostnames\.  
 If you use LDAPS without certificate verification or LDAP, URIs can be hostnames or IP addresses\.  
-Use LDAP over TSL/SSL \(LDAPS\) to avoid transmission of passwords and other sensitive information over unencrypted channels\. If AWS ParallelCluster doesn't find a protocol, it adds `ldaps://` to the beginning of each URI or hostname\.  
+Use LDAP over TLS/SSL \(LDAPS\) to avoid transmission of passwords and other sensitive information over unencrypted channels\. If AWS ParallelCluster doesn't find a protocol, it adds `ldaps://` to the beginning of each URI or hostname\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `PasswordSecretArn` \(**Required**, `String`\)  

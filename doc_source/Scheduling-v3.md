@@ -133,9 +133,6 @@ AwsBatchQueues:
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
-**Topics**
-+ [`AwsBatchQueues` Properties](#Scheduling-v3-AwsBatchQueues.properties)
-
 ### `AwsBatchQueues` Properties<a name="Scheduling-v3-AwsBatchQueues.properties"></a>
 
 `Name` \(**Required**, `String`\)  
@@ -144,6 +141,12 @@ The name of the AWS Batch queue\.
 
 `CapacityType` \(**Optional**, `String`\)  
 The type of the compute resources used in the AWS Batch queue\. Supported values are `ONDEMAND` or `SPOT`\. The default value is `ONDEMAND`\.  
+When `CapacityType` is set to `SPOT`, there must be an `AWSServiceRoleForEC2Spot` service\-linked role in your account\. You can create this role with the following AWS CLI command:  
+
+```
+$ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com
+```
+For more information, see [Service\-linked role for Spot Instance requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html#service-linked-roles-spot-instance-requests) in the *Amazon EC2 User Guide for Linux Instances*\.
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 #### `Networking`<a name="Scheduling-v3-AwsBatchQueues-Networking"></a>
@@ -285,9 +288,6 @@ SlurmQueues:
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
-**Topics**
-+ [`SlurmQueues` Properties](#Scheduling-v3-SlurmQueues.properties)
-
 ### `SlurmQueues` Properties<a name="Scheduling-v3-SlurmQueues.properties"></a>
 
 `Name` \(**Required**, `String`\)  
@@ -296,6 +296,12 @@ The name of the Slurm queue\.
 
 `CapacityType` \(**Optional**, `String`\)  
 The type of the compute resources used in the Slurm queue\. Supported values are `ONDEMAND` or `SPOT`\. The default value is `ONDEMAND`\.  
+When `CapacityType` is set to `SPOT`, there must be an `AWSServiceRoleForEC2Spot` service\-linked role in your account\. You can create this role with the following AWS CLI command:  
+
+```
+$ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com
+```
+For more information, see [Service\-linked role for Spot Instance requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html#service-linked-roles-spot-instance-requests) in the *Amazon EC2 User Guide for Linux Instances*\.
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 #### `Networking`<a name="Scheduling-v3-SlurmQueues-Networking"></a>
@@ -326,15 +332,17 @@ Specifies the IDs of existing subnets in which to provision the Slurm queue\. Cu
 
 `AssignPublicIp` \(**Optional**, `String`\)  
 Creates or assigns a public IP address to the nodes in the Slurm queue\. Supported values are `true` and `false`\. The default depends on the subnet specified; a subnet with public IPs will default to assigning public IP addresses\.  
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. In this case, set `AssignPublicIp` to `false`\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `SecurityGroups` \(**Optional**, `[String]`\)  
 List of security groups to use for the Slurm queue\. If no security groups are specified, AWS ParallelCluster will create new ones\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+If you're enabling [Efa](#yaml-Scheduling-SlurmQueues-ComputeResources-Efa) for your compute instances, ensure that your EFA\-enabled instances are members of a security group that allows all inbound and outbound traffic to itself\.
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `AdditionalSecurityGroups` \(**Optional**, `[String]`\)  
 List of additional security groups to use for the Slurm queue\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `PlacementGroup` \(**Optional**\)  
 Specifies the placement group settings for the Slurm queue\.  
@@ -377,7 +385,33 @@ Image:
 ##### `Image` Properties<a name="Scheduling-v3-SlurmQueues-Image.properties"></a>
 
 `CustomAmi` \(**Optional**, `String`\)  
-The AMI to use for the Slurm queue instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.5/amis.txt)\.
+The AMI to use for the Slurm queue instead of the default AMIs\. You can use the pcluster CLI command to view a list of the default AMIs\.  
+
+```
+pcluster list-official-images
+```
+If the custom AMI requires additional permissions for its launch, these permissions must be added to the head node policy\.  
+For example, if a custom AMI has an encrypted snapshot associated with it, the following additional policies are required in the head node policies:  
+
+```
+{
+   "Version": "2012-10-17",
+   "Statement": [
+       {
+           "Effect": "Allow",
+           "Action": [
+               "kms:DescribeKey",
+               "kms:ReEncrypt*",
+               "kms:CreateGrant",
+               "kms:Decrypt"
+           ],
+           "Resource": [
+               "arn:aws:kms:<AWS_REGION>:<AWS_ACCOUNT_ID>:key/<AWS_KMS_KEY_ID>"
+           ]                                                    
+       }
+   ]
+}
+```
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
@@ -411,6 +445,7 @@ Not all instance types can disable hyperthreading\. For a list of instance types
 
 `InstanceType` \(**Required**, `String`\)  
 The instance type to use in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture, either `x86_64` or `arm64`\.  
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `MinCount` \(**Optional**, `Integer`\)  
@@ -435,7 +470,8 @@ Efa:
   GdrSupport: boolean
 ```  
 `Enabled` \(**Optional**, `Boolean`\)  
-Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge` for Arm\-based Graviton2 instances\) on specific operating systems `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. A cluster placement group should be used to minimize latencies between instances\. The default value is false\.  
+Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge` for Arm\-based Graviton2 instances\) on specific operating systems `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa-v3.md)\. Use a cluster placement group to minimize latencies between instances\. The default value is `false`\.  
+If you're defining a custom security group in [SecurityGroups](#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups), ensure that your EFA\-enabled instances are members of a security group that allows all inbound and outbound traffic to itself\.
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `GdrSupport` \(**Optional**, `Boolean`\)  
 **\(Optional\)** Starting with AWS ParallelCluster version 3\.0\.2, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is always enabled if it's supported by the instance type for the Slurm compute resource and the operating system\.  
@@ -501,7 +537,7 @@ Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest
 For more information, see [Amazon EBS volume types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `Iops` \(**Optional**, `Boolean`\)  
-Defines the number of IOPS for `io1` and `io2` type volumes\.  
+Defines the number of IOPS for `io1`, `io2`, and `gp3` type volumes\.  
 The default value, supported values, and `volume_iops` to `volume_size` ratio varies by `VolumeType` and `Size`\.    
 `VolumeType` = `io1`  
 Default `Iops` = 100  
@@ -510,7 +546,11 @@ Maximum `volume_iops` to `volume_size` ratio = 50 IOPS per GiB\. 5000 IOPS requi
 `VolumeType` = `io2`  
 Default `Iops` = 100  
 Supported values `Iops` = 100–64000 \(256000 for `io2` Block Express volumes\) †  
-Maximum `Iops` to `Size` ratio = 500 IOPS per GiB\. 5000 IOPS requires a `Size` of at least 10 GiB\.
+Maximum `Iops` to `Size` ratio = 500 IOPS per GiB\. 5000 IOPS requires a `Size` of at least 10 GiB\.  
+`VolumeType` = `gp3`  
+Default `Iops` = 3000  
+Supported values `Iops` = 3000–16000 †  
+Maximum `Iops` to `Size` ratio = 500 IOPS per GiB for volumes with IOPS greater than 3000\.
 † Maximum IOPS is guaranteed only on [Instances built on the Nitro System](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) provisioned with more than 32,000 IOPS\. Other instances guarantee up to 32,000 IOPS\. Older `io1` volumes might not reach full performance unless you [modify the volume](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modify-volume.html)\. `io2` Block Express volumes support `volume_iops` values up to 256000 on `R5b` instance types\. For more information, see [`io2` Block Express volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#io2-block-express) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
 `Throughput` \(**Optional**, `Integer`\)  
@@ -640,10 +680,6 @@ SlurmSettings:
     HostedZoneId: string
     UseEc2Hostnames: string
 ```
-
-**Topics**
-+ [`SlurmSettings` Properties](#Scheduling-v3-SlurmSettings.properties)
-+ [`Dns`](#Scheduling-v3-SlurmSettings-Dns)
 
 ### `SlurmSettings` Properties<a name="Scheduling-v3-SlurmSettings.properties"></a>
 

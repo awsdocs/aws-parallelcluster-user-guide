@@ -6,5 +6,4 @@
 
 **Topics**
 + [Slurm Workload Manager \(`slurm`\)](slurm-workload-manager-v3.md)
-+ [Slurm guide for multiple queue mode](multiple-queue-mode-slurm-user-guide-v3.md)
 + [AWS Batch \(`awsbatch`\)](awsbatchcli-v3.md)

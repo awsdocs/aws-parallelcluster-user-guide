@@ -10,9 +10,16 @@ AWS ParallelCluster supports the following high\-level configurations:
 
 All of these configurations can operate with or without public IP addressing\. AWS ParallelCluster can also be deployed to use an HTTP proxy for all AWS requests\. The combinations of these configurations result in many deployment scenarios\. For example, you can configure a single public subnet with all access over the internet\. Or, you can configure a fully private network using AWS Direct Connect and HTTP proxy for all traffic\.
 
-Starting from AWS ParallelCluster 3\.0\.0 it is possible to configure different `SecurityGroups`, `AdditionalSecurityGroups` and `PlacementGroup` settings for each queue, see `HeadNode / Networking` \([`Networking`](HeadNode-v3.md#HeadNode-v3-Networking)\) and `SlurmQueues / Networking` \([`SlurmQueues` Properties](Scheduling-v3.md#Scheduling-v3-SlurmQueues.properties)\) and `AwsBatchQueues / Networking` \([`AwsBatchQueues` Properties](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues.properties)\) sections for more details\.
+Starting from AWS ParallelCluster 3\.0\.0 it is possible to configure different `SecurityGroups`, `AdditionalSecurityGroups` and `PlacementGroup` settings for each queue\. For more information, see `HeadNode` / `Networking` and `SlurmQueues` / `Networking` and `AwsBatchQueues` / `Networking`\.
 
 For illustrations of some networking scenarios, see the following architecture diagrams\.
+
+**Topics**
++ [AWS ParallelCluster in a single public subnet](#network-configuration-v3-single-subnet)
++ [AWS ParallelCluster using two subnets](#network-configuration-v3-two-subnets)
++ [AWS ParallelCluster in a single private subnet connected using AWS Direct Connect](#network-configuration-v3-single-subnet-direct-connect)
++ [AWS ParallelCluster with AWS Batch scheduler](#network-configuration-v3-batch)
++ [AWS ParallelCluster in a single subnet with no internet access](#aws-parallelcluster-in-a-single-public-subnet-no-internet-v3)
 
 ## AWS ParallelCluster in a single public subnet<a name="network-configuration-v3-single-subnet"></a>
 
@@ -22,7 +29,6 @@ For illustrations of some networking scenarios, see the following architecture d
 
 ```
 # Note that all values are only provided as examples
-...
 HeadNode:
   ...
   Networking:
@@ -39,8 +45,9 @@ Scheduling:
 ```
 
 In this configuration, all instances of the cluster must be assigned a public IP in order to get internet access\. To achieve this, do the following:
-+ Make sure the head node is assigned a public IP address by either turning on "Enable auto\-assign public IPv4 address" setting for the subnet used in `HeadNode > Networking > SubnetId` or by assigning an Elastic IP in `HeadNode > Networking > ElasticIp`\.
-+ Make sure the compute nodes are assigned a public IP address by either turning on "Enable auto\-assign public IPv4 address" setting for the subnet used in `Scheduling > SlurmQueues > Networking > SubnetIds` or by setting `AssignPublicIp: true` in `Scheduling > SlurmQueues > Networking`\.
++ Make sure the head node is assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in `HeadNode` / `Networking` / `SubnetId` or by assigning an Elastic IP in `HeadNode` / `Networking` / `ElasticIp`\.
++ Make sure the compute nodes are assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in `Scheduling` / `SlurmQueues` / `Networking` / `SubnetIds` or by setting `AssignPublicIp: true` in `Scheduling` / `SlurmQueues` / `Networking`\.
++ If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
 
 For more information, see [ Enabling internet access](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#vpc-igw-internet-access) in *Amazon VPC User Guide*\.
 
@@ -52,7 +59,6 @@ For more information, see [ Enabling internet access](https://docs.aws.amazon.co
 
 ```
 # Note that all values are only provided as examples
-...
 HeadNode:
   ...
   Networking:
@@ -68,7 +74,9 @@ Scheduling:
         #AssignPublicIp: false
 ```
 
-In this configuration, only the head node of the cluster is required to have a public IP assigned\. You can achieve so by either turning on "Enable auto\-assign public IPv4 address" setting for the subnet used in `HeadNode > Networking > SubnetId` or by assigning an Elastic IP in `HeadNode > Networking > ElasticIp`\.
+In this configuration, only the head node of the cluster is required to have a public IP assigned\. You can achieve this by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in `HeadNode` / `Networking` / `SubnetId` or by assigning an Elastic IP in `HeadNode` / `Networking` / `ElasticIp`\.
+
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
 
 This configuration requires a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) or an internal proxy in the subnet used for the queues, to give internet access to the compute instances\.
 
@@ -80,7 +88,6 @@ This configuration requires a [NAT gateway](https://docs.aws.amazon.com/vpc/late
 
 ```
 # Note that all values are only provided as examples
-...
 HeadNode:
   ...
   Networking:
@@ -101,15 +108,13 @@ Scheduling:
           HttpProxyAddress: http://proxy-address:port
 ```
 
-When `Scheduling / SlurmQueues / Networking / AssignPublicIp` is set to `false`, the subnets must be correctly set up to use the Proxy for all traffic\. Web access is required for both head and compute nodes\. 
-
- 
+When `Scheduling` / `SlurmQueues` / `Networking` / `AssignPublicIp` is set to `false`, the subnets must be correctly set up to use the Proxy for all traffic\. Web access is required for both head and compute nodes\. 
 
 ## AWS ParallelCluster with AWS Batch scheduler<a name="network-configuration-v3-batch"></a>
 
-When you use `awsbatch` as the scheduler type, AWS ParallelCluster creates an AWS Batch managed compute environment\. The AWS Batch environment manages Amazon Elastic Container Service \(Amazon ECS\) container instances\. These instances are launched in the subnet configured in the `AwsBatchQueues > Networking > SubnetIds` parameter\. For AWS Batch to function correctly, Amazon ECS container instances need external network access to communicate with the Amazon ECS service endpoint\. This translates into the following scenarios: 
-+  The Subnet Id specified for the queue uses a NAT gateway to access the internet\. \(We recommended this approach\.\) 
-+  Instances launched in the queue subnet have public IP addresses and can reach the internet through an Internet Gateway\. 
+When you use `awsbatch` as the scheduler type, AWS ParallelCluster creates an AWS Batch managed compute environment\. The AWS Batch environment manages Amazon Elastic Container Service \(Amazon ECS\) container instances\. These instances are launched in the subnet configured in the `AwsBatchQueues` / `Networking` / `SubnetIds` parameter\. For AWS Batch to function correctly, Amazon ECS container instances need external network access to communicate with the Amazon ECS service endpoint\. This translates into the following scenarios: 
++ The Subnet ID specified for the queue uses a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to access the internet\. We recommended this approach\.
++ Instances launched in the queue subnet have public IP addresses and can reach the internet through an Internet Gateway\. 
 
 Additionally, if you're interested in multi\-node parallel jobs \(from the [AWS Batch docs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html#mnp-ce)\):
 
@@ -117,14 +122,14 @@ AWS Batch multi\-node parallel jobs use the Amazon ECS `awsvpc` network mode\. T
 
 When using Amazon ECS Task Networking, the `awsvpc` network mode doesn't provide elastic network interfaces with public IP addresses for tasks that use the Amazon EC2 launch type\. To access the internet, tasks that use the Amazon EC2 launch type must be launched in a private subnet that's configured to use a NAT gateway\.
 
-You must configure a NAT gateway in order to enable the cluster to run multi\-node parallel jobs\.
+You must configure a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) in order to enable the cluster to run multi\-node parallel jobs\.
 
  ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/two-subnets-batch.png) 
 
-All the previous configuration and considerations are valid for AWS Batch, too\. See an example of AWS Batch networking configuration\. *Note that all values are only provided as examples\.*
+All the previous configuration and considerations are valid for AWS Batch, too\. The following is an example of a AWS Batch networking configuration\.
 
 ```
-...
+# Note that all values are only provided as examples
 HeadNode:
   ...
   Networking:
@@ -144,7 +149,7 @@ Scheduling:
         #AssignPublicIp: true | false
 ```
 
-In the `Scheduling > AwsBatchQueues > Networking` section the `SubnetIds` is a list type but, currently, only one subnet is supported\.
+In the `Scheduling` / `AwsBatchQueues` / `Networking` section, the `SubnetIds` is a list type but, currently, only one subnet is supported\.
 
 For more information, see the following topics:
 +  [AWS Batch managed compute environments](https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html#managed_compute_environments) 
@@ -193,9 +198,9 @@ Create and configure the following [VPC endpoints](https://docs.aws.amazon.com/v
 
 ------
 
-\*\* This endpoint is only required when [`DirectoryService`](DirectoryService-v3.md#DirectoryService-v3.properties) is enabled, otherwise it is optional\.
+\*\* This endpoint is only required when `DirectoryService` is enabled, otherwise it is optional\.
 
-All instances in the VPC must have proper security groups to communicate with the endpoints\. You can do this by adding security groups to `AdditionalSecurityGroups` under the `HeadNode` and `Queue` configurations\. For example, if the VPC endpoints are created without explicitly specifying a security group, the default security group that's associated with the endpoint\. By adding the default security group to `AdditionalSecurityGroups`, you enable the communication between the cluster and the endpoints\.
+All instances in the VPC must have proper security groups to communicate with the endpoints\. You can do this by adding security groups to `AdditionalSecurityGroups` under the `HeadNode` and `AdditionalSecurityGroups` under the `SlurmQueues` configurations\. For example, if the VPC endpoints are created without explicitly specifying a security group, the default security group that's associated with the endpoint\. By adding the default security group to `AdditionalSecurityGroups`, you enable the communication between the cluster and the endpoints\.
 
 **Disable Route 53 and use EC2 hostnames**
 
@@ -210,6 +215,9 @@ Scheduling:
       DisableManagedDns: true
       UseEc2Hostnames: true
 ```
+
+**Warning**  
+For clusters created with `SlurmSettings` / `Dns` / `DisableManagedDns` and `UseEc2Hostnames` set to `true`, the Slurm `NodeName` isn't resolved by the DNS\. Use the Slurm `NodeHostName` instead\.
 
 **Cluster configuration**
 
@@ -240,7 +248,7 @@ Scheduling:
         AdditionalSecurityGroups:
           - sg-1abcdef01234567890 # optional, the security group that enables the communication between the cluster and the VPC endpoints
 ```
-+ `SubnetId(s)`: The subnet without internet access\.
++ `SubnetId\(s\)`: The subnet without internet access\.
 
   To enable communication between AWS ParallelCluster and AWS Services, the VPC of the subnet must have the VPC endpoints attached\. Before you create your cluster, verify that [auto\-assign public IPv4 address is disabled](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html#subnet-public-ip) in the subnet to ensure that the `pcluster` commands have access to the cluster\.
 + `AdditionalSecurityGroups`: The security group that enables the communication between the cluster and the VPC endpoints\.
@@ -250,10 +258,10 @@ Scheduling:
   + If custom security groups are used when creating the cluster and/or the VPC endpoints, `AdditionalSecurityGroups` is unnecessary as long as the custom security groups enable communication between the cluster and the VPC endpoints\.
 + `Scheduler`: The cluster scheduler\.
 
-  `Slurm` is the only valid value\. Only the Slurm scheduler supports a cluster in a subnet without internet access\.
+  `slurm` is the only valid value\. Only the Slurm scheduler supports a cluster in a subnet without internet access\.
 + `SlurmSettings`: The Slurm settings\.
 
-  See the previous section *Disable Route53 and use EC2 hostnames*\.
+  See the preceding section *Disable Route53 and use EC2 hostnames*\.
 
 **Limitations**
 + *Connecting to the head node over SSH or NICE DCV:* When connecting to a cluster, make sure the client of the connection can reach the head node of the cluster through its private IP address\. If the client isn't in the same VPC as the head node, use a proxy instance in a public subnet of the VPC\. This requirement applies to both SSH and DCV connections\. The public IP of a head node isn't accessible if the subnet doesn't have internet access\. The `pcluster ssh` and `dcv-connect` commands use the public IP if it exists or the private IP\. Before you create your cluster, verify that [auto\-assign public IPv4 address is disabled](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html#subnet-public-ip) in the subnet to ensure that the `pcluster` commands have access to the cluster\.

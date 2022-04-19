@@ -15,11 +15,11 @@ The AWS ParallelCluster community maintains a Wiki page that provides many troub
 
 ## Retrieving and preserving logs<a name="troubleshooting-v3-get-logs"></a>
 
-EC2 metrics for Head Node and storage, and Head Node log streams are available in the CloudWatch Dashboard created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch)\. 
+AWS ParallelCluster creates EC2 metrics for HeadNode and Compute instances and storage\. You can view the metrics in the CloudWatch console **Custom Dashboards**\. AWS ParallelCluster also creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. The [Monitoring](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch) cluster configuration section describes how you can modify the cluster CloudWatch logs and dashboard\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
-Logs are a useful resource for troubleshooting issues\. If you want to delete a failing cluster, you should first create an archive of cluster logs\. Follow the following steps to start this process\.
+Logs are a useful resource for troubleshooting issues\. For example, if you want to delete a failing cluster, it might be useful to first create an archive of the cluster logs\. Follow the next steps to create an archive\.
 
-It is possible to archive the logs in S3 or in a local file \(depending on the `--output-file` parameter\)\.
+You can archive the logs in S3 or in a local file \(depending on the `--output-file` parameter\)\.
 
 ```
 $ pcluster export-cluster-logs --cluster-name mycluster --region eu-west-1 \
@@ -36,7 +36,7 @@ $ pcluster export-cluster-logs --cluster-name mycluster --region eu-west-1 \
 }
 ```
 
-The archive contains the Amazon CloudWatch Logs streams and AWS CloudFormation stack events from the Head Node and Compute Nodes for the last 14 days, unless specified explicitly in the configuration or in the parameters for the `export-cluster-logs` command\. Please note take the command execution may to run depending on the number of nodes in the cluster and log streams available in CloudWatch Logs\. For more information about the available log streams, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
+The archive contains the Amazon CloudWatch Logs streams and AWS CloudFormation stack events from the head node and compute nodes for the last 14 days, unless specified explicitly in the configuration or in the parameters for the `export-cluster-logs` command\. The time it takes for the command to complete depends on the number of nodes in the cluster and the number log streams available in CloudWatch Logs\. For more information about the available log streams, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md)\.
 
 Starting from 3\.0\.0, AWS ParallelCluster preserves CloudWatch Logs by default when a cluster is deleted\. If you want to delete a cluster and preserve its logs, make sure that `Monitoring > Logs > CloudWatch > DeletionPolicy` isn't set to `Delete` in the cluster configuration\. Otherwise, change the value for this field to `Retain` and run the `pcluster update-cluster` command\. Then, run `pcluster delete-cluster --cluster-name <cluster_name>` to delete the cluster yet retain the log group that’s stored in Amazon CloudWatch\.
 
@@ -84,39 +84,80 @@ $ pcluster describe-cluster --cluster-name mycluster --region eu-west-1
 }
 ```
 
+**Topics**
++ [View AWS CloudFormation events on `CREATE_FAILED`](#troubleshooting-v3-cluster-deployment-events)
++ [Use the CLI to view logstreams](#troubleshooting-v3-cluster-deployment-cli-logstreams)
++ [Re\-create the failed cluster with `rollback-on-failure`](#troubleshooting-v3-cluster-deployment-cli-fail-rollback)
+
+### View AWS CloudFormation events on `CREATE_FAILED`<a name="troubleshooting-v3-cluster-deployment-events"></a>
+
+You can use the console or the AWS ParallelCluster CLI to view CloudFormation events on `CREATE_FAILED` errors to help find the root cause\.
+
+**Topics**
++ [View events in the CloudFormation console](#troubleshooting-v3-cluster-deployment-cloudformation)
++ [Use the CLI to view and filter CloudFormation events on `CREATE_FAILED`](#troubleshooting-v3-cluster-deployment-cli-events)
+
+#### View events in the CloudFormation console<a name="troubleshooting-v3-cluster-deployment-cloudformation"></a>
+
+To see more information about what caused the `"CREATE_FAILED"` status, you can use the CloudFormation console\.
+
+**View CloudFormation error messages from the console\.**
+
+1. Log in to the AWS Management Console and navigate to [https://console\.aws\.amazon\.com/cloudformation](https://console.aws.amazon.com/cloudformation/)\.
+
+1. Select the stack named *cluster\_name*\.
+
+1. Choose the **Events** tab\.
+
+1. Check the **Status** for the resource that failed to create by scrolling through the list of resource events by **Logical ID**\. If a subtask failed to create, work backwards to find the failed resource event\.
+
+1. As an example, if you see the following status message, you must use instance types that won't exceed your current vCPU limit or request more vCPU capacity\.
+
+   ```
+   2022-02-04 16:09:44 UTC-0800	HeadNode	CREATE_FAILED	You have requested more vCPU capacity than your current vCPU limit of 0 allows 
+        for the instance bucket that the specified instance type belongs to. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit. 
+        (Service: AmazonEC2; Status Code: 400; Error Code: VcpuLimitExceeded; Request ID: a9876543-b321-c765-d432-dcba98766789; Proxy: null).
+   ```
+
+#### Use the CLI to view and filter CloudFormation events on `CREATE_FAILED`<a name="troubleshooting-v3-cluster-deployment-cli-events"></a>
+
 To diagnose the cluster creation issue you can use the ``pcluster get-cluster-stack-events`` command, by filtering for `CREATE_FAILED` status\. For more information, see [Filtering AWS CLI output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) in the *AWS Command Line Interface User Guide*\.
 
 ```
 $ pcluster get-cluster-stack-events --cluster-name mycluster --region eu-west-1 \
-  --query 'events[?resourceStatus==`CREATE_FAILED`]'
-[
-  {
-    "eventId": "3ccdedd0-0f03-11ec-8c06-02c352fe2ef9",
-    "physicalResourceId": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f02-11ec-a3b9-024fcc6f3387",
-    "resourceStatus": "CREATE_FAILED",
-    "resourceStatusReason": "The following resource(s) failed to create: [HeadNode]. ",
-    "stackId": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f02-11ec-a3b9-024fcc6f3387",
-    "stackName": "mycluster",
-    "logicalResourceId": "mycluster",
-    "resourceType": "AWS::CloudFormation::Stack",
-    "timestamp": "2021-09-06T11:11:51.780Z"
-  },
-  {
-    "eventId": "HeadNode-CREATE_FAILED-2021-09-06T11:11:50.127Z",
-    "physicalResourceId": "i-04e91cc1f4ea796fe",
-    "resourceStatus": "CREATE_FAILED",
-    "resourceStatusReason": "Received FAILURE signal with UniqueId i-04e91cc1f4ea796fe",
-    "resourceProperties": "{\"LaunchTemplate\":{\"Version\":\"1\",\"LaunchTemplateId\":\"lt-057d2b1e687f05a62\"}}",
-    "stackId": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f02-11ec-a3b9-024fcc6f3387",
-    "stackName": "mycluster",
-    "logicalResourceId": "HeadNode",
-    "resourceType": "AWS::EC2::Instance",
-    "timestamp": "2021-09-06T11:11:50.127Z"
-  }
-]
+    --query 'events[?resourceStatus==`CREATE_FAILED`]'
+  [
+    {
+      "eventId": "3ccdedd0-0f03-11ec-8c06-02c352fe2ef9",
+      "physicalResourceId": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f02-11ec-a3b9-024fcc6f3387",
+      "resourceStatus": "CREATE_FAILED",
+      "resourceStatusReason": "The following resource(s) failed to create: [HeadNode]. ",
+      "stackId": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f02-11ec-a3b9-024fcc6f3387",
+      "stackName": "mycluster",
+      "logicalResourceId": "mycluster",
+      "resourceType": "AWS::CloudFormation::Stack",
+      "timestamp": "2021-09-06T11:11:51.780Z"
+    },
+    {
+      "eventId": "HeadNode-CREATE_FAILED-2021-09-06T11:11:50.127Z",
+      "physicalResourceId": "i-04e91cc1f4ea796fe",
+      "resourceStatus": "CREATE_FAILED",
+      "resourceStatusReason": "Received FAILURE signal with UniqueId i-04e91cc1f4ea796fe",
+      "resourceProperties": "{\"LaunchTemplate\":{\"Version\":\"1\",\"LaunchTemplateId\":\"lt-057d2b1e687f05a62\"}}",
+      "stackId": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f02-11ec-a3b9-024fcc6f3387",
+      "stackName": "mycluster",
+      "logicalResourceId": "HeadNode",
+      "resourceType": "AWS::EC2::Instance",
+      "timestamp": "2021-09-06T11:11:50.127Z"
+    }
+  ]
 ```
 
-In the previous example, the failure was in the `HeadNode` setup\. To debug this kind of issue, you can list the log streams available from the head node with the ``pcluster list-cluster-log-streams`` by filtering for `node-type`, and then analyzing the log streams content\.
+In the previous example, the failure was in the `HeadNode` setup\.
+
+### Use the CLI to view logstreams<a name="troubleshooting-v3-cluster-deployment-cli-logstreams"></a>
+
+To debug this kind of issue, you can list the log streams available from the head node with the ``pcluster list-cluster-log-streams`` by filtering for `node-type`, and then analyzing the log streams content\.
 
 ```
 $ pcluster list-cluster-log-streams --cluster-name mycluster --region eu-west-1 \
@@ -183,23 +224,24 @@ $ pcluster get-cluster-log-events --cluster-name mycluster \
 
 In the previous example, the failure is due to a `runpostinstall` failure, so strictly related to the content of the custom bootstrap script used in the `OnNodeConfigured` configuration parameter of the ``CustomActions``\.
 
-The head node log streams are available in the CloudWatch Dashboard created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch)\. If there are no log streams available, the failure might be caused by the ``CustomActions`` custom bootstrap script or an AMIs related issue\. To diagnose the creation issue in this case, create the cluster again using ``pcluster create-cluster``, including the `--rollback-on-failure` parameter set to `false`\. Then, SSH into the cluster:
+### Re\-create the failed cluster with `rollback-on-failure`<a name="troubleshooting-v3-cluster-deployment-cli-fail-rollback"></a>
+
+AWS ParallelCluster creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\. If there are no log streams available, the failure might be caused by the ``CustomActions`` custom bootstrap script or an AMIs related issue\. To diagnose the creation issue in this case, create the cluster again using ``pcluster create-cluster``, including the `--rollback-on-failure` parameter set to `false`\. Then, SSH into the cluster:
 
 ```
 $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
-  --cluster-configuration cluster-config.yaml --rollback-on-failure false
-{
-  "cluster": {
-    "clusterName": "mycluster",
-    "cloudformationStackStatus": "CREATE_IN_PROGRESS",
-    "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
-    "region": "eu-west-1",
-    "version": "3.1.2",
-    "clusterStatus": "CREATE_IN_PROGRESS"
-  }
-}
-
-$ pcluster ssh --cluster-name mycluster
+   --cluster-configuration cluster-config.yaml --rollback-on-failure false
+ {
+   "cluster": {
+     "clusterName": "mycluster",
+     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
+     "region": "eu-west-1",
+     "version": "3.1.2",
+     "clusterStatus": "CREATE_IN_PROGRESS"
+   }
+ } 
+ $ pcluster ssh --cluster-name mycluster
 ```
 
 After you're logged into the head node, you should find three primary log files that you can use to pinpoint the error\.
@@ -232,7 +274,7 @@ $ pcluster get-cluster-log-events --cluster-name mycluster \
 --region eu-west-1 --log-stream-name ip-10-0-0-13.i-04e91cc1f4ea796fe.cfn-init
 ```
 
-Note: The head and compute node log streams are also available in the CloudWatch Dashboard that was created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch)\. 
+AWS ParallelCluster creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
 ### Key logs for debugging<a name="troubleshooting-v3-key-logs"></a>
 
@@ -343,7 +385,7 @@ The logs for NICE DCV are written to files in the `/var/log/dcv/` directory\. Re
 
 The instance type should have at least 1\.7 gibibyte \(GiB\) of RAM to run NICE DCV\. Nano and micro instance types don't have enough memory to run NICE DCV\.
 
-Note: NICE DCV log streams are available in the Dashboard created within the cluster: [Amazon CloudWatch dashboard](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch) 
+AWS ParallelCluster creates NICE DCV log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
 ## Troubleshooting issues in clusters with AWS Batch integration<a name="troubleshooting-v3-batch"></a>
 

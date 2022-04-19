@@ -215,12 +215,36 @@ compute_root_volume_size = 35
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.5/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.6/amis.txt)\.
 
 There is no default value\.
 
 ```
 custom_ami = ami-00d4efc81188687a0
+```
+
+If the custom AMI requires additional permissions for its launch, these permissions must be added to both the user and head node policies\.
+
+For example, if a custom AMI has an encrypted snapshot associated with it, the following additional policies are required in both the user and head node policies:
+
+```
+{
+   "Version": "2012-10-17",
+   "Statement": [
+       {
+           "Effect": "Allow",
+           "Action": [
+               "kms:DescribeKey",
+               "kms:ReEncrypt*",
+               "kms:CreateGrant",
+               "kms:Decrypt"
+           ],
+           "Resource": [
+               "arn:aws:kms:<AWS_REGION>:<AWS_ACCOUNT_ID>:key/<AWS_KMS_KEY_ID>"
+           ]                                                    
+       }
+   ]
+}
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
@@ -939,7 +963,7 @@ Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templa
 This is an advanced parameter\. Any change to this setting is done at your own risk\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.5.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.6.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

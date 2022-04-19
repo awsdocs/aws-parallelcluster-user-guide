@@ -73,6 +73,7 @@ HeadNode:
 `InstanceType` \(**Required**, `String`\)  
 Specifies the instance type for the head node\.  
 Specifies the Amazon EC2 instance type that's used for the head node\. The architecture of the instance type must be the same as the architecture used for the AWS Batch [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-AwsBatchQueues-ComputeResources-InstanceTypes) or Slurm [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) setting\.  
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `DisableSimultaneousMultithreading` \(**Optional**, `Boolean`\)  
@@ -110,11 +111,11 @@ Creates or assigns an Elastic IP address to the head node\. Supported values are
 
 `SecurityGroups` \(**Optional**, `[String]`\)  
 List of Amazon VPC security group ids to use for the head node\. These replace the security groups that AWS ParallelCluster creates if this property is not included\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `AdditionalSecurityGroups` \(**Optional**, `[String]`\)  
 List of additional Amazon VPC security group ids to use for the head node\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `Proxy` \(**Optional**\)  
 Specifies the proxy settings for the head node\.  
@@ -196,7 +197,8 @@ For more information, see [Amazon EBS volume types](https://docs.aws.amazon.com/
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
 `Iops` \(**Optional**, `Integer`\)  
 Defines the number of IOPS for `io1`, `io2`, and `gp3` type volumes\.  
-The default value, supported values, and `volume_iops` to `volume_size` ratio varies by `VolumeType` and `Size`\.    
+The default value, supported values, and `volume_iops` to `volume_size` ratio varies by `VolumeType` and `Size`\.  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)    
 `VolumeType` = `io1`  
 Default `Iops` = 100  
 Supported values `Iops` = 100–64000 †  
@@ -214,7 +216,7 @@ Maximum `Iops` to `Size` ratio = 500 IOPS per GiB\. 5000 IOPS requires a `Size` 
 `Throughput` \(**Optional**, `Integer`\)  
 Defines the throughput for `gp3` volume types, in MiB/s\. This setting is valid only when `VolumeType` is `gp3`\. The default value is `125`\. Supported values: 125–1000 MiB/s  
 The ratio of `Throughput` to `Iops` can be no more than 0\.25\. The maximum throughput of 1000 MiB/s requires that the `Iops` setting is at least 4000\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
 `DeleteOnTermination` \(**Optional**, `Boolean`\)  
 Specifies whether the root volume should be deleted when the head node is terminated\. The default value is `true`\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
@@ -372,10 +374,10 @@ List of IAM policies\.
 
 ```
 Imds:
-  Secured: boolean
+    Secured: boolean
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ### `Imds` Properties<a name="HeadNode-v3-Imds.properties"></a>
 

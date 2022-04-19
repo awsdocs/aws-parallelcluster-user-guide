@@ -295,7 +295,7 @@ $ pcluster describe-cluster --cluster-name test-cluster
  or 
 
 ```
-$ pcluster list-clusters --query 'items[?clusterName==`test-cluster`]'
+$ pcluster list-clusters --query 'clusters[?clusterName==`test-cluster`]'
 ```
 
 After the cluster reaches the `"clusterStatus": "CREATE_COMPLETE"` status, you can connect to it by using your normal SSH client settings\. For more information about connecting to Amazon EC2 instances, see the [EC2 User Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux) in the *Amazon EC2 User Guide for Linux Instances*\. Or you can connect the cluster through 

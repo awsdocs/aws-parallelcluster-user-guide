@@ -16,7 +16,7 @@ Using internal variables provided through the `/etc/parallelcluster/cfnconfig` f
 
  ******** 
 
-AWS ParallelCluster 3\.x configuration uses YAML syntax, it's the full reference can be found at [Configuration files](configuration-v3.md)\.
+AWS ParallelCluster 3\.x configuration uses YAML syntax\. The full reference can be found at [Configuration files](configuration-v3.md)\.
 
 In addition to requiring a YAML file format, a number of configuration sections, settings, and parameter values have been updated in AWS ParallelCluster 3\.x\. In this section, we note key changes to the AWS ParallelCluster configuration along with side\-by\-side examples illustrating these differences across each version of AWS ParallelCluster\.
 
@@ -154,7 +154,7 @@ AdditionalPackages:
  Notes: 
 +  The installation of Intel HPC Platform Specification software is subject to the terms and conditions of the applicable [Intel End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) 
 
- **Example of custom IAM configurations including: instance profile, instance role, additional policies for instances and the role for the lambda functions associated to the cluster** 
+ **Example of custom IAM configurations including: instance profile, instance role, additional policies for instances and the role for the lambda functions associated with the cluster** 
 
 AWS ParallelCluster 2: 
 

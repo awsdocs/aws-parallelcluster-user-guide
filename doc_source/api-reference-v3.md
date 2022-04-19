@@ -10,7 +10,7 @@
 
  ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/API-Architecture.png) 
 
- **AWS ParallelCluster API Documentation** 
+## AWS ParallelCluster API Documentation<a name="api-reference-documentation-v3"></a>
 
  The OpenAPI specification file describing the AWS ParallelCluster API can be downloaded from: 
 
@@ -37,7 +37,7 @@ https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<
 **Warning**  
 Any user in the AWS account, that has privileged access to AWS Lambda or Amazon API Gateway services, will automatically inherit permissions to administer AWS ParallelCluster API resources\. 
 
- **Deploy with AWS CLI** 
+## Deploy with AWS CLI<a name="api-reference-deploy-v3"></a>
 
 Configure AWS Credentials to be used with the CLI if not done already\.
 
@@ -49,14 +49,14 @@ Run the following command to deploy the API
 
 ```
 REGION=<region>
-API_STACK_NAME=<stack-name>  # This can be any name
-VERSION=3.1.2
-aws cloudformation create-stack \
-    --region ${REGION} \
-    --stack-name ${API_STACK_NAME} \
-    --template-url https://${REGION}-aws-parallelcluster.s3.${REGION}.amazonaws.com/parallelcluster/${VERSION}/api/parallelcluster-api.yaml \
-    --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
-aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME} --region ${REGION}
+  API_STACK_NAME=<stack-name>  # This can be any name
+  VERSION=3.1.2
+  aws cloudformation create-stack \
+      --region ${REGION} \
+      --stack-name ${API_STACK_NAME} \
+      --template-url https://${REGION}-aws-parallelcluster.s3.${REGION}.amazonaws.com/parallelcluster/${VERSION}/api/parallelcluster-api.yaml \
+      --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+  aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME} --region ${REGION}
 ```
 
  **Customize your deployment** 
@@ -81,9 +81,9 @@ aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME} -
 **Warning**  
  When `CreateApiUserRole=true` access to the API endpoint is not restricted by Amazon API Gateway resource policies,  all IAM roles having unconstrained `execute-api:Invoke` permission will be able to access AWS ParallelCluster features\. For more information, see \.[Controlling access to an API with API Gateway resource policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html) in the *API Gateway Developer Guide*\.
 **Warning**  
- The `ParallelClusterApiUserRole` has invoke permissions for all AWS ParallelCluster API operations\. To restrict access to a subset of API resources please see the [Control who can call an API Gateway API method with IAM policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html#api-gateway-who-can-invoke-an-api-method-using-iam-policies) in the *API Gateway Developer Guide*\.
+The `ParallelClusterApiUserRole` has permission to invoke all AWS ParallelCluster API operations\. To restrict access to a subset of API resources please see the [Control who can call an API Gateway API method with IAM policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html#api-gateway-who-can-invoke-an-api-method-using-iam-policies) in the *API Gateway Developer Guide*\.
 
- **Updating the API** 
+## Updating the API<a name="api-reference-update-v3"></a>
 
  **Use case 1: upgrading to a newer AWS ParallelCluster version** 
 
@@ -93,14 +93,14 @@ aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME} -
 
 ```
 REGION=<region>
-API_STACK_NAME=<stack-name>  # This needs to correspond to the existing API stack name
-VERSION=3.1.2
-aws cloudformation update-stack \
-    --region ${REGION} \
-    --stack-name ${API_STACK_NAME} \  
-    --template-url https://${REGION}-aws-parallelcluster.s3.${REGION}.amazonaws.com/parallelcluster/${VERSION}/api/parallelcluster-api.yaml \
-    --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
-aws cloudformation wait stack-update-complete --stack-name ${API_STACK_NAME} --region ${REGION}
+  API_STACK_NAME=<stack-name>  # This needs to correspond to the existing API stack name
+  VERSION=3.1.2
+  aws cloudformation update-stack \
+      --region ${REGION} \
+      --stack-name ${API_STACK_NAME} \  
+      --template-url https://${REGION}-aws-parallelcluster.s3.${REGION}.amazonaws.com/parallelcluster/${VERSION}/api/parallelcluster-api.yaml \
+      --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+  aws cloudformation wait stack-update-complete --stack-name ${API_STACK_NAME} --region ${REGION}
 ```
 
  **Use case 2: updating the API to the latest available Docker image build for the deployed AWS ParallelCluster version** 
@@ -109,14 +109,14 @@ AWS ParallelCluster can periodically deploy refreshed Docker images for the API 
 
 ```
 REGION=<region>
-API_STACK_NAME=<stack-name>
-DOCKER_UPDATE_IMAGE_PIPELINE=$(aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterDockerUpdateImagePipeline'].OutputValue" --output text)
-aws imagebuilder start-image-pipeline-execution --region ${REGION} --image-pipeline-arn ${DOCKER_UPDATE_IMAGE_PIPELINE}
+  API_STACK_NAME=<stack-name>
+  DOCKER_UPDATE_IMAGE_PIPELINE=$(aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterDockerUpdateImagePipeline'].OutputValue" --output text)
+  aws imagebuilder start-image-pipeline-execution --region ${REGION} --image-pipeline-arn ${DOCKER_UPDATE_IMAGE_PIPELINE}
 ```
 
  This triggers a build of an EC2 Image Builder pipeline that takes care of fetching the latest available AWS ParallelCluster Docker image for the deployed API version\. 
 
- **Invoking AWS ParallelCluster API** 
+## Invoking AWS ParallelCluster API<a name="api-reference-invoke-v3"></a>
 
  The AWS ParallelCluster Amazon API Gateway endpoint is configured with [`AWS_IAM` authorization type](https://docs.aws.amazon.com/apigateway/latest/developerguide/permissions.html#api-gateway-control-access-iam-permissions-model-for-calling-api), thus requiring all request to be SigV4 signed with valid IAM credentials \([API reference: making http requests](https://docs.aws.amazon.com/apigateway/api-reference/making-http-requests/)\)\. 
 
@@ -126,8 +126,8 @@ aws imagebuilder start-image-pipeline-execution --region ${REGION} --image-pip
 
 ```
 REGION=<region>
-API_STACK_NAME=<stack-name>
-aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterApiUserRole'].OutputValue" --output text
+    API_STACK_NAME=<stack-name>
+    aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterApiUserRole'].OutputValue" --output text
 ```
 
  Temporary credentials for such user can be obtained with a call to [STS AssumeRole](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/sts/assume-role.html)\. 
@@ -136,13 +136,15 @@ aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_N
 
 ```
 REGION=<region>
-API_STACK_NAME=<stack-name>
-aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterApiInvokeUrl'].OutputValue" --output text
+    API_STACK_NAME=<stack-name>
+    aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterApiInvokeUrl'].OutputValue" --output text
 ```
 
  The AWS ParallelCluster API can be invoked by any HTTP client that complies with the OpenAPI specifications that can be found here: 
 
- `https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/ParallelCluster.openapi.yaml` 
+```
+https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/ParallelCluster.openapi.yaml
+```
 
  Requests need to be SigV4 signed as documented [here](https://docs.aws.amazon.com/apigateway/api-reference/signing-requests)\. 
 
@@ -153,22 +155,48 @@ aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK
  To implement more advanced access control mechanism, such as Amazon Cognito or Lambda Authorizers, or to further protect the API with AWS WAF or API keys please follow the [Amazon API Gateway documentation](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html)\. 
 
 **Warning**  
- An IAM user authorized to invoke the AWS ParallelCluster API will be able to indirectly control all AWS resources managed by AWS ParallelCluster in the AWS account\. This includes the creation of AWS resources that the IAM user cannot control directly due to restrictions on his IAM policy\. For example the creation of a AWS ParallelCluster cluster, depending on its configuration, may include the deployment of Amazon EC2 instances, Amazon Route 53, Amazon Elastic File System filesystems, Amazon FSx filesystems, IAM roles, and resources from other AWS services used by AWS ParallelCluster that the IAM user might not have direct control over\. 
+An IAM user authorized to invoke the AWS ParallelCluster API will be able to indirectly control all AWS resources managed by AWS ParallelCluster in the AWS account\. This includes the creation of AWS resources that the IAM user cannot control directly due to restrictions on the user IAM policy\. For example the creation of a AWS ParallelCluster cluster, depending on its configuration, may include the deployment of Amazon EC2 instances, Amazon Route 53, Amazon Elastic File System filesystems, Amazon FSx filesystems, IAM roles, and resources from other AWS services used by AWS ParallelCluster that the IAM user might not have direct control over\. 
 
- **Accessing the API logs and metrics** 
+**Warning**  
+When creating a cluster with `AdditionalIamPolicies` specified in the configuration, the additional policies must match one of the following patterns:  
+
+```
+- !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/parallelcluster*
+- !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/parallelcluster/*
+- !Sub arn:${AWS::Partition}:iam::aws:policy/CloudWatchAgentServerPolicy
+- !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore
+- !Sub arn:${AWS::Partition}:iam::aws:policy/AWSBatchFullAccess
+- !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonS3ReadOnlyAccess
+- !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AWSBatchServiceRole
+- !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+- !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+- !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AmazonEC2SpotFleetTaggingRole
+- !Sub arn:${AWS::Partition}:iam::aws:policy/EC2InstanceProfileForImageBuilder
+- !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+```
+If you need other additional policies, you can do one of the following:  
+Edit the `DefaultParallelClusterIamAdminPolicy` in:  
+
+  ```
+  https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/parallelcluster-api.yaml
+  ```
+Add the policy in the `ArnLike/iam:PolicyARN` section\.
+Omit specifying policies for `AdditionalIamPolicies` in the configuration file and manually add policies to the AWS ParallelCluster Instance Role created within the cluster\.
+
+## Accessing the API logs and metrics<a name="api-reference-access-v3"></a>
 
  API logs are published to Amazon CloudWatch with a retention of 30 days\. To retrieve the LogGroup name associated with an API deployment run the following command: 
 
 ```
 REGION=<region>
-API_STACK_NAME=<stack-name>
-aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterLambdaLogGroup'].OutputValue" --output text
+  API_STACK_NAME=<stack-name>
+  aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterLambdaLogGroup'].OutputValue" --output text
 ```
 
 Lambda metrics, logs and AWS X\-Ray trace logs can be also accessed through the Lambda console\. To retrieve the ARN of the Lambda function associated with an API deployment run the following command: 
 
 ```
 REGION=<region>
-API_STACK_NAME=<stack-name>
-aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterLambdaArn'].OutputValue" --output text
+  API_STACK_NAME=<stack-name>
+  aws cloudformation describe-stacks --region ${REGION} --stack-name ${API_STACK_NAME} --query "Stacks[0].Outputs[?OutputKey=='ParallelClusterLambdaArn'].OutputValue" --output text
 ```

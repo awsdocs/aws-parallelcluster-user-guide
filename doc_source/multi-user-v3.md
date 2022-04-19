@@ -14,13 +14,26 @@ You can create, delete, and modify a cluster’s users or groups after your dire
 
 If you plan to use AWS ParallelCluster in a single subnet with no internet access, see [AWS ParallelCluster in a single subnet with no internet access](network-configuration-v3.md#aws-parallelcluster-in-a-single-public-subnet-no-internet-v3) for additional requirements\.
 
+**Topics**
++ [Create an Active Directory](#create-addir-v3)
++ [Create a cluster with an AD domain](#create-addircluster-v3)
++ [Log in to a cluster integrated with an AD domain](#login-addircluster-v3)
++ [Running MPI jobs](#addircluster-MPI-v3)
++ [Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations](#examples-addir-v3)
+
 ## Create an Active Directory<a name="create-addir-v3"></a>
 
 Make sure that you create an Active Directory \(AD\) before you create your cluster\. For information about how to choose the type of active directory for your cluster, see [Which to choose](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html#choosing_an_option) in the *AWS Directory Service Administration Guide*\.
 
 If the directory is empty, add users with user names and passwords\. For more information, see the documentation that's specific to [AWS Directory Service for Microsoft Active Directory](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_manage_users_groups.html) or [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/simple_ad_manage_users_groups.html)\.
 
+**Note**  
+AWS ParallelCluster requires every Active Directory user directory to be in the `/home/$user` directory\.
+
 ## Create a cluster with an AD domain<a name="create-addircluster-v3"></a>
+
+**Warning**  
+This introductory section describes how to setup AWS ParallelCluster with a Managed AD server over LDAP\. LDAP is an insecure protocol\. For production systems, we strongly recommended the use of TLS certificates \(LDAPS\) as described in the [Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations](#examples-addir-v3) section that follows\.
 
 Configure your cluster to integrate with a directory by specifying the relevant information in the `DirectoryService` section of the cluster configuration file\. For more information, see the [DirectoryService](DirectoryService-v3.md) configuration section\.
 
@@ -113,7 +126,7 @@ DirectoryService:
 ```
 
 **Considerations:**
-+ We recommend that you use LDAP over TSL/SSL \(or LDAPS\) rather than LDAP alone\. TSL/SSL ensures that the connection is encrypted\.
++ We recommend that you use LDAP over TLS/SSL \(or LDAPS\) rather than LDAP alone\. TLS/SSL ensures that the connection is encrypted\.
 + The `DomainAddr` property value matches the entries in the `DnsIpAddrs` list from the `describe-directories` output\.
 + We recommend that your cluster use subnets that are located in the same Availability Zone that the `DomainAddr` points to\. If you use [custom Dynamic Host Configuration Protocol \(DHCP\) configuration](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/dhcp_options_set.html) that's recommended for directory VPCs and your subnets *aren't* located in the `DomainAddr` Availability Zone, cross traffic among Availability Zones is possible\. The use of custom DHCP configurations *isn't* required to make use of the multi\-user AD integration feature\.
 + The `DomainReadOnlyUser` property value specifies a user that must be created in the directory\. This user *isn't* created by default\. We recommend that you *don't* give this user permission to modify directory data\.
@@ -160,7 +173,7 @@ Either configure your application to use Slurm as the MPI bootstrapping method o
 
 ## Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations<a name="examples-addir-v3"></a>
 
-AWS ParallelCluster supports multiple user access by integrating with an AWS Directory Service over Lightweight Directory Access Protocol \(LDAP\), or LDAP over TSL/SSL \(LDAPS\)\.
+AWS ParallelCluster supports multiple user access by integrating with an AWS Directory Service over Lightweight Directory Access Protocol \(LDAP\), or LDAP over TLS/SSL \(LDAPS\)\.
 
 The following examples show how to create cluster configurations to integrate with an AWS Managed Microsoft AD over LDAP\(S\)\.
 

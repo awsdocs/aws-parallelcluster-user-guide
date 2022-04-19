@@ -62,7 +62,12 @@ Specifies the time duration in seconds \(measured from the job attempt’s `star
 
 `-n NODES, --nodes NODES`  
 Specifies the number of nodes to reserve for the job\. Specify a value for this parameter to enable multi\-node parallel submission\.  
-Multi\-node parallel jobs aren't supported when the [`cluster_type`](cluster-definition.md#cluster-type) parameter is set to `spot`\.
+When the `Scheduler` / `AwsBatchQueues` / `CapacityType` parameter is set to `SPOT`, multi\-node parallel jobs *aren't* supported\. Additionally, there must be an `AWSServiceRoleForEC2Spot` service\-linked role in your account\. You can create this role with the following AWS CLI command:  
+
+```
+$ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com
+```
+For more information, see [Service\-linked role for Spot Instance requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html#service-linked-roles-spot-instance-requests) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 `-a ARRAY_SIZE, --array-size ARRAY_SIZE`  
 Indicates the size of the array\. You can specify a value between 2 and 10,000\. If you specify array properties for a job, it becomes an array job\.
