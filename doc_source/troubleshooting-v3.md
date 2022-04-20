@@ -65,7 +65,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
     "region": "eu-west-1",
-    "version": "3.1.2",
+    "version": "3.1.3",
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -237,7 +237,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
      "cloudformationStackStatus": "CREATE_IN_PROGRESS",
      "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
      "region": "eu-west-1",
-     "version": "3.1.2",
+     "version": "3.1.3",
      "clusterStatus": "CREATE_IN_PROGRESS"
    }
  } 
@@ -422,8 +422,6 @@ If the Active Directory \(AD\) integration feature isn't working as expected the
 + [How to troubleshoot logging in to compute nodes](#troubleshooting-v3-multi-user-ad-compute-node-login)
 + [Known issues with SimCenter StarCCM\+ jobs in a multi\-user environment](#troubleshooting-v3-multi-user-ad-starccm)
 + [Known issues with username resolution](#troubleshooting-v3-multi-user-name-resolution)
-+ [How to troubleshoot logging in to compute nodes](#troubleshooting-v3-multi-user-ad-compute-node-login)
-+ [Known issues with SimCenter StarCCM\+ jobs in a multi\-user environment](#troubleshooting-v3-multi-user-ad-starccm)
 + [How to resolve home directory create issues](#troubleshooting-v3-multi-home-directory)
 
 ### AD specific troubleshooting<a name="troubleshooting-v3-multi-ad-specific"></a>
@@ -642,9 +640,9 @@ With AWS ParallelCluster, password logins to cluster compute nodes are disabled 
 
 All users must use their own SSH key to log in to compute nodes\.
 
-Users can retrieve their SSH key in the head node after first login, if [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) is enabled in the cluster configuration\.
+Users can retrieve their SSH key in the head node after first authentication \(for example login\), if [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) is enabled in the cluster configuration\.
 
-When users log in to the head node for the first time, they can retrieve SSH keys that are automatically generated for them as directory users\. Home directories for the user are also created\. This can also happen the first time a sudo\-user switches to a user in the head node\.
+When users authenticate on the head node for the first time, they can retrieve SSH keys that are automatically generated for them as directory users\. Home directories for the user are also created\. This can also happen the first time a sudo\-user switches to a user in the head node\.
 
 If a user hasn't logged into the head node, SSH keys aren't generated and the user won't be able to log in to compute nodes\.
 
@@ -654,7 +652,7 @@ This section is relevant to jobs launched in a multi\-user environment by Simcen
 
 If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
 
-Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error like `error setting up the bootstrap proxies`\.
+Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error like `error setting up the bootstrap proxies`\. This bug only impacts AWS ParallelCluster versions 3\.1\.1 and 3\.1\.2\.
 
 To prevent this from occurring, force IntelMPI to use Slurm as MPI boostrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
 
@@ -662,7 +660,7 @@ To prevent this from occurring, force IntelMPI to use Slurm as MPI boostrap meth
 
 This section is relevant to retrieving usernames within jobs\.
 
-Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), the username retrieved within a job process might be `nobody` if you run a job without `srun`\.
+Due to a known [bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385), the username retrieved within a job process might be `nobody` if you run a job without `srun`\. This bug only impacts AWS ParallelCluster versions 3\.1\.1 and 3\.1\.2\.
 
 For example, if you run the command `sbatch --wrap 'srun id'` as a directory user, the correct username is returned\. However, if you run the `sbatch --wrap 'id'` as a directory user, `nobody` might be returned as the username\.
 
@@ -676,30 +674,6 @@ You can use the following workarounds\.
    AdditionalSssdConfigs:
      enumerate: true
    ```
-
-### How to troubleshoot logging in to compute nodes<a name="troubleshooting-v3-multi-user-ad-compute-node-login"></a>
-
-This section is relevant to logging in to compute nodes in clusters integrated with AD\.
-
-With AWS ParallelCluster, password logins to cluster compute nodes are disabled by design\.
-
-All users must use their own SSH key to log in to compute nodes\.
-
-Users can retrieve their SSH key in the head node after first login, if [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) is enabled in the cluster configuration\.
-
-When users log in to the head node for the first time, they can retrieve SSH keys that are automatically generated for them as directory users\. Home directories for the user are also created\. This can also happen the first time a sudo\-user switches to a user in the head node\.
-
-If a user hasn't logged into the head node, SSH keys aren't generated and the user won't be able to log in to compute nodes\.
-
-### Known issues with SimCenter StarCCM\+ jobs in a multi\-user environment<a name="troubleshooting-v3-multi-user-ad-starccm"></a>
-
-This section is relevant to jobs launched in a multi\-user environment by Simcenter StarCCM\+ computational fluid dynamics software from Siemens\.
-
-If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by default the MPI processes are bootstrapped using SSH\.
-
-Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error like `error setting up the bootstrap proxies`\.
-
-To prevent this from occurring, force IntelMPI to use Slurm as MPI boostrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
 
 ### How to resolve home directory create issues<a name="troubleshooting-v3-multi-home-directory"></a>
 

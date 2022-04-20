@@ -2,6 +2,7 @@
 
 In this tutorial, you create a multiple user environment\. This environment includes an AWS ParallelCluster that's integrated with an AWS Managed Microsoft AD \(Active Directory\) at `corp.pcluster.com`\. It also includes a `ReadOnly` user and a login user\. You can use either the automated path or the manual path to create the VPC, an Active Directory \(AD\), and EC2 instances needed for AD over LDAP integration\. After you create these resources, you proceed to configure and create your cluster integrated with your AD\. After the cluster is created, you log in as the user you created\. For more information about the configuration that you create in this tutorial, see [Multiple user access to clusters](multi-user-v3.md) and the [DirectoryService configuration section](DirectoryService-v3.md)\.
 
+**Important**  
 In this tutorial, the cluster that you create communicates with the Active Directory \(AD\) over Lightweight Directory Access Protocol \(LDAP\) to authenticate users that were defined in the AD\. LDAP *doesn't* provide encryption\. To ensure secure transmission of potentially sensitive information, we strongly recommend that you use LDAP over TLS/SSL \(abbreviated LDAPS\) for clusters integrated with ADs\. For more information, see [Enable server\-side LDAPS using AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_ldap_server_side.html) in the AWS Directory Service *Administration Guide*\.
 
 The focus of this tutorial is the process of how to create an environment that supports multiple user access to clusters\. This tutorial doesn't focus on how you create and use an AWS Directory Service AD itself\. The steps you take to set up an AWS Managed Microsoft AD in this tutorial are provided for testing purposes only\. They *aren't* provided to replace the official documentation and best practices you can find at [AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) and [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) in the *AWS Directory Service Administration Guide*\.
@@ -38,14 +39,16 @@ Choose the *Manual* tab to manually create the AD infrastructure\.
 1. After the CloudFormation stack has reached the `CREATE_COMPLETE` state, choose the **Outputs** tab of the stack\. Make a note of the output resource names and IDs because you will need to use them in later steps\. The outputs provide the information that's needed to create the cluster:  
 ![\[A diagram that shows the created stack outputs in the AWS Management Console.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/ad-cfn.png)
 
-1. Continue at [Step 2: Create the cluster](#tutorials_05_multi-user-ad-step2)\.
+1. Continue at [\(Optional\) Step 2: Manage AD users and groups](#tutorials_05_multi-user-ad-step2) or [Step 3: Create the cluster](#tutorials_05_multi-user-ad-step3)\.
 
 ------
 #### [ Manual ]
 
+**Create the AD, add users, and create an AWS Secrets Manager secret**
+
 1. 
 
-**Create the AD, add users, and create an AWS Secrets Manager secret\.**
+**Create the AD\.**
 
    Create a VPC for the directory service with two subnets in different Availability Zones and an AWS Managed Microsoft AD\.
 **Note**  
@@ -131,11 +134,15 @@ The AD takes at least 15 minutes to create\.
 
 1. 
 
-**Create an EC2 instance, join it to your AD, and create users\.**
+**Create an EC2 instance and join it to your AD\.**
 
    Prepare to create users in your directory and store the password for a `ReadOnlyUser`\.
 
-   1. Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+   1. 
+
+**Create the EC2 instance**
+
+      Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
    1. In the **EC2 Dashboard**, choose **Launch Instance**\.
 
@@ -148,102 +155,113 @@ The AD takes at least 15 minutes to create\.
       + **IAM Role**: Create or select one using having the AWS Secrets Manager permissions suggested by the helper\.
       + Choose **Review and Launch** to launch the instance\.
       + Make note of the InstanceId \(for example, i\-1234567890abcdef0\) and wait for the instance to finish launching\.
+      + After the instance has launched, continue to the next step\.
 
-   1. After the instance has launched, use the following commands to connect to the instance:
+1. 
 
-      ```
-      $ INSTANCE_ID="i-1234567890abcdef0"
-      ```
+**Connect to your instance and join the AD realm as `admin`**
 
-      ```
-      $ PUBLIC_IP=$(aws ec2 describe-instances \
-       --instance-ids $INSTANCE_ID \
-       --query "Reservations[0].Instances[0].PublicIpAddress" \
-       --output text)
-      ```
+   Run the following commands to connect to the instance:
 
-      ```
-      $ ssh -i ~/.ssh/keys/keypair.pem ec2-user@$PUBLIC_IP
-      ```
+   ```
+   $ INSTANCE_ID="i-1234567890abcdef0"
+   ```
 
-      Install necessary software and join the realm\.
+   ```
+   $ PUBLIC_IP=$(aws ec2 describe-instances \
+   --instance-ids $INSTANCE_ID \
+   --query "Reservations[0].Instances[0].PublicIpAddress" \
+   --output text)
+   ```
 
-      ```
-      $ sudo yum -y install sssd realmd oddjob oddjob-mkhomedir adcli samba-common samba-common-tools krb5-workstation openldap-clients policycoreutils-python
-      ```
+   ```
+   $ ssh -i ~/.ssh/keys/keypair.pem ec2-user@$PUBLIC_IP
+   ```
 
-      Replace with your admin password:
+   Install necessary software and join the realm\.
 
-      ```
-      $ ADMIN_PW="asdfASDF1234"
-      ```
+   ```
+   $ sudo yum -y install sssd realmd oddjob oddjob-mkhomedir adcli samba-common samba-common-tools krb5-workstation openldap-clients policycoreutils-python
+   ```
 
-      ```
-      $ echo $ADMIN_PW | sudo realm join -U Admin corp.pcluster.com
-      ```
+   Replace the Admin password with your `admin` password:
 
-      Output:
+   ```
+   $ ADMIN_PW="asdfASDF1234"
+   ```
 
-      ```
-      Password for Admin:
-      ```
+   ```
+   $ echo $ADMIN_PW | sudo realm join -U Admin corp.pcluster.com
+   ```
 
-      If the above has succeeded, add user\(s\) to the AD with the following command:
+   Output:
 
-      ```
-      $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=ReadOnlyUser ReadOnlyUser
-      ```
+   ```
+   Password for Admin:
+   ```
 
-      ```
-      $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=user000 user000
-      ```
+   If the above has succeeded, you are joined to the realm and can proceed to the next step\.
 
-      Verify the users have been created:
+1. 
 
-      The directory\_id is an output of the python script\.
+**Create the ReadOnlyUser and an additional user\.**
 
-      ```
-      $ DIRECTORY_IP="192.0.2.254"
-      ```
+   In this step, you use [adcli](https://www.mankier.com/package/adcli) and [openldap\-clients](https://www.mankier.com/package/openldap-clients) tools that you installed in a preceding step\.
 
-      ```
-      $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
-      ```
+   ```
+   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=ReadOnlyUser ReadOnlyUser
+   ```
 
-      ```
-      $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=user000,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
-      ```
+   ```
+   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=user000 user000
+   ```
 
-      At this point you can disconnect from the instance \(and terminate it\)\.
+   **Verify the users have been created:**
 
-      When you create a user with the `ad-cli`, the user is disabled by default\.
+   The directory\_id is an output of the python script\.
 
-      Reset and activate the user passwords from your local machine:
+   ```
+   $ DIRECTORY_IP="192.0.2.254"
+   ```
+
+   ```
+   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
+   ```
+
+   ```
+   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=user000,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
+   ```
+
+   At this point you can disconnect from the instance \(and terminate it\)\.
+
+   When you create a user with the `ad-cli`, the user is disabled by default\.
+
+   **Reset and activate the user passwords from your local machine:**
 **Note**  
 `ro-p@ssw0rd` below is the password of `ReadOnlyUser`, retrieved via secrets manager \(explained below\)\.
 `user-p@ssw0rd` is the password of a cluster user, provided when you connect \(`ssh`\) to the cluster\.
 
-      The `directory-id` is an output of the python script\.
+   The `directory-id` is an output of the python script\.
 
-      ```
-      $ DIRECTORY_ID="d-abcdef01234567890"
-      ```
+   ```
+   $ DIRECTORY_ID="d-abcdef01234567890"
+   ```
 
-      ```
-      $ aws ds reset-user-password \
-      --directory-id $DIRECTORY_ID \
-      --user-name "ReadOnlyUser" \
-      --new-password "ro-p@ssw0rd" \
-      --region "region-id"
-      ```
+   ```
+   $ aws ds reset-user-password \
+   --directory-id $DIRECTORY_ID \
+   --user-name "ReadOnlyUser" \
+   --new-password "ro-p@ssw0rd" \
+   --region "region-id"
+   ```
 
-      ```
-      $ aws ds reset-user-password \
-      --directory-id $DIRECTORY_ID \
-      --user-name "user000" \
-      --new-password "user-p@ssw0rd" \
-      --region "region-id"
-      ```
+   ```
+   $ aws ds reset-user-password \
+   --directory-id $DIRECTORY_ID \
+   --user-name "user000" \
+   --new-password "user-p@ssw0rd" \
+   --region "region-id"
+   ```
 
 1. **Add the password to a Secrets Manager secret\.**
 
@@ -264,11 +282,115 @@ The AD takes at least 15 minutes to create\.
    arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-1234
    ```
 
-1. Continue at [Step 2: Create the cluster](#tutorials_05_multi-user-ad-step2)\.
+1. Continue at [\(Optional\) Step 2: Manage AD users and groups](#tutorials_05_multi-user-ad-step2) or [Step 3: Create the cluster](#tutorials_05_multi-user-ad-step3)\.
 
 ------
 
-## Step 2: Create the cluster<a name="tutorials_05_multi-user-ad-step2"></a>
+## \(Optional\) Step 2: Manage AD users and groups<a name="tutorials_05_multi-user-ad-step2"></a>
+
+In this step, you manage users and groups from an EC2 Amazon Linux 2 instance that is joined to the AD domain\.
+
+If you followed the *automated* path, restart and log in to the AD joined instance that was created as part of the automation\.
+
+If you followed the *manual* path, restart and log in to the instance that you created and joined to the AD in preceding steps\.
+
+In these steps, you use the [adcli](https://www.mankier.com/package/adcli) and [openldap\-clients](https://www.mankier.com/package/openldap-clients) tools that were installed in the instance as part of a preceding step\.
+
+**Log in to an EC2 instance that is joined to the AD domain**
+
+1. From the EC2 console, select the untitled EC2 instance that was created in previous steps\. The instance state might be **Stopped**\.
+
+1. If the instance state is **Stopped**, choose **Instance state** and then **Start instance**\.
+
+1. After the status checks pass, select the instance and choose **Connect** and ssh in to the instance\.
+
+**Manage users and groups when logged into an EC2 Amazon Linux 2 instance that is joined the the AD**
+
+The `adcli` commands with the ` -U "Admin"` option ask you to enter the AD `Admin` password\. You include the AD `Admin` password as part of the `ldapsearch` commands\.
+
+1. Create a user\.
+
+   ```
+   $ adcli create-user "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   ```
+
+1. Set a user password
+
+   ```
+   $ aws --region "region-id" ds reset-user-password --directory-id "d-abcdef01234567890" --user-name "clusteruser" --new-password "new-p@ssw0rd"
+   ```
+
+1. Create a group\.
+
+   ```
+   $ adcli create-group "clusterteam" --domain "corp.pcluster.com" -U "Admin"
+   ```
+
+1. Add a user to a group\.
+
+   ```
+   $ adcli add-member "clusterteam" "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   ```
+
+1. 
+
+**Describe users and groups**
+
+   Describe all users\.
+
+   ```
+   $ ldapsearch "(&(objectClass=user))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   ```
+
+   Describe a specific user\.
+
+   ```
+   $ ldapsearch "(&(objectClass=user)(cn=clusteruser))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   ```
+
+   Describe all users with a name pattern\.
+
+   ```
+   $ ldapsearch "(&(objectClass=user)(cn=user*))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   ```
+
+   Describe all users that are part of a specific group\.
+
+   ```
+   $ ldapsearch "(&(objectClass=user)(memberOf=CN=clusterteam,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   ```
+
+   Describe all groups
+
+   ```
+   $ ldapsearch "objectClass=group" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   ```
+
+   Describe a specific group
+
+   ```
+   $ ldapsearch "(&(objectClass=group)(cn=clusterteam))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   ```
+
+1. Remove a user from a group\.
+
+   ```
+   $ adcli remove-member "clusterteam" "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   ```
+
+1. Delete a user
+
+   ```
+   $ adcli delete-user "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   ```
+
+1. Delete a group\.
+
+   ```
+   $ adcli delete-group "clusterteam" --domain "corp.pcluster.com" -U "Admin"
+   ```
+
+## Step 3: Create the cluster<a name="tutorials_05_multi-user-ad-step3"></a>
 
 The environment is set up to create a cluster that can authenticate users against the AD\.
 
@@ -347,7 +469,7 @@ Output:
 }
 ```
 
-## Step 3: Connect to the cluster as a user<a name="tutorials_05_multi-user-ad-step3"></a>
+## Step 4: Connect to the cluster as a user<a name="tutorials_05_multi-user-ad-step4"></a>
 
 You can determine the status of the cluster with the following commands:
 
@@ -375,7 +497,7 @@ You can log in without the password by providing the SSH key that was created fo
 
 If the `ssh` command succeeded, you have successfully connected to the cluster as a user that is authenticated using AD\.
 
-## Step 4: Clean up<a name="tutorials_05_multi-user-ad-step4"></a>
+## Step 5: Clean up<a name="tutorials_05_multi-user-ad-step5"></a>
 
 1. From your local machine, delete the cluster\.
 
