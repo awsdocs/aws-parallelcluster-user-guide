@@ -189,7 +189,7 @@ RootVolume:
 Specifies the head node root volume size in gibibytes \(GiB\)\. The default size comes from the AMI\. Using a different size requires that the AMI supports `growroot`\.   
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
 `Encrypted` \(**Optional**, `Boolean`\)  
-Specifies if the root volume is encrypted\. The default value is `false`\.  
+Specifies if the root volume is encrypted\. The default value is `true`\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
 `VolumeType` \(**Optional**, `String`\)  
 Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `st1`, and `standard`\. The default value is `gp2`\.  
