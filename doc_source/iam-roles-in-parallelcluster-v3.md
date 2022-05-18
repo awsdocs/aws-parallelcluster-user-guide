@@ -201,7 +201,10 @@ The following policy shows the permissions required to run AWS ParallelCluster c
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
-                "lambda:UpdateFunctionConfiguration"
+                "lambda:UpdateFunctionConfiguration",
+                "lambda:TagResource",
+                "lambda:ListTags",
+                "lambda:UntagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:parallelcluster-*",
