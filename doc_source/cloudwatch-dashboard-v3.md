@@ -4,4 +4,4 @@ An Amazon CloudWatch dashboard is created when the cluster is created\. This mak
 
 For more information about Amazon CloudWatch dashboards, see [Using Amazon CloudWatch dashboards](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Dashboards.html) in the *Amazon CloudWatch User Guide*\.
 
-If you don’t want to create the Amazon CloudWatch dashboard, disable by setting [`Monitoring` section](Monitoring-v3.md) / [Dashboards](Monitoring-v3.md#yaml-Monitoring-Dashboards) / [CloudWatch](Monitoring-v3.md#yaml-Monitoring-Dashboard-CloudWatch) / [Enabled](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Efa-Enabled) to `false`\.
+If you don’t want to create the Amazon CloudWatch dashboard, disable by setting `Monitoring` / `Dashboards` / `CloudWatch` / `Enabled` to `false`\.

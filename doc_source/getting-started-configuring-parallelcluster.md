@@ -260,7 +260,7 @@ After the cluster reaches the "CREATE\_COMPLETE" status, you can connect to it b
 To delete the cluster, run the following command\.
 
 ```
-$ pcluster delete-cluster --region us-east-1 mycluster
+$ pcluster delete --region us-east-1 mycluster
 ```
 
 To delete the network resources in the VPC, you can delete the CloudFormation networking stack\. The stack name starts with "parallelclusternetworking\-" and contains the creation time in "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.

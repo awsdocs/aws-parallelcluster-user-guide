@@ -140,12 +140,12 @@ Specifies the Amazon EBS snapshot ID if you're using a snapshot as the source fo
 Specifies the Amazon EBS volume ID\. When this is specified for an `EbsSettings` instance, only the `MountDir` parameter can also be specified\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-`Throughput` \(**Required**, `Integer`\)  
+`Throughput` \(**Optional**, `Integer`\)  
 The throughput, in MiB/s to provision for a volume, with a maximum of 1,000 MiB/s\.  
 This setting is valid only when `VolumeType` is `gp3`\. The supported range is 125 to 1000, with a default value of 125\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
-`DeletionPolicy` \(**Required**, `String`\)  
+`DeletionPolicy` \(**Optional**, `String`\)  
 Specifies whether the volume should be retained, deleted, or snapshotted when the cluster is deleted\. The supported values are `Delete`, `Retain`, and `Snapshot`\. The default value is `Delete`\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
@@ -220,7 +220,9 @@ If you set this option, it only supports file systems:
 + That don't have a mount target in the stack's Availability Zone
 
   OR
-+ That do have an existing mount target in the stack's Availability Zone, with inbound and outbound NFS traffic allowed from `0.0.0.0/0`\.
++ That do have an existing mount target in the stack's Availability Zone, with inbound and outbound NFS traffic allowed from the `HeadNode` and `ComputeNodes`\.
+
+  Verify that `SlurmQueues` / `Networking` / `SecurityGroups` and `HeadNode` / `Networking` / `SecurityGroups` are set correctly for Amazon EFS file systems\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ## `FsxLustreSettings`<a name="SharedStorage-v3-FsxLustreSettings"></a>
@@ -324,6 +326,13 @@ The ID of the AWS Key Management Service \(AWS KMS\) key used to encrypt the FSx
 `FileSystemId` \(**Optional**, `String`\)  
 Specifies the id of an existing FSx for Lustre file system\.  
 If this option is specified, only the `MountDir` and `FileSystemId` settings in the `FsxLustreSettings` are used and any other settings in the `FsxLustreSettings` are ignored\.  
+If you set this option, it only supports file systems:  
++ That don't have a mount target in the stack's Availability Zone
+
+  OR
++ That do have an existing mount target in the stack's Availability Zone, with FSx for Lustre file servers and FSx for Lustre client traffic allowed from the `HeadNode` and `ComputeNodes`\. For more information, see [FSx for Lustre inbound and outbound rules](https://docs.aws.amazon.com/fsx/latest/LustreGuide/limit-access-security-groups.html#lustre-client-inbound-outbound-rules)\.
+
+  Verify that `SlurmQueues` / `Networking` / `SecurityGroups` and `HeadNode` / `Networking` / `SecurityGroups` are set correctly for FSx for Lustre file systems\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `AutoImportPolicy` \(**Optional**, `String`\)  

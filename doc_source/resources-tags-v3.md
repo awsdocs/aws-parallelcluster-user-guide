@@ -55,7 +55,7 @@ You can view these tags in the EC2 section of the AWS Management Console\.
 |  `aws:cloudformation:stack-name`  |  `clustername`  | 
 |  `aws:cloudformation:logical-id`  |  `HeadNode`  | 
 |  `aws:cloudformation:stack-id`  |  `arn:aws:cloudformation:region-id:ACCOUNTID:stack/clustername/1234abcd-12ab-12ab-12ab-1234567890abcdef0`  | 
-|  `parallelcluster:version`  |  `3.1.3`  | 
+|  `parallelcluster:version`  |  `3.1.4`  | 
 
 
 **AWS ParallelCluster head node root volume tags**  
@@ -64,7 +64,7 @@ You can view these tags in the EC2 section of the AWS Management Console\.
 | --- | --- | 
 |  `parallelcluster:cluster-name`  |  `clustername`  | 
 |  `parallelcluster:node-type`  |  `HeadNode`  | 
-|  `parallelcluster:version`  |  `3.1.3`  | 
+|  `parallelcluster:version`  |  `3.1.4`  | 
 
 
 **AWS ParallelCluster compute node instance tags**  
@@ -77,7 +77,7 @@ You can view these tags in the EC2 section of the AWS Management Console\.
 |  `aws:ec2launchtemplate:version`  |  `1`  | 
 |  `parallelcluster:node-type`  |  `Compute`  | 
 |  `parallelcluster:queue-name`  |  `queue-name`  | 
-|  `parallelcluster:version`  |  `3.1.3`  | 
+|  `parallelcluster:version`  |  `3.1.4`  | 
 
 
 **AWS ParallelCluster compute node root volume tags**  
@@ -88,4 +88,4 @@ You can view these tags in the EC2 section of the AWS Management Console\.
 |  `parallelcluster:compute-resource-name`  |  `compute-resource-name`  | 
 |  `parallelcluster:node-type`  |  `Compute`  | 
 |  `parallelcluster:queue-name`  |  `queue-name`  | 
-|  `parallelcluster:version`  |  `3.1.3`  | 
+|  `parallelcluster:version`  |  `3.1.4`  | 

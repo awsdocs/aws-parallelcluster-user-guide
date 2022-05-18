@@ -11,7 +11,7 @@ $ node --version
 v16.8.0
 $ pcluster version
 {
-  "version": "3.1.3"
+  "version": "3.1.4"
 }
 ```
 

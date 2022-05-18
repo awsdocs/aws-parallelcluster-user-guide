@@ -83,7 +83,7 @@ The ARN of the IAM policy to use as permissions boundary for all roles created b
 
 #### `Components` Properties<a name="Build-v3-Components.properties"></a>
 
-\(**Optional**\) Specifies EC2 ImageBuilder components to use during the AMI build process in addition to the ones provided by default by AWS ParallelCluster\. Such components can be used to customize the AMI build process\.
+\(**Optional**\) Specifies EC2 ImageBuilder components to use during the AMI build process in addition to the ones provided by default by AWS ParallelCluster\. Such components can be used to customize the AMI build process\. For more information, see [AWS ParallelCluster AMI customization](custom-ami-v3.md)\.
 
 ```
 Components:

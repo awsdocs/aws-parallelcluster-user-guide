@@ -49,6 +49,7 @@ Amazon's trademarks and trade dress may not be used in
       + [AWS ParallelCluster API](api-reference-v3.md)
       + [Connect to the head node through NICE DCV](dcv-v3.md)
       + [Using pcluster update-cluster](using-pcluster-update-cluster-v3.md)
+      + [AWS ParallelCluster AMI customization](custom-ami-v3.md)
    + [Reference for AWS ParallelCluster](reference-version-3.md)
       + [AWS ParallelCluster CLI commands](commands-v3.md)
          + [pcluster](pcluster-v3.md)

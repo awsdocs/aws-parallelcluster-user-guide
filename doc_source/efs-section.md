@@ -11,6 +11,8 @@
 
 Defines configuration settings for the Amazon EFS that's mounted on the head and compute nodes\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the Amazon EFS documentation\.
 
+To include Amazon EFS volumes in your cluster definition, see ``[cluster]` section` / ``efs_settings``\.
+
 The format is `[efs efs-name]`\. *efs\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```

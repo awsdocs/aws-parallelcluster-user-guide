@@ -821,7 +821,8 @@ To:
                 "lambda:GetFunction",
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",
-                "lambda:RemovePermission"
+                "lambda:RemovePermission",
+                "lambda:TagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",
@@ -1192,7 +1193,8 @@ To:
                 "lambda:GetFunction",
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",
-                "lambda:RemovePermission"
+                "lambda:RemovePermission",
+                "lambda:TagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",
@@ -1474,7 +1476,8 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
                 "lambda:GetFunctionConfiguration",
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",
-                "lambda:RemovePermission"
+                "lambda:RemovePermission",
+                "lambda:TagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",

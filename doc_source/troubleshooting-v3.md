@@ -17,7 +17,27 @@ The AWS ParallelCluster community maintains a Wiki page that provides many troub
 
 AWS ParallelCluster creates EC2 metrics for HeadNode and Compute instances and storage\. You can view the metrics in the CloudWatch console **Custom Dashboards**\. AWS ParallelCluster also creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. The [Monitoring](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch) cluster configuration section describes how you can modify the cluster CloudWatch logs and dashboard\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
-Logs are a useful resource for troubleshooting issues\. For example, if you want to delete a failing cluster, it might be useful to first create an archive of the cluster logs\. Follow the next steps to create an archive\.
+Logs are a useful resource for troubleshooting issues\. For example, if you want to delete a failing cluster, it might be useful to first create an archive of the cluster logs\. Follow the steps in [Archive logs](#troubleshooting-v3-get-logs-archive) to create an archive\.
+
+**Topics**
++ [Cluster logs unavailable in CloudWatch](#troubleshooting-v3-get-logs-unavailable)
++ [Archive logs](#troubleshooting-v3-get-logs-archive)
++ [Preserved logs](#troubleshooting-v3-get-logs-preserve)
++ [Terminated node logs](#troubleshooting-v3-get-logs-terminated-node)
+
+### Cluster logs unavailable in CloudWatch<a name="troubleshooting-v3-get-logs-unavailable"></a>
+
+If cluster logs aren't available in CloudWatch, check to make sure you haven't overwritten the AWS ParallelCluster CloudWatch log configuration when adding custom logs to the configuration\.
+
+To add custom logs to the CloudWatch configuration, make sure you append to the configuration rather than fetch and overwrite it\. For more information on `fetch-config` and `append-config`, see [Multiple CloudWatch agent configuration files](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-common-scenarios.html#CloudWatch-Agent-multiple-config-files) in the *CloudWatch User Guide*\.
+
+To restore the AWS ParallelCluster CloudWatch log configuration you can run the following command inside an AWS ParallelCluster node\.
+
+```
+$ /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
+```
+
+### Archive logs<a name="troubleshooting-v3-get-logs-archive"></a>
 
 You can archive the logs in S3 or in a local file \(depending on the `--output-file` parameter\)\.
 
@@ -38,7 +58,11 @@ $ pcluster export-cluster-logs --cluster-name mycluster --region eu-west-1 \
 
 The archive contains the Amazon CloudWatch Logs streams and AWS CloudFormation stack events from the head node and compute nodes for the last 14 days, unless specified explicitly in the configuration or in the parameters for the `export-cluster-logs` command\. The time it takes for the command to complete depends on the number of nodes in the cluster and the number log streams available in CloudWatch Logs\. For more information about the available log streams, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md)\.
 
+### Preserved logs<a name="troubleshooting-v3-get-logs-preserve"></a>
+
 Starting from 3\.0\.0, AWS ParallelCluster preserves CloudWatch Logs by default when a cluster is deleted\. If you want to delete a cluster and preserve its logs, make sure that `Monitoring > Logs > CloudWatch > DeletionPolicy` isn't set to `Delete` in the cluster configuration\. Otherwise, change the value for this field to `Retain` and run the `pcluster update-cluster` command\. Then, run `pcluster delete-cluster --cluster-name <cluster_name>` to delete the cluster yet retain the log group that’s stored in Amazon CloudWatch\.
+
+### Terminated node logs<a name="troubleshooting-v3-get-logs-terminated-node"></a>
 
 If compute nodes self terminate after launching and there aren't any compute node logs for it in CloudWatch, submit a job that triggers a cluster scaling action\. Wait for the instance to fail and retrieve the instance console log\.
 
@@ -65,7 +89,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
     "region": "eu-west-1",
-    "version": "3.1.3",
+    "version": "3.1.4",
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -237,7 +261,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
      "cloudformationStackStatus": "CREATE_IN_PROGRESS",
      "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
      "region": "eu-west-1",
-     "version": "3.1.3",
+     "version": "3.1.4",
      "clusterStatus": "CREATE_IN_PROGRESS"
    }
  } 

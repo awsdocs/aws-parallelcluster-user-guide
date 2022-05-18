@@ -2,7 +2,7 @@
 
 AWS ParallelCluster uses AWS Identity and Access Management \(IAM\) roles to control permissions that are associated with the AWS resources deployed to the AWS account\. In AWS ParallelCluster we can identify two types of IAM roles: the one that is assumed by the user that invokes the CLI commands and the ones that are associated with AWS ParallelCluster resources, such as the EC2 instances launched in a cluster\.
 
-By default, AWS ParallelCluster takes care of creating all needed IAM roles that are configured with the minimal set of policies required by AWS ParallelCluster resources\. However, the user that invokes the various AWS ParallelCluster operations must have the right level of permissions to create or modify all of the necessary resources\. 
+By default, AWS ParallelCluster takes care of creating all needed IAM roles that are configured with the minimal set of policies required by AWS ParallelCluster resources\. However, the user that invokes the various AWS ParallelCluster operations must have the right level of permissions to create or modify all of the necessary resources\.
 
 **Topics**
 + [Using existing IAM roles with AWS ParallelCluster](#iam-roles-in-parallelcluster-v3-existing-roles)
@@ -31,10 +31,12 @@ The following example policies include Amazon Resource Names \(ARNs\) for the re
 
 The following policy shows the permissions required to run AWS ParallelCluster commands\. You must create a [policy to manage permissions on IAM resources](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam) for cluster creation\.
 
+The last action listed in the policy is included to provide validation of any secrets specified in the cluster configuration\. For example, an AWS Secrets Manager secret is used to configure the `DirectoryService` integration\. In this case, a cluster is created only if a valid secret exists in the `PasswordSecretArn`\. If this action is omitted, secret validation is skipped\. To improve your security posture, we recommend that you can scope down this policy statement by adding only the secrets specified in your cluster configuration\.
+
 ```
 {
     "Version": "2012-10-17",
-    "Statement": [
+    "Statement": [   
         {
             "Action": [
                 "ec2:Describe*"
@@ -202,9 +204,7 @@ The following policy shows the permissions required to run AWS ParallelCluster c
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
                 "lambda:UpdateFunctionConfiguration",
-                "lambda:TagResource",
-                "lambda:ListTags",
-                "lambda:UntagResource"
+                "lambda:TagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:parallelcluster-*",
@@ -268,7 +268,12 @@ The following policy shows the permissions required to run AWS ParallelCluster c
             "Resource": "*",
             "Effect": "Allow",
             "Sid": "CloudWatchLogs"
-        }
+        },
+        {
+            "Action": "secretsmanager:DescribeSecret",
+            "Resource": "arn:aws:secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:*",
+            "Effect": "Allow"
+        }, 
     ]
 }
 ```
@@ -447,7 +452,8 @@ Users that intend to create custom EC2 images with AWS ParallelCluster will need
                 "lambda:GetFunction",
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
-                "lambda:DeleteFunction"
+                "lambda:DeleteFunction",
+                "lambda:TagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:ParallelClusterImage-*"
@@ -795,7 +801,7 @@ AWS ParallelCluster exposes a series of configuration options to control and cus
 
 `HeadNode` / `Iam` / `InstanceRole` \| `InstanceProfile`
 
-This option allows to override the IAM role that is assigned to the head node of the cluster\. For additional details, please refer to the `InstanceProfile` reference\.
+This option allows to override the default IAM role that's assigned to the head node of the cluster\. For additional details, please refer to the `InstanceProfile` reference\.
 
 Here is the minimal set of policies to be used as part of this role when the scheduler is Slurm:
 + `arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy` managed IAM policy\. For more information, see [Create IAM roles and users for use with the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-iam-roles-for-cloudwatch-agent.html) in the *Amazon CloudWatch User Guide*\.

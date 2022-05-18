@@ -51,8 +51,9 @@ Use LDAP over TLS/SSL \(LDAPS\) to avoid transmission of passwords and other sen
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `PasswordSecretArn` \(**Required**, `String`\)  
-The Amazon Resource Name \(ARN\) of the AWS Secrets Manager secret that contains a password\. This ARN corresponds to SSSD\-LDAP parameter that's called `ldap_default_authtok`\.  
+The Amazon Resource Name \(ARN\) of the AWS Secrets Manager secret that contains the `DomainReadOnlyUser` plaintext password\. The content of the secret corresponds to SSSD\-LDAP parameter that's called `ldap_default_authtok`\.  
 The LDAP client uses the password to authenticate to the AD domain as a `DomainReadOnlyUser` when requesting identity information\.  
+If the user has the permission to `[DescribeSecret](https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_DescribeSecret.html)`, `PasswordSecretArn` is validated\. `PasswordSecretArn` is valid if the specified secret exists\. If the user IAM policy doesn't include `DescribeSecret`, `PasswordSecretArn` isn't validated and a warning message is displayed\. For more information, see [Base user policy required to invoke AWS ParallelCluster features](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-base-user-policy)\.  
 When the value of the secret changes, the cluster *isn't* automatically updated\. To update the cluster for the new secret value, you must stop the compute fleet with the ``pcluster update-compute-fleet`` command and then run the following command from within the head node\.  
 
 ```

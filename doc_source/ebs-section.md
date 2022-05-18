@@ -13,6 +13,8 @@
 
 Defines Amazon EBS volume configuration settings for volumes that are mounted on the head node and shared via NFS to the compute nodes\.
 
+To include Amazon EBS volumes in your cluster definition, see ``[cluster]` section` / ``ebs_settings``\.
+
 The format is `[ebs ebs-name]`\. *ebs\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 ```

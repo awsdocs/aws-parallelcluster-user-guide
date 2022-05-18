@@ -68,7 +68,7 @@ Scheduling:
         S3Access:
           - BucketName: string
             EnableWriteAccess: boolean
-            KeyName: boolean
+            KeyName: string
         AdditionalIamPolicies:
           - Policy: string
       Image:
@@ -279,7 +279,7 @@ SlurmQueues:
       S3Access:
         - BucketName: string
           EnableWriteAccess: boolean
-          KeyName: boolean
+          KeyName: string
       AdditionalIamPolicies:
         - Policy: string
     Image:
@@ -332,11 +332,12 @@ Specifies the IDs of existing subnets in which to provision the Slurm queue\. Cu
 
 `AssignPublicIp` \(**Optional**, `String`\)  
 Creates or assigns a public IP address to the nodes in the Slurm queue\. Supported values are `true` and `false`\. The default depends on the subnet specified; a subnet with public IPs will default to assigning public IP addresses\.  
-If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. In this case, set `AssignPublicIp` to `false`\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. In this case, set `AssignPublicIp` to `false`\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `SecurityGroups` \(**Optional**, `[String]`\)  
 List of security groups to use for the Slurm queue\. If no security groups are specified, AWS ParallelCluster will create new ones\.  
+Verify that the security groups are configured correctly for your [SharedStorage](SharedStorage-v3.md) systems\.  
 If you're enabling [Efa](#yaml-Scheduling-SlurmQueues-ComputeResources-Efa) for your compute instances, ensure that your EFA\-enabled instances are members of a security group that allows all inbound and outbound traffic to itself\.
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
@@ -357,7 +358,7 @@ PlacementGroup:
 Indicates whether a placement group is used for the Slurm queue\. If this is not specified, the default value is `false`\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)  
 `Id` \(**Optional**, `String`\)  
-The placement group name for an existing cluster placement group used for the Slurm queue\. If this is not specified, AWS ParallelCluster will create a new cluster placement group for each queue\.  
+The placement group name for an existing cluster placement group used for the Slurm queue\. Make sure you provide the placement group *name* and *not the ID*\. If this is not specified, AWS ParallelCluster creates a new cluster placement group for each queue\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `Proxy` \(**Optional**\)  
@@ -614,7 +615,7 @@ Iam:
   S3Access:
     - BucketName: string
       EnableWriteAccess: boolean
-      KeyName: boolean
+      KeyName: string
   AdditionalIamPolicies:
     - Policy: string
   InstanceProfile: string
@@ -642,7 +643,7 @@ Specifies a bucket for the Slurm queue\. This is used to generate policies to gr
 S3Access:
   - BucketName: string
     EnableWriteAccess: boolean
-    KeyName: boolean
+    KeyName: string
 ```
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)    
 `BucketName` \(**Required**, `String`\)  
