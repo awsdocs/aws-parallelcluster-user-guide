@@ -219,6 +219,11 @@ Scheduling:
 **Warning**  
 For clusters created with `SlurmSettings` / `Dns` / `DisableManagedDns` and `UseEc2Hostnames` set to `true`, the Slurm `NodeName` isn't resolved by the DNS\. Use the Slurm `NodeHostName` instead\.
 
+**Note**  
+When `UseEc2Hostnames` is set to `true`, Slurm configuration file is set with ParallelCluster prolog and epilog scripts:
++ prolog is executed to add nodes info to /etc/hosts on compute nodes when each job is allocated\. 
++ epilog is executed to clean contents written by prolog\.
+
 **Cluster configuration**
 
 Learn how to configure your cluster to run in a subnet with no connection to the internet\.
