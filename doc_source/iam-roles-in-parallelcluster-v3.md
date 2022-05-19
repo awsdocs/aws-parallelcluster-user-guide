@@ -204,7 +204,9 @@ The last action listed in the policy is included to provide validation of any se
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
                 "lambda:UpdateFunctionConfiguration",
-                "lambda:TagResource"
+                "lambda:TagResource",
+                "lambda:ListTags",
+                "lambda:UntagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:parallelcluster-*",
@@ -453,7 +455,9 @@ Users that intend to create custom EC2 images with AWS ParallelCluster will need
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
                 "lambda:DeleteFunction",
-                "lambda:TagResource"
+                "lambda:TagResource",
+                "lambda:ListTags",
+                "lambda:UntagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:ParallelClusterImage-*"
