@@ -635,7 +635,9 @@ To:
                 "dynamodb:GetItem",
                 "dynamodb:PutItem",
                 "dynamodb:Query",
-                "dynamodb:TagResource"
+                "dynamodb:TagResource",
+                "lambda:ListTags",
+                "lambda:UntagResource"
             ],
             "Resource": "*",
             "Effect": "Allow",
@@ -1196,7 +1198,9 @@ To:
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
-                "lambda:TagResource"
+                "lambda:TagResource",
+                "lambda:ListTags",
+                "lambda:UntagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",
@@ -1479,7 +1483,9 @@ The following example sets the `ParallelClusterUserPolicy` using `awsbatch` as t
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
-                "lambda:TagResource"
+                "lambda:TagResource",
+                "lambda:ListTags",
+                "lambda:UntagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",
