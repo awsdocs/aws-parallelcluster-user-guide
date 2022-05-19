@@ -715,8 +715,9 @@ Defines a custom Route 53 hosted zone id to use for DNS name resolution for the
 Specifies the use of default EC2 hostnames\.
 
 **Note**
+
 When `UseEc2Hostnames` is set to `true`, Slurm configuration file is set with ParallelCluster prolog and epilog scripts:
-+ prolog is executed to add nodes info to /etc/hosts on compute nodes when each job is allocated\.
-+ epilog is executed to clean contents written by prolog\.
++ prolog runs to add nodes info to /etc/hosts on compute nodes when each job is allocated\.
++ epilog runs to clean contents written by prolog\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
