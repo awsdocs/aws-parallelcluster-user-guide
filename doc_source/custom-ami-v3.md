@@ -12,7 +12,7 @@ For more information on using these methods, see [Building a Custom AWS Parallel
 
 ## AWS ParallelCluster AMI customization considerations<a name="custom-ami-considerations-v3"></a>
 
-Whether you choose the `pcluster` image commands or the manual method to create your customer image, we recommend that you perform preliminary validation tests and include provisions for monitoring the status of image creation\.
+Whether you choose the `pcluster` image commands or the manual method to create your custom image, we recommend that you perform preliminary validation tests and include provisions for monitoring the status of image creation\.
 
 To build a custom AMI using `pcluster`, you create a [build image configuration file](image-builder-configuration-file-v3.md) with a `Build` and `Image` section that [EC2 Image Builder](https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html) uses to build your custom image\. The `Build` section specifies what Image Builder needs to build the image, including the `ParentImage` \(base image\), and `Components`\. An [Image Builder component](https://docs.aws.amazon.com/imagebuilder/latest/userguide/toe-component-manager.html) defines a sequence of steps required to customize an instance prior to image creation or to test an instance that was launched by the created image\. For AWS ParallelCluster component examples, see [Custom AMIs](https://catalog.prod.workshops.aws/workshops/e2f40d13-8082-4718-909b-6cdc3155ae41/examples/custom-ami)\. The `Image` section specifies the image properties\.
 
