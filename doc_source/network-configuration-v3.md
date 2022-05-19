@@ -221,8 +221,8 @@ For clusters created with `SlurmSettings` / `Dns` / `DisableManagedDns` and `Use
 
 **Note**  
 When `UseEc2Hostnames` is set to `true`, Slurm configuration file is set with ParallelCluster prolog and epilog scripts:
-+ prolog is executed to add nodes info to /etc/hosts on compute nodes when each job is allocated\. 
-+ epilog is executed to clean contents written by prolog\.
++ prolog runs to add nodes info to /etc/hosts on compute nodes when each job is allocated\. 
++ epilog runs to clean contents written by prolog\.
 
 **Cluster configuration**
 
