@@ -822,7 +822,9 @@ To:
                 "lambda:InvokeFunction",
                 "lambda:AddPermission",
                 "lambda:RemovePermission",
-                "lambda:TagResource"
+                "lambda:TagResource",
+                "lambda:ListTags",
+                "lambda:UntagResource"                
             ],
             "Resource": [
                 "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",
