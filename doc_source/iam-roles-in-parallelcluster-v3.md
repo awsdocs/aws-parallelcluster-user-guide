@@ -1097,11 +1097,6 @@ Here is the minimal set of policies to be used as part of this role:
         "arn:aws:s3:::parallelcluster-*-v1-do-not-delete",
         "arn:aws:s3:::parallelcluster-*-v1-do-not-delete/*"
       ]
-    },
-    {
-        "Action": "secretsmanager:GetSecretValue",
-        "Resource": "arn:aws:secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET_ID>",
-        "Effect": "Allow"
     }
   ]
 }
@@ -1139,11 +1134,6 @@ Here is the minimal set of policies to be used as part of this role:
           {
               "Action": "ec2:DescribeInstanceAttribute",
               "Resource": "*",
-              "Effect": "Allow"
-          },
-          {
-              "Action": "secretsmanager:GetSecretValue",
-              "Resource": "arn:aws:secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET_ID>",
               "Effect": "Allow"
           }
       ]
