@@ -32,7 +32,7 @@ $ pcluster configure --config multi-queue-mode.yaml
 
 For more information about the `pcluster configure` command, see [`pcluster configure`](pcluster.configure-v3.md)\.
 
-After you complete this step, you should have a basic configuration file named `multi-queue-mode.yaml`\. This file should contain a basic cluster configuration with a VPC section\.
+After you complete this step, you should have a basic configuration file named `multi-queue-mode.yaml`\. This file should contain a basic cluster configuration\.
 
 In the next step you modify your new configuration file and launch a cluster with multiple queues\.
 
@@ -83,7 +83,7 @@ Scheduling:
 Create a cluster named `multi-queue-cluster` based on your configuration file:
 
 ```
-$ pcluster create-cluster multi-queue-cluster --cluster-configuration multi-queue-mode.yaml
+$ pcluster create-cluster --cluster-name multi-queue-cluster --cluster-configuration multi-queue-mode.yaml
 {
   "cluster": {
     "clusterName": "multi-queue-cluster",
@@ -96,7 +96,7 @@ $ pcluster create-cluster multi-queue-cluster --cluster-configuration multi-queu
 }
 ```
 
-For more information, about the `pcluster create-cluster` command, see `create\-cluster`\.
+For more information, about the `pcluster create-cluster` command, see [`pcluster create-cluster`](pcluster.create-cluster-v3.md)\.
 
 To check the status of the cluster, run the following command:
 
@@ -121,7 +121,7 @@ When the cluster is created, the `clusterStatus` field will show `CREATE_COMPLET
 Use your private SSH key file to log into the head node\.
 
 ```
-$ pcluster ssh multi-queue-cluster -i ~/path/to/yourkeyfile.pem
+$ pcluster ssh --cluster-name multi-queue-cluster -i ~/path/to/yourkeyfile.pem
 ```
 
 For more information about `pcluster ssh`, see [`pcluster ssh`](pcluster.ssh-v3.md)\.
@@ -138,7 +138,7 @@ spot*        up   infinite      2  idle  spot-st-c5xlarge-1,spot-st-t2micro-1
 ondemand     up   infinite     10  idle~ ondemand-dy-c52xlarge-[1-10]
 ```
 
-The output shows that you have two `t2.micro` compute nodes in the `idle` state that are available in your cluster\.
+The output shows that you have one `t2.micro` and one `c5.xlarge` compute node in the `idle` state that are available in your cluster\.
 
 Other nodes are all in power saving state, shown by the `~` suffix in node state, with no EC2 instances backing them\. The default queue is designated by a `*` suffix after its queue name, so `spot` is your default job queue\.
 
@@ -150,7 +150,7 @@ Next, try to run a job to sleep for a while\. The job will later output its own 
 $ tee <<EOF hellojob.sh
 #!/bin/bash
 sleep 30
-echo "Hello World from $(hostname)"
+echo "Hello World from \$(hostname)"
 EOF
 
 $ chmod +x hellojob.sh
@@ -209,8 +209,8 @@ $ sinfo
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
 spot*        up   infinite      1  alloc# spot-dy-t2micro-1
 spot*        up   infinite     17  idle~ spot-dy-c5xlarge-[2-10],spot-dy-t2micro-[2-9]
-spot*        up   infinite      1  mix   spot-dy-c5xlarge-1
-spot*        up   infinite      1  alloc spot-dy-t2micro-1
+spot*        up   infinite      1  mix   spot-st-c5xlarge-1
+spot*        up   infinite      1  alloc spot-st-t2micro-1
 ondemand     up   infinite     10  idle~ ondemand-dy-c52xlarge-[1-10]
 ```
 
