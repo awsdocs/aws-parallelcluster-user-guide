@@ -92,7 +92,7 @@ $ pcluster create-cluster --cluster-name multi-queue-cluster --cluster-configura
 }
 ```
 
-For more information, about the `pcluster create-cluster` command, see `pcluster create\-cluster`\.
+For more information, about the `pcluster create-cluster` command, see [`pcluster create-cluster`](pcluster.create-cluster-v3.md)\.
 
 To check the status of the cluster, run the following command:
 
@@ -120,7 +120,7 @@ Use your private SSH key file to log into the head node\.
 $ pcluster ssh --cluster-name multi-queue-cluster -i ~/path/to/yourkeyfile.pem
 ```
 
-For more information about `pcluster ssh`, see `pcluster ssh`\.
+For more information about `pcluster ssh`, see [`pcluster ssh`](pcluster.ssh-v3.md)\.
 
 After logging in, run the `sinfo` command to verify that your scheduler queues are set up and configured\.
 
@@ -259,7 +259,7 @@ spot*        up   infinite      3  idle  spot-dy-t2micro-1,spot-st-c5xlarge-1,sp
 ondemand     up   infinite     10  idle~ ondemand-dy-c52xlarge-[1-10]
 ```
 
-After logging off of the cluster, you can clean up by running `pcluster delete-cluster`\. For more information, about `pcluster list-clusters` and `pcluster delete-cluster`, see `pcluster list\-clusters` and `pcluster delete\-cluster`\.
+After logging off of the cluster, you can clean up by running `pcluster delete-cluster`\. For more information, about `pcluster list-clusters` and `pcluster delete-cluster`, see [`pcluster list-clusters`](pcluster.list-clusters-v3.md) and [`pcluster delete-cluster`](pcluster.delete-cluster-v3.md)\.
 
 ```
 $ pcluster list-clusters
