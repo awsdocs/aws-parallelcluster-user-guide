@@ -3,7 +3,7 @@
 Shows the output of a given job\.
 
 ```
-awsbout [ - h ] [ - c CLUSTER ] [ - hd HEAD ] [ - t TAIL ] [ - s ] [ - sp STREAM_PERIOD ] job_id
+awsbout [-h] [-c CLUSTER] [-hd HEAD] [-t TAIL] [-s] [-sp STREAM_PERIOD] job_id
 ```
 
 ## Positional Arguments<a name="awsbatchcli.awsbout-v3.arguments"></a>

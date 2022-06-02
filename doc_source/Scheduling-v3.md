@@ -413,6 +413,7 @@ For example, if a custom AMI has an encrypted snapshot associated with it, the f
    ]
 }
 ```
+To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3.md#troubleshooting-v3-custom-amis)\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
@@ -712,11 +713,8 @@ Defines a custom Route 53 hosted zone id to use for DNS name resolution for the
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `UseEc2Hostnames` \(**Optional**, `String`\)  
-Specifies the use of default EC2 hostnames\.
-
-**Note**  
-When `UseEc2Hostnames` is set to `true`, Slurm configuration file is set with ParallelCluster prolog and epilog scripts:
-+ prolog runs to add nodes info to /etc/hosts on compute nodes when each job is allocated\.
-+ epilog runs to clean contents written by prolog\.
-
+Specifies the use of default EC2 hostnames\.  
+When `UseEc2Hostnames` is set to `true`, the Slurm configuration file is set with the AWS ParallelCluster `prolog` and `epilog` scripts:  
++ `prolog` runs to add nodes info to `/etc/hosts` on compute nodes when each job is allocated\.
++ `epilog` runs to clean contents written by `prolog`\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

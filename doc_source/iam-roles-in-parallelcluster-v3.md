@@ -275,7 +275,7 @@ The last action listed in the policy is included to provide validation of any se
             "Action": "secretsmanager:DescribeSecret",
             "Resource": "arn:aws:secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:*",
             "Effect": "Allow"
-        }, 
+        }
     ]
 }
 ```
@@ -659,26 +659,26 @@ The IAM roles passed as part of the above listed parameters have to be created o
 
 ```
 {
-            "Condition": {
-                "StringEqualsIfExists": {
-                    "iam:PassedToService": [
-                        "ecs-tasks.amazonaws.com",
-                        "lambda.amazonaws.com",
-                        "ec2.amazonaws.com",
-                        "spotfleet.amazonaws.com",
-                        "batch.amazonaws.com",
-                        "codebuild.amazonaws.com"
-                    ]
-                }
-            },
-            "Action": [
-                "iam:PassRole"
-            ],
-            "Resource": [
-                <list all custom IAM roles>
-            ],
-            "Effect": "Allow",
-            "Sid": "IamPassRole"
+    "Condition": {
+        "StringEqualsIfExists": {
+            "iam:PassedToService": [
+                "ecs-tasks.amazonaws.com",
+                "lambda.amazonaws.com",
+                "ec2.amazonaws.com",
+                "spotfleet.amazonaws.com",
+                "batch.amazonaws.com",
+                "codebuild.amazonaws.com"
+            ]
+        }
+    },
+    "Action": [
+        "iam:PassRole"
+    ],
+    "Resource": [
+        <list all custom IAM roles>
+    ],
+    "Effect": "Allow",
+    "Sid": "IamPassRole"
 }
 ```
 

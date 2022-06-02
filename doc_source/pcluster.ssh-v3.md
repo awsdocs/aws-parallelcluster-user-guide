@@ -3,8 +3,11 @@
 Runs a `ssh` command with the cluster user name and IP address pre\-populated\. Arbitrary arguments are appended to the end of the `ssh` command line\.
 
 ```
-pcluster ssh [-h] [--debug] [--region REGION]
-             --cluster-name CLUSTER_NAME [--dryrun DRYRUN]
+pcluster ssh [-h]
+                 --cluster-name CLUSTER_NAME
+                [--debug]
+                [--dryrun DRYRUN]
+                [--region REGION]
 ```
 
 ## Named arguments<a name="pcluster-v3.ssh.namedargs"></a>
@@ -12,14 +15,17 @@ pcluster ssh [-h] [--debug] [--region REGION]
 `-h, --help`  
 Shows the help text for `pcluster ssh`\.
 
-`--region, -r REGION`  
-Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
-
 `--cluster-name, -n CLUSTER_NAME`  
 Specifies the name of the cluster to connect to\.
 
+`--debug`  
+Enables debug logging\.
+
 `--dryrun DRYRUN`  
 Prints the command line that would be run and exits\.
+
+`--region, -r REGION`  
+Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 Example:
 

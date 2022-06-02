@@ -11,7 +11,7 @@ Although the head node doesn't run any job, its functions and its sizing are cru
 ## Best practices: network performance<a name="best-practices-network-performance-v3"></a>
 
 Network performance is critical to ensuring high performance computing \(HPC\) applications perform as expected\. We recommend these three best practices to optimize your network performance\.
-+ **Placement group:** a cluster placement group is a logical grouping of instances within a single Availability Zone\. For more information on placement groups, see [placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\. If you are using Slurm, you can configure each Slurm queue to use a cluster placement group by specifying a `PlacementGroup` in the queue's [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) settings\.
++ **Placement group:** a cluster placement group is a logical grouping of instances within a single Availability Zone\. For more information on placement groups, see [placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\. If you are using Slurm, you can configure each Slurm queue to use a cluster placement group by specifying a `PlacementGroup` in the queue's ``Networking`` settings\.
 
   ```
   Networking:

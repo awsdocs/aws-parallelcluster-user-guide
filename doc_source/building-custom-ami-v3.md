@@ -22,7 +22,7 @@ If you have a customized AMI and software already in place, you can apply the ch
 Key points:
 + The process takes about 1 hour\. This time can vary if there are additional `Build` / `Components` to be installed at build time\.
 + The AMI is tagged with the versions of the main components, such as the kernel, scheduler, and [EFA](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) driver\. A subset of the component versions are also reported in the AMI description\.
-+ Starting from AWS ParallelCluster 3\.0\.0, a new set of CLI commands can be used to manage the life\-cycle of images, including `build-image`, `list-images`, `describe-image` and `delete-image`\.
++ Starting from AWS ParallelCluster 3\.0\.0, a new set of CLI commands can be used to manage the life\-cycle of images, including `build\-image`, `list\-images`, `describe\-image` and `delete\-image`\.
 + This method is repeatable\. You can re\-run it to keep AMIs updated, such as OS updates, and then use them when you update an existing cluster\.
 
 Steps:
@@ -131,9 +131,9 @@ Image creation takes about 1 hour\. You can monitor the status of the build proc
 $ pcluster describe-image --image-id IMAGE_ID --region REGION
 ```
 
-As previously mentioned, the `build-image` command creates a CloudFormation stack with all the EC2 resources required to build the image, and launches the EC2 Image Builder process\.
+As previously mentioned, the `build\-image` command creates a CloudFormation stack with all the EC2 resources required to build the image, and launches the EC2 Image Builder process\.
 
-After running the `build-image` command, it's possible to retrieve CloudFormation stack events by using `pcluster get\-image\-stack\-events`\. You can filter results with the `--query` parameter to see the latest events\. For more information, see [Filtering AWS CLI output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) in the *AWS Command Line Interface User Guide*\.
+After running the `build\-image` command, it's possible to retrieve CloudFormation stack events by using `pcluster get\-image\-stack\-events`\. You can filter results with the `--query` parameter to see the latest events\. For more information, see [Filtering AWS CLI output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) in the *AWS Command Line Interface User Guide*\.
 
 ```
 $ pcluster get-image-stack-events --image-id IMAGE_ID --region REGION --query "events[0]"
@@ -182,7 +182,7 @@ $ pcluster get-image-log-events --image-id IMAGE_ID --region REGION \
 }
 ```
 
-Continue to check with the `describe-image` command until you see the `BUILD_COMPLETE` status\.
+Continue to check with the `describe\-image` command until you see the `BUILD_COMPLETE` status\.
 
 ```
 $ pcluster describe-image --image-id IMAGE_ID --region REGION
@@ -240,7 +240,7 @@ Starting from AWS ParallelCluster 3\.0\.0, a new set of commands has been added 
 This method consists on modifying an official AWS ParallelCluster AMI by adding customization on top of it\. The base AWS ParallelCluster AMIs are updated with new releases\. These AMIs have all of the components required for AWS ParallelCluster to function when it's installed and configured\. You can start with one of these as your base\.
 
 Key points:
-+ This method is faster than the `build-image` command, however, it is a manual process and not automatically repeatable\.
++ This method is faster than the `build\-image` command, however, it is a manual process and not automatically repeatable\.
 + With this method you don't have access to the log retrieval and image lifecycle management commands available through the CLI\.
 
 Steps:

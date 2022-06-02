@@ -1,6 +1,6 @@
 # Slurm guide for multiple queue mode<a name="multiple-queue-mode-slurm-user-guide-v3"></a>
 
- The following sections provide a general overview on using a Slurm cluster with a scaling architecture\.
+Here you can learn how AWS ParallelCluster and Slurm manage queue \(partition\) nodes and how you can monitor the queue and node states\.
 
 ## Overview<a name="multiple-queue-mode-slurm-user-guide-v3-overview"></a>
 
@@ -25,15 +25,15 @@ Consider the node states shown in the following `sinfo` example\.
 
 ```
 $ sinfo
-            PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-                efa          up   infinite      4  idle~ efa-dy-efacompute1-[1-4]
-                efa          up   infinite      1   idle efa-st-efacompute1-1
-                gpu          up   infinite      1  idle% gpu-dy-gpucompute1-1
-                gpu          up   infinite      9  idle~ gpu-dy-gpucompute1-[2-10]
-                ondemand     up   infinite      2   mix# ondemand-dy-ondemandcompute1-[1-2]
-                ondemand     up   infinite     18  idle~ ondemand-dy-ondemandcompute1-[3-10],ondemand-dy-ondemandcompute2-[1-10]
-                spot*        up   infinite     13  idle~ spot-dy-spotcompute1-[1-10],spot-dy-spotcompute2-[1-3]
-                spot*        up   infinite      2   idle spot-st-spotcompute2-[1-2]
+  PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+  efa          up   infinite      4  idle~ efa-dy-efacompute1-[1-4]
+  efa          up   infinite      1   idle efa-st-efacompute1-1
+  gpu          up   infinite      1  idle% gpu-dy-gpucompute1-1
+  gpu          up   infinite      9  idle~ gpu-dy-gpucompute1-[2-10]
+  ondemand     up   infinite      2   mix# ondemand-dy-ondemandcompute1-[1-2]
+  ondemand     up   infinite     18  idle~ ondemand-dy-ondemandcompute1-[3-10],ondemand-dy-ondemandcompute2-[1-10]
+  spot*        up   infinite     13  idle~ spot-dy-spotcompute1-[1-10],spot-dy-spotcompute2-[1-3]
+  spot*        up   infinite      2   idle spot-st-spotcompute2-[1-2]
 ```
 
 The `spot-st-spotcompute2-[1-2]` and `efa-st-efacompute1-1` nodes already have backing instances set up and are available for use\. The `ondemand-dy-ondemandcompute1-[1-2]` nodes are in the `POWER_UP` state and should be available within a few minutes\. The `gpu-dy-gpucompute1-1` node is in the `POWER_DOWN` state, and it transitions into `POWER_SAVING` state after `ScaledownIdletime` \(defaults to 10 minutes\)\.
@@ -66,13 +66,13 @@ Consider the initial state of the cluster, which you can view by running the `si
 
 ```
 $ sinfo
-            PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-                efa          up   infinite      4  idle~ efa-dy-efacompute1-[1-4]
-                efa          up   infinite      1   idle efa-st-efacompute1-1
-                gpu          up   infinite     10  idle~ gpu-dy-gpucompute1-[1-10]
-                ondemand     up   infinite     20  idle~ ondemand-dy-ondemandcompute1-[1-10],ondemand-dy-ondemandcompute2-[1-10]
-                spot*        up   infinite     13  idle~ spot-dy-spotcompute1-[1-10],spot-dy-spotcompute2-[1-3]
-                spot*        up   infinite      2   idle spot-st-spotcompute2-[1-2]
+  PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+  efa          up   infinite      4  idle~ efa-dy-efacompute1-[1-4]
+  efa          up   infinite      1   idle efa-st-efacompute1-1
+  gpu          up   infinite     10  idle~ gpu-dy-gpucompute1-[1-10]
+  ondemand     up   infinite     20  idle~ ondemand-dy-ondemandcompute1-[1-10],ondemand-dy-ondemandcompute2-[1-10]
+  spot*        up   infinite     13  idle~ spot-dy-spotcompute1-[1-10],spot-dy-spotcompute2-[1-3]
+  spot*        up   infinite      2   idle spot-st-spotcompute2-[1-2]
 ```
 
 Note that `spot` is the default queue\. It is indicated by the `*` suffix\.
@@ -105,29 +105,29 @@ Consider the state of the jobs using the `squeue` command\.
 
 ```
 $ squeue
-             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-                12  ondemand     wrap   ubuntu CF       0:36     10 ondemand-dy-ondemandcompute1-[1-8],ondemand-dy-ondemandcompute2-[1-2]
-                13       gpu     wrap   ubuntu CF       0:05      1 gpu-dy-gpucompute1-1
-                7       spot     wrap   ubuntu  R       2:48      1 spot-st-spotcompute2-1
-                8        efa     wrap   ubuntu  R       0:39      1 efa-dy-efacompute1-1
+ JOBID PARTITION    NAME   USER   ST       TIME  NODES NODELIST(REASON)
+  12   ondemand     wrap   ubuntu CF       0:36     10 ondemand-dy-ondemandcompute1-[1-8],ondemand-dy-ondemandcompute2-[1-2]
+  13        gpu     wrap   ubuntu CF       0:05      1 gpu-dy-gpucompute1-1
+   7       spot     wrap   ubuntu  R       2:48      1 spot-st-spotcompute2-1
+   8        efa     wrap   ubuntu  R       0:39      1 efa-dy-efacompute1-1
 ```
 
 Jobs 7 and 8 \(in the `spot` and `efa` queues\) are already running \(`R`\)\. Jobs 12 and 13 are still configuring \(`CF`\), probably waiting for instances to become available\.
 
 ```
 # Nodes states corresponds to state of running jobs
-            $ sinfo
-            PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-                efa          up   infinite      3  idle~ efa-dy-efacompute1-[2-4]
-                efa          up   infinite      1    mix efa-dy-efacompute1-1
-                efa          up   infinite      1   idle efa-st-efacompute1-1
-                gpu          up   infinite      1   mix~ gpu-dy-gpucompute1-1
-                gpu          up   infinite      9  idle~ gpu-dy-gpucompute1-[2-10]
-                ondemand     up   infinite     10   mix# ondemand-dy-ondemandcompute1-[1-8],ondemand-dy-ondemandcompute2-[1-2]
-                ondemand     up   infinite     10  idle~ ondemand-dy-ondemandcompute1-[9-10],ondemand-dy-ondemandcompute2-[3-10]
-                spot*        up   infinite     13  idle~ spot-dy-spotcompute1-[1-10],spot-dy-spotcompute2-[1-3]
-                spot*        up   infinite      1    mix spot-st-spotcompute2-1
-                spot*        up   infinite      1   idle spot-st-spotcompute2-2
+$ sinfo
+ PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+ efa          up   infinite      3  idle~ efa-dy-efacompute1-[2-4]
+ efa          up   infinite      1    mix efa-dy-efacompute1-1
+ efa          up   infinite      1   idle efa-st-efacompute1-1
+ gpu          up   infinite      1   mix~ gpu-dy-gpucompute1-1
+ gpu          up   infinite      9  idle~ gpu-dy-gpucompute1-[2-10]
+ ondemand     up   infinite     10   mix# ondemand-dy-ondemandcompute1-[1-8],ondemand-dy-ondemandcompute2-[1-2]
+ ondemand     up   infinite     10  idle~ ondemand-dy-ondemandcompute1-[9-10],ondemand-dy-ondemandcompute2-[3-10]
+ spot*        up   infinite     13  idle~ spot-dy-spotcompute1-[1-10],spot-dy-spotcompute2-[1-3]
+ spot*        up   infinite      1    mix spot-st-spotcompute2-1
+ spot*        up   infinite      1   idle spot-st-spotcompute2-2
 ```
 
 ## Node state and features<a name="multiple-queue-mode-slurm-user-guide-v3-node-state-features"></a>
@@ -178,10 +178,10 @@ In some cases, you might want to have some manual control over the nodes or queu
   In general, we don't recommend that you set nodes to `POWER_DOWN` directly using the `scontrol update nodename=nodename state=power_down` command\. This is because AWS ParallelCluster automatically handles the power down process\.
 + **Disable a queue \(partition\) or stop all static nodes in specific partition**
 
-  Set a specific queue to `INACTIVE` with the `scontrol update partition=queue name state=inactive` command\. Doing this terminates all instances backing nodes in the partition\.
+  Set a specific queue to `INACTIVE` with the `scontrol update partition=queuename state=inactive` command\. Doing this terminates all instances backing nodes in the partition\.
 + **Enable a queue \(partition\)**
 
-  Set a specific queue to `UP` with the `scontrol update partition=queue name state=up` command\.
+  Set a specific queue to `UP` with the `scontrol update partition=queuename state=up` command\.
 
 ## Scaling behavior and adjustments<a name="multiple-queue-mode-slurm-user-guide-v3-scaling-behavior"></a>
 

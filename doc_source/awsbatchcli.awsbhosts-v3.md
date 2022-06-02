@@ -3,7 +3,7 @@
 Shows the hosts that belong to the cluster’s compute environment\.
 
 ```
-awsbhosts [ - h ] [ - c CLUSTER ] [ - d ] [ instance_ids [ instance_ids ... ]]
+awsbhosts [-h] [-c CLUSTER] [-d] [instance_ids [instance_ids ... ]]
 ```
 
 ## Positional Arguments<a name="awsbatchcli.awsbhosts-v3.arguments"></a>

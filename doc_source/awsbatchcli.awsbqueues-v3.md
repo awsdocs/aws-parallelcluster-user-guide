@@ -3,7 +3,7 @@
 Shows the job queue that is associated with the cluster\.
 
 ```
-awsbqueues [ - h ] [ - c CLUSTER ] [ - d ] [ job_queues [ job_queues ... ]]
+awsbqueues [-h] [-c CLUSTER] [-d] [job_queues [job_queues ... ]]
 ```
 
 ## Positional arguments<a name="awsbatchcli.awsbqueues-v3.arguments"></a>

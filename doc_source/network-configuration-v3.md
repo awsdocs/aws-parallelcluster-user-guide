@@ -220,9 +220,9 @@ Scheduling:
 For clusters created with `SlurmSettings` / `Dns` / `DisableManagedDns` and `UseEc2Hostnames` set to `true`, the Slurm `NodeName` isn't resolved by the DNS\. Use the Slurm `NodeHostName` instead\.
 
 **Note**  
-When `UseEc2Hostnames` is set to `true`, Slurm configuration file is set with ParallelCluster prolog and epilog scripts:
-+ prolog runs to add nodes info to /etc/hosts on compute nodes when each job is allocated\. 
-+ epilog runs to clean contents written by prolog\.
+When `UseEc2Hostnames` is set to `true`, the Slurm configuration file is set with the AWS ParallelCluster `prolog` and `epilog` scripts:  
+`prolog` runs to add nodes info to `/etc/hosts` on compute nodes when each job is allocated\.
+`epilog` runs to clean contents written by `prolog`\.
 
 **Cluster configuration**
 

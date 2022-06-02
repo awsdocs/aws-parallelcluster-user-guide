@@ -3,8 +3,11 @@
 Get detailed information about a cluster\.
 
 ```
-pcluster describe-cluster [-h] --cluster-name CLUSTER_NAME
-                          [--region REGION] [--debug] [--query QUERY]
+pcluster describe-cluster [-h] 
+                 --cluster-name CLUSTER_NAME
+                [--debug]
+                [--query QUERY]
+                [--region REGION]
 ```
 
 ## Named arguments<a name="pcluster-v3.describe-cluster.namedargs"></a>
@@ -15,11 +18,11 @@ Shows the help text for `pcluster describe-cluster`\.
 `--cluster-name, -n CLUSTER_NAME`  
 Specifies the name of the cluster\.
 
-`--region, -r REGION`  
-Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
-
 `--debug`  
 Enables debug logging\.
 
 `--query QUERY`  
 Specifies the JMESPath query to perform on the output\.
+
+`--region, -r REGION`  
+Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.

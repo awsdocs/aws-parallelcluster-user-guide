@@ -635,9 +635,7 @@ To:
                 "dynamodb:GetItem",
                 "dynamodb:PutItem",
                 "dynamodb:Query",
-                "dynamodb:TagResource",
-                "lambda:ListTags",
-                "lambda:UntagResource"
+                "dynamodb:TagResource"
             ],
             "Resource": "*",
             "Effect": "Allow",
@@ -826,7 +824,7 @@ To:
                 "lambda:RemovePermission",
                 "lambda:TagResource",
                 "lambda:ListTags",
-                "lambda:UntagResource"                
+                "lambda:UntagResource"
             ],
             "Resource": [
                 "arn:aws:lambda:<REGION>:<AWS ACCOUNT ID>:function:parallelcluster-*",

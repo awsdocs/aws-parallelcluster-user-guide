@@ -40,4 +40,5 @@ For example, if a custom AMI has an encrypted snapshot associated with it, the f
    ]
 }
 ```
+To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3.md#troubleshooting-v3-custom-amis)\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

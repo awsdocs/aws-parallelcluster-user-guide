@@ -12,6 +12,8 @@ When you use the `awsbatch` scheduler, the AWS ParallelCluster CLI commands for 
 + Monitor jobs, queues, and hosts\.
 + Mirror traditional scheduler commands\.
 
+This CLI is distributed as a separate package\. For more information, see [Scheduler Support](moving-from-v2-to-v3.md#scheduler_support)\.
+
 **Topics**
 + [`awsbsub`](awsbatchcli.awsbsub-v3.md)
 + [`awsbstat`](awsbatchcli.awsbstat-v3.md)

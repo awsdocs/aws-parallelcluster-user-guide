@@ -3,7 +3,7 @@
 Cancels or terminates jobs submitted in the cluster\.
 
 ```
-awsbkill [ - h ] [ - c CLUSTER ] [ - r REASON ] job_ids [ job_ids ... ]
+awsbkill [-h] [-c CLUSTER] [-r REASON] job_ids [job_ids ... ]
 ```
 
 ## Positional Arguments<a name="awsbatchcli.awsbkill-v3.arguments"></a>

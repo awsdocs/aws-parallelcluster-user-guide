@@ -33,26 +33,32 @@ After you have verified that the custom component is working, add it to the [Bui
 
 ### Monitor the Image Builder process with `pcluster` commands to aid in debugging<a name="custom-ami-monitor-v3"></a>
 
-`describe\-image`  
+`describe\-image`
+
 Use this command to monitor the build image status\.
 
-`list\-image\-log\-streams`  
+`list\-image\-log\-streams`
+
 Use this command to get IDs of log streams that you can use to retrieve log events with `get\-image\-log\-events`\.
 
-`get\-image\-log\-events`  
-Use this command to get the log stream of build image process events\.  
-For example, you can tail build image events as shown in the following command\.  
+`get\-image\-log\-events`
+
+Use this command to get the log stream of build image process events\.
+
+For example, you can tail build image events as shown in the following command\.
 
 ```
 $ watch -n 1 'pcluster get-image-log-events -i <image-id> \
-              --log-stream-name <pcluster-version> \
-              --query "events[*].message" | tail -n 50'
+          --log-stream-name <pcluster-version> \
+          --query "events[*].message" | tail -n 50'
 ```
 
-[get\-image\-stack\-events](pcluster.get-image-stack-events-v3.md)  
+`get\-image\-stack\-events`
+
 Use this command to retrieve image stack events for the stack created by Image Builder\.
 
-`export\-image\-logs`  
+`export\-image\-logs`
+
 Use this command save image logs\.
 
 For more information on AWS ParallelCluster logs and Amazon CloudWatch, see [Amazon CloudWatch Logs Build image logs](cloudwatch-logs-v3.md#cloudwatch-logs-build-images) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
@@ -64,3 +70,7 @@ If you build and use a custom AMI, you must repeat the steps that you used to cr
 
 **Custom bootstrap actions**  
 Review the [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md) section to determine if the modifications you want to make can be scripted and supported with future AWS ParallelCluster releases\.
+
+**Using custom AMIs**  
+You can specify custom AMIs in the cluster configuration in the `Image` / `CustomAmi` and `Scheduling` / `SlurmQueues` / `- Name` / `Image` / `CustomAmi` sections\.  
+To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3.md#troubleshooting-v3-custom-amis)\.

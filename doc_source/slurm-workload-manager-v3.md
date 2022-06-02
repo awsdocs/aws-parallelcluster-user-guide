@@ -1,9 +1,25 @@
 # Slurm Workload Manager \(`slurm`\)<a name="slurm-workload-manager-v3"></a>
 
- For information about Slurm, see [https://slurm\.schedmd\.com](https://slurm.schedmd.com)\. For downloads, see [https://github\.com/SchedMD/slurm/tags](https://github.com/SchedMD/slurm/tags)\. For the source code, see [https://github\.com/SchedMD/slurm](https://github.com/SchedMD/slurm)\.
+For information about Slurm, see [https://slurm\.schedmd\.com](https://slurm.schedmd.com)\. For downloads, see [https://github\.com/SchedMD/slurm/tags](https://github.com/SchedMD/slurm/tags)\. For the source code, see [https://github\.com/SchedMD/slurm](https://github.com/SchedMD/slurm)\.
 
-AWS ParallelCluster version 3\.1\.4 uses Slurm 21\.08\.8\-2\. AWS ParallelCluster versions 3\.1\.2 and 3\.1\.3 use Slurm 21\.08\.6\. AWS ParallelCluster version 3\.1\.1 uses Slurm 21\.08\.5\. AWS ParallelCluster version 3\.0\.0 uses Slurm 20\.11\.8\. AWS ParallelCluster versions between 2\.11\.0 and 2\.11\.2 use Slurm 20\.11\.7\.AWS ParallelCluster version 2\.10\.4 uses Slurm 20\.02\.7\. AWS ParallelCluster versions between 2\.9\.0 and 2\.10\.3 use Slurm 20\.02\.4\. AWS ParallelCluster versions between 2\.6 and 2\.8\.1 use Slurm 19\.05\.5\. AWS ParallelCluster versions 2\.5\.0 and 2\.5\.1 use Slurm 19\.05\.3\-2\. AWS ParallelCluster versions between 2\.3\.1 and 2\.4\.1 use Slurm 18\.08\.6\-2\. AWS ParallelCluster versions before 2\.3\.1 use Slurm 16\.05\.3\-1\.
+
+| AWS ParallelCluster version\(s\) | Supported Slurm version | 
+| --- | --- | 
+|  3\.1\.4  |  21\.08\.8\-2  | 
+|  3\.1\.2, 3\.1\.3  |  21\.08\.6  | 
+|  3\.1\.1  |  21\.08\.5  | 
+|  3\.0\.0  |  20\.11\.8  | 
+|  2\.11\.7  |  20\.11\.9  | 
+|  2\.11\.4 to 2\.11\.6  |  20\.11\.8  | 
+|  2\.11\.0 to 2\.11\.3  |  20\.11\.7  | 
+|  2\.10\.4  |  20\.02\.7  | 
+|  2\.9\.0 to 2\.10\.3  |  20\.02\.4  | 
+|  2\.6 to 2\.8\.1  |  19\.05\.5  | 
+|  2\.5\.0, 2\.5\.1  |  19\.05\.3\-2  | 
+|  2\.3\.1 to 2\.4\.1  |  18\.08\.6\-2  | 
+|  prior to 2\.3\.1  |  16\.05\.3\-1  | 
 
 **Topics**
 + [Configuration of Multiple Queues](configuration-of-multiple-queues-v3.md)
 + [Slurm guide for multiple queue mode](multiple-queue-mode-slurm-user-guide-v3.md)
++ [Slurm cluster protected mode](slurm-protected-mode-v3.md)

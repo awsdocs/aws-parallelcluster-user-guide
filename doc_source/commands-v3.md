@@ -5,16 +5,22 @@
 `pcluster3-config-converter` is used to convert cluster configurations in AWS ParallelCluster version 2 format into AWS ParallelCluster version 3 format\.
 
 ```
-pcluster [ -h ] ( list-clusters | create-cluster | delete-cluster | describe-cluster |
-                   update-cluster | describe-compute-fleet | update-compute-fleet |
-                   delete-cluster-instances | describe-cluster-instances |
-                   list-cluster-log-streams | get-cluster-log-events | get-cluster-stack-events |
-                   list-images | build-image | delete-image | describe-image |
-                   list-image-log-streams | get-image-log-events | get-image-stack-events |
-                   list-official-images | configure | dcv-connect | export-cluster-logs |
-                   export-image-logs | ssh | version ) ...
-pcluster3-config-converter [-h] [-c CONFIG_FILE] [-t CLUSTER_TEMPLATE]
-                                  [-o OUTPUT_FILE] [--force-convert]
+pcluster [-h] ( build-image | configure | 
+                create-cluster | dcv-connect | 
+                delete-cluster | delete-cluster-instances | delete-image |
+                describe-cluster | describe-cluster-instances | 
+                describe-compute-fleet | describe-image |
+                export-cluster-logs | export-image-logs | 
+                get-cluster-log-events | get-cluster-stack-events | 
+                get-image-log-events | get-image-stack-events |
+                list-cluster-log-streams | list-clusters | 
+                list-images | list-image-log-streams | list-official-images |
+                ssh | update-cluster | 
+                update-compute-fleet | version ) ...
+pcluster3-config-converter [-h] [-t CLUSTER_TEMPLATE]
+                [-c CONFIG_FILE]
+                [--force-convert]
+                [-o OUTPUT_FILE]
 ```
 
 **Topics**
