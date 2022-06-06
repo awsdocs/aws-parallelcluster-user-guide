@@ -114,7 +114,7 @@ Creates or assigns an Elastic IP address to the head node\. Supported values are
 `SecurityGroups` \(**Optional**, `[String]`\)  
 List of Amazon VPC security group ids to use for the head node\. These replace the security groups that AWS ParallelCluster creates if this property is not included\.  
 Verify that the security groups are configured correctly for your [SharedStorage](SharedStorage-v3.md) systems\.  
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `AdditionalSecurityGroups` \(**Optional**, `[String]`\)  
 List of additional Amazon VPC security group ids to use for the head node\.  
