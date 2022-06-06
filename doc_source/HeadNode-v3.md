@@ -228,7 +228,8 @@ Specifies details for any instance store volume\. For more information, see [Ins
 ```
 EphemeralVolume:
   MountDir: string
-```  
+```
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 `MountDir` \(**Optional**, `String`\)  
 Specifies the mount directory for the instance store volume\. The default is `/scratch`\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
