@@ -118,7 +118,7 @@ Verify that the security groups are configured correctly for your [SharedStorage
 
 `AdditionalSecurityGroups` \(**Optional**, `[String]`\)  
 List of additional Amazon VPC security group ids to use for the head node\.  
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
 
 `Proxy` \(**Optional**\)  
 Specifies the proxy settings for the head node\.  
