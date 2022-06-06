@@ -99,6 +99,8 @@ Networking:
     HttpProxyAddress: string
 ```
 
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+
 ### `Networking` properties<a name="HeadNode-v3-Networking.properties"></a>
 
 `SubnetId` \(**Required**, `String`\)  
