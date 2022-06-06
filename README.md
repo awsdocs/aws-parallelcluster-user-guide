@@ -1,6 +1,6 @@
 ## AWS ParallelCluster User Guide
 
-The open source version of the AWS ParallelCluster User Guide.
+The open source version of the [AWS ParallelCluster User Guide](doc_source/index.md).
 
 ## License Summary
 
