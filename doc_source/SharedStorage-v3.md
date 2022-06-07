@@ -93,7 +93,7 @@ EbsSettings:
     NumberOfVolumes: integer
 ```
 
-[Update policy: This setting is not analyzed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-ignored-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ### `EbsSettings` Properties<a name="SharedStorage-v3-EbsSettings.properties"></a>
 
