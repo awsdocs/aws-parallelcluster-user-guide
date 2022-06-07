@@ -1,6 +1,6 @@
 # AWS ParallelCluster resources and tagging<a name="resources-tags-v3"></a>
 
-With AWS ParallelCluster you can create tags to track and manage your AWS ParallelCluster resources\. You define the tags that you want AWS CloudFormation to create and propagate to all cluster resources in the ``Tags` section` of the cluster configuration file\. You can also use tags that AWS ParallelCluster automatically generates to track and manage your resources\.
+With AWS ParallelCluster you can create tags to track and manage your AWS ParallelCluster resources\. You define the tags that you want AWS CloudFormation to create and propagate to all cluster resources in the [`Tags` section](Tags-v3.md) of the cluster configuration file\. You can also use tags that AWS ParallelCluster automatically generates to track and manage your resources\.
 
 When you create a cluster, the cluster and its resources are tagged with the AWS ParallelCluster and AWS systems tags defined in this section\.
 

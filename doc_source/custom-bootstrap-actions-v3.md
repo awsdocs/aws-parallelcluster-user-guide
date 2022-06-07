@@ -8,7 +8,7 @@
 
  If a custom action fails, the instance bootstrap also fails\. Success is signaled with an exit code of zero \(0\)\. Any other exit code indicates the instance bootstrap failed\. 
 
- You can specify different scripts for the head node and for each queue, in the `HeadNode / CustomActions` and `Scheduling / SlurmQueues / CustomActions` configuration sections\. 
+ You can specify different scripts for the head node and for each queue, in the [`HeadNode / CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) and [`Scheduling / SlurmQueues / CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) configuration sections\. 
 
 **Note**  
  Before AWS ParallelCluster version 3\.0, it was not possible to specify different scripts for head and compute nodes\. Please refer to [Moving from AWS ParallelCluster 2\.x to 3\.x](moving-from-v2-to-v3.md)\.

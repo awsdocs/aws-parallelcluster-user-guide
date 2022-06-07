@@ -35,7 +35,7 @@ AWS ParallelCluster requires every Active Directory user directory to be in the 
 **Warning**  
 This introductory section describes how to setup AWS ParallelCluster with a Managed AD server over LDAP\. LDAP is an insecure protocol\. For production systems, we strongly recommended the use of TLS certificates \(LDAPS\) as described in the [Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations](#examples-addir-v3) section that follows\.
 
-Configure your cluster to integrate with a directory by specifying the relevant information in the `DirectoryService` section of the cluster configuration file\. For more information, see the [DirectoryService](DirectoryService-v3.md) configuration section\.
+Configure your cluster to integrate with a directory by specifying the relevant information in the `DirectoryService` section of the cluster configuration file\. For more information, see the [`DirectoryService`](DirectoryService-v3.md) configuration section\.
 
 You can use this following example to integrate your cluster with an AWS Managed Microsoft AD over LDAP\.
 

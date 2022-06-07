@@ -107,7 +107,7 @@ Specifies the scheduler used\. Supported values are `slurm` and `awsbatch`\.
 
 ## `AwsBatchQueues`<a name="Scheduling-v3-AwsBatchQueues"></a>
 
-**\(Optional\)** Settings for the AWS Batch queue\. Only one queue is supported\. This section is required when `Scheduler` is `awsbatch`\.
+**\(Optional\)** Settings for the AWS Batch queue\. Only one queue is supported\. This section is required when [`Scheduler`](#yaml-Scheduling-Scheduler) is `awsbatch`\.
 
 ```
 AwsBatchQueues:
@@ -225,7 +225,7 @@ The maximum percentage that an EC2 Spot Instance price can be when compared with
 
 ## `SlurmQueues`<a name="Scheduling-v3-SlurmQueues"></a>
 
-**\(Optional\)** Settings for the Slurm queue\. This section is required when `Scheduler` is `slurm`\.
+**\(Optional\)** Settings for the Slurm queue\. This section is required when [`Scheduler`](#yaml-Scheduling-Scheduler) is `slurm`\.
 
 ```
 SlurmQueues:
@@ -332,7 +332,7 @@ Specifies the IDs of existing subnets in which to provision the Slurm queue\. Cu
 
 `AssignPublicIp` \(**Optional**, `String`\)  
 Creates or assigns a public IP address to the nodes in the Slurm queue\. Supported values are `true` and `false`\. The default depends on the subnet specified; a subnet with public IPs will default to assigning public IP addresses\.  
-If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. In this case, set `AssignPublicIp` to `false`\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. In this case, set `AssignPublicIp` to `false`\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `SecurityGroups` \(**Optional**, `[String]`\)  
@@ -447,7 +447,7 @@ Not all instance types can disable hyperthreading\. For a list of instance types
 
 `InstanceType` \(**Required**, `String`\)  
 The instance type to use in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture, either `x86_64` or `arm64`\.  
-If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `MinCount` \(**Optional**, `Integer`\)  

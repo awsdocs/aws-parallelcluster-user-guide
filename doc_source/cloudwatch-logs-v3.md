@@ -1,6 +1,6 @@
 # Integration with Amazon CloudWatch Logs<a name="cloudwatch-logs-v3"></a>
 
- For more information about CloudWatch Logs, see [Amazon CloudWatch Logs User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/)\. To configure CloudWatch Logs integration, see the `Monitoring` section\. To learn how to append custom logs to the CloudWatch configuration using `append-config`, see [Multiple CloudWatch agent configuration files](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-common-scenarios.html#CloudWatch-Agent-multiple-config-files) in the *Amazon CloudWatch User Guide*\.
+ For more information about CloudWatch Logs, see [Amazon CloudWatch Logs User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/)\. To configure CloudWatch Logs integration, see the [`Monitoring`](Monitoring-v3.md) section\. To learn how to append custom logs to the CloudWatch configuration using `append-config`, see [Multiple CloudWatch agent configuration files](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-common-scenarios.html#CloudWatch-Agent-multiple-config-files) in the *Amazon CloudWatch User Guide*\.
 
 ## Amazon CloudWatch Logs cluster logs<a name="cloudwatch-logs-clusters"></a>
 
@@ -36,4 +36,4 @@ Jobs in clusters that use AWS Batch store the output of jobs that reached a `RUN
 
 A log group is created for each custom build image with a name `/aws/imagebuilder/ParallelClusterImage-<image-id>`\. A unique log stream with name *\{pcluster\-version\}*/1 contains the output of the build image process\.
 
-You can access the logs using `pcluster` image commands\. For more information, see [AWS ParallelCluster AMI customization](custom-ami-v3.md)\.
+You can access the logs using [`pcluster`](pcluster-v3.md) image commands\. For more information, see [AWS ParallelCluster AMI customization](custom-ami-v3.md)\.

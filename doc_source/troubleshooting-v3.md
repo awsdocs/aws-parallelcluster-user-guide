@@ -146,7 +146,7 @@ To see more information about what caused the `"CREATE_FAILED"` status, you can 
 
 #### Use the CLI to view and filter CloudFormation events on `CREATE_FAILED`<a name="troubleshooting-v3-cluster-deployment-cli-events"></a>
 
-To diagnose the cluster creation issue you can use the ``pcluster get-cluster-stack-events`` command, by filtering for `CREATE_FAILED` status\. For more information, see [Filtering AWS CLI output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) in the *AWS Command Line Interface User Guide*\.
+To diagnose the cluster creation issue you can use the [`pcluster get-cluster-stack-events`](pcluster.get-cluster-stack-events-v3.md) command, by filtering for `CREATE_FAILED` status\. For more information, see [Filtering AWS CLI output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) in the *AWS Command Line Interface User Guide*\.
 
 ```
 $ pcluster get-cluster-stack-events --cluster-name mycluster --region eu-west-1 \
@@ -182,7 +182,7 @@ In the previous example, the failure was in the `HeadNode` setup\.
 
 ### Use the CLI to view logstreams<a name="troubleshooting-v3-cluster-deployment-cli-logstreams"></a>
 
-To debug this kind of issue, you can list the log streams available from the head node with the ``pcluster list-cluster-log-streams`` by filtering for `node-type`, and then analyzing the log streams content\.
+To debug this kind of issue, you can list the log streams available from the head node with the [`pcluster list-cluster-log-streams`](pcluster.list-cluster-log-streams-v3.md) by filtering for `node-type`, and then analyzing the log streams content\.
 
 ```
 $ pcluster list-cluster-log-streams --cluster-name mycluster --region eu-west-1 \
@@ -213,7 +213,7 @@ The two primary log streams that you can use to pinpoint initialization errors a
 +  `cfn-init` is the log for the `cfn-init` script\. First check this log stream\. You're likely to see the `Command chef failed` error in this log\. Look at the lines immediately before this line for more specifics connected with the error message\. For more information, see [cfn\-init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-init.html)\.
 +  `cloud-init` is the log for [cloud\-init](https://cloudinit.readthedocs.io/)\. If you don't see anything in `cfn-init`, then try checking this log next\.
 
-You can retrieve the content of the log stream by using the ``pcluster get-cluster-log-events`` \(note the `--limit 5` option to limit the number of retrieved events\):
+You can retrieve the content of the log stream by using the [`pcluster get-cluster-log-events`](pcluster.get-cluster-log-events-v3.md) \(note the `--limit 5` option to limit the number of retrieved events\):
 
 ```
 $ pcluster get-cluster-log-events --cluster-name mycluster \
@@ -247,11 +247,11 @@ $ pcluster get-cluster-log-events --cluster-name mycluster \
 }
 ```
 
-In the previous example, the failure is due to a `runpostinstall` failure, so strictly related to the content of the custom bootstrap script used in the `OnNodeConfigured` configuration parameter of the ``CustomActions``\.
+In the previous example, the failure is due to a `runpostinstall` failure, so strictly related to the content of the custom bootstrap script used in the `OnNodeConfigured` configuration parameter of the [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions)\.
 
 ### Re\-create the failed cluster with `rollback-on-failure`<a name="troubleshooting-v3-cluster-deployment-cli-fail-rollback"></a>
 
-AWS ParallelCluster creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\. If there are no log streams available, the failure might be caused by the ``CustomActions`` custom bootstrap script or an AMIs related issue\. To diagnose the creation issue in this case, create the cluster again using ``pcluster create-cluster``, including the `--rollback-on-failure` parameter set to `false`\. Then, SSH into the cluster:
+AWS ParallelCluster creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\. If there are no log streams available, the failure might be caused by the [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) custom bootstrap script or an AMIs related issue\. To diagnose the creation issue in this case, create the cluster again using [`pcluster create-cluster`](pcluster.create-cluster-v3.md), including the `--rollback-on-failure` parameter set to `false`\. Then, SSH into the cluster:
 
 ```
 $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
@@ -285,14 +285,14 @@ $ pcluster update-compute-fleet --cluster-name mycluster \
    --status STOP_REQUESTED
 ```
 
-You can list the log streams available from the cluster nodes by using the ``pcluster list-cluster-log-streams`` command and filtering using the `private-dns-name` of one of the failing nodes or the head node\.
+You can list the log streams available from the cluster nodes by using the [`pcluster list-cluster-log-streams`](pcluster.list-cluster-log-streams-v3.md) command and filtering using the `private-dns-name` of one of the failing nodes or the head node\.
 
 ```
 $ pcluster list-cluster-log-streams --cluster-name mycluster --region eu-west-1 \
  --filters 'Name=private-dns-name,Values=ip-10-0-0-101'
 ```
 
-Then, you can retrieve the content of the log stream to analyze it by using the ``pcluster get-cluster-log-events`` command and passing the `--log-stream-name` corresponding to one of the key logs mentioned in the following section\.
+Then, you can retrieve the content of the log stream to analyze it by using the [`pcluster get-cluster-log-events`](pcluster.get-cluster-log-events-v3.md) command and passing the `--log-stream-name` corresponding to one of the key logs mentioned in the following section\.
 
 ```
 $ pcluster get-cluster-log-events --cluster-name mycluster \
@@ -383,7 +383,7 @@ This section continues to explore how you can troubleshoot node related issues, 
   + `/var/log/parallelcluster/clustermgtd` \(head node\)
   + `/var/log/parallelcluster/slurm_suspend.log` \(head node\)
 + In most cases, `clustermgtd` handles all expected instance termination action\. Check in the `clustermgtd` log to see why it failed to replace or terminate a node\.
-+ For dynamic nodes failing ``SlurmSettings` Properties`, check in the `SuspendProgram` log to see if `SuspendProgram` was called by `slurmctld` with the specific node as argument\. Note that `SuspendProgram` doesn’t actually perform any action\. Rather, it only logs when it’s called\. All instance termination and `NodeAddr` reset is done by `clustermgtd`\. Slurm puts nodes back into a `POWER_SAVING` state after `SuspendTimeout` automatically\.
++ For dynamic nodes failing [`SlurmSettings` Properties](Scheduling-v3.md#Scheduling-v3-SlurmSettings.properties), check in the `SuspendProgram` log to see if `SuspendProgram` was called by `slurmctld` with the specific node as argument\. Note that `SuspendProgram` doesn’t actually perform any action\. Rather, it only logs when it’s called\. All instance termination and `NodeAddr` reset is done by `clustermgtd`\. Slurm puts nodes back into a `POWER_SAVING` state after `SuspendTimeout` automatically\.
 
 ### Troubleshooting other known node and job issues<a name="troubleshooting-v3-other-node-job-issues"></a>
 
@@ -391,7 +391,7 @@ Another type of known issue is that AWS ParallelCluster might fail to allocate j
 
 ## Placement groups and instance launch issues<a name="troubleshooting-v3-placemment-groups"></a>
 
-To get the lowest inter\-node latency, use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If there aren't enough instances available when a request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving this error when using cluster placement groups, set the ``Networking` Properties` parameter to `true`\.
+To get the lowest inter\-node latency, use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If there aren't enough instances available when a request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving this error when using cluster placement groups, set the [`Networking` Properties](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking.properties) parameter to `true`\.
 
 If you require a high performance shared filesystem, consider using [Amazon FSx for Lustre](http://aws.amazon.com/fsx/lustre/)\.
 

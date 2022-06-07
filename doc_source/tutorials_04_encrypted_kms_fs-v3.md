@@ -3,13 +3,13 @@
 Learn how to set up a customer managed AWS KMS key to encrypt and protect your data in cluster file storage systems configured for AWS ParallelCluster\.
 
 AWS ParallelCluster supports the configuration options:
-+ `SharedStorage` / `EbsSettings` / `KmsKeyId`
-+ `SharedStorage` / `EfsSettings` / `KmsKeyId`
-+ `SharedStorage` / `FsxLustreSettings` / `KmsKeyId`
++ [`SharedStorage`](SharedStorage-v3.md) / [`EbsSettings`](SharedStorage-v3.md#SharedStorage-v3-EbsSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-EbsSettings-KmsKeyId)
++ [`SharedStorage`](SharedStorage-v3.md) / [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-EfsSettings-KmsKeyId)
++ [`SharedStorage`](SharedStorage-v3.md) / [`FsxLustreSettings`](SharedStorage-v3.md#SharedStorage-v3-FsxLustreSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-FsxLustreSettings-KmsKeyId)
 
 You can use these options to provide a customer managed AWS KMS key for Amazon EBS, Amazon EFS, and FSx for Lustre shared storage system encryption\. To use them, you must create and configure an IAM policy for:
-+ `HeadNode` / `Iam` / `AdditionalIamPolicies` / `Policy`
-+ `Scheduler` / `SlurmQueues` / `Iam` / `AdditionalIamPolicies` / `Policy` 
++ [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalIamPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) / [`Policy`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies-Policy)
++ [`Scheduler`](Scheduling-v3.md#yaml-Scheduling-Scheduler) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalIamPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) / [`Policy`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies-Policy) 
 
 **Topics**
 + [Create the policy](#creating-the-role-v3)

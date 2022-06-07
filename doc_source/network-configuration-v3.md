@@ -10,7 +10,7 @@ AWS ParallelCluster supports the following high\-level configurations:
 
 All of these configurations can operate with or without public IP addressing\. AWS ParallelCluster can also be deployed to use an HTTP proxy for all AWS requests\. The combinations of these configurations result in many deployment scenarios\. For example, you can configure a single public subnet with all access over the internet\. Or, you can configure a fully private network using AWS Direct Connect and HTTP proxy for all traffic\.
 
-Starting from AWS ParallelCluster 3\.0\.0 it is possible to configure different `SecurityGroups`, `AdditionalSecurityGroups` and `PlacementGroup` settings for each queue\. For more information, see `HeadNode` / `Networking` and `SlurmQueues` / `Networking` and `AwsBatchQueues` / `Networking`\.
+Starting from AWS ParallelCluster 3\.0\.0 it is possible to configure different `SecurityGroups`, `AdditionalSecurityGroups` and `PlacementGroup` settings for each queue\. For more information, see [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) and [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) and [`AwsBatchQueues`](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues-Networking)\.
 
 For illustrations of some networking scenarios, see the following architecture diagrams\.
 
@@ -45,9 +45,9 @@ Scheduling:
 ```
 
 In this configuration, all instances of the cluster must be assigned a public IP in order to get internet access\. To achieve this, do the following:
-+ Make sure the head node is assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in `HeadNode` / `Networking` / `SubnetId` or by assigning an Elastic IP in `HeadNode` / `Networking` / `ElasticIp`\.
-+ Make sure the compute nodes are assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in `Scheduling` / `SlurmQueues` / `Networking` / `SubnetIds` or by setting `AssignPublicIp: true` in `Scheduling` / `SlurmQueues` / `Networking`\.
-+ If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
++ Make sure the head node is assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SubnetId`](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId) or by assigning an Elastic IP in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp)\.
++ Make sure the compute nodes are assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SubnetIds`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SubnetIds) or by setting [`AssignPublicIp`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-AssignPublicIp): true in [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking)\.
++ If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
 
 For more information, see [ Enabling internet access](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#vpc-igw-internet-access) in *Amazon VPC User Guide*\.
 
@@ -74,9 +74,9 @@ Scheduling:
         #AssignPublicIp: false
 ```
 
-In this configuration, only the head node of the cluster is required to have a public IP assigned\. You can achieve this by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in `HeadNode` / `Networking` / `SubnetId` or by assigning an Elastic IP in `HeadNode` / `Networking` / `ElasticIp`\.
+In this configuration, only the head node of the cluster is required to have a public IP assigned\. You can achieve this by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SubnetId`](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId) or by assigning an Elastic IP in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp)\.
 
-If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `HeadNode` / `Networking` / `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
 
 This configuration requires a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) or an internal proxy in the subnet used for the queues, to give internet access to the compute instances\.
 
@@ -108,11 +108,11 @@ Scheduling:
           HttpProxyAddress: http://proxy-address:port
 ```
 
-When `Scheduling` / `SlurmQueues` / `Networking` / `AssignPublicIp` is set to `false`, the subnets must be correctly set up to use the Proxy for all traffic\. Web access is required for both head and compute nodes\. 
+When [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`AssignPublicIp`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-AssignPublicIp) is set to `false`, the subnets must be correctly set up to use the Proxy for all traffic\. Web access is required for both head and compute nodes\. 
 
 ## AWS ParallelCluster with AWS Batch scheduler<a name="network-configuration-v3-batch"></a>
 
-When you use `awsbatch` as the scheduler type, AWS ParallelCluster creates an AWS Batch managed compute environment\. The AWS Batch environment manages Amazon Elastic Container Service \(Amazon ECS\) container instances\. These instances are launched in the subnet configured in the `AwsBatchQueues` / `Networking` / `SubnetIds` parameter\. For AWS Batch to function correctly, Amazon ECS container instances need external network access to communicate with the Amazon ECS service endpoint\. This translates into the following scenarios: 
+When you use `awsbatch` as the scheduler type, AWS ParallelCluster creates an AWS Batch managed compute environment\. The AWS Batch environment manages Amazon Elastic Container Service \(Amazon ECS\) container instances\. These instances are launched in the subnet configured in the [`AwsBatchQueues`](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues-Networking) / [`SubnetIds`](Scheduling-v3.md#yaml-Scheduling-AwsBatchQueues-Networking-SubnetIds) parameter\. For AWS Batch to function correctly, Amazon ECS container instances need external network access to communicate with the Amazon ECS service endpoint\. This translates into the following scenarios: 
 + The Subnet ID specified for the queue uses a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to access the internet\. We recommended this approach\.
 + Instances launched in the queue subnet have public IP addresses and can reach the internet through an Internet Gateway\. 
 
@@ -149,7 +149,7 @@ Scheduling:
         #AssignPublicIp: true | false
 ```
 
-In the `Scheduling` / `AwsBatchQueues` / `Networking` section, the `SubnetIds` is a list type but, currently, only one subnet is supported\.
+In the [`Scheduling`](Scheduling-v3.md) / [`AwsBatchQueues`](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues-Networking) section, the [`SubnetIds`](Scheduling-v3.md#yaml-Scheduling-AwsBatchQueues-Networking-SubnetIds) is a list type but, currently, only one subnet is supported\.
 
 For more information, see the following topics:
 +  [AWS Batch managed compute environments](https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html#managed_compute_environments) 
@@ -198,9 +198,9 @@ Create and configure the following [VPC endpoints](https://docs.aws.amazon.com/v
 
 ------
 
-\*\* This endpoint is only required when `DirectoryService` is enabled, otherwise it is optional\.
+\*\* This endpoint is only required when [`DirectoryService`](DirectoryService-v3.md#DirectoryService-v3.properties) is enabled, otherwise it is optional\.
 
-All instances in the VPC must have proper security groups to communicate with the endpoints\. You can do this by adding security groups to `AdditionalSecurityGroups` under the `HeadNode` and `AdditionalSecurityGroups` under the `SlurmQueues` configurations\. For example, if the VPC endpoints are created without explicitly specifying a security group, the default security group that's associated with the endpoint\. By adding the default security group to `AdditionalSecurityGroups`, you enable the communication between the cluster and the endpoints\.
+All instances in the VPC must have proper security groups to communicate with the endpoints\. You can do this by adding security groups to [`AdditionalSecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-AdditionalSecurityGroups) under the [`HeadNode`](HeadNode-v3.md) and [`AdditionalSecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-AdditionalSecurityGroups) under the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) configurations\. For example, if the VPC endpoints are created without explicitly specifying a security group, the default security group that's associated with the endpoint\. By adding the default security group to `AdditionalSecurityGroups`, you enable the communication between the cluster and the endpoints\.
 
 **Disable Route 53 and use EC2 hostnames**
 
@@ -217,7 +217,7 @@ Scheduling:
 ```
 
 **Warning**  
-For clusters created with `SlurmSettings` / `Dns` / `DisableManagedDns` and `UseEc2Hostnames` set to `true`, the Slurm `NodeName` isn't resolved by the DNS\. Use the Slurm `NodeHostName` instead\.
+For clusters created with [`SlurmSettings`](Scheduling-v3.md#Scheduling-v3-SlurmSettings) / [`Dns`](Scheduling-v3.md#Scheduling-v3-SlurmSettings-Dns) / [`DisableManagedDns`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-Dns-DisableManagedDns) and [`UseEc2Hostnames`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-Dns-UseEc2Hostnames) set to `true`, the Slurm `NodeName` isn't resolved by the DNS\. Use the Slurm `NodeHostName` instead\.
 
 **Note**  
 When `UseEc2Hostnames` is set to `true`, the Slurm configuration file is set with the AWS ParallelCluster `prolog` and `epilog` scripts:  
@@ -253,18 +253,18 @@ Scheduling:
         AdditionalSecurityGroups:
           - sg-1abcdef01234567890 # optional, the security group that enables the communication between the cluster and the VPC endpoints
 ```
-+ `SubnetId\(s\)`: The subnet without internet access\.
++ [`SubnetId(s)`](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId): The subnet without internet access\.
 
   To enable communication between AWS ParallelCluster and AWS Services, the VPC of the subnet must have the VPC endpoints attached\. Before you create your cluster, verify that [auto\-assign public IPv4 address is disabled](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html#subnet-public-ip) in the subnet to ensure that the `pcluster` commands have access to the cluster\.
-+ `AdditionalSecurityGroups`: The security group that enables the communication between the cluster and the VPC endpoints\.
++ [`AdditionalSecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-AdditionalSecurityGroups): The security group that enables the communication between the cluster and the VPC endpoints\.
 
   Optional:
   + If the VPC endpoints are created without explicitly specifying a security group, the default security group of the VPC is associated\. Therefore, provide the default security group to `AdditionalSecurityGroups`\.
   + If custom security groups are used when creating the cluster and/or the VPC endpoints, `AdditionalSecurityGroups` is unnecessary as long as the custom security groups enable communication between the cluster and the VPC endpoints\.
-+ `Scheduler`: The cluster scheduler\.
++ [`Scheduler`](Scheduling-v3.md#yaml-Scheduling-Scheduler): The cluster scheduler\.
 
   `slurm` is the only valid value\. Only the Slurm scheduler supports a cluster in a subnet without internet access\.
-+ `SlurmSettings`: The Slurm settings\.
++ [`SlurmSettings`](Scheduling-v3.md#Scheduling-v3-SlurmSettings): The Slurm settings\.
 
   See the preceding section *Disable Route53 and use EC2 hostnames*\.
 

@@ -222,10 +222,13 @@ If you set this option, it only supports file systems:
   OR
 + That do have an existing mount target in the stack's Availability Zone, with inbound and outbound NFS traffic allowed from the `HeadNode` and `ComputeNodes`\.
 
-  Verify that `SlurmQueues` / `Networking` / `SecurityGroups` and `HeadNode` / `Networking` / `SecurityGroups` are set correctly for Amazon EFS file systems\.
+  Verify that [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups) are set correctly for Amazon EFS file systems\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ## `FsxLustreSettings`<a name="SharedStorage-v3-FsxLustreSettings"></a>
+
+**Note**  
+You must include `FsxLustreSettings` if your configuration includes an Amazon FSx file system\.
 
 **\(Optional\)** The settings for an FSx for Lustre file system\.
 
@@ -332,7 +335,7 @@ If you set this option, it only supports file systems:
   OR
 + That do have an existing mount target in the stack's Availability Zone, with FSx for Lustre file servers and FSx for Lustre client traffic allowed from the `HeadNode` and `ComputeNodes`\. For more information, see [FSx for Lustre inbound and outbound rules](https://docs.aws.amazon.com/fsx/latest/LustreGuide/limit-access-security-groups.html#lustre-client-inbound-outbound-rules)\.
 
-  Verify that `SlurmQueues` / `Networking` / `SecurityGroups` and `HeadNode` / `Networking` / `SecurityGroups` are set correctly for FSx for Lustre file systems\.
+  Verify that [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups) are set correctly for FSx for Lustre file systems\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `AutoImportPolicy` \(**Optional**, `String`\)  

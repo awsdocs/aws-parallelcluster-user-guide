@@ -84,7 +84,7 @@ Bootstrap errors that activate protected mode can be subdivided into the followi
 
 1. **Bootstrap error that causes an instance to self\-terminate**\.
 
-   An instance fails early in the bootstrap process, such as an instance that self\-terminates due to errors in the `SlurmQueues` \\ `CustomActions` \\ `OnNodeStart` \| `OnNodeConfigured` script\.
+   An instance fails early in the bootstrap process, such as an instance that self\-terminates due to errors in the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) \\ [`CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) \\ [`OnNodeStart`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeStart) \| [`OnNodeConfigured`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeConfigured) script\.
 
    For dynamic nodes, look for errors similar to:
 

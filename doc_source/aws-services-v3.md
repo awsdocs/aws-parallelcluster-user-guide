@@ -89,13 +89,13 @@ For more information, see [https://aws\.amazon\.com/ecr/](http://aws.amazon.com/
 
 ## Amazon EFS<a name="amazon-efs-v3"></a>
 
-Amazon Elastic File System \(Amazon EFS\) provides a simple, scalable, and fully managed elastic NFS file system for use with AWS Cloud services and on\-premises resources\. Amazon EFS is used when the [`efs_settings`](cluster-definition.md#efs-settings) setting is specified and refers to an [`[efs]` section](efs-section.md)\. Support for Amazon EFS was added in AWS ParallelCluster version 2\.1\.0\.
+Amazon Elastic File System \(Amazon EFS\) provides a simple, scalable, and fully managed elastic NFS file system for use with AWS Cloud services and on\-premises resources\. Amazon EFS is used when the [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings) are specified\. Support for Amazon EFS was added in AWS ParallelCluster version 2\.1\.0\.
 
 For more information about Amazon EFS, see [https://aws\.amazon\.com/efs/](http://aws.amazon.com/efs/) and [https://docs\.aws\.amazon\.com/efs/](https://docs.aws.amazon.com/efs/)\.
 
 ## Amazon FSx for Lustre<a name="amazon-fsx-for-lustre-v3"></a>
 
-FSx for Lustre provides a high\-performance file system that uses the open\-source Lustre file system\. FSx for Lustre is used when the [`fsx_settings`](cluster-definition.md#fsx-settings) setting is specified and refers to an [`[fsx]` section](fsx-section.md)\. Support for FSx for Lustre was added in AWS ParallelCluster version 2\.2\.1\.
+FSx for Lustre provides a high\-performance file system that uses the open\-source Lustre file system\. FSx for Lustre is used when the [`FsxLustreSettings` Properties](SharedStorage-v3.md#SharedStorage-v3-FsxLustreSettings.properties) are specified\. Support for FSx for Lustre was added in AWS ParallelCluster version 2\.2\.1\.
 
 For more information about FSx for Lustre, see [https://aws\.amazon\.com/fsx/lustre/](http://aws.amazon.com/fsx/lustre/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
 
@@ -115,7 +115,7 @@ For more information about Lambda, see [https://aws\.amazon\.com/lambda/](http:/
 
 ## NICE DCV<a name="nice-dcv-v3"></a>
 
-NICE DCV is a high\-performance remote display protocol that provides a secure way to deliver remote desktops and application streaming to any device over varying network conditions\. NICE DCV is used when the [`dcv_settings`](cluster-definition.md#dcv-settings) setting is specified and refers to an [`[dcv]` section](dcv-section.md)\. Support for NICE DCV was added in AWS ParallelCluster version 2\.5\.0\.
+NICE DCV is a high\-performance remote display protocol that provides a secure way to deliver remote desktops and application streaming to any device over varying network conditions\. NICE DCV is used when the [`HeadNode` section](HeadNode-v3.md) / [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv) settings are specified\. Support for NICE DCV was added in AWS ParallelCluster version 2\.5\.0\.
 
 For more information about NICE DCV, see [https://aws\.amazon\.com/hpc/dcv/](http://aws.amazon.com/hpc/dcv/) and [https://docs\.aws\.amazon\.com/dcv/](https://docs.aws.amazon.com/dcv/)\.
 
@@ -135,6 +135,6 @@ For more information, see [https://aws\.amazon\.com/s3/](http://aws.amazon.com/s
 
 ## Amazon VPC<a name="amazon-vpc-v3"></a>
 
-Amazon VPC defines a network used by the nodes in your cluster\. The VPC settings for the cluster are defined in the [`[vpc]` section](vpc-section.md)\.
+An Amazon VPC defines a network used by the nodes in your cluster\.
 
 For more information about Amazon VPC, see [https://aws\.amazon\.com/vpc/](http://aws.amazon.com/vpc/) and [https://docs\.aws\.amazon\.com/vpc/](https://docs.aws.amazon.com/vpc/)\.

@@ -62,7 +62,7 @@ Specifies the time duration in seconds \(measured from the job attempt’s `star
 
 `-n NODES, --nodes NODES`  
 Specifies the number of nodes to reserve for the job\. Specify a value for this parameter to enable multi\-node parallel submission\.  
-When the `Scheduler` / `AwsBatchQueues` / `CapacityType` parameter is set to `SPOT`, multi\-node parallel jobs *aren't* supported\. Additionally, there must be an `AWSServiceRoleForEC2Spot` service\-linked role in your account\. You can create this role with the following AWS CLI command:  
+When the [`Scheduler`](Scheduling-v3.md#yaml-Scheduling-Scheduler) / [`AwsBatchQueues`](Scheduling-v3.md#Scheduling-v3-AwsBatchQueues) / [`CapacityType`](Scheduling-v3.md#yaml-Scheduling-AwsBatchQueues-CapacityType) parameter is set to `SPOT`, multi\-node parallel jobs *aren't* supported\. Additionally, there must be an `AWSServiceRoleForEC2Spot` service\-linked role in your account\. You can create this role with the following AWS CLI command:  
 
 ```
 $ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com

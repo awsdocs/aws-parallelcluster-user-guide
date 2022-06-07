@@ -16,9 +16,9 @@ Throughout their lifecycle, cloud nodes enter several if not all of the followin
 + **A node that is currently available for use** appears without a suffix \(for example `idle`\) in `sinfo`\. After the node is set up and has joined the cluster, it becomes available to run jobs\. In this stage, the node is properly configured and ready for use\.
 
   As a general rule, we recommend that the number of EC2 instances be the same as the number of available nodes\. In most cases, static nodes are available after the cluster is created\.
-+ **A node that is transitioning to a `POWER_DOWN` state** appears with a `%` suffix \(for example `idle%`\) in `sinfo`\. Dynamic nodes automatically enter the `POWER_DOWN` state after `ScaledownIdletime`\. In contrast, static nodes in most cases aren't powered down\. However, nodes can be placed in the `POWER_DOWN` state manually with the `scontrol update nodename=nodename state=powering_down` command\. In this state, the instances associated with a node are terminated, and the node is set back to the `POWER_SAVING` state and available for use after `ScaledownIdletime`\.
++ **A node that is transitioning to a `POWER_DOWN` state** appears with a `%` suffix \(for example `idle%`\) in `sinfo`\. Dynamic nodes automatically enter the `POWER_DOWN` state after [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\. In contrast, static nodes in most cases aren't powered down\. However, nodes can be placed in the `POWER_DOWN` state manually with the `scontrol update nodename=nodename state=powering_down` command\. In this state, the instances associated with a node are terminated, and the node is set back to the `POWER_SAVING` state and available for use after [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\.
 
-  The `ScaledownIdletime` setting is saved to the Slurm configuration `SuspendTimeout` setting\.
+  The [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime) setting is saved to the Slurm configuration `SuspendTimeout` setting\.
 + **A node that is offline** appears with a `*` suffix \(for example `down*`\) in `sinfo`\. A node goes offline if the Slurm controller can't contact the node or if the static nodes are disabled and the backing instances are terminated\.
 
 Consider the node states shown in the following `sinfo` example\.
@@ -36,7 +36,7 @@ $ sinfo
   spot*        up   infinite      2   idle spot-st-spotcompute2-[1-2]
 ```
 
-The `spot-st-spotcompute2-[1-2]` and `efa-st-efacompute1-1` nodes already have backing instances set up and are available for use\. The `ondemand-dy-ondemandcompute1-[1-2]` nodes are in the `POWER_UP` state and should be available within a few minutes\. The `gpu-dy-gpucompute1-1` node is in the `POWER_DOWN` state, and it transitions into `POWER_SAVING` state after `ScaledownIdletime` \(defaults to 10 minutes\)\.
+The `spot-st-spotcompute2-[1-2]` and `efa-st-efacompute1-1` nodes already have backing instances set up and are available for use\. The `ondemand-dy-ondemandcompute1-[1-2]` nodes are in the `POWER_UP` state and should be available within a few minutes\. The `gpu-dy-gpucompute1-1` node is in the `POWER_DOWN` state, and it transitions into `POWER_SAVING` state after [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime) \(defaults to 10 minutes\)\.
 
 All of the other nodes are in `POWER_SAVING` state with no EC2 instances backing them\.
 
@@ -171,7 +171,7 @@ In some cases, you might want to have some manual control over the nodes or queu
 + **Power up dynamic nodes in `POWER_SAVING` state**
 
    Run the `scontrol update nodename=nodename state=power_up` command or submit a placeholder `sleep 1` job requesting a certain number of nodes and then rely on Slurm to power up the required number of nodes\.
-+ **Power down dynamic nodes before `ScaledownIdletime`**
++ **Power down dynamic nodes before [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)**
 
   We recommend that you set dynamic nodes to `DOWN` with the `scontrol update nodename=nodename state=down` command\. AWS ParallelCluster automatically terminates and resets the downed dynamic nodes\.
 
@@ -191,7 +191,7 @@ In some cases, you might want to have some manual control over the nodes or queu
 + `ResumeProgram` launches two EC2 instances and assigns the private IP addresses and hostnames of `queue1-dy-spotcompute1-[1-2]`, waiting for `ResumeTimeout` \(the default period is 30 minutes before resetting the nodes\.
 + Instances are configured and join the cluster\. A job starts running on instances\.
 + The job completes and stops running\.
-+ After the configured `SuspendTime` has elapsed \(which is set to `ScaledownIdletime`\), the scheduler sets the instances to the the `POWER_SAVING` state\. The scheduler then sets `queue1-dy-spotcompute1-[1-2]` to the `POWER_DOWN` state and calls `SuspendProgram` with the node names\.
++ After the configured `SuspendTime` has elapsed \(which is set to [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\), the scheduler sets the instances to the the `POWER_SAVING` state\. The scheduler then sets `queue1-dy-spotcompute1-[1-2]` to the `POWER_DOWN` state and calls `SuspendProgram` with the node names\.
 + `SuspendProgram` is called for two nodes\. Nodes remain in the `POWER_DOWN` state, for example, by remaining `idle%` for a `SuspendTimeout` \(the default period is 120 seconds \(2 minutes\)\)\. After `clustermgtd` detects that nodes are powering down, it terminates the backing instances\. Then, it transitions `queue1-dy-spotcompute1-[1-2]` to the idle state and resets the private IP address and hostname so it is ready to power up for future jobs\.
 
 **If things go wrong and an instance for a particular node can't be launched for some reason, then the following happens:**
@@ -243,7 +243,7 @@ The following list contains the key logs\. The log stream name used with Amazon 
 
 **Failure when replacing or terminating instances, failure when powering down nodes**
 + In general, `clustermgtd` handles all expected instance termination actions\. Look in the `clustermgtd` log to see why it failed to replace or terminate a node\.
-+ For dynamic nodes failing `ScaledownIdletime`, look in the `SuspendProgram` log to see if `slurmctld` processes made calls with the specific node as argument\. Note `SuspendProgram` doesn't actually perform any specific action\. Rather, it only logs when it’s called\. All instance termination and `NodeAddr` resets are completed by `clustermgtd`\. Slurm transitions nodes to `IDLE` after `SuspendTimeout`\.
++ For dynamic nodes failing [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime), look in the `SuspendProgram` log to see if `slurmctld` processes made calls with the specific node as argument\. Note `SuspendProgram` doesn't actually perform any specific action\. Rather, it only logs when it’s called\. All instance termination and `NodeAddr` resets are completed by `clustermgtd`\. Slurm transitions nodes to `IDLE` after `SuspendTimeout`\.
 
 **Other issues:**
 + AWS ParallelCluster doesn't make job allocation or scaling decisions\. It only tries to launch, terminate, and maintain resources according to Slurm’s instructions\.

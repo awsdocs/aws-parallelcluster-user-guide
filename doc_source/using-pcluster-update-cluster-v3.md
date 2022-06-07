@@ -1,36 +1,36 @@
 # Using `pcluster update-cluster`<a name="using-pcluster-update-cluster-v3"></a>
 
-In AWS ParallelCluster 3\.x, ``pcluster update-cluster`` analyzes the settings used to create the current cluster and the settings in the configuration file for issues\. If any issues are discovered, they are reported, and the steps to take to fix the issues are displayed\. For example, if the compute `InstanceType` is changed, the compute fleet must be stopped before an update can proceed\. This issue is reported when it is discovered\. If no blocking issues are discovered, update process is started and the changes are reported\.
+In AWS ParallelCluster 3\.x, [`pcluster update-cluster`](pcluster.update-cluster-v3.md) analyzes the settings used to create the current cluster and the settings in the configuration file for issues\. If any issues are discovered, they are reported, and the steps to take to fix the issues are displayed\. For example, if the compute [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) is changed, the compute fleet must be stopped before an update can proceed\. This issue is reported when it is discovered\. If no blocking issues are discovered, update process is started and the changes are reported\.
 
-You can use the ``pcluster update-cluster` --dryrun` option to see the changes before their run\. For more information, see [`pcluster update-cluster` examples](#pcluster-update-cluster-examples)\.
+You can use the [`pcluster update-cluster`](pcluster.update-cluster-v3.md) \-\-dryrun option to see the changes before their run\. For more information, see [`pcluster update-cluster` examples](#pcluster-update-cluster-examples)\.
 
 For troubleshooting guidance, see [AWS ParallelCluster Troubleshooting](troubleshooting-v3.md)
 
 ## Update Policy: definitions<a name="pcluster-update-policy-definitions"></a>
 
 **Update policy: This setting can be changed during an update\.**  
-After changing this setting, the cluster can be updated using ``pcluster update-cluster``\.
+After changing this setting, the cluster can be updated using [`pcluster update-cluster`](pcluster.update-cluster-v3.md)\.
 
 **Update policy: If this setting is changed, the update is not allowed\.**  
-After changing this setting, the cluster can't be updated\. You must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use ``pcluster create-cluster``\. To delete the original cluster, use ``pcluster delete-cluster``\.
+After changing this setting, the cluster can't be updated\. You must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use [`pcluster create-cluster`](pcluster.create-cluster-v3.md)\. To delete the original cluster, use [`pcluster delete-cluster`](pcluster.delete-cluster-v3.md)\.
 
 **Update policy: This setting is not analyzed during an update\.**  
-These settings can be changed, and the cluster updated using ``pcluster update-cluster``\.
+These settings can be changed, and the cluster updated using [`pcluster update-cluster`](pcluster.update-cluster-v3.md)\.
 
 **Update policy: The compute fleet must be stopped for this setting to be changed for an update\.**  
-These settings cannot be changed while the compute fleet exists\. Either the change must be reverted or the compute fleet must be stopped \(using ``pcluster update-compute-fleet``\)\. After the compute fleet is stopped you can update the cluster \(``pcluster update-cluster``\) to activate the changes\. For example, if you are using a Slurm scheduler with `SlurmQueues` / `ComputeResources` / `- Name` / `MinCount` > 0, a compute fleet is started\.
+These settings cannot be changed while the compute fleet exists\. Either the change must be reverted or the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\. After the compute fleet is stopped you can update the cluster \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\) to activate the changes\. For example, if you are using a Slurm scheduler with [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`ComputeResources`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) / \- [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Name) / [`MinCount`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-MinCount) > 0, a compute fleet is started\.
 
 **Update policy: This setting can't be decreased during an update\.**  
-These settings can be changed, but they cannot be decreased\. If these settings must be decreased, you must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use ``pcluster create-cluster``\. To delete the original cluster, use ``pcluster delete-cluster``\.
+These settings can be changed, but they cannot be decreased\. If these settings must be decreased, you must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use [`pcluster create-cluster`](pcluster.create-cluster-v3.md)\. To delete the original cluster, use [`pcluster delete-cluster`](pcluster.delete-cluster-v3.md)\.
 
 **Update policy: Reducing the size of a queue below the current number of nodes requires that the compute fleet be stopped first\.**  
-These settings can be changed, but if the change would reduce the size of the queue below the current size, the compute fleet must be stopped \(using ``pcluster update-compute-fleet``\)\. After the compute fleet is stopped you can update the cluster \(``pcluster update-cluster``\) to activate the changes\.
+These settings can be changed, but if the change would reduce the size of the queue below the current size, the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\. After the compute fleet is stopped you can update the cluster \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\) to activate the changes\.
 
 **Update policy: Reducing the number of static nodes in a queue requires that the compute fleet be stopped first\.**  
-These settings can be changed, but if the change would reduce the number of static nodes in the queue below the current size, the compute fleet must be stopped \(using ``pcluster update-compute-fleet``\)\. After the compute fleet is stopped you can update the cluster \(``pcluster update-cluster``\) to activate the changes\.
+These settings can be changed, but if the change would reduce the number of static nodes in the queue below the current size, the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\. After the compute fleet is stopped you can update the cluster \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\) to activate the changes\.
 
 **Update policy: If this setting is changed, the update is not allowed\. If you force the update, the new value will be ignored and the old value will be used\.**  
-After changing this setting, the cluster can't be updated\. You must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use ``pcluster create-cluster``\. To delete the original cluster, use ``pcluster delete-cluster``\.
+After changing this setting, the cluster can't be updated\. You must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use [`pcluster create-cluster`](pcluster.create-cluster-v3.md)\. To delete the original cluster, use [`pcluster delete-cluster`](pcluster.delete-cluster-v3.md)\.
 
 ## `pcluster update-cluster` examples<a name="pcluster-update-cluster-examples"></a>
 + This example demonstrates an update with some allowed changes and the update is started directly\.

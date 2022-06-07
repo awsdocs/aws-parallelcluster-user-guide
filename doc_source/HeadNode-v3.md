@@ -73,7 +73,7 @@ HeadNode:
 `InstanceType` \(**Required**, `String`\)  
 Specifies the instance type for the head node\.  
 Specifies the Amazon EC2 instance type that's used for the head node\. The architecture of the instance type must be the same as the architecture used for the AWS Batch [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-AwsBatchQueues-ComputeResources-InstanceTypes) or Slurm [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) setting\.  
-If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set `ElasticIp` to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`ElasticIp`](#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `DisableSimultaneousMultithreading` \(**Optional**, `Boolean`\)  
@@ -118,7 +118,7 @@ Verify that the security groups are configured correctly for your [SharedStorage
 
 `AdditionalSecurityGroups` \(**Optional**, `[String]`\)  
 List of additional Amazon VPC security group ids to use for the head node\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `Proxy` \(**Optional**\)  
 Specifies the proxy settings for the head node\.  
@@ -222,7 +222,7 @@ The ratio of `Throughput` to `Iops` can be no more than 0\.25\. The maximum thro
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
 `DeleteOnTermination` \(**Optional**, `Boolean`\)  
 Specifies whether the root volume should be deleted when the head node is terminated\. The default value is `true`\.  
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `EphemeralVolume` \(**Optional**\)  
 Specifies details for any instance store volume\. For more information, see [Instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\.  
@@ -231,7 +231,7 @@ Specifies details for any instance store volume\. For more information, see [Ins
 EphemeralVolume:
   MountDir: string
 ```
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)    
 `MountDir` \(**Optional**, `String`\)  
 Specifies the mount directory for the instance store volume\. The default is `/scratch`\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
@@ -368,7 +368,7 @@ There is no default value\.
 AdditionalIamPolicies:
   - Policy: string
 ```
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)    
 `Policy` \(**Optional**, `[String]`\)  
 List of IAM policies\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)

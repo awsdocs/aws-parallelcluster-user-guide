@@ -2,10 +2,10 @@
 
 ## Custom Bootstrap Actions<a name="custom_bootstrap_actions"></a>
 
-With AWS ParallelCluster 3, you can specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the `HeadNode` and `Scheduling` / `SlurmQueues` sections\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\. 
+With AWS ParallelCluster 3, you can specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) sections\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\. 
 
  Custom bootstrap actions scripts that are developed for AWS ParallelCluster 2 must be adapted to be used in AWS ParallelCluster 3:
-+ We don't recommend using `/etc/parallelcluster/cfnconfig` and `cfn_node_type` to differentiate between head and compute nodes\. Instead, we recommend that you specify two different scripts in the `HeadNode` and `Scheduling` / `SlurmQueues`\.
++ We don't recommend using `/etc/parallelcluster/cfnconfig` and `cfn_node_type` to differentiate between head and compute nodes\. Instead, we recommend that you specify two different scripts in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues)\.
 + If you prefer to continue loading `/etc/parallelcluster/cfnconfig` for use in your bootstrap actions script, note the value of `cfn_node_type` is changed from "MasterServer" to "HeadNode" \(see: [Inclusive language](#inclusive_language)\)\.
 + On AWS ParallelCluster 2, the first input argument to bootstrap action scripts was the S3 URL to the script and was reserved\. In AWS ParallelCluster 3, only the arguments configured in the configuration are passed to the scripts\.
 

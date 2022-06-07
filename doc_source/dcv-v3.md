@@ -2,7 +2,7 @@
 
 NICE DCV is a remote visualization technology that enables users to securely connect to graphic\-intensive 3D applications that are hosted on a remote high\-performance server\. For more information, see [NICE DCV](https://docs.aws.amazon.com/dcv/)\.
 
-The NICE DCV software is automatically installed on the head node and can be enabled by using the ``Dcv`` section from the `HeadNode` configuration\.
+The NICE DCV software is automatically installed on the head node and can be enabled by using the [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv) section from the [`HeadNode`](HeadNode-v3.md) configuration\.
 
 ```
 HeadNode:
@@ -10,13 +10,13 @@ HeadNode:
     Enabled: true
 ```
 
-For more information about NICE DCV configuration parameters, see `HeadNode` / `Dcv`\. To connect to the NICE DCV session, use the ``pcluster dcv-connect`` command\.
+For more information about NICE DCV configuration parameters, see [`HeadNode`](HeadNode-v3.md) / [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv)\. To connect to the NICE DCV session, use the [`pcluster dcv-connect`](pcluster.dcv-connect-v3.md) command\.
 
 ## NICE DCV HTTPS certificate<a name="dcv-v3-certificate"></a>
 
 NICE DCV automatically generates a self\-signed certificate to secure traffic between the NICE DCV client and NICE DCV server\.
 
-To replace the default self\-signed NICE DCV certificate with another certificate, first connect to the head node\. Then, copy both the certificate and key to the `/etc/dcv` folder before running the ``pcluster dcv-connect`` command\.
+To replace the default self\-signed NICE DCV certificate with another certificate, first connect to the head node\. Then, copy both the certificate and key to the `/etc/dcv` folder before running the [`pcluster dcv-connect`](pcluster.dcv-connect-v3.md) command\.
 
 For more information, see [Changing the TLS certificate](https://docs.aws.amazon.com/dcv/latest/adminguide/manage-cert.html) in the *NICE DCV Administrator Guide*\.
 

@@ -4,7 +4,7 @@ Though building a custom AMI isn't ideal, there are scenarios where building a c
 
 There are two ways to build a custom AWS ParallelCluster AMI\.
 
-1. Create a [build image configuration file](image-builder-configuration-file-v3.md) and then use the `pcluster` CLI to build the image with EC2 Image Builder\. This process is automated, repeatable and supports monitoring\. For more information, see the `pcluster` image commands\.
+1. Create a [build image configuration file](image-builder-configuration-file-v3.md) and then use the `pcluster` CLI to build the image with EC2 Image Builder\. This process is automated, repeatable and supports monitoring\. For more information, see the [`pcluster`](pcluster-v3.md) image commands\.
 
 1. Create an instance from an AWS ParallelCluster AMI, log in to it, make manual modifications, and use Amazon EC2 to create a new AMI from the modified instance\. This process takes less time, however, it isn't automated or repeatable, and it doesn't support use of the `pcluster` CLI image monitoring commands\.
 
@@ -14,9 +14,9 @@ For more information on using these methods, see [Building a Custom AWS Parallel
 
 Whether you choose the `pcluster` image commands or the manual method to create your custom image, we recommend that you perform preliminary validation tests and include provisions for monitoring the status of image creation\.
 
-To build a custom AMI using `pcluster`, you create a [build image configuration file](image-builder-configuration-file-v3.md) with a `Build` and `Image` section that [EC2 Image Builder](https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html) uses to build your custom image\. The `Build` section specifies what Image Builder needs to build the image, including the `ParentImage` \(base image\), and `Components`\. An [Image Builder component](https://docs.aws.amazon.com/imagebuilder/latest/userguide/toe-component-manager.html) defines a sequence of steps required to customize an instance prior to image creation or to test an instance that was launched by the created image\. For AWS ParallelCluster component examples, see [Custom AMIs](https://catalog.prod.workshops.aws/workshops/e2f40d13-8082-4718-909b-6cdc3155ae41/examples/custom-ami)\. The `Image` section specifies the image properties\.
+To build a custom AMI using `pcluster`, you create a [build image configuration file](image-builder-configuration-file-v3.md) with a [`Build`](Build-v3.md) and [`Image`](Image-v3.md#Image-v3.properties) section that [EC2 Image Builder](https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html) uses to build your custom image\. The `Build` section specifies what Image Builder needs to build the image, including the [`ParentImage`](Build-v3.md#yaml-build-image-Build-ParentImage) \(base image\), and [`Components`](Build-v3.md#Build-v3-Components)\. An [Image Builder component](https://docs.aws.amazon.com/imagebuilder/latest/userguide/toe-component-manager.html) defines a sequence of steps required to customize an instance prior to image creation or to test an instance that was launched by the created image\. For AWS ParallelCluster component examples, see [Custom AMIs](https://catalog.prod.workshops.aws/workshops/e2f40d13-8082-4718-909b-6cdc3155ae41/examples/custom-ami)\. The `Image` section specifies the image properties\.
 
-When called from `pcluster build\-image` to create a custom image, Image Builder uses the build image configuration with the AWS ParallelCluster cookbook to bootstrap AWS ParallelCluster on your `ParentImage`\. It downloads components, runs build and validate phases, creates the AMI, launches an instance from the AMI, and runs tests\. When the process completes, it produces a new image or a stop message\.
+When called from pcluster [`build-image`](pcluster.build-image-v3.md) to create a custom image, Image Builder uses the build image configuration with the AWS ParallelCluster cookbook to bootstrap AWS ParallelCluster on your [`ParentImage`](Build-v3.md#yaml-build-image-Build-ParentImage)\. It downloads components, runs build and validate phases, creates the AMI, launches an instance from the AMI, and runs tests\. When the process completes, it produces a new image or a stop message\.
 
 ### Perform custom component validation tests<a name="custom-ami-validation-v3"></a>
 
@@ -33,15 +33,15 @@ After you have verified that the custom component is working, add it to the [Bui
 
 ### Monitor the Image Builder process with `pcluster` commands to aid in debugging<a name="custom-ami-monitor-v3"></a>
 
-`describe\-image`
+[`describe-image`](pcluster.describe-image-v3.md)
 
 Use this command to monitor the build image status\.
 
-`list\-image\-log\-streams`
+[`list-image-log-streams`](pcluster.list-image-log-streams-v3.md)
 
-Use this command to get IDs of log streams that you can use to retrieve log events with `get\-image\-log\-events`\.
+Use this command to get IDs of log streams that you can use to retrieve log events with [`get-image-log-events`](pcluster.get-image-log-events-v3.md)\.
 
-`get\-image\-log\-events`
+[`get-image-log-events`](pcluster.get-image-log-events-v3.md)
 
 Use this command to get the log stream of build image process events\.
 
@@ -53,11 +53,11 @@ $ watch -n 1 'pcluster get-image-log-events -i <image-id> \
           --query "events[*].message" | tail -n 50'
 ```
 
-`get\-image\-stack\-events`
+[`get-image-stack-events`](pcluster.get-image-stack-events-v3.md)
 
 Use this command to retrieve image stack events for the stack created by Image Builder\.
 
-`export\-image\-logs`
+[`export-image-logs`](pcluster.export-image-logs-v3.md)
 
 Use this command save image logs\.
 
@@ -72,5 +72,5 @@ If you build and use a custom AMI, you must repeat the steps that you used to cr
 Review the [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md) section to determine if the modifications you want to make can be scripted and supported with future AWS ParallelCluster releases\.
 
 **Using custom AMIs**  
-You can specify custom AMIs in the cluster configuration in the `Image` / `CustomAmi` and `Scheduling` / `SlurmQueues` / `- Name` / `Image` / `CustomAmi` sections\.  
+You can specify custom AMIs in the cluster configuration in the [`Image`](Image-v3.md) / [`CustomAmi`](Image-v3.md#yaml-Image-CustomAmi) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / \- [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Name) / [`Image`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Image) / [`CustomAmi`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Image-CustomAmi) sections\.  
 To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3.md#troubleshooting-v3-custom-amis)\.

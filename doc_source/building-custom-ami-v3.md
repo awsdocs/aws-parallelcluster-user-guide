@@ -20,16 +20,16 @@ There are two ways to build a custom AWS ParallelCluster AMI\. One of these two 
 If you have a customized AMI and software already in place, you can apply the changes needed by AWS ParallelCluster on top of it\. AWS ParallelCluster relies on the EC2 Image Builder service to build customized AMIs\. For more information, see the [Image Builder User Guide](https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html)\.
 
 Key points:
-+ The process takes about 1 hour\. This time can vary if there are additional `Build` / `Components` to be installed at build time\.
++ The process takes about 1 hour\. This time can vary if there are additional [`Build`](Build-v3.md) / [`Components`](Build-v3.md#Build-v3-Components) to be installed at build time\.
 + The AMI is tagged with the versions of the main components, such as the kernel, scheduler, and [EFA](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) driver\. A subset of the component versions are also reported in the AMI description\.
-+ Starting from AWS ParallelCluster 3\.0\.0, a new set of CLI commands can be used to manage the life\-cycle of images, including `build\-image`, `list\-images`, `describe\-image` and `delete\-image`\.
++ Starting from AWS ParallelCluster 3\.0\.0, a new set of CLI commands can be used to manage the life\-cycle of images, including [`build-image`](pcluster.build-image-v3.md), [`list-images`](pcluster.list-images-v3.md), [`describe-image`](pcluster.describe-image-v3.md) and [`delete-image`](pcluster.delete-image-v3.md)\.
 + This method is repeatable\. You can re\-run it to keep AMIs updated, such as OS updates, and then use them when you update an existing cluster\.
 
 Steps:
 
 1. Configure your AWS account credentials so that the AWS ParallelCluster client can make calls to AWS API operations on your behalf\. The set of required permissions are documented in [AWS Identity and Access Management roles in AWS ParallelCluster 3\.x](iam-roles-in-parallelcluster-v3.md)\.
 
-1. Create a basic *build image* configuration file, by specifying the `InstanceType` to be used to build the image and the `ParentImage` to be used as the starting point for AMI creation\. For more information on optional build parameters, see [Image Configuration](image-builder-configuration-file-v3.md)\.
+1. Create a basic *build image* configuration file, by specifying the [`InstanceType`](Build-v3.md#yaml-build-image-Build-InstanceType) to be used to build the image and the [`ParentImage`](Build-v3.md#yaml-build-image-Build-ParentImage) to be used as the starting point for AMI creation\. For more information on optional build parameters, see [Image Configuration](image-builder-configuration-file-v3.md)\.
 
    ```
    Build:
@@ -37,7 +37,7 @@ Steps:
      ParentImage: <BASE_AMI_ID>
    ```
 
-1. Use the CLI command `pcluster build\-image` to build an AWS ParallelCluster AMI starting from the AMI that you provide as the base:
+1. Use the CLI command [`pcluster build-image`](pcluster.build-image-v3.md) to build an AWS ParallelCluster AMI starting from the AMI that you provide as the base:
 
    ```
    $ pcluster build-image --image-id IMAGE_ID --image-configuration IMAGE_CONFIG.yaml --region REGION
@@ -53,9 +53,9 @@ Steps:
    }
    ```
 **Warning**  
-`pcluster build-image` uses the default VPC\. If the default VPC has been deleted, perhaps by using AWS Control Tower or AWS Landing Zone, the subnet ID must be specified in the image configuration file\. For more information, see [SubnetId](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId)\.
+`pcluster build-image` uses the default VPC\. If the default VPC has been deleted, perhaps by using AWS Control Tower or AWS Landing Zone, the subnet ID must be specified in the image configuration file\. For more information, see [`SubnetId`](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId)\.
 
-   For other parameters, see the `pcluster build\-image` command\. The previous command does the following:
+   For other parameters, see the [`pcluster build-image`](pcluster.build-image-v3.md) command\. The previous command does the following:
    + Creates a CloudFormation stack based on the image configuration\. The stack includes all of the EC2 Image Builder resources required for the build\.
    + Among the created resources are the official Image Builder AWS ParallelCluster components on top of which custom Image Builder components can be added\. To learn how to create custom components, run through the [Custom AMIs examples](https://catalog.prod.workshops.aws/workshops/e2f40d13-8082-4718-909b-6cdc3155ae41/examples/custom-ami) in the *HPC for Public Sector Customers Workshop*\.
    + EC2 Image Builder launches a build instance, applies the AWS ParallelCluster cookbook, installs the AWS ParallelCluster software stack, and performs necessary configuration tasks\. The AWS ParallelCluster cookbook is used to build and bootstrap AWS ParallelCluster\.
@@ -121,19 +121,19 @@ Steps:
    }
    ```
 
-1. To create your cluster, enter the AMI ID in the `CustomAmi` field in your cluster configuration\.
+1. To create your cluster, enter the AMI ID in the [`CustomAmi`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Image-CustomAmi) field in your cluster configuration\.
 
 **Troubleshooting and monitoring AMI creation process**
 
-Image creation takes about 1 hour\. You can monitor the status of the build process by running the `pcluster describe\-image` command or log retrieval commands\.
+Image creation takes about 1 hour\. You can monitor the status of the build process by running the [`pcluster describe-image`](pcluster.describe-image-v3.md) command or log retrieval commands\.
 
 ```
 $ pcluster describe-image --image-id IMAGE_ID --region REGION
 ```
 
-As previously mentioned, the `build\-image` command creates a CloudFormation stack with all the EC2 resources required to build the image, and launches the EC2 Image Builder process\.
+As previously mentioned, the [`build-image`](pcluster.build-image-v3.md) command creates a CloudFormation stack with all the EC2 resources required to build the image, and launches the EC2 Image Builder process\.
 
-After running the `build\-image` command, it's possible to retrieve CloudFormation stack events by using `pcluster get\-image\-stack\-events`\. You can filter results with the `--query` parameter to see the latest events\. For more information, see [Filtering AWS CLI output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) in the *AWS Command Line Interface User Guide*\.
+After running the [`build-image`](pcluster.build-image-v3.md) command, it's possible to retrieve CloudFormation stack events by using [`pcluster get-image-stack-events`](pcluster.get-image-stack-events-v3.md)\. You can filter results with the `--query` parameter to see the latest events\. For more information, see [Filtering AWS CLI output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) in the *AWS Command Line Interface User Guide*\.
 
 ```
 $ pcluster get-image-stack-events --image-id IMAGE_ID --region REGION --query "events[0]"
@@ -151,7 +151,7 @@ $ pcluster get-image-stack-events --image-id IMAGE_ID --region REGION --query "e
 }
 ```
 
-After about 15 minutes the stack events appear in the log event entry related to Image Builder creation\. You can now list image log streams and monitor the Image Builder steps by using `pcluster list\-image\-log\-streams` and `pcluster get\-image\-log\-events` commands\.
+After about 15 minutes the stack events appear in the log event entry related to Image Builder creation\. You can now list image log streams and monitor the Image Builder steps by using [`pcluster list-image-log-streams`](pcluster.list-image-log-streams-v3.md) and [`pcluster get-image-log-events`](pcluster.get-image-log-events-v3.md) commands\.
 
 ```
 $ pcluster list-image-log-streams --image-id IMAGE_ID --region REGION \
@@ -182,7 +182,7 @@ $ pcluster get-image-log-events --image-id IMAGE_ID --region REGION \
 }
 ```
 
-Continue to check with the `describe\-image` command until you see the `BUILD_COMPLETE` status\.
+Continue to check with the [`describe-image`](pcluster.describe-image-v3.md) command until you see the `BUILD_COMPLETE` status\.
 
 ```
 $ pcluster describe-image --image-id IMAGE_ID --region REGION
@@ -240,12 +240,12 @@ Starting from AWS ParallelCluster 3\.0\.0, a new set of commands has been added 
 This method consists on modifying an official AWS ParallelCluster AMI by adding customization on top of it\. The base AWS ParallelCluster AMIs are updated with new releases\. These AMIs have all of the components required for AWS ParallelCluster to function when it's installed and configured\. You can start with one of these as your base\.
 
 Key points:
-+ This method is faster than the `build\-image` command, however, it is a manual process and not automatically repeatable\.
++ This method is faster than the [`build-image`](pcluster.build-image-v3.md) command, however, it is a manual process and not automatically repeatable\.
 + With this method you don't have access to the log retrieval and image lifecycle management commands available through the CLI\.
 
 Steps:
 
-1. Find the AMI that corresponds to the specific region that you use\. To find it you can use the `pcluster list\-official\-images` command with the `--region` parameter to select the specific region and `--os` and `--architecture` parameters to filter for the desired AMI with the OS and architecture that you want to use\. From the output you can retrieve the EC2 Image ID\.
+1. Find the AMI that corresponds to the specific region that you use\. To find it you can use the [`pcluster list-official-images`](pcluster.list-official-images-v3.md) command with the `--region` parameter to select the specific region and `--os` and `--architecture` parameters to filter for the desired AMI with the OS and architecture that you want to use\. From the output you can retrieve the EC2 Image ID\.
 
 1. Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -275,4 +275,4 @@ Steps:
 
    1. Choose **Image and templates** and then **Create image**\.
 
-1. Enter the new AMI ID in the `CustomAmi` field in your cluster configuration and create a cluster\.
+1. Enter the new AMI ID in the [`CustomAmi`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Image-CustomAmi) field in your cluster configuration and create a cluster\.
