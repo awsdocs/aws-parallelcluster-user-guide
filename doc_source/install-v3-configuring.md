@@ -310,7 +310,7 @@ To delete the cluster, run the following command\.
 $ pcluster delete-cluster --region us-east-1 --cluster-name test-cluster
 ```
 
-After the cluster is deleted, you can delete the network resources in the VPC by deleting the CloudFormation networking stack\. The stack's name starts with "parallelclusternetworking\-" and contains the creation time in "YYYYMMDDHHMMSS" format\. You can list the stacks using the [`list\-stacks`](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
+After the cluster is deleted, you can delete the network resources in the VPC by deleting the CloudFormation networking stack\. The stack's name starts with "parallelclusternetworking\-" and contains the creation time in "YYYYMMDDHHMMSS" format\. You can list the stacks using the [`list-stacks`](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
 
 ```
 $ aws --region us-east-1 cloudformation list-stacks \
@@ -320,7 +320,7 @@ $ aws --region us-east-1 cloudformation list-stacks \
    "parallelclusternetworking-pubpriv-20191029205804"
 ```
 
- The stack can be deleted using the [`delete\-stack`](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack) command\.
+ The stack can be deleted using the [`delete-stack`](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack) command\.
 
 ```
 $ aws --region us-east-1 cloudformation delete-stack \
