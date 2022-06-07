@@ -250,7 +250,7 @@ FsxLustreSettings:
   StorageType: string
 ```
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 **Note**  
 If AWS Batch is used as a scheduler, FSx for Lustre is only available on the cluster head node\.
