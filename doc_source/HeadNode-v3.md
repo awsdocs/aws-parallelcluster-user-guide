@@ -367,7 +367,8 @@ There is no default value\.
 ```
 AdditionalIamPolicies:
   - Policy: string
-```  
+```
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 `Policy` \(**Optional**, `[String]`\)  
 List of IAM policies\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
