@@ -1,6 +1,6 @@
 # Steps to take after installation<a name="install-v3-after-install"></a>
 
-You can verify that AWS ParallelCluster installed correctly by running ``pcluster version``\.
+You can verify that AWS ParallelCluster installed correctly by running [`pcluster version`](pcluster.version-v3.md)\.
 
 ```
 $ pcluster version
