@@ -22,6 +22,8 @@ DirectoryService:
   AdditionalSssdConfigs: dict
 ```
 
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+
 ## `DirectoryService` Properties<a name="DirectoryService-v3.properties"></a>
 
 **Note**  
