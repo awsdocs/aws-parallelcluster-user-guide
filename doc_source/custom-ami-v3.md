@@ -49,7 +49,7 @@ For example, you can tail build image events as shown in the following command\.
 
 ```
 $ watch -n 1 'pcluster get-image-log-events -i <image-id> \
-          --log-stream-name <pcluster-version> \
+          --log-stream-name <pcluster-version>/1 \
           --query "events[*].message" | tail -n 50'
 ```
 
