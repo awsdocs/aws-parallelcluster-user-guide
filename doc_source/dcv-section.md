@@ -2,7 +2,7 @@
 
 Defines configuration settings for the NICE DCV server running on the head node\.
 
-To create and configure a NICE DCV server, specify a [`dcv_settings`](cluster-definition.md#dcv-settings) with the name of your section, with [`enable`](#dcv-section-enable) set to `master`, and a [`base_os`](cluster-definition.md#base-os) set to `alinux2`, `centos7`, or `ubuntu1804`\.
+To create and configure a NICE DCV server, specify the cluster [`dcv_settings`](cluster-definition.md#dcv-settings) with the name you define in the `dcv` section, and set [`enable`](#dcv-section-enable) to `master`, and [`base_os`](cluster-definition.md#base-os) to `alinux2`, `centos7`, `ubuntu1804` or `ubuntu2004`\. If the head node is an ARM instance, set [`base_os`](cluster-definition.md#base-os) to `alinux2`, `centos7`, or `ubuntu1804`\.
 
 The format is `[dcv dcv-name]`\. *dcv\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
@@ -13,11 +13,13 @@ port = 8443
 access_from = 0.0.0.0/0
 ```
 
+For more information, see [Connect to the head node through NICE DCV](dcv.md)
+
 **Important**  
 By default the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, you can connect to a NICE DCV port only if you have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the [`access_from`](#dcv-section-access-from) setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the [`port`](#dcv-section-port) setting to set a nonstandard port\.
 
 **Note**  
-Support for the [`[dcv]` section](#dcv-section)on `centos8` was removed in AWS ParallelCluster version 2\.10\.4\. Support for the [`[dcv]` section](#dcv-section)on `centos8` was added in AWS ParallelCluster version 2\.10\.0\. Support for the [`[dcv]` section](#dcv-section) on AWS Graviton\-based instances was added in AWS ParallelCluster version 2\.9\.0\. Support for the [`[dcv]` section](#dcv-section) on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for the [`[dcv]` section](#dcv-section)on `centos7` was added in AWS ParallelCluster version 2\.5\.0\.
+Support for the [`[dcv]` section](#dcv-section)on `centos8` was removed in AWS ParallelCluster version 2\.10\.4\. Support for the [`[dcv]` section](#dcv-section) on `centos8` was added in AWS ParallelCluster version 2\.10\.0\. Support for the [`[dcv]` section](#dcv-section) on AWS Graviton\-based instances was added in AWS ParallelCluster version 2\.9\.0\. Support for the [`[dcv]` section](#dcv-section) on `alinux2` and `ubuntu1804` was added in AWS ParallelCluster version 2\.6\.0\. Support for the [`[dcv]` section](#dcv-section)on `centos7` was added in AWS ParallelCluster version 2\.5\.0\.
 
 ## `access_from`<a name="dcv-section-access-from"></a>
 

@@ -130,7 +130,7 @@ Support for [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-st
 
 **\(Optional\)** Specifies the FSx for Lustre data compression type\. This corresponds to the [DataCompressionType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-datacompressiontype) property\. For more information, see [FSx for Lustre data compression](https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-compression.html) in the *Amazon FSx for Lustre User Guide*\.
 
-The only valid value is `LZ4`\. To disable data compression, remove the `data\_compression\_type` parameter\.
+The only valid value is `LZ4`\. To disable data compression, remove the [`data_compression_type`](#fsx-data-compression-type) parameter\.
 
 ```
 data_compression_type = LZ4
@@ -374,7 +374,7 @@ storage_type = SSD
 ```
 
 **Note**  
-Support for the `storage\_type` setting was added in AWS ParallelCluster version 2\.10\.0\.
+Support for the [`storage_type`](#fsx-storage-type) setting was added in AWS ParallelCluster version 2\.10\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 

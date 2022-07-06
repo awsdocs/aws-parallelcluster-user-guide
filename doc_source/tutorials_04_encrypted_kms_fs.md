@@ -4,6 +4,12 @@ AWS ParallelCluster supports the configuration options `ebs_kms_key_id` and `fsx
 
 In order for the cluster to create, the AWS KMS key must know the name of the cluster's role\. This prevents you from using the role created on cluster create, requiring a custom `ec2_iam_role`\.
 
+**Prerequisites**
++ AWS ParallelCluster [is installed](install.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam.md#example-parallelcluser-policies) required to run the [`pcluster`](pcluster.md) CLI\.
+
 ## Creating the role<a name="creating-the-role"></a>
 
 First you create a policy:

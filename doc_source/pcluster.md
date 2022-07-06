@@ -10,7 +10,7 @@ pcluster [ -h ] ( create | update | delete | start | stop | status | list |
 ## Arguments<a name="pcluster.arguments"></a>
 
 **`pcluster command`**  
-Possible choices: `configure`, `create`, `createami`, `dcv`, `delete`, `instances`, `list`, `ssh`, `start`, `status`, `stop`, `update`, `version`
+Possible choices: [`configure`](pcluster.configure.md), [`create`](pluster.create.md), [`createami`](pcluster.createami.md), [`dcv`](pcluster.dcv.md), [`delete`](pcluster.delete.md), [`instances`](pcluster.instances.md), [`list`](pcluster.list.md), [`ssh`](pcluster.ssh.md), [`start`](pcluster.start.md), [`status`](pcluster.status.md), [`stop`](pcluster.stop.md), [`update`](pcluster.update.md), [`version`](pcluster.version.md)
 
 ## Sub\-commands:<a name="pcluster.subcommands"></a>
 

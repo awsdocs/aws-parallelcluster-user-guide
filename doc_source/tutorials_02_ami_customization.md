@@ -15,16 +15,17 @@ Starting with AWS ParallelCluster version 2\.6\.1, most of the install recipes a
 extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
 ```
 
+**Prerequisites**
++ AWS ParallelCluster [is installed](install.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [ permissions](iam.md#example-parallelcluser-policies) required to run the [`pcluster`](pcluster.md) CLI\.
+
 ## How to Customize the AWS ParallelCluster AMI<a name="how-to-customize-the-aws-parallelcluster-ami"></a>
 
-There are three ways to use a custom AWS ParallelCluster AMI\. Two of these three methods require you to build a new AMI that's available under your AWS account\. The third method \(Use a Custom AMI at Runtime\) doesn't require that you build anything in advance\. Choose the method that best fits your needs\.
+There are three ways to use a custom AWS ParallelCluster AMI described in the next sections\. Two of these three methods require you to build a new AMI that's available under your AWS account\. The third method \(Use a Custom AMI at Runtime\) doesn't require that you build anything in advance, but does add risk to the deployment\. Choose the method that best fits your needs\.
 
-**Topics**
-+ [Modify an AWS ParallelCluster AMI](#modify-an-aws-parallelcluster-ami)
-+ [Build a Custom AWS ParallelCluster AMI](#build-a-custom-aws-parallelcluster-ami)
-+ [Use a Custom AMI at Runtime](#use-a-custom-ami-at-runtime)
-
-### Modify an AWS ParallelCluster AMI<a name="modify-an-aws-parallelcluster-ami"></a>
+## Modify an AWS ParallelCluster AMI<a name="modify-an-aws-parallelcluster-ami"></a>
 
 This is the safest and most recommended method\. Because the base AWS ParallelCluster AMI is often updated with new releases, this AMI has all of the components required for AWS ParallelCluster to function when it's installed and configured\. You can start with this as the base\.
 
@@ -52,7 +53,7 @@ This is the safest and most recommended method\. Because the base AWS ParallelCl
 
 1. Enter the AMI id in the [custom\_ami](cluster-definition.md#custom-ami-section) field within your cluster configuration\.
 
-### Build a Custom AWS ParallelCluster AMI<a name="build-a-custom-aws-parallelcluster-ami"></a>
+## Build a Custom AWS ParallelCluster AMI<a name="build-a-custom-aws-parallelcluster-ami"></a>
 
 If you have a customized AMI and software already in place, you can apply the changes needed by AWS ParallelCluster on top of it\.
 
@@ -92,7 +93,11 @@ You shouldn't use an AWS ParallelCluster AMI from a running cluster as *<BASE\_A
 **Note**  
 The instance type used to build a custom AWS ParallelCluster AMI is `t2.xlarge`\. This instance type doesn't qualify for the AWS free tier, so you're charged for any instances that are created when you build this AMI\.
 
-### Use a Custom AMI at Runtime<a name="use-a-custom-ami-at-runtime"></a>
+## Use a Custom AMI at Runtime<a name="use-a-custom-ami-at-runtime"></a>
+
+**Warning**  
+To avoid the risk of using an AMI that's not compatible with AWS ParallelCluster, we recommend that you avoid using this method\.  
+When compute nodes are launched with potentially untested AMIs at runtime, incompatibilities with the runtime installation of AWS ParallelCluster's required software might cause AWS ParallelCluster to stop working\.
 
 If you don't want to create anything in advance, you can use your AMI and create an AWS ParallelCluster from that AMI\.
 

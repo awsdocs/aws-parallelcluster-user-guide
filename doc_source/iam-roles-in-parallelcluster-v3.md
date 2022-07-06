@@ -24,6 +24,7 @@ The following example policies include Amazon Resource Names \(ARNs\) for the re
 **Topics**
 + [Base user policy required to invoke AWS ParallelCluster features](#iam-roles-in-parallelcluster-v3-base-user-policy)
 + [Additional user policy when using AWS Batch scheduler](#iam-roles-in-parallelcluster-v3-user-policy-batch)
++ [Additional user policy when using Amazon FSx for Lustre](#iam-roles-in-parallelcluster-v3-user-policy-fsxlustre)
 + [User Policy to use AWS ParallelCluster image build features](#iam-roles-in-parallelcluster-v3-user-policy-build-image)
 + [User Policy to manage IAM resources](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam)
 
@@ -35,254 +36,228 @@ The last action listed in the policy is included to provide validation of any se
 
 ```
 {
-    "Version": "2012-10-17",
-    "Statement": [   
-        {
-            "Action": [
-                "ec2:Describe*"
-            ],
-            "Resource": "*",
-            "Effect": "Allow",
-            "Sid": "EC2Read"
-        },
-        {
-            "Action": [
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AttachNetworkInterface",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateLaunchTemplateVersion",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreatePlacementGroup",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSnapshot",
-                "ec2:CreateTags",
-                "ec2:CreateVolume",
-                "ec2:DeleteLaunchTemplate",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeletePlacementGroup",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteVolume",
-                "ec2:DisassociateAddress",
-                "ec2:ModifyLaunchTemplate",
-                "ec2:ModifyNetworkInterfaceAttribute",
-                "ec2:ModifyVolume",
-                "ec2:ModifyVolumeAttribute",
-                "ec2:ReleaseAddress",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:TerminateInstances"
-            ],
-            "Resource": "*",
-            "Effect": "Allow",
-            "Sid": "EC2Write"
-        },
-        {
-            "Action": [
-                "dynamodb:DescribeTable",
-                "dynamodb:ListTagsOfResource",
-                "dynamodb:CreateTable",
-                "dynamodb:DeleteTable",
-                "dynamodb:GetItem",
-                "dynamodb:PutItem",
-                "dynamodb:Query",
-                "dynamodb:TagResource"
-            ],
-            "Resource": "arn:aws:dynamodb:*:<AWS ACCOUNT ID>:table/parallelcluster-*",
-            "Effect": "Allow",
-            "Sid": "DynamoDB"
-        },
-        {
-            "Action": [
-                "route53:ChangeResourceRecordSets",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHostedZone",
-                "route53:DeleteHostedZone",
-                "route53:GetChange",
-                "route53:GetHostedZone",
-                "route53:ListResourceRecordSets",
-                "route53:ListQueryLoggingConfigs"
-            ],
-            "Resource": "*",
-            "Effect": "Allow",
-            "Sid": "Route53HostedZones"
-        },
-        {
-            "Action": [
-                "cloudformation:*"
-            ],
-            "Resource": "*",
-            "Effect": "Allow",
-            "Sid": "CloudFormation"
-        },
-        {
-            "Action": [
-                "cloudwatch:PutDashboard",
-                "cloudwatch:ListDashboards",
-                "cloudwatch:DeleteDashboards",
-                "cloudwatch:GetDashboard"
-            ],
-            "Resource": "*",
-            "Effect": "Allow",
-            "Sid": "CloudWatch"
-        },
-        {
-            "Action": [
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:GetPolicy",
-                "iam:SimulatePrincipalPolicy",
-                "iam:GetInstanceProfile"
-            ],
-            "Resource": [
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/*",
-                "arn:aws:iam::<AWS ACCOUNT ID>:policy/*",
-                "arn:aws:iam::aws:policy/*",
-                "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/*"
-            ],
-            "Effect": "Allow",
-            "Sid": "IamRead"
-        },
-        {
-            "Action": [
-                "iam:CreateInstanceProfile",
-                "iam:DeleteInstanceProfile",
-                "iam:AddRoleToInstanceProfile",
-                "iam:RemoveRoleFromInstanceProfile"
-            ],
-            "Resource": [
-                "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*"
-            ],
-            "Effect": "Allow",
-            "Sid": "IamInstanceProfile"
-        },
-        {
-            "Condition": {
-                "StringEqualsIfExists": {
-                    "iam:PassedToService": [
-                        "lambda.amazonaws.com",
-                        "ec2.amazonaws.com",
-                        "spotfleet.amazonaws.com"
-                    ]
-                }
-            },
-            "Action": [
-                "iam:PassRole"
-            ],
-            "Resource": [
-                "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*"
-            ],
-            "Effect": "Allow",
-            "Sid": "IamPassRole"
-        },
-        {
-            "Condition": {
-                "StringEquals": {
-                    "iam:AWSServiceName": [
-                        "fsx.amazonaws.com",
-                        "s3.data-source.lustre.fsx.amazonaws.com"
-                    ]
-                }
-            },
-            "Action": [
-                "iam:CreateServiceLinkedRole",
-                "iam:DeleteServiceLinkedRole"
-            ],
-            "Resource": "*",
-            "Effect": "Allow"
-        },
-        {
-            "Action": [
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:GetFunctionConfiguration",
-                "lambda:GetFunction",
-                "lambda:InvokeFunction",
-                "lambda:AddPermission",
-                "lambda:RemovePermission",
-                "lambda:UpdateFunctionConfiguration",
-                "lambda:TagResource",
-                "lambda:ListTags",
-                "lambda:UntagResource"
-            ],
-            "Resource": [
-                "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:parallelcluster-*",
-                "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:pcluster-*"
-            ],
-            "Effect": "Allow",
-            "Sid": "Lambda"
-        },
-        {
-            "Action": [
-                "s3:*"
-            ],
-            "Resource": [
-                "arn:aws:s3:::parallelcluster-*",
-                "arn:aws:s3:::aws-parallelcluster-*"
-            ],
-            "Effect": "Allow",
-            "Sid": "S3ResourcesBucket"
-        },
-        {
-            "Action": [
-                "s3:Get*",
-                "s3:List*"
-            ],
-            "Resource": "arn:aws:s3:::*-aws-parallelcluster*",
-            "Effect": "Allow",
-            "Sid": "S3ParallelClusterReadOnly"
-        },
-        {
-            "Action": [
-                "fsx:*"
-            ],
-            "Resource": [
-                "arn:aws:fsx:*:<AWS ACCOUNT ID>:*"
-            ],
-            "Effect": "Allow",
-            "Sid": "FSx"
-        },
-        {
-            "Action": [
-                "elasticfilesystem:*"
-            ],
-            "Resource": [
-                "arn:aws:elasticfilesystem:*:<AWS ACCOUNT ID>:*"
-            ],
-            "Effect": "Allow",
-            "Sid": "EFS"
-        },
-        {
-            "Action": [
-                "logs:DeleteLogGroup",
-                "logs:PutRetentionPolicy",
-                "logs:DescribeLogGroups",
-                "logs:CreateLogGroup",
-                "logs:FilterLogEvents",
-                "logs:GetLogEvents",
-                "logs:CreateExportTask",
-                "logs:DescribeLogStreams",
-                "logs:DescribeExportTasks"
-            ],
-            "Resource": "*",
-            "Effect": "Allow",
-            "Sid": "CloudWatchLogs"
-        },
-        {
-            "Action": "secretsmanager:DescribeSecret",
-            "Resource": "arn:aws:secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:*",
-            "Effect": "Allow"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [   
+      {
+          "Action": [
+              "ec2:Describe*"
+          ],
+          "Resource": "*",
+          "Effect": "Allow",
+          "Sid": "EC2Read"
+      },
+      {
+          "Action": [
+              "ec2:AllocateAddress",
+              "ec2:AssociateAddress",
+              "ec2:AttachNetworkInterface",
+              "ec2:AuthorizeSecurityGroupEgress",
+              "ec2:AuthorizeSecurityGroupIngress",
+              "ec2:CreateLaunchTemplate",
+              "ec2:CreateLaunchTemplateVersion",
+              "ec2:CreateNetworkInterface",
+              "ec2:CreatePlacementGroup",
+              "ec2:CreateSecurityGroup",
+              "ec2:CreateSnapshot",
+              "ec2:CreateTags",
+              "ec2:CreateVolume",
+              "ec2:DeleteLaunchTemplate",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DeletePlacementGroup",
+              "ec2:DeleteSecurityGroup",
+              "ec2:DeleteVolume",
+              "ec2:DisassociateAddress",
+              "ec2:ModifyLaunchTemplate",
+              "ec2:ModifyNetworkInterfaceAttribute",
+              "ec2:ModifyVolume",
+              "ec2:ModifyVolumeAttribute",
+              "ec2:ReleaseAddress",
+              "ec2:RevokeSecurityGroupEgress",
+              "ec2:RevokeSecurityGroupIngress",
+              "ec2:RunInstances",
+              "ec2:TerminateInstances"
+          ],
+          "Resource": "*",
+          "Effect": "Allow",
+          "Sid": "EC2Write"
+      },
+      {
+          "Action": [
+              "dynamodb:DescribeTable",
+              "dynamodb:ListTagsOfResource",
+              "dynamodb:CreateTable",
+              "dynamodb:DeleteTable",
+              "dynamodb:GetItem",
+              "dynamodb:PutItem",
+              "dynamodb:Query",
+              "dynamodb:TagResource"
+          ],
+          "Resource": "arn:aws:dynamodb:*:<AWS ACCOUNT ID>:table/parallelcluster-*",
+          "Effect": "Allow",
+          "Sid": "DynamoDB"
+      },
+      {
+          "Action": [
+              "route53:ChangeResourceRecordSets",
+              "route53:ChangeTagsForResource",
+              "route53:CreateHostedZone",
+              "route53:DeleteHostedZone",
+              "route53:GetChange",
+              "route53:GetHostedZone",
+              "route53:ListResourceRecordSets",
+              "route53:ListQueryLoggingConfigs"
+          ],
+          "Resource": "*",
+          "Effect": "Allow",
+          "Sid": "Route53HostedZones"
+      },
+      {
+          "Action": [
+              "cloudformation:*"
+          ],
+          "Resource": "*",
+          "Effect": "Allow",
+          "Sid": "CloudFormation"
+      },
+      {
+          "Action": [
+              "cloudwatch:PutDashboard",
+              "cloudwatch:ListDashboards",
+              "cloudwatch:DeleteDashboards",
+              "cloudwatch:GetDashboard"
+          ],
+          "Resource": "*",
+          "Effect": "Allow",
+          "Sid": "CloudWatch"
+      },
+      {
+          "Action": [
+              "iam:GetRole",
+              "iam:GetRolePolicy",
+              "iam:GetPolicy",
+              "iam:SimulatePrincipalPolicy",
+              "iam:GetInstanceProfile"
+          ],
+          "Resource": [
+              "arn:aws:iam::<AWS ACCOUNT ID>:role/*",
+              "arn:aws:iam::<AWS ACCOUNT ID>:policy/*",
+              "arn:aws:iam::aws:policy/*",
+              "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/*"
+          ],
+          "Effect": "Allow",
+          "Sid": "IamRead"
+      },
+      {
+          "Action": [
+              "iam:CreateInstanceProfile",
+              "iam:DeleteInstanceProfile",
+              "iam:AddRoleToInstanceProfile",
+              "iam:RemoveRoleFromInstanceProfile"
+          ],
+          "Resource": [
+              "arn:aws:iam::<AWS ACCOUNT ID>:instance-profile/parallelcluster/*"
+          ],
+          "Effect": "Allow",
+          "Sid": "IamInstanceProfile"
+      },
+      {
+          "Condition": {
+              "StringEqualsIfExists": {
+                  "iam:PassedToService": [
+                      "lambda.amazonaws.com",
+                      "ec2.amazonaws.com",
+                      "spotfleet.amazonaws.com"
+                  ]
+              }
+          },
+          "Action": [
+              "iam:PassRole"
+          ],
+          "Resource": [
+              "arn:aws:iam::<AWS ACCOUNT ID>:role/parallelcluster/*"
+          ],
+          "Effect": "Allow",
+          "Sid": "IamPassRole"
+      },
+      {
+          "Action": [
+              "lambda:CreateFunction",
+              "lambda:DeleteFunction",
+              "lambda:GetFunctionConfiguration",
+              "lambda:GetFunction",
+              "lambda:InvokeFunction",
+              "lambda:AddPermission",
+              "lambda:RemovePermission",
+              "lambda:UpdateFunctionConfiguration",
+              "lambda:TagResource",
+              "lambda:ListTags",
+              "lambda:UntagResource"
+          ],
+          "Resource": [
+              "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:parallelcluster-*",
+              "arn:aws:lambda:*:<AWS ACCOUNT ID>:function:pcluster-*"
+          ],
+          "Effect": "Allow",
+          "Sid": "Lambda"
+      },
+      {
+          "Action": [
+              "s3:*"
+          ],
+          "Resource": [
+              "arn:aws:s3:::parallelcluster-*",
+              "arn:aws:s3:::aws-parallelcluster-*"
+          ],
+          "Effect": "Allow",
+          "Sid": "S3ResourcesBucket"
+      },
+      {
+          "Action": [
+              "s3:Get*",
+              "s3:List*"
+          ],
+          "Resource": "arn:aws:s3:::*-aws-parallelcluster*",
+          "Effect": "Allow",
+          "Sid": "S3ParallelClusterReadOnly"
+      },
+      {
+          "Action": [
+              "elasticfilesystem:*"
+          ],
+          "Resource": [
+              "arn:aws:elasticfilesystem:*:<AWS ACCOUNT ID>:*"
+          ],
+          "Effect": "Allow",
+          "Sid": "EFS"
+      },
+      {
+          "Action": [
+              "logs:DeleteLogGroup",
+              "logs:PutRetentionPolicy",
+              "logs:DescribeLogGroups",
+              "logs:CreateLogGroup",
+              "logs:FilterLogEvents",
+              "logs:GetLogEvents",
+              "logs:CreateExportTask",
+              "logs:DescribeLogStreams",
+              "logs:DescribeExportTasks"
+          ],
+          "Resource": "*",
+          "Effect": "Allow",
+          "Sid": "CloudWatchLogs"
+      },
+      {
+          "Action": "secretsmanager:DescribeSecret",
+          "Resource": "arn:aws:secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET NAME>",
+          "Effect": "Allow"
+      }
+  ]
 }
 ```
 
 ### Additional user policy when using AWS Batch scheduler<a name="iam-roles-in-parallelcluster-v3-user-policy-batch"></a>
 
-In case you need to create and manage a cluster with AWS Batch scheduler the following additional policy is required\.
+In case you need to create and manage a cluster with AWS Batch scheduler, the following additional policy is required\.
 
 ```
 {
@@ -365,6 +340,62 @@ In case you need to create and manage a cluster with AWS Batch scheduler the fol
             "Sid": "ECS"
         }
     ]
+}
+```
+
+### Additional user policy when using Amazon FSx for Lustre<a name="iam-roles-in-parallelcluster-v3-user-policy-fsxlustre"></a>
+
+In case you need to create and manage a cluster with Amazon FSx for Lustre, the following additional policy is required\.
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [   
+      {
+          "Condition": {
+              "StringEquals": {
+                  "iam:AWSServiceName": [
+                      "fsx.amazonaws.com",
+                      "s3.data-source.lustre.fsx.amazonaws.com"
+                  ]
+              }
+          },
+          "Action": [
+              "iam:CreateServiceLinkedRole",
+              "iam:DeleteServiceLinkedRole"
+          ],
+          "Resource": "*",
+          "Effect": "Allow"
+      },
+      {
+          "Action": [
+              "fsx:*"
+          ],
+          "Resource": [
+              "arn:aws:fsx:*:<AWS ACCOUNT ID>:*"
+          ],
+          "Effect": "Allow",
+          "Sid": "FSx"
+      },
+      {
+          "Action": [
+              "iam:CreateServiceLinkedRole",
+              "iam:AttachRolePolicy",
+              "iam:PutRolePolicy"
+          ],
+          "Resource": "arn:aws:iam::<AWS ACCOUNT ID>:role/aws-service-role/s3.data-source.lustre.fsx.amazonaws.com/*",
+          "Effect": "Allow"
+      },
+      {
+          "Action": [
+              "s3:Get*",
+              "s3:List*",
+              "s3:PutObject"
+          ],
+          "Resource": "arn:aws:s3:::<S3 NAME>",
+          "Effect": "Allow"
+      }
+  ]
 }
 ```
 

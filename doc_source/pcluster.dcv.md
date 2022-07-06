@@ -7,7 +7,7 @@ pcluster dcv [ -h ] ( connect )
 ```
 
 **`pcluster dcv command`**  
-Possible choices: `connect`
+Possible choices: [`connect`](#pcluster-dcv-connect)
 
 **Note**  
 OS support changes for the `pcluster dcv` command in different AWS ParallelCluster versions:  

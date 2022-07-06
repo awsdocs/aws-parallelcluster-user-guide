@@ -12,6 +12,8 @@ The AWS ParallelCluster community maintains a Wiki page that provides many troub
 + [Troubleshooting issues in clusters with AWS Batch integration](#troubleshooting-v3-batch)
 + [Troubleshooting multi\-user integration with Active Directory](#troubleshooting-v3-multi-user)
 + [Troubleshooting custom AMI issues](#troubleshooting-v3-custom-amis)
++ [Troubleshooting a cluster update timeout when `cfn-hup` isn't running](#troubleshooting-v3-cluster-update-timeout)
++ [Network troubleshooting](#troubleshooting-v3-networking)
 + [Additional support](#troubleshooting-v3-additional-support)
 
 ## Retrieving and preserving logs<a name="troubleshooting-v3-get-logs"></a>
@@ -61,7 +63,7 @@ The archive contains the Amazon CloudWatch Logs streams and AWS CloudFormation s
 
 ### Preserved logs<a name="troubleshooting-v3-get-logs-preserve"></a>
 
-Starting from 3\.0\.0, AWS ParallelCluster preserves CloudWatch Logs by default when a cluster is deleted\. If you want to delete a cluster and preserve its logs, make sure that `Monitoring > Logs > CloudWatch > DeletionPolicy` isn't set to `Delete` in the cluster configuration\. Otherwise, change the value for this field to `Retain` and run the `pcluster update-cluster` command\. Then, run `pcluster delete-cluster --cluster-name <cluster_name>` to delete the cluster yet retain the log group that’s stored in Amazon CloudWatch\.
+Starting from 3\.0\.0, AWS ParallelCluster preserves CloudWatch Logs by default when a cluster is deleted\. If you want to delete a cluster and preserve its logs, make sure that [`Monitoring`](Monitoring-v3.md) / [`Logs`](Monitoring-v3.md#yaml-Monitoring-Logs) / [`CloudWatch`](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch) / [`DeletionPolicy`](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch-DeletionPolicy) isn't set to `Delete` in the cluster configuration\. Otherwise, change the value for this field to `Retain` and run the `pcluster update-cluster` command\. Then, run `pcluster delete-cluster --cluster-name <cluster_name>` to delete the cluster yet retain the log group that’s stored in Amazon CloudWatch\.
 
 ### Terminated node logs<a name="troubleshooting-v3-get-logs-terminated-node"></a>
 
@@ -178,7 +180,7 @@ $ pcluster get-cluster-stack-events --cluster-name mycluster --region eu-west-1 
   ]
 ```
 
-In the previous example, the failure was in the `HeadNode` setup\.
+In the previous example, the failure was in the head node setup\.
 
 ### Use the CLI to view logstreams<a name="troubleshooting-v3-cluster-deployment-cli-logstreams"></a>
 
@@ -301,6 +303,14 @@ $ pcluster get-cluster-log-events --cluster-name mycluster \
 
 AWS ParallelCluster creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
+**Topics**
++ [Key logs for debugging](#troubleshooting-v3-key-logs)
++ [Troubleshooting node initialization issues](#troubleshooting-v3-node-init)
++ [**Troubleshooting unexpected node replacements and terminations**](#troubleshooting-unexpected-node-replacements-and-terminations)
++ [**Replacing, terminating, or powering down problematic instances and nodes**](#replacing-terminating-or-powering-down-problematic-instances-and-nodes)
++ [Queue \(partion\) `Inactive` status](#troubleshooting-v3-queues)
++ [Troubleshooting other known node and job issues](#troubleshooting-v3-other-node-job-issues)
+
 ### Key logs for debugging<a name="troubleshooting-v3-key-logs"></a>
 
 The following table provides an overview of the key logs for the head node:
@@ -319,6 +329,10 @@ These are the key logs for the compute nodes:
 ### Troubleshooting node initialization issues<a name="troubleshooting-v3-node-init"></a>
 
 This section covers how you can troubleshoot node initialization issues\. This includes issues where the node fails to launch, power up, or join a cluster\.
+
+**Topics**
++ [Head node](#troubleshooting-v3-node-init.head-node)
++ [Compute nodes](#troubleshooting-v3-node-init.compute-node)
 
 #### Head node<a name="troubleshooting-v3-node-init.head-node"></a>
 
@@ -350,6 +364,21 @@ When a cluster is created, the head node must wait for the compute nodes to join
 + Check the `clustermgtd` \(`/var/log/parallelcluster/clustermgtd`\) log to see if instances were launched for the node\. If they weren’t launched, there should be clear error message detailing the launch failure\. 
 + If instance is launched, there's some issue during setup process\. You should see the corresponding private IP address and instance ID from the `ResumeProgram` log\. Moreover, you can look at the corresponding setup logs for the specific instance\. 
 
+ **Compute nodes backed by Spot instances:** 
++ If it's the first time you use spot instances and the job remains in a PD \(Pending state\), double check the `/var/log/parallelcluster/slurm_resume.log` file\. You'll probably find an error like the following:
+
+  ```
+  2022-05-20 13:06:24,796 - [slurm_plugin.common:add_instances_for_nodes] - ERROR - Encountered exception when launching instances for nodes (x1) ['spot-dy-t2micro-2']: An error occurred (AuthFailure.ServiceLinkedRoleCreationNotPermitted) when calling the RunInstances operation: The provided credentials do not have permission to create the service-linked role for EC2 Spot Instances.
+  ```
+
+  When using Spot Instances, an `AWSServiceRoleForEC2Spot` service\-linked role must exist in your account\. To create this role in your account using the AWS CLI, run the following command:
+
+  ```
+  $ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com
+  ```
+
+  For more information, see [Working with Spot Instances](spot-v3.md) in the AWS ParallelCluster User Guide and [Service\-linked role for Spot Instance requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html#service-linked-roles-spot-instance-requests) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 ### **Troubleshooting unexpected node replacements and terminations**<a name="troubleshooting-unexpected-node-replacements-and-terminations"></a>
 
 This section continues to explore how you can troubleshoot node related issues, specifically when a node is replaced or terminated unexpectedly\.
@@ -370,12 +399,12 @@ This section continues to explore how you can troubleshoot node related issues, 
   + After the node starts, enable termination protection using this command\.
 
     ```
-    aws ec2 modify-instance-attribute --instance-id i-xyz --disable-api-termination
+    $ aws ec2 modify-instance-attribute --instance-id i-1234567890abcdef0 --disable-api-termination
     ```
   + Retrieve the console output from the node with this command\.
 
     ```
-    aws ec2 get-console-output --instance-id i-xyz --output text
+    $ aws ec2 get-console-output --instance-id i-1234567890abcdef0 --output text
     ```
 
 ### **Replacing, terminating, or powering down problematic instances and nodes**<a name="replacing-terminating-or-powering-down-problematic-instances-and-nodes"></a>
@@ -384,6 +413,11 @@ This section continues to explore how you can troubleshoot node related issues, 
   + `/var/log/parallelcluster/slurm_suspend.log` \(head node\)
 + In most cases, `clustermgtd` handles all expected instance termination action\. Check in the `clustermgtd` log to see why it failed to replace or terminate a node\.
 + For dynamic nodes failing [`SlurmSettings` Properties](Scheduling-v3.md#Scheduling-v3-SlurmSettings.properties), check in the `SuspendProgram` log to see if `SuspendProgram` was called by `slurmctld` with the specific node as argument\. Note that `SuspendProgram` doesn’t actually perform any action\. Rather, it only logs when it’s called\. All instance termination and `NodeAddr` reset is done by `clustermgtd`\. Slurm puts nodes back into a `POWER_SAVING` state after `SuspendTimeout` automatically\.
++ If compute nodes are failing continuously due to bootstrap failures, verify if they are being launched with [Slurm cluster protected mode](slurm-protected-mode-v3.md) enabled\. If protected mode isn't enabled, modify the protected mode settings to enable protected mode\. Troubleshoot and fix the bootstrap script\.
+
+### Queue \(partion\) `Inactive` status<a name="troubleshooting-v3-queues"></a>
+
+If you run `sinfo` and the output shows queues with `AVAIL` status of `inact`, your cluster might have [Slurm cluster protected mode](slurm-protected-mode-v3.md) enabled and the queue has been set to the `INACTIVE` state for a pre\-defined period of time\.
 
 ### Troubleshooting other known node and job issues<a name="troubleshooting-v3-other-node-job-issues"></a>
 
@@ -391,11 +425,11 @@ Another type of known issue is that AWS ParallelCluster might fail to allocate j
 
 ## Placement groups and instance launch issues<a name="troubleshooting-v3-placemment-groups"></a>
 
-To get the lowest inter\-node latency, use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If there aren't enough instances available when a request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving this error when using cluster placement groups, set the [`Networking` Properties](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking.properties) parameter to `true`\.
+To get the lowest inter\-node latency, use a *placement group*\. A placement group guarantees that your instances are on the same networking backbone\. If there aren't enough instances available when a request is made, an `InsufficientInstanceCapacity` error is returned\. To reduce the possibility of receiving this error when using cluster placement groups, set the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Enabled`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Enabled) parameter to `false`\.
 
-If you require a high performance shared filesystem, consider using [Amazon FSx for Lustre](http://aws.amazon.com/fsx/lustre/)\.
+For additional control over capacity access, consider [launching instances with ODCR \(On\-Demand Capacity Reservations\)](launch-instances-odcr-v3.md)\.
 
-For more information, see [Troubleshooting instance launch issues](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshooting-launch.html) and [Placement groups roles and limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#concepts-placement-groups) in the *Amazon EC2 User Guide for Linux Instances* 
+For more information, see [Troubleshooting instance launch issues](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/troubleshooting-launch.html) and [Placement groups roles and limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#concepts-placement-groups) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Directories that cannot be replaced<a name="troubleshooting-v3-dirs-must-keep"></a>
 
@@ -416,6 +450,12 @@ AWS ParallelCluster creates NICE DCV log streams in log groups\. You can view th
 
 This section is relevant to clusters with AWS Batch scheduler integration\.
 
+**Topics**
++ [Head node issues](#troubleshooting-v3-batch-head-node)
++ [Compute issues](#troubleshooting-v3-batch-compute-nodes)
++ [Job failures](#troubleshooting-v3-batch-job-fail)
++ [Connect timeout on endpoint URL error](#troubleshooting-v3-batch-connect-timeout)
+
 ### Head node issues<a name="troubleshooting-v3-batch-head-node"></a>
 
 Head node related setup issues can be troubleshooted in the same way as a Slurm cluster \(except for Slurm specific logs\)\. For more information about these issues, see [Head node](#troubleshooting-v3-node-init.head-node)\.
@@ -426,7 +466,15 @@ AWS Batch manages the scaling and compute aspects of your services\. If you enco
 
 ### Job failures<a name="troubleshooting-v3-batch-job-fail"></a>
 
-If a job fails, you can run the [`awsbout`](awsbatchcli_awsbout.md) command to retrieve the job output\. You can also run the [`awsbstat`](awsbatchcli.awsbstat-v3.md) command to obtain a link to the job logs stored by Amazon CloudWatch\.
+If a job fails, you can run the [`awsbout`](awsbatchcli.awsbout-v3.md) command to retrieve the job output\. You can also run the [`awsbstat`](awsbatchcli.awsbstat-v3.md) command to obtain a link to the job logs stored by Amazon CloudWatch\.
+
+### Connect timeout on endpoint URL error<a name="troubleshooting-v3-batch-connect-timeout"></a>
+
+If multi\-node parallel jobs fail with error: `Connect timeout on endpoint URL`:
++ In the `awsbout` output log, check that the job is multi\-node parallel from the output: `Detected 3/3 compute nodes. Waiting for all compute nodes to start.`
++ Verify whether the compute nodes subnet is public\.
+
+Multi\-node parallel jobs don't support the use of public subnets when using AWS Batch in AWS ParallelCluster\. You must use a private subnet for your compute nodes and jobs\. For more information, see [Compute environment considerations](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html#mnp-ce) in the *AWS Batch User Guide*\. To configure a private subnet for your compute nodes, see [AWS ParallelCluster with AWS Batch scheduler](network-configuration-v3.md#network-configuration-v3-batch)\.
 
 ## Troubleshooting multi\-user integration with Active Directory<a name="troubleshooting-v3-multi-user"></a>
 
@@ -763,6 +811,38 @@ If you don't want to see these warnings in the future, tag the custom AMI with t
 $ aws ec2 create-tags \
   --resources ami-yourcustomAmi \
   --tags Key="parallelcluster:version",Value="3.1.4" Key="parallelcluster:os",Value="my-os"
+```
+
+## Troubleshooting a cluster update timeout when `cfn-hup` isn't running<a name="troubleshooting-v3-cluster-update-timeout"></a>
+
+The `cfn-hup` helper is a daemon that detects changes in resource metadata and runs user\-specified actions when a change is detected\. This is how you make configuration updates on your running Amazon EC2 instances through the `UpdateStack` API action\.
+
+Currently the `cfn-hup` daemon is launched by the `supervisord`\. But after launch, the `cfn-hup` process is detached from `supervisord` control\. If the `cfn-hup` demon is killed by an external actor, it's not restarted automatically\. If `cfn-hup` isn't running, during a cluster update, the CloudFormation stack starts the update process as expected but the update procedure isn't activated on the head node and the stack eventually goes into timeout\. From the cluster logs `/var/log/chef-client`, you can see that the update recipe is never invoked\.
+
+**Check and restart `cfn-hup` in case of failures**
+
+1. On the headnode, check if `cfn-hup` is running:
+
+   ```
+   $ ps aux | grep cfn-hup
+   ```
+
+1. Check `cfn-hup` log `/var/log/cfn-hup.log` and `/var/log/supervisord.log` on the head node\.
+
+1. If `cfn-hup` isn't running, try restarting it by running:
+
+   ```
+   $ sudo /opt/parallelcluster/pyenv/versions/cookbook_virtualenv/bin/supervisorctl start cfn-hup
+   ```
+
+## Network troubleshooting<a name="troubleshooting-v3-networking"></a>
+
+### Cluster in a single public subnet issues<a name="troubleshooting-v3-networking-private-subnet"></a>
+
+Check the `cloud-init-output.log` from one of the compute nodes\. If you find something like the following that indicates the node is stuck in slurm initialization, it is most likely due to a missing DynamoDB VPC endpoint\. You must add the DynamoDB endpoint\. For more information see [AWS ParallelCluster in a single subnet with no internet access](network-configuration-v3.md#aws-parallelcluster-in-a-single-public-subnet-no-internet-v3)\.
+
+```
+ruby_block[retrieve compute node info] action run[2022-03-11T17:47:11+00:00] INFO: Processing ruby_block[retrieve compute node info] action run (aws-parallelcluster-slurm::init line 31)
 ```
 
 ## Additional support<a name="troubleshooting-v3-additional-support"></a>

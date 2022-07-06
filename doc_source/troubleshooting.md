@@ -10,6 +10,7 @@
 + [Troubleshooting issues in NICE DCV](#nice-dcv-troubleshooting)
 + [Troubleshooting issues in clusters with AWS Batch integration](#clusters-with-aws-batch-integration)
 + [Troubleshooting when a resource fails to create](#troubleshooting-resource-fails-to-create)
++ [Troubleshooting IAM policy size issues](#troubleshooting-policy-size-issues)
 + [Additional support](#getting-support)
 
 The AWS ParallelCluster community maintains a Wiki page that provides many troubleshooting tips on the [AWS ParallelCluster GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki/)\. For a list of known issues, see [Known issues](https://github.com/aws/aws-parallelcluster/wiki#known-issues-)\.
@@ -328,6 +329,10 @@ View CloudFormation error messages from the console\.
    arn:aws:cloudformation:region-id:123456789012:stack/parallelcluster-my-cluster-MasterServerSubstack-ABCDEFGHIJKL/a1234567-b321-c765-d432-dcba98766789
    was not successfully created: The following resource(s) failed to create: [MasterServer].
    ```
+
+## Troubleshooting IAM policy size issues<a name="troubleshooting-policy-size-issues"></a>
+
+Refer to [IAM and AWS STS quotas, name requirements, and character limits](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html) to verify quotas on managed policies attached to roles\. If a managed policy size exceeds the quota, split the policy into two or more policies\. If you exceed the quota on the number of policies attached to an IAM role, create additional roles and distribute the policies among them to meet the quota\.
 
 ## Additional support<a name="getting-support"></a>
 

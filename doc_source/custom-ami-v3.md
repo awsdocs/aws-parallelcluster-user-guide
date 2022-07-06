@@ -18,7 +18,7 @@ To build a custom AMI using `pcluster`, you create a [build image configuration 
 
 When called from pcluster [`build-image`](pcluster.build-image-v3.md) to create a custom image, Image Builder uses the build image configuration with the AWS ParallelCluster cookbook to bootstrap AWS ParallelCluster on your [`ParentImage`](Build-v3.md#yaml-build-image-Build-ParentImage)\. It downloads components, runs build and validate phases, creates the AMI, launches an instance from the AMI, and runs tests\. When the process completes, it produces a new image or a stop message\.
 
-### Perform custom component validation tests<a name="custom-ami-validation-v3"></a>
+## Perform custom component validation tests<a name="custom-ami-validation-v3"></a>
 
 Before you include an Image Builder component in a configuration, test and validate it using one of the following methods\. Because the Image Builder process can take upwards of an hour to complete, testing the components beforehand can save you considerable time\.
 
@@ -31,7 +31,7 @@ Test the component document in a running instance, outside the build image proce
 **After successful validation add the component to your build image configuration**  
 After you have verified that the custom component is working, add it to the [Build image configuration file](image-builder-configuration-file-v3.md)\.
 
-### Monitor the Image Builder process with `pcluster` commands to aid in debugging<a name="custom-ami-monitor-v3"></a>
+## Monitor the Image Builder process with `pcluster` commands to aid in debugging<a name="custom-ami-monitor-v3"></a>
 
 [`describe-image`](pcluster.describe-image-v3.md)
 
@@ -49,8 +49,8 @@ For example, you can tail build image events as shown in the following command\.
 
 ```
 $ watch -n 1 'pcluster get-image-log-events -i <image-id> \
-          --log-stream-name <pcluster-version>/1 \
-          --query "events[*].message" | tail -n 50'
+        --log-stream-name/1 <pcluster-version> \
+        --query "events[*].message" | tail -n 50'
 ```
 
 [`get-image-stack-events`](pcluster.get-image-stack-events-v3.md)
@@ -63,7 +63,7 @@ Use this command save image logs\.
 
 For more information on AWS ParallelCluster logs and Amazon CloudWatch, see [Amazon CloudWatch Logs Build image logs](cloudwatch-logs-v3.md#cloudwatch-logs-build-images) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
-### Other considerations<a name="custom-ami-other-v3"></a>
+## Other considerations<a name="custom-ami-other-v3"></a>
 
 **New AWS ParallelCluster releases and custom AMIs**  
 If you build and use a custom AMI, you must repeat the steps that you used to create your custom AMI with each new AWS ParallelCluster release\.

@@ -7,15 +7,17 @@ Before reading any further, we recommend that you first review the [Custom Boots
 
 Even though building a custom AMI isn't ideal, there are scenarios where building a custom AMI for AWS ParallelCluster is necessary\. This tutorial guides you through the process of building a custom AMI for these scenarios\.
 
-## How to Customize the AWS ParallelCluster AMI<a name="how-to-customize-the-aws-parallelcluster-ami"></a>
+**Prerequisites**
++ AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI and build images\.
+
+## How to Customize the AWS ParallelCluster AMI<a name="how-to-customize-the-aws-parallelcluster-ami-v3"></a>
 
 There are two ways to build a custom AWS ParallelCluster AMI\. One of these two methods is to build a new AMI using the AWS ParallelCluster CLI\. Another method requires you to make manual modifications to build a new AMI that's available under your AWS account\.
 
-**Topics**
-+ [Build a Custom AWS ParallelCluster AMI](#build-a-custom-aws-parallelcluster-ami)
-+ [Modify an AWS ParallelCluster AMI](#modify-an-aws-parallelcluster-ami)
-
-### Build a Custom AWS ParallelCluster AMI<a name="build-a-custom-aws-parallelcluster-ami"></a>
+## Build a Custom AWS ParallelCluster AMI<a name="build-a-custom-aws-parallelcluster-ami-v3"></a>
 
 If you have a customized AMI and software already in place, you can apply the changes needed by AWS ParallelCluster on top of it\. AWS ParallelCluster relies on the EC2 Image Builder service to build customized AMIs\. For more information, see the [Image Builder User Guide](https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html)\.
 
@@ -33,23 +35,23 @@ Steps:
 
    ```
    Build:
-     InstanceType: <BUILD_INSTANCE_TYPE>
-     ParentImage: <BASE_AMI_ID>
+    InstanceType: <BUILD_INSTANCE_TYPE>
+    ParentImage: <BASE_AMI_ID>
    ```
 
 1. Use the CLI command [`pcluster build-image`](pcluster.build-image-v3.md) to build an AWS ParallelCluster AMI starting from the AMI that you provide as the base:
 
    ```
    $ pcluster build-image --image-id IMAGE_ID --image-configuration IMAGE_CONFIG.yaml --region REGION
-        {
-     "image": {
-       "imageId": "IMAGE_ID",
-       "imageBuildStatus": "BUILD_IN_PROGRESS",
-       "cloudformationStackStatus": "CREATE_IN_PROGRESS",
-       "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
-       "region": "us-east-1",
-       "version": "3.1.4"
-     }
+       {
+    "image": {
+      "imageId": "IMAGE_ID",
+      "imageBuildStatus": "BUILD_IN_PROGRESS",
+      "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+      "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
+      "region": "us-east-1",
+      "version": "3.1.4"
+    }
    }
    ```
 **Warning**  
@@ -67,57 +69,57 @@ Steps:
 
    ```
    $ pcluster describe-image --image-id IMAGE_ID --region REGION
-        
+       
    # BEFORE COMPLETE
    {
-     "imageConfiguration": {
-       "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?...",
-     },
-     "imageId": "IMAGE_ID",
-     "imagebuilderImageStatus": "BUILDING",
-     "imageBuildStatus": "BUILD_IN_PROGRESS",
-     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
-     "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
-     "region": "us-east-1",
-     "version": "3.1.4",
-     "cloudformationStackTags": [
-       {
-         "value": "3.1.4",
-         "key": "parallelcluster:version"
-       },
-       {
-         "value": "IMAGE_ID",
-         "key": "parallelcluster:image_name"
-       },
-       ...
-     ],
-     "imageBuildLogsArn": "arn:aws:logs:us-east-1:123456789012:log-group:/aws/imagebuilder/ParallelClusterImage-IMAGE_ID",
-     "cloudformationStackCreationTime": "2022-04-05T21:36:26.176Z"
+    "imageConfiguration": {
+      "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?...",
+    },
+    "imageId": "IMAGE_ID",
+    "imagebuilderImageStatus": "BUILDING",
+    "imageBuildStatus": "BUILD_IN_PROGRESS",
+    "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+    "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
+    "region": "us-east-1",
+    "version": "3.1.4",
+    "cloudformationStackTags": [
+      {
+        "value": "3.1.4",
+        "key": "parallelcluster:version"
+      },
+      {
+        "value": "IMAGE_ID",
+        "key": "parallelcluster:image_name"
+      },
+      ...
+    ],
+    "imageBuildLogsArn": "arn:aws:logs:us-east-1:123456789012:log-group:/aws/imagebuilder/ParallelClusterImage-IMAGE_ID",
+    "cloudformationStackCreationTime": "2022-04-05T21:36:26.176Z"
    }
    
    # AFTER COMPLETE
    {
-     "imageConfiguration": {
-       "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
-     },
-     "imageId": "IMAGE_ID",
-     "imageBuildStatus": "BUILD_COMPLETE",
-     "region": "us-east-1",
-     "ec2AmiInfo": {
-         "amiName": "IMAGE_ID 2022-04-05T21-39-24.020Z",
-         "amiId": "ami-1234stuv5678wxyz",
-         "description": "AWS ParallelCluster AMI for alinux2, kernel-4.14.238-182.422.amzn2.x86_64, lustre-2.10.8-5.amzn2.x86_64, efa-1.13.0-1.amzn2.x86_64, dcv-2021.1.10598-1.el7.x86_64, slurm-20-11-8-1",
-         "state": "AVAILABLE",
-         "tags": [
-          {
-            "value": "2021.3.11591-1.el7.x86_64",
-            "key": "parallelcluster:dcv_version"
-          },
-          ...
-         ],
-       "architecture": "x86_64"
-     },
-     "version": "3.1.4"      
+    "imageConfiguration": {
+      "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
+    },
+    "imageId": "IMAGE_ID",
+    "imageBuildStatus": "BUILD_COMPLETE",
+    "region": "us-east-1",
+    "ec2AmiInfo": {
+        "amiName": "IMAGE_ID 2022-04-05T21-39-24.020Z",
+        "amiId": "ami-1234stuv5678wxyz",
+        "description": "AWS ParallelCluster AMI for alinux2, kernel-4.14.238-182.422.amzn2.x86_64, lustre-2.10.8-5.amzn2.x86_64, efa-1.13.0-1.amzn2.x86_64, dcv-2021.1.10598-1.el7.x86_64, slurm-20-11-8-1",
+        "state": "AVAILABLE",
+        "tags": [
+         {
+           "value": "2021.3.11591-1.el7.x86_64",
+           "key": "parallelcluster:dcv_version"
+         },
+         ...
+        ],
+      "architecture": "x86_64"
+    },
+    "version": "3.1.4"      
    }
    ```
 
@@ -138,16 +140,16 @@ After running the [`build-image`](pcluster.build-image-v3.md) command, it's poss
 ```
 $ pcluster get-image-stack-events --image-id IMAGE_ID --region REGION --query "events[0]"
 {
-  "eventId": "ParallelClusterImage-CREATE_IN_PROGRESS-2022-04-05T21:39:24.725Z",
-  "physicalResourceId": "arn:aws:imagebuilder:us-east-1:123456789012:image/parallelclusterimage-IMAGE_ID/3.1.4/1",
-  "resourceStatus": "CREATE_IN_PROGRESS",
-  "resourceStatusReason": "Resource creation Initiated",
-  "resourceProperties": "{\"InfrastructureConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:infrastructure-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"ImageRecipeArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:image-recipe/parallelclusterimage-IMAGE_ID/3.1.4\",\"DistributionConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:distribution-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"Tags\":{\"parallelcluster:image_name\":\"IMAGE_ID\",\"parallelcluster:image_id\":\"IMAGE_ID\"}}",
-  "stackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
-  "stackName": "IMAGE_ID",
-  "logicalResourceId": "ParallelClusterImage",
-  "resourceType": "AWS::ImageBuilder::Image",
-  "timestamp": "2022-04-05T21:39:24.725Z"
+ "eventId": "ParallelClusterImage-CREATE_IN_PROGRESS-2022-04-05T21:39:24.725Z",
+ "physicalResourceId": "arn:aws:imagebuilder:us-east-1:123456789012:image/parallelclusterimage-IMAGE_ID/3.1.4/1",
+ "resourceStatus": "CREATE_IN_PROGRESS",
+ "resourceStatusReason": "Resource creation Initiated",
+ "resourceProperties": "{\"InfrastructureConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:infrastructure-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"ImageRecipeArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:image-recipe/parallelclusterimage-IMAGE_ID/3.1.4\",\"DistributionConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:distribution-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"Tags\":{\"parallelcluster:image_name\":\"IMAGE_ID\",\"parallelcluster:image_id\":\"IMAGE_ID\"}}",
+ "stackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
+ "stackName": "IMAGE_ID",
+ "logicalResourceId": "ParallelClusterImage",
+ "resourceType": "AWS::ImageBuilder::Image",
+ "timestamp": "2022-04-05T21:39:24.725Z"
 }
 ```
 
@@ -155,30 +157,30 @@ After about 15 minutes the stack events appear in the log event entry related to
 
 ```
 $ pcluster list-image-log-streams --image-id IMAGE_ID --region REGION \
-     --query 'logStreams[*].logStreamName'
+    --query 'logStreams[*].logStreamName'
 
-  "3.1.4/1"
+ "3.1.4/1"
 ]
 
 $ pcluster get-image-log-events --image-id IMAGE_ID --region REGION \
- --log-stream-name 3.1.4/1 --limit 3
+--log-stream-name 3.1.4/1 --limit 3
 {
-  "nextToken": "f/36295977202298886557255241372854078762600452615936671762",
-  "prevToken": "b/36295977196879805474012299949460899222346900769983430672",
-  "events": [
-    {
-      "message": "ExecuteBash: FINISHED EXECUTION",
-      "timestamp": "2022-04-05T22:13:26.633Z"
-    },
-    {
-      "message": "Document arn:aws:imagebuilder:us-east-1:123456789012:component/parallelclusterimage-test-abcd1234-ef56-gh78-ij90-1234abcd5678/3.1.4/1",
-      "timestamp": "2022-04-05T22:13:26.741Z"
-    },
-    {
-      "message": "TOE has completed execution successfully",
-      "timestamp": "2022-04-05T22:13:26.819Z"
-    }
-  ]
+ "nextToken": "f/36295977202298886557255241372854078762600452615936671762",
+ "prevToken": "b/36295977196879805474012299949460899222346900769983430672",
+ "events": [
+   {
+     "message": "ExecuteBash: FINISHED EXECUTION",
+     "timestamp": "2022-04-05T22:13:26.633Z"
+   },
+   {
+     "message": "Document arn:aws:imagebuilder:us-east-1:123456789012:component/parallelclusterimage-test-abcd1234-ef56-gh78-ij90-1234abcd5678/3.1.4/1",
+     "timestamp": "2022-04-05T22:13:26.741Z"
+   },
+   {
+     "message": "TOE has completed execution successfully",
+     "timestamp": "2022-04-05T22:13:26.819Z"
+   }
+ ]
 }
 ```
 
@@ -187,27 +189,27 @@ Continue to check with the [`describe-image`](pcluster.describe-image-v3.md) com
 ```
 $ pcluster describe-image --image-id IMAGE_ID --region REGION
 {
-  "imageConfiguration": {
-    "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
-  },
-  "imageId": "IMAGE_ID",
-  "imageBuildStatus": "BUILD_COMPLETE",
-  "region": "us-east-1",
-  "ec2AmiInfo": {
-      "amiName": "IMAGE_ID 2022-04-05T21-39-24.020Z",
-      "amiId": "ami-1234stuv5678wxyz",
-      "description": "AWS ParallelCluster AMI for alinux2, kernel-4.14.238-182.422.amzn2.x86_64, lustre-2.10.8-5.amzn2.x86_64, efa-1.13.0-1.amzn2.x86_64, dcv-2021.1.10598-1.el7.x86_64, slurm-20-11-8-1",
-      "state": "AVAILABLE",
-      "tags": [
-       {
-         "value": "2021.3.11591-1.el7.x86_64",
-         "key": "parallelcluster:dcv_version"
-       },
-       ...
-      ],
-    "architecture": "x86_64"
-  },
-  "version": "3.1.4"      
+ "imageConfiguration": {
+   "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
+ },
+ "imageId": "IMAGE_ID",
+ "imageBuildStatus": "BUILD_COMPLETE",
+ "region": "us-east-1",
+ "ec2AmiInfo": {
+     "amiName": "IMAGE_ID 2022-04-05T21-39-24.020Z",
+     "amiId": "ami-1234stuv5678wxyz",
+     "description": "AWS ParallelCluster AMI for alinux2, kernel-4.14.238-182.422.amzn2.x86_64, lustre-2.10.8-5.amzn2.x86_64, efa-1.13.0-1.amzn2.x86_64, dcv-2021.1.10598-1.el7.x86_64, slurm-20-11-8-1",
+     "state": "AVAILABLE",
+     "tags": [
+      {
+        "value": "2021.3.11591-1.el7.x86_64",
+        "key": "parallelcluster:dcv_version"
+      },
+      ...
+     ],
+   "architecture": "x86_64"
+ },
+ "version": "3.1.4"      
 }
 ```
 
@@ -217,15 +219,15 @@ It's possible to archive the logs in an Amazon S3 bucket or in a local file \(de
 
 ```
 $ pcluster export-image-logs --image-id IMAGE_ID --region REGION \
- --bucket BUCKET_NAME --bucket-prefix BUCKET_FOLDER
+--bucket BUCKET_NAME --bucket-prefix BUCKET_FOLDER
 {
-  "url": "https://BUCKET_NAME.s3.us-east-1.amazonaws.com/BUCKET-FOLDER/IMAGE_ID-logs-202209071136.tar.gz?AWSAccessKeyId=..."
+ "url": "https://BUCKET_NAME.s3.us-east-1.amazonaws.com/BUCKET-FOLDER/IMAGE_ID-logs-202209071136.tar.gz?AWSAccessKeyId=..."
 }
 
 $ pcluster export-image-logs --image-id IMAGE_ID \
- --region REGION --bucket BUCKET_NAME --bucket-prefix BUCKET_FOLDER --output-file /tmp/archive.tar.gz
+--region REGION --bucket BUCKET_NAME --bucket-prefix BUCKET_FOLDER --output-file /tmp/archive.tar.gz
 {
-  "path": "/tmp/archive.tar.gz"
+ "path": "/tmp/archive.tar.gz"
 }
 ```
 
@@ -235,7 +237,7 @@ The archive contains the CloudWatch Logs Streams related to the Image Builder pr
 
 Starting from AWS ParallelCluster 3\.0\.0, a new set of commands has been added in the CLI to build, monitor, and manage the image lifecycle\. For more information about the commands, see [pcluster commands](pcluster-v3.md#pcluster.subcommands-v3)\.
 
-### Modify an AWS ParallelCluster AMI<a name="modify-an-aws-parallelcluster-ami"></a>
+## Modify an AWS ParallelCluster AMI<a name="modify-an-aws-parallelcluster-ami-v3"></a>
 
 This method consists on modifying an official AWS ParallelCluster AMI by adding customization on top of it\. The base AWS ParallelCluster AMIs are updated with new releases\. These AMIs have all of the components required for AWS ParallelCluster to function when it's installed and configured\. You can start with one of these as your base\.
 

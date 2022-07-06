@@ -4,7 +4,13 @@
 
 ## Running your jobs on AWS ParallelCluster with multiple queue mode<a name="tutorial-mqm-running-jobs"></a>
 
-This tutorial walks you through running your first Hello World job on AWS ParallelCluster with [Multiple queue mode](queue-mode.md)\. If you haven't already installed AWS ParallelCluster and configured your CLI, follow the instructions in the [Setting up AWS ParallelCluster](getting_started.md) guide before continuing with this tutorial\.
+This tutorial walks you through running your first Hello World job on AWS ParallelCluster with [Multiple queue mode](queue-mode.md)\.
+
+**Prerequisites**
++ AWS ParallelCluster [is installed](install.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam.md#example-parallelcluser-policies) required to run the [`pcluster`](pcluster.md) CLI\.
 
 **Note**  
 Multiple queue mode is only supported for AWS ParallelCluster version 2\.9\.0 or later\.

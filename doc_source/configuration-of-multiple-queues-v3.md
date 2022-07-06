@@ -38,7 +38,7 @@ The instances that are launched into the compute fleet are dynamically assigned\
  `$HOSTNAME=$QUEUE-$STATDYN-$COMPUTE_RESOURCE-$NODENUM` 
 + `$QUEUE` is the name of the queue\. For example, if the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) section has an entry with the [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Name) set to “`queue-name`” then “`$QUEUE`” is “`queue-name`”\.
 +  `$STATDYN` is `st` for static nodes or `dy` for dynamic nodes\. 
-+  `$COMPUTE_RESOURCE` is the [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Name) of the [`ComputeResource`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) corresponding to this node\.
++  `$COMPUTE_RESOURCE` is the [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Name) of the [`ComputeResources`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) compute resource corresponding to this node\.
 +  `$NODENUM` is the number of the node\. `$NODENUM` is between one \(1\) and the value of [`MinCount`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-MinCount) for static nodes and between one \(1\) and [`MaxCount`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-MaxCount)\-[`MinCount`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-MinCount) for dynamic nodes\.
 
 From the example configuration file above, a given node from `queue1` and compute resource `c5xlarge` has a hostname: `queue1-dy-c5xlarge-1`\.

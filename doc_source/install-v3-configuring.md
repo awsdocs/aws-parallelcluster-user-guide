@@ -2,7 +2,9 @@
 
 After you install AWS ParallelCluster, complete the following configuration steps\.
 
-First, set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI user guide*\.
+Verify that your AWS Account has a role that includes the permissions needed to run the [`pcluster`](pcluster-v3.md) CLI\. For more information, see [AWS ParallelCluster example user policies](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies)\.
+
+Set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI user guide*\.
 
 ```
 $ aws configure
@@ -310,7 +312,7 @@ To delete the cluster, run the following command\.
 $ pcluster delete-cluster --region us-east-1 --cluster-name test-cluster
 ```
 
-After the cluster is deleted, you can delete the network resources in the VPC by deleting the CloudFormation networking stack\. The stack's name starts with "parallelclusternetworking\-" and contains the creation time in "YYYYMMDDHHMMSS" format\. You can list the stacks using the [`list-stacks`](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
+After the cluster is deleted, you can delete the network resources in the VPC by deleting the CloudFormation networking stack\. The stack's name starts with "parallelclusternetworking\-" and contains the creation time in "YYYYMMDDHHMMSS" format\. You can list the stacks using the [https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
 
 ```
 $ aws --region us-east-1 cloudformation list-stacks \
@@ -320,7 +322,7 @@ $ aws --region us-east-1 cloudformation list-stacks \
    "parallelclusternetworking-pubpriv-20191029205804"
 ```
 
- The stack can be deleted using the [`delete-stack`](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack) command\.
+ The stack can be deleted using the [https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack) command\.
 
 ```
 $ aws --region us-east-1 cloudformation delete-stack \

@@ -1,12 +1,12 @@
 # Running jobs in a multiple queue mode cluster<a name="multi-queue-tutorial-v3"></a>
 
-This tutorial walks you through running your first Hello World job on AWS ParallelCluster with [multiple queue mode](configuration-of-multiple-queues-v3.md)\. If you haven't already installed AWS ParallelCluster and configured your CLI, follow the instructions in the [Installing AWS ParallelCluster](install-v3-parallelcluster.md) guide before continuing with this tutorial\.
+This tutorial walks you through running your first Hello World job on AWS ParallelCluster with [multiple queue mode](configuration-of-multiple-queues-v3.md)\.
 
 **Prerequisites**
 + AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
-+ The AWS CLI [is installed\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 + You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
-+ As a user you have the [permissions required to run AWS ParallelCluster](iam-roles-in-parallelcluster-v3.md)\.
++ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI\.
 
 ## Configure your cluster<a name="multi-queue-tutorial-v3-configure-cluster"></a>
 

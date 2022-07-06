@@ -82,12 +82,14 @@ additional_cfn_template = https://<bucket-name>.s3.amazonaws.com/my-cfn-template
 
 ## `additional_iam_policies`<a name="additional-iam-policies"></a>
 
-**\(Optional\)** Specifies a list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used in the cluster in addition to the permissions required by AWS ParallelCluster separated by commas\. An IAM policy name and its ARN are different\. Names can't be used as an argument to [`additional_iam_policies`](#additional-iam-policies)\. [`additional_iam_policies`](#additional-iam-policies) should be used instead of the [`ec2_iam_role`](#ec2-iam-role)\. This is because [`additional_iam_policies`](#additional-iam-policies) are added to the permissions that AWS ParallelCluster requires, and the [`ec2_iam_role`](#ec2-iam-role) must include all permissions required\. The permissions required often change from release to release as features are added\.
+**\(Optional\)** Specifies a list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used in the cluster in addition to the permissions required by AWS ParallelCluster separated by commas\. An IAM policy name and its ARN are different\. Names can't be used as an argument to `additional_iam_policies`\.
+
+If your intent is to add extra policies to the default settings for cluster nodes, we recommend that you pass the additional custom IAM policies with the `additional_iam_policies` setting instead of using the [`ec2_iam_role`](#ec2-iam-role) settings to add your specific EC2 policies\. This is because `additional_iam_policies` are added to the default permissions that AWS ParallelCluster requires\. An existing [`ec2_iam_role`](#ec2-iam-role) must include all permissions required\. However, because the permissions required often change from release to release as features are added, an existing [`ec2_iam_role`](#ec2-iam-role) can become obsolete\.
 
 There is no default value\.
 
 ```
-additional_iam_policies = arn:aws:iam::aws:policy/AdministratorAccess
+additional_iam_policies = arn:aws:iam::123456789012:policy/CustomEC2Policy
 ```
 
 **Note**  
@@ -215,7 +217,7 @@ compute_root_volume_size = 35
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. For more information, see [Modify an AWS ParallelCluster AMI](tutorials_02_ami_customization.md#modify-an-aws-parallelcluster-ami) or [Build a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md#build-a-custom-aws-parallelcluster-ami)\.
 
 There is no default value\.
 
@@ -372,7 +374,11 @@ ebs_settings = custom1, custom2
 
 ## `ec2_iam_role`<a name="ec2-iam-role"></a>
 
-**\(Optional\)** Defines the name of an existing IAM role for Amazon EC2 that's attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to [`ec2_iam_role`](#ec2-iam-role)\. If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. We recommend that you use [`additional_iam_policies`](#additional-iam-policies), rather than [`ec2_iam_role`](#ec2-iam-role), because features added to AWS ParallelCluster often require new permissions\.
+**\(Optional\)** Defines the name of an existing IAM role for Amazon EC2 that's attached to all instances in the cluster\. An IAM role name and its Amazon Resource Name \(ARN\) are different\. ARNs can't be used as an argument to `ec2_iam_role`\.
+
+If this option is specified, the [`additional_iam_policies`](#additional-iam-policies) setting is ignored\. If your intent is to add extra policies to the default settings for cluster nodes, we recommend that you pass the additional custom IAM policies with the [`additional_iam_policies`](#additional-iam-policies) setting instead of using the `ec2_iam_role` settings\.
+
+If this option isn't specified, the default AWS ParallelCluster IAM role for Amazon EC2 is used\. For more information, see [AWS Identity and Access Management roles in AWS ParallelCluster](iam.md)\.
 
 There is no default value\.
 
@@ -398,7 +404,7 @@ efs_settings = customfs
 
 ## `enable_efa`<a name="enable-efa"></a>
 
-**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. EFA is supported by specific instance types \(`c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems \([`base_os`](#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` sections](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
+**\(Optional\)** If present, specifies that Elastic Fabric Adapter \(EFA\) is enabled for the compute nodes\. To view the list of EC2 instances that support EFA, see [Supported instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types) in the *Amazon EC2 User Guide for Linux Instances*\. For more information, see [Elastic Fabric Adapter](efa.md)\. If the [`queue_settings`](#queue-settings) setting is defined, either this setting can be defined, or the [`enable_efa`](queue-section.md#queue-enable-efa) settings in the [`[queue]` section](queue-section.md) can be defined\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](#placement) and [`placement_group`](#placement-group)\.
 
 ```
 enable_efa = compute

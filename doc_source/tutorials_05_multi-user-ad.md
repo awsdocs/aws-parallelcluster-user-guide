@@ -1,11 +1,23 @@
-# Integrate Active Directory over LDAP<a name="tutorials_05_multi-user-ad"></a>
+# Integrating Active Directory<a name="tutorials_05_multi-user-ad"></a>
 
-In this tutorial, you create a multiple user environment\. This environment includes an AWS ParallelCluster that's integrated with an AWS Managed Microsoft AD \(Active Directory\) at `corp.pcluster.com`\. It also includes a `ReadOnly` user and a login user\. You can use either the automated path or the manual path to create the VPC, an Active Directory \(AD\), and EC2 instances needed for AD over LDAP integration\. After you create these resources, you proceed to configure and create your cluster integrated with your AD\. After the cluster is created, you log in as the user you created\. For more information about the configuration that you create in this tutorial, see [Multiple user access to clusters](multi-user-v3.md) and the [DirectoryService configuration section](DirectoryService-v3.md)\.
+In this tutorial, you create a multiple user environment\. This environment includes an AWS ParallelCluster that's integrated with an AWS Managed Microsoft AD \(Active Directory\) at `corp.pcluster.com`\. It configures an `Admin` user to manage the directory, a `ReadOnly` user to read the directory, and a `user000` user to log into the cluster\. You can use either the automated path or the manual path to create the networking resources, an Active Directory \(AD\), and the EC2 instance you use to configure the AD\. Regardless of the path, the infrastructure that you create is pre\-configured to integrate AWS ParallelCluster using any of the following methods:
++ LDAPS with certificate verification \(recommended as the most secure option\)
++ LDAPS without certificate verification
++ LDAP
 
-**Important**  
-In this tutorial, the cluster that you create communicates with the Active Directory \(AD\) over Lightweight Directory Access Protocol \(LDAP\) to authenticate users that were defined in the AD\. LDAP *doesn't* provide encryption\. To ensure secure transmission of potentially sensitive information, we strongly recommend that you use LDAP over TLS/SSL \(abbreviated LDAPS\) for clusters integrated with ADs\. For more information, see [Enable server\-side LDAPS using AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_ldap_server_side.html) in the AWS Directory Service *Administration Guide*\.
+LDAP by itself *doesn't* provide encryption\. To ensure secure transmission of potentially sensitive information, we strongly recommend that you use LDAPS \(LDAP over TLS/SSL\) for clusters integrated with ADs\. For more information, see [Enable server\-side LDAPS using AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_ldap_server_side.html) in the AWS Directory Service *Administration Guide*\.
+
+After you create these resources, you proceed to configure and create your cluster integrated with your AD\. After the cluster is created, you log in as the user you created\. For more information about the configuration that you create in this tutorial, see [Multiple user access to clusters](multi-user-v3.md) and the [`DirectoryService`](DirectoryService-v3.md) configuration section\.
 
 The focus of this tutorial is the process of how to create an environment that supports multiple user access to clusters\. This tutorial doesn't focus on how you create and use an AWS Directory Service AD itself\. The steps you take to set up an AWS Managed Microsoft AD in this tutorial are provided for testing purposes only\. They *aren't* provided to replace the official documentation and best practices you can find at [AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) and [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) in the *AWS Directory Service Administration Guide*\.
+
+**Prerequisites**
++ AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI\.
+
+As you go through the tutorial, replace `inputs highlighted in red`, such as `region-id` and `d-abcdef01234567890`, with your values for names and IDs\. Replace `0123456789012` with your AWS account number\.
 
 ## Step 1: Create the AD infrastructure<a name="tutorials_05_multi-user-ad-step1"></a>
 
@@ -13,533 +25,40 @@ Choose the *Automated* tab to create the Active Directory \(AD\) infrastructure 
 
 Choose the *Manual* tab to manually create the AD infrastructure\.
 
-------
-#### [ Automated ]
-
-1. Sign in to the AWS Management Console
-
-1. Open the link, [CloudFormation Quick Create \(region us\-east\-1\)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=pcluster-ad&templateURL=https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/1-click/ad-integration.yaml), to create the following resources in the CloudFormation console:
-   + A VPC with two subnets and routing for public access \(if no VPC is specified\)\.
-   + An AWS Managed Microsoft AD\.
-   + An EC2 instance that's joined to the AD that you can use to manage the directory\.
-
-1. In the **Quick create stack** page **Parameters** section, create the passwords for the following parameters:
-   + **AdminPassword**
-   + **ReadOnlyPassword**
-   + **UserPassword**
-
-   For **Keypair**, enter the name of an EC2 key pair\.
-
-   Make note of the passwords\. You use them later on in this tutorial\.
-
-1. Acknowledge each of the access capabilities at the bottom of the page by checking the boxes\.
-
-1. Choose **Create stack**\.
-
-1. After the CloudFormation stack has reached the `CREATE_COMPLETE` state, choose the **Outputs** tab of the stack\. Make a note of the output resource names and IDs because you will need to use them in later steps\. The outputs provide the information that's needed to create the cluster:  
-![\[A diagram that shows the created stack outputs in the AWS Management Console.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/ad-cfn.png)
-
-1. Continue at [\(Optional\) Step 2: Manage AD users and groups](#tutorials_05_multi-user-ad-step2) or [Step 3: Create the cluster](#tutorials_05_multi-user-ad-step3)\.
-
-------
-#### [ Manual ]
-
-**Create the AD, add users, and create an AWS Secrets Manager secret**
-
-1. 
-
-**Create the AD\.**
-
-   Create a VPC for the directory service with two subnets in different Availability Zones and an AWS Managed Microsoft AD\.
-**Note**  
-The directory and domain name is `corp.pcluster.com`\. The short name is `CORP`\.
-Change the `Admin` password in the script\.
-The AD takes at least 15 minutes to create\.
-
-   You can use the following Python script to create the VPC, subnets and AD resources in your local AWS Region\. Save this file as `ad.py` and run it\.
-
-   ```
-   import boto3
-   import time
-   from pprint import pprint
-   
-   vpc_name = "PclusterVPC"
-   ad_domain = "corp.pcluster.com"
-   admin_password = "asdfASDF1234"
-   
-   ec2 = boto3.client("ec2")
-   ds = boto3.client("ds")
-   region = boto3.Session().region_name
-   
-   # Create the VPC, Subnets, IGW, Routes
-   vpc = ec2.create_vpc(CidrBlock="10.0.0.0/16")["Vpc"]
-   vpc_id = vpc["VpcId"]
-   ec2.create_tags(Resources=[vpc_id], Tags=[{"Key": "Name", "Value": vpc_name}])
-   subnet1 = ec2.create_subnet(VpcId=vpc_id, CidrBlock="10.0.0.0/17", AvailabilityZone=f"{region}a")["Subnet"]
-   subnet1_id = subnet1["SubnetId"]
-   ec2.create_tags(Resources=[subnet1_id], Tags=[{"Key": "Name", "Value": f"{vpc_name}/subnet1"}])
-   ec2.modify_subnet_attribute(SubnetId=subnet1_id, MapPublicIpOnLaunch={"Value": True})
-   subnet2 = ec2.create_subnet(VpcId=vpc_id, CidrBlock="10.0.128.0/17", AvailabilityZone=f"{region}b")["Subnet"]
-   subnet2_id = subnet2["SubnetId"]
-   ec2.create_tags(Resources=[subnet2_id], Tags=[{"Key": "Name", "Value": f"{vpc_name}/subnet2"}])
-   ec2.modify_subnet_attribute(SubnetId=subnet2_id, MapPublicIpOnLaunch={"Value": True})
-   igw = ec2.create_internet_gateway()["InternetGateway"]
-   ec2.attach_internet_gateway(InternetGatewayId=igw["InternetGatewayId"], VpcId=vpc_id)
-   route_table = ec2.describe_route_tables(Filters=[{"Name": "vpc-id", "Values": [vpc_id]}])["RouteTables"][0]
-   ec2.create_route(RouteTableId=route_table["RouteTableId"], DestinationCidrBlock="0.0.0.0/0", GatewayId=igw["InternetGatewayId"])
-   ec2.modify_vpc_attribute(VpcId=vpc_id, EnableDnsSupport={"Value": True})
-   ec2.modify_vpc_attribute(VpcId=vpc_id, EnableDnsHostnames={"Value": True})
-   
-   # Create the Active Directory
-   ad = ds.create_microsoft_ad(
-       Name=ad_domain,
-       Password=admin_password,
-       Description="ParallelCluster AD",
-       VpcSettings={"VpcId": vpc_id, "SubnetIds": [subnet1_id, subnet2_id]},
-       Edition="Standard",
-   )
-   directory_id = ad["DirectoryId"]
-   
-   # Wait for completion
-   print("Waiting for the directory to be created...")
-   directories = ds.describe_directories(DirectoryIds=[directory_id])["DirectoryDescriptions"]
-   directory = directories[0]
-   while directory["Stage"] in {"Requested", "Creating"}:
-       time.sleep(3)
-       directories = ds.describe_directories(DirectoryIds=[directory_id])["DirectoryDescriptions"]
-       directory = directories[0]
-       
-   dns_ip_addrs = directory["DnsIpAddrs"]
-   
-   pprint({"directory_id": directory_id,
-           "vpc_id": vpc_id,
-           "subnet1_id": subnet1_id,
-           "subnet2_id": subnet2_id,
-           "dns_ip_addrs": dns_ip_addrs})
-   ```
-
-   The following is example output from python script\.
-
-   ```
-   {
-     "directory_id": "d-abcdef01234567890",
-     "dns_ip_addrs": ["192.0.2.254", "203.0.113.237"],
-     "subnet1_id": "subnet-021345abcdef6789",
-     "subnet2_id": "subnet-1234567890abcdef0",
-     "vpc_id": "vpc-021345abcdef6789"
-   }
-   ```
-
-   Make a note of the output resource names and IDs\. You use them in later steps\.
-
-1. 
-
-**Create an EC2 instance and join it to your AD\.**
-
-   Prepare to create users in your directory and store the password for a `ReadOnlyUser`\.
-
-   1. 
-
-**Create the EC2 instance**
-
-      Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-   1. In the **EC2 Dashboard**, choose **Launch Instance**\.
-
-   1. Select a recent Amazon Linux 2 AMI, t2\.micro instance type\.
-
-**In **Configure Instance Details**, choose the following values:**
-      + **Network**: **PclusterVPC**
-      + **Auto\-assign Public IP**: **Enable**
-      + **Domain join directory**: **corp\.pcluster\.com**
-      + **IAM Role**: Create or select one using having the AWS Secrets Manager permissions suggested by the helper\.
-      + Choose **Review and Launch** to launch the instance\.
-      + Make note of the InstanceId \(for example, i\-1234567890abcdef0\) and wait for the instance to finish launching\.
-      + After the instance has launched, continue to the next step\.
-
-1. 
-
-**Connect to your instance and join the AD realm as `admin`**
-
-   Run the following commands to connect to the instance:
-
-   ```
-   $ INSTANCE_ID="i-1234567890abcdef0"
-   ```
-
-   ```
-   $ PUBLIC_IP=$(aws ec2 describe-instances \
-   --instance-ids $INSTANCE_ID \
-   --query "Reservations[0].Instances[0].PublicIpAddress" \
-   --output text)
-   ```
-
-   ```
-   $ ssh -i ~/.ssh/keys/keypair.pem ec2-user@$PUBLIC_IP
-   ```
-
-   Install necessary software and join the realm\.
-
-   ```
-   $ sudo yum -y install sssd realmd oddjob oddjob-mkhomedir adcli samba-common samba-common-tools krb5-workstation openldap-clients policycoreutils-python
-   ```
-
-   Replace the Admin password with your `admin` password:
-
-   ```
-   $ ADMIN_PW="asdfASDF1234"
-   ```
-
-   ```
-   $ echo $ADMIN_PW | sudo realm join -U Admin corp.pcluster.com
-   ```
-
-   Output:
-
-   ```
-   Password for Admin:
-   ```
-
-   If the above has succeeded, you are joined to the realm and can proceed to the next step\.
-
-1. 
-
-**Create the ReadOnlyUser and an additional user\.**
-
-   In this step, you use [adcli](https://www.mankier.com/package/adcli) and [openldap\-clients](https://www.mankier.com/package/openldap-clients) tools that you installed in a preceding step\.
-
-   ```
-   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=ReadOnlyUser ReadOnlyUser
-   ```
-
-   ```
-   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=user000 user000
-   ```
-
-   **Verify the users have been created:**
-
-   The directory\_id is an output of the python script\.
-
-   ```
-   $ DIRECTORY_IP="192.0.2.254"
-   ```
-
-   ```
-   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
-   ```
-
-   ```
-   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=user000,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
-   ```
-
-   At this point you can disconnect from the instance \(and terminate it\)\.
-
-   When you create a user with the `ad-cli`, the user is disabled by default\.
-
-   **Reset and activate the user passwords from your local machine:**
-**Note**  
-`ro-p@ssw0rd` below is the password of `ReadOnlyUser`, retrieved via secrets manager \(explained below\)\.
-`user-p@ssw0rd` is the password of a cluster user, provided when you connect \(`ssh`\) to the cluster\.
-
-   The `directory-id` is an output of the python script\.
-
-   ```
-   $ DIRECTORY_ID="d-abcdef01234567890"
-   ```
-
-   ```
-   $ aws ds reset-user-password \
-   --directory-id $DIRECTORY_ID \
-   --user-name "ReadOnlyUser" \
-   --new-password "ro-p@ssw0rd" \
-   --region "region-id"
-   ```
-
-   ```
-   $ aws ds reset-user-password \
-   --directory-id $DIRECTORY_ID \
-   --user-name "user000" \
-   --new-password "user-p@ssw0rd" \
-   --region "region-id"
-   ```
-
-1. **Add the password to a Secrets Manager secret\.**
-
-   Now that you have created a `ReadOnlyUser` and set the password, store it in a secret that AWS ParallelCluster uses for validating logins\.
-
-   Use Secrets Manager to create a new secret to hold the password for the `ReadOnlyUser` as the value\. The secret value format must be text only, not JSON\. Make note of the secret ARN for future steps\.
-
-   ```
-   $ aws secretsmanager create-secret --name "ADSecretPassword" \
-   --secret-string "ro-p@ssw0rd" \
-   --query ARN \
-   --output text
-   ```
-
-   Output:
-
-   ```
-   arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-1234
-   ```
-
-1. Continue at [\(Optional\) Step 2: Manage AD users and groups](#tutorials_05_multi-user-ad-step2) or [Step 3: Create the cluster](#tutorials_05_multi-user-ad-step3)\.
-
-------
-
-## \(Optional\) Step 2: Manage AD users and groups<a name="tutorials_05_multi-user-ad-step2"></a>
-
-In this step, you manage users and groups from an EC2 Amazon Linux 2 instance that is joined to the AD domain\.
-
-If you followed the *automated* path, restart and log in to the AD joined instance that was created as part of the automation\.
-
-If you followed the *manual* path, restart and log in to the instance that you created and joined to the AD in preceding steps\.
-
-In these steps, you use the [adcli](https://www.mankier.com/package/adcli) and [openldap\-clients](https://www.mankier.com/package/openldap-clients) tools that were installed in the instance as part of a preceding step\.
-
-**Log in to an EC2 instance that is joined to the AD domain**
-
-1. From the EC2 console, select the untitled EC2 instance that was created in previous steps\. The instance state might be **Stopped**\.
-
-1. If the instance state is **Stopped**, choose **Instance state** and then **Start instance**\.
-
-1. After the status checks pass, select the instance and choose **Connect** and ssh in to the instance\.
-
-**Manage users and groups when logged into an EC2 Amazon Linux 2 instance that is joined the the AD**
-
-The `adcli` commands with the ` -U "Admin"` option ask you to enter the AD `Admin` password\. You include the AD `Admin` password as part of the `ldapsearch` commands\.
-
-1. Create a user\.
-
-   ```
-   $ adcli create-user "clusteruser" --domain "corp.pcluster.com" -U "Admin"
-   ```
-
-1. Set a user password
-
-   ```
-   $ aws --region "region-id" ds reset-user-password --directory-id "d-abcdef01234567890" --user-name "clusteruser" --new-password "new-p@ssw0rd"
-   ```
-
-1. Create a group\.
-
-   ```
-   $ adcli create-group "clusterteam" --domain "corp.pcluster.com" -U "Admin"
-   ```
-
-1. Add a user to a group\.
-
-   ```
-   $ adcli add-member "clusterteam" "clusteruser" --domain "corp.pcluster.com" -U "Admin"
-   ```
-
-1. 
-
-**Describe users and groups**
-
-   Describe all users\.
-
-   ```
-   $ ldapsearch "(&(objectClass=user))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
-   ```
-
-   Describe a specific user\.
-
-   ```
-   $ ldapsearch "(&(objectClass=user)(cn=clusteruser))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
-   ```
-
-   Describe all users with a name pattern\.
-
-   ```
-   $ ldapsearch "(&(objectClass=user)(cn=user*))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
-   ```
-
-   Describe all users that are part of a specific group\.
-
-   ```
-   $ ldapsearch "(&(objectClass=user)(memberOf=CN=clusterteam,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
-   ```
-
-   Describe all groups
-
-   ```
-   $ ldapsearch "objectClass=group" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
-   ```
-
-   Describe a specific group
-
-   ```
-   $ ldapsearch "(&(objectClass=group)(cn=clusterteam))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
-   ```
-
-1. Remove a user from a group\.
-
-   ```
-   $ adcli remove-member "clusterteam" "clusteruser" --domain "corp.pcluster.com" -U "Admin"
-   ```
-
-1. Delete a user
-
-   ```
-   $ adcli delete-user "clusteruser" --domain "corp.pcluster.com" -U "Admin"
-   ```
-
-1. Delete a group\.
-
-   ```
-   $ adcli delete-group "clusterteam" --domain "corp.pcluster.com" -U "Admin"
-   ```
-
-## Step 3: Create the cluster<a name="tutorials_05_multi-user-ad-step3"></a>
-
-The environment is set up to create a cluster that can authenticate users against the AD\.
-
-Create a simple cluster configuration and provide the settings relevant to connecting to the AD\. For more information, see the [`DirectoryService` section](DirectoryService-v3.md)\.
-
-Save the example cluster configuration as a `config.yaml` file:
-
-**Note**  
-`KeyName`: One of your EC2 keypairs\.
-`SubnetId / SubnetIds`: One of the subnet IDs provided in the output of the CloudFormation quick create stack \(automated tutorial\) or python script \(manual tutorial\)\.
-`Region`: The Region where you created the AD infrastructure\.
-`DomainAddr`: This IP address is one of the DNS addresses of your AD service\.
-`PasswordSecretArn`: The ARN of the secret that contains the password for the `DomainReadOnlyUser`\.
-
-```
-HeadNode:
-  InstanceType: t2.micro
-  Ssh:
-    KeyName: keypair
-  Networking:
-    SubnetId: subnet-abcdef01234567890
-Scheduling:
-  Scheduler: slurm
-  SlurmQueues:
-    - Name: queue0
-      ComputeResources:
-        - Name: queue0-t2-micro
-          MinCount: 0
-          MaxCount: 4
-          InstanceType: t2.micro
-      Networking:
-        SubnetIds:
-          - subnet-abcdef01234567890
-Region: region-id
-Image:
-  Os: alinux2
-DirectoryService:
-  DomainName: dc=corp,dc=pcluster,dc=com
-  DomainAddr: ldap://192.0.2.254,ldap://203.0.113.237
-  PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-AAAAA
-  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
-  AdditionalSssdConfigs:
-    ldap_auth_disable_tls_never_use_in_production: True
-```
-
-Create your cluster with the following command:
-
-```
-$ pcluster create-cluster --cluster-name "ad-cluster" --cluster-configuration "./config.yaml"
-```
-
-Output:
-
-```
-{
-  "cluster": {
-    "clusterName": "ad-cluster",
-    "cloudformationStackStatus": "CREATE_IN_PROGRESS",
-    "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
-    "region": "region-id",
-    "version": "3.1.1",
-    "clusterStatus": "CREATE_IN_PROGRESS"
-  },
-  "validationMessages": [
-    {
-      "level": "WARNING",
-      "type": "DomainAddrValidator",
-      "message": "The use of the ldaps protocol is strongly encouraged for security reasons."
-    },
-    {
-      "level": "WARNING",
-      "type": "LdapTlsReqCertValidator",
-      "message": "For security reasons it's recommended to use hard or demand"
-    }
-  ]
-}
-```
-
-## Step 4: Connect to the cluster as a user<a name="tutorials_05_multi-user-ad-step4"></a>
-
-You can determine the status of the cluster with the following commands:
-
-```
-$ pcluster describe-cluster -n ad-cluster --region "region-id" --query "clusterStatus"
-```
-
-Output:
-
-```
-"CREATE_IN_PROGRESS" / "CREATE_COMPLETE"
-```
-
-When the status reaches `"CREATE_COMPLETE"`, log in with the created user name and password:
-
-```
-$ HEAD_NODE_IP=$(pcluster describe-cluster -n "ad-cluster" --region "region-id" --query headNode.publicIpAddress | xargs echo)
-```
-
-```
-$ ssh user000@$HEAD_NODE_IP
-```
-
-You can log in without the password by providing the SSH key that was created for the new user at `/home/user000@HEAD_NODE_IP/.ssh/id_rsa`\.
-
-If the `ssh` command succeeded, you have successfully connected to the cluster as a user that is authenticated using AD\.
-
 ## Step 5: Clean up<a name="tutorials_05_multi-user-ad-step5"></a>
 
-1. From your local machine, delete the cluster\.
+1. 
+
+**From your local machine, delete the cluster\.**
 
    ```
    $ pcluster delete-cluster --cluster-name "ad-cluster" --region "region-id"
-   ```
-
-   Output:
-
-   ```
    {
      "cluster": {
        "clusterName": "ad-cluster",
        "cloudformationStackStatus": "DELETE_IN_PROGRESS",
        "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
        "region": "region-id",
-       "version": "3.1.1",
+       "version": "3.1.4",
        "clusterStatus": "DELETE_IN_PROGRESS"
      }
    }
    ```
 
-1. Check the status of the cluster delete\.
+1. 
+
+**Check the status of the cluster delete\.**
 
    ```
    $ pcluster describe-cluster --cluster-name "ad-cluster" --region "region-id" --query "clusterStatus"
-   ```
-
-   Output:
-
-   ```
    "DELETE_IN_PROGRESS"
    ```
 
    After the cluster delete is complete, proceed to the next step\.
 
-3\. Delete the directory resources\.
+### Automated<a name="tutorials_05_multi-user-ad-step5-automated"></a>
 
-------
-#### [ Automated ]
-
-**Delete the Active Directory**
+**Delete the Active Directory resources**
 
 1. From [https://console\.aws\.amazon\.com/cloudformation/](https://console.aws.amazon.com/cloudformation/)
 
@@ -549,8 +68,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. Choose **Delete**\.
 
-------
-#### [ Manual ]
+### Manual<a name="tutorials_05_multi-user-ad-step5-manual"></a>
 
 1. 
 
@@ -564,399 +82,209 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
+**Delete the Hosted Zone\.**
+
+   1. Create a `recordset-delete.json` with the following content \(pay attention here that HostedZoneId is the Canonical Hosted Zone ID of the Load Balancer\):
+
+      ```
+      {
+        "Changes": [
+          {
+            "Action": "DELETE",
+            "ResourceRecordSet": {
+              "Name": "corp.pcluster.com",
+              "Type": "A",
+              "Region": "region-id",
+              "SetIdentifier": "pcluster-active-directory",
+              "AliasTarget": {
+                "HostedZoneId": "Z2IFOLAFXWLO4F",
+                "DNSName": "CorpPclusterCom-NLB-3afe296bf4ba80d4.elb.region-id.amazonaws.com",
+                "EvaluateTargetHealth": true
+              }
+            }
+          }
+        ]
+      }
+      ```
+
+   1. Submit the recordset change to the hosted zone, this time using the hosted zone ID:
+
+      ```
+      $ aws route53 change-resource-record-sets --hosted-zone-id Z09020002B5MZQNXMSJUB \
+        --change-batch file://recordset-delete.json
+      {
+       "ChangeInfo": {
+           "Id": "/change/C04853642A0TH2TJ5NLNI",
+           "Status": "PENDING",
+           "SubmittedAt": "2022-05-05T14:25:51.046000+00:00"
+       }
+      }
+      ```
+
+   1. Delete the Hosted Zone:
+
+      ```
+      $ aws route53 delete-hosted-zone --id Z09020002B5MZQNXMSJUB
+      {
+       "ChangeInfo": {
+           "Id": "/change/C0468051QFABTVHMDEG9",
+           "Status": "PENDING",
+           "SubmittedAt": "2022-05-05T14:26:13.814000+00:00"
+       }
+      }
+      ```
+
+1. 
+
+**Delete the LB Listener:**
+
+   ```
+   $ aws elbv2 delete-listener \
+     --listener-arn arn:aws:elasticloadbalancing:region-id:123456789012:listener/net/CorpPclusterCom-NLB/3afe296bf4ba80d4/a8f9d97318743d4b --region region-id
+   ```
+
+1. 
+
+**Delete Target Group:**
+
+   ```
+   $ aws elbv2 delete-target-group \
+     --target-group-arn arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81 --region region-id
+   ```
+
+1. 
+
+**Delete the Load Balancer:**
+
+   ```
+   $ aws elbv2 delete-load-balancer \
+     --load-balancer-arn arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpPclusterCom-NLB/3afe296bf4ba80d4 --region region-id
+   ```
+
+1. 
+
+**Delete the policy used by the cluster to read the certificate from Secrets Manager:**
+
+   ```
+   $ aws iam delete-policy --policy-arn arn:aws:iam::123456789012:policy/ReadCertPcluster
+   ```
+
+1. 
+
+**Delete the secret containing the domain certificate:**
+
+   ```
+   $ aws secretsmanager delete-secret \
+     --secret-id arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-123abc \
+     --region region-id
+   {
+    "ARN": "arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-123abc",
+    "Name": "pcluster-cert",
+    "DeletionDate": "2022-06-04T16:27:36.183000+02:00"
+   }
+   ```
+
+1. 
+
+**Delete the certificate from ACM:**
+
+   ```
+   $ aws acm delete-certificate \
+     --certificate-arn arn:aws:acm:region-id:123456789012:certificate/343db133-490f-4077-b8d4-3da5bfd89e72 --region region-id
+   ```
+
+1. 
+
 **Delete the Active Directory resources\.**
 
-   Get the following resource IDs from the output of the python script `ad.py`:
-   + AD ID
-   + AD subnet IDs
-   + AD VPC ID
+   1. Get the following resource IDs from the output of the python script `ad.py`:
+      + AD ID
+      + AD subnet IDs
+      + AD VPC ID
 
-   1. 
-
-**Use `boto3` in a Python 3 environment to delete the resources\.**
-
-      Start with imports:
+   1. Delete the directory:
 
       ```
-      $ import boto3
-      ds = boto3.client("ds")
-      ec2 = boto3.client("ec2")
-      secret = boto3.client("secretsmanager")
-      region = boto3.Session().region_name
-      ```
-
-   1. 
-
-**Delete the directory\.**
-
-      ```
-      $ ds.delete_directory(DirectoryId="d-abcdef0123456789")
-      ```
-
-      Output:
-
-      ```
+      $ aws ds delete-directory --directory-id d-abcdef0123456789 --region region-id
       {
-      	"DirectoryId": "d-abcdef01234567890",
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"content-type": "application/x-amz-json-1.1",
-      			"content-length": "30",
-      			"date": "Mon, 17 Jan 2022 17:25:48 GMT"
-      		},
-      		"RetryAttempts": 0
-      	}
+         "DirectoryId": "d-abcdef0123456789"
       }
       ```
 
-   1. 
-
-**Verify that the directory was deleted\.**
-
-      This can take up to 30 minutes\.
+   1. List the Security Groups in the VPC:
 
       ```
-      $ ds.describe_directories(DirectoryIds = ["d-abcdef0123456789"])
+      $ aws ec2 describe-security-groups --filters '[{"Name":"vpc-id","Values":["vpc-07614ade95ebad1bc"]}]' --region region-id
       ```
 
-      Output:
+   1. Delete the non default Security Group:
 
       ```
+      $ aws ec2 delete-security-group --group-id sg-021345abcdef6789 --region region-id
+      ```
+
+   1. Delete the subnets:
+
+      ```
+      $ aws ec2 delete-subnet --subnet-id subnet-1234567890abcdef --region region-id
+      ```
+
+      ```
+      $ aws ec2 delete-subnet --subnet-id subnet-021345abcdef6789 --region region-id
+      ```
+
+   1. Describe Internet Gateway:
+
+      ```
+      $ aws ec2 describe-internet-gateways \
+        --filters Name=attachment.vpc-id,Values=vpc-021345abcdef6789 \
+        --region region-id
       {
-      	"DirectoryDescriptions": [],
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"content-type": "application/x-amz-json-1.1",
-      			"content-length": "28",
-      			"date": "Sun, 23 Jan 2022 17:05:07 GMT"
-      		},
-      		"RetryAttempts": 0
-      	}
+        "InternetGateways": [
+          {
+            "Attachments": [
+              {
+                "State": "available",
+                "VpcId": "vpc-021345abcdef6789"
+              }
+            ],
+            "InternetGatewayId": "igw-1234567890abcdef",
+            "OwnerId": "123456789012",
+            "Tags": []
+          }
+        ]  
       }
       ```
 
-   1. 
-
-**Delete the VPC non\-default security group\.**
-
-      Get the security group ID:
+   1. Detach Internet Gateway:
 
       ```
-      $ ec2.describe_security_groups(Filters=[{"Name":"vpc-id","Values":["vpc-021345abcdef6789"]}])
+      $ aws ec2 detach-internet-gateway \
+        --internet-gateway-id igw-1234567890abcdef \
+        --vpc-id vpc-021345abcdef6789 \
+        --region region-id
       ```
 
-      Output:
+   1. Delete Internet Gateway:
 
       ```
-      {
-      	"SecurityGroups": [{
-      		"Description": "default VPC security group",
-      		"GroupName": "default", 
-      		"IpPermissions": [{
-      			"IpProtocol": "-1", 
-      			"IpRanges": [], 
-      			"Ipv6Ranges": [], 
-      			"PrefixListIds": [], 
-      			"UserIdGroupPairs": [{
-      				"GroupId": "sg-abcdef01234567890",
-      				"UserId": "123456789012"
-      			}]
-      		}], 
-      		"OwnerId": "123456789012",
-      		"GroupId": "sg-abcdef01234567890",
-      		"IpPermissionsEgress": [{
-      			"IpProtocol": "-1",
-      			"IpRanges": [{
-      				"CidrIp": "0.0.0.0/0"
-      			}],
-      			"Ipv6Ranges": [],
-      			"PrefixListIds": [],
-      			"UserIdGroupPairs": []
-      		}],
-      		"VpcId": "vpc-021345abcdef6789"
-      	},
-      	{
-      		"Description": "launch-wizard-2 created 2022-01-23T08:05:48.031-08:00",
-      		"GroupName": "launch-wizard-2",
-      		"IpPermissions": [{
-      			"FromPort": 22, "IpProtocol": "tcp",
-      			"IpRanges": [{
-      				"CidrIp": "0.0.0.0/0"
-      			}],
-      			"Ipv6Ranges": [],
-      			"PrefixListIds": [],
-      			"ToPort": 22,
-      			"UserIdGroupPairs": []
-      		}],
-      		"OwnerId": "123456789012",
-      		"GroupId": "sg-021345abcdef6789",
-      		"IpPermissionsEgress": [{
-      			"IpProtocol": "-1",
-      			"IpRanges": [{
-      				"CidrIp": "0.0.0.0/0"
-      			}],
-      			"Ipv6Ranges": [],
-      			"PrefixListIds": [],
-      			"UserIdGroupPairs": []
-      		}],
-      		"VpcId": "vpc-021345abcdef6789"
-      	}],
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"cache-control": "no-cache, no-store",
-      			"strict-transport-security": "max-age=31536000; includeSubDomains",
-      			"vary": "accept-encoding",
-      			"content-type": "text/xml;charset=UTF-8",
-      			"content-length": "2806",
-      			"date": "Sun, 23 Jan 2022 17:06:39 GMT",
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
+      $ aws ec2 delete-internet-gateway \
+        --internet-gateway-id igw-1234567890abcdef \
+        --region region-id
       ```
 
-      Delete the security group\.
+   1. Delete VPC:
 
       ```
-      $ ec2.delete_security_group(GroupId="sg-021345abcdef6789")
+      $ aws ec2 delete-vpc \
+        --vpc-id vpc-021345abcdef6789 \
+        --region region-id
       ```
 
-      Output:
+   1. Delete the secret containing the ReadOnlyUser password:
 
       ```
-      {
-      	"ResponseMetadata":
-      	{
-      		"RequestId": "06691c7a-f504-4aed-97c4-91abd848b34d",
-      		"HTTPStatusCode": 200, 
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "06691c7a-f504-4aed-97c4-91abd848b34d",
-      			"cache-control": "no-cache, no-store",
-      			"strict-transport-security": "max-age=31536000; includeSubDomains",
-      			"content-type": "text/xml;charset=UTF-8",
-      			"content-length": "239",
-      			"date": "Sun, 23 Jan 2022 17:39:42 GMT",
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
+      $ aws secretsmanager delete-secret \
+        --secret-id arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-1234" \
+        --region region-id
       ```
-
-   1. 
-
-**Delete the subnets if they're no longer being used\.**
-
-      ```
-      $ ec2.delete_subnet("SubnetId"="subnet-1234567890abcdef")
-      ```
-
-      Output:
-
-      ```
-      {
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"cache-control": "no-cache, no-store",
-      			"strict-transport-security": "max-age=31536000; includeSubDomains",
-      			"content-type": "text/xml;charset=UTF-8",
-      			"content-length": "225",
-      			"date": "Mon, 17 Jan 2022 18:10:08 GMT",
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
-      ```
-
-      ```
-      $ ec2.delete_subnet("SubnetId"="subnet-021345abcdef6789")
-      ```
-
-      Output:
-
-      ```
-      {
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"cache-control": "no-cache, no-store",
-      			"strict-transport-security": "max-age=31536000; includeSubDomains",
-      			"content-type": "text/xml;charset=UTF-8",
-      			"content-length": "225",
-      			"date": "Mon, 17 Jan 2022 18:10:08 GMT",
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
-      ```
-
-   1. 
-
-**Detach and delete the internet gateway if it's no longer being used\.**
-
-      Get the internet gateway ID:
-
-      ```
-      $ ec2.describe_internet_gateways("Filters"=[{"Name":"attachment.vpc-id","Values":["vpc-021345abcdef6789"]}])
-      ```
-
-      Output:
-
-      ```
-      {
-      	"InternetGateways": [{
-      		"Attachments": [{
-      			"State": "available", 
-      			"VpcId": "vpc-021345abcdef6789"
-      		}], 
-      		"InternetGatewayId": "igw-abcdef01234567890", 
-      		"OwnerId": "123456789012", 
-      		"Tags": []
-      	}], 
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456", 
-      		"HTTPStatusCode": 200, "HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456", 
-      			"cache-control": "no-cache, no-store", 
-      			"strict-transport-security": "max-age=31536000; includeSubDomains", 
-      			"content-type": "text/xml;charset=UTF-8", 
-      			"content-length": "649", 
-      			"date": "Sun, 23 Jan 2022 17:55:22 GMT", 
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
-      ```
-
-      Detach the internet gateway\.
-
-      ```
-      $ ec2.detach_internet_gateway(InternetGatewayId="igw-1234567890abcdef", VpcId="vpc-021345abcdef6789")
-      ```
-
-      Output:
-
-      ```
-      {
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"cache-control": "no-cache, no-store",
-      			"strict-transport-security": "max-age=31536000; includeSubDomains",
-      			"content-type": "text/xml;charset=UTF-8",
-      			"content-length": "243",
-      			"date": "Mon, 17 Jan 2022 18:39:39 GMT",
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
-      ```
-
-      Delete the internet gateway\.
-
-      ```
-      $ ec2.delete_internet_gateway(InternetGatewayId="igw-1234567890abcdef")
-      ```
-
-      Output:
-
-      ```
-      {
-      	"ResponseMetadata":	{
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"cache-control": "no-cache, no-store",
-      			"strict-transport-security": "max-age=31536000; includeSubDomains",
-      			"content-type": "text/xml;charset=UTF-8",
-      			"content-length": "243",
-      			"date": "Mon, 17 Jan 2022 18:54:10 GMT",
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
-      ```
-
-   1. 
-
-**Delete the VPC if it's no longer being used\.**
-
-      ```
-      $ ec2.delete_vpc("VpcId"="vpc-021345abcdef6789")
-      ```
-
-      Output:
-
-      ```
-      {
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456",
-      			"cache-control": "no-cache, no-store",
-      			"strict-transport-security": "max-age=31536000; includeSubDomains",
-      			"content-type": "text/xml;charset=UTF-8",
-      			"content-length": "219",
-      			"date": "Mon, 17 Jan 2022 19:14:30 GMT",
-      			"server": "AmazonEC2"
-      		},
-      		"RetryAttempts": 0
-      	}
-      }
-      ```
-
-   1. 
-
-**Delete the Secrets Manager secret if it's no longer being used\.**
-
-      ```
-      $ secret.delete_secret("SecretId"="arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-AAAAA")
-      ```
-
-      Output:
-
-      ```
-      {
-      	"ARN": "arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-123ABC",
-      	"Name": "ADSecretPassword",
-      	"DeletionDate": "datetime.datetime(2022, 2, 20, 15, 8, 39, 452000, tzinfo=tzlocal())",
-      	"ResponseMetadata": {
-      		"RequestId": "1234567-abcd-0123-def0-abcdef0123456",
-      		"HTTPStatusCode": 200,
-      		"HTTPHeaders": {
-      			"date": "Fri, 21 Jan 2022 15:08:39 GMT",
-      			"content-type": "application/x-amz-json-1.1",
-      			"content-length": "134",
-      			"connection": "keep-alive",
-      			"x-amzn-requestid": "1234567-abcd-0123-def0-abcdef0123456"
-      		}, 
-      		"RetryAttempts": 0
-      	}
-      }
-      ```
-
-------

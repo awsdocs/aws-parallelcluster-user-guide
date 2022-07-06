@@ -1,6 +1,14 @@
 # Elastic Fabric Adapter<a name="efa"></a>
 
-Elastic Fabric Adapter \(EFA\) is a network device that has OS\-bypass capabilities for low\-latency network communications with other instances on the same subnet\. EFA is exposed by using Libfabric, and can be used by applications using the Messaging Passing Interface \(MPI\)\. To use EFA with AWS ParallelCluster, add the line `enable_efa = compute` to the [`[cluster]` section](cluster-definition.md)\. EFA is supported by specific instance types \([`compute_instance_type`](cluster-definition.md#compute-instance-type) are to be one of `c5n.18xlarge`, `c5n.metal`, `g4dn.metal`, `i3en.24xlarge`, `i3en.metal`, `m5dn.24xlarge`, `m5n.24xlarge`, `m5zn.12xlarge`, `m5zn.metal`, `r5dn.24xlarge`, `r5n.24xlarge`, `p3dn.24xlarge`, and `p4d.24xlarge` for x86\-64 instances and `c6gn.16xlarge`for Arm\-based Graviton2 instances\) on specific operating systems \([`base_os`](cluster-definition.md#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004` for x86\-64 instances and `alinux2`, `ubuntu1804`, or `ubuntu2004` for Arm\-based Graviton2 instances\)\. For more information about the `enable_efa` setting, see [`enable_efa`](cluster-definition.md#enable-efa)\. A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](cluster-definition.md#placement) and [`placement_group`](cluster-definition.md#placement-group)\.
+Elastic Fabric Adapter \(EFA\) is a network device that has OS\-bypass capabilities for low\-latency network communications with other instances on the same subnet\. EFA is exposed by using Libfabric, and can be used by applications using the Messaging Passing Interface \(MPI\)\.
+
+To use EFA with AWS ParallelCluster, add the line `enable_efa = true` to the [`[queue]` section](queue-section.md)\.
+
+To view the list of EC2 instances that support EFA, see [Supported instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+For more information about the `enable_efa` setting, see [`enable_efa`](queue-section.md#queue-enable-efa) in the [`[queue]` section](queue-section.md)\.
+
+A cluster placement group should be used to minimize latencies between instances\. For more information, see [`placement`](cluster-definition.md#placement) and [`placement_group`](cluster-definition.md#placement-group)\.
 
 For more information, see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) in the *Amazon EC2 User Guide for Linux Instances* and [Scale HPC workloads with elastic fabric adapter and AWS ParallelCluster](https://aws.amazon.com/blogs/opensource/scale-hpc-workloads-elastic-fabric-adapter-and-aws-parallelcluster/) in the *AWS Open Source Blog*\.
 

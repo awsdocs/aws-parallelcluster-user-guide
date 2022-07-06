@@ -2,7 +2,11 @@
 
 This tutorial walks you through running an MPI job with `awsbatch` as a scheduler\.
 
-If you haven't yet installed AWS ParallelCluster and configured your CLI, follow the instructions in the [getting started](getting_started.md) guide before continuing with this tutorial\. Also, make sure to read through the [awsbatch networking setup](networking.md#awsbatch-networking) documentation before moving to the next step\.
+**Prerequisites**
++ AWS ParallelCluster [is installed](install.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam.md#example-parallelcluser-policies) required to run the [`pcluster`](pcluster.md) CLI\.
 
 ## Creating the cluster<a name="creating-the-cluster"></a>
 

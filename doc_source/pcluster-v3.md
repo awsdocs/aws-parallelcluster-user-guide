@@ -2,6 +2,8 @@
 
 `pcluster` is the primary AWS ParallelCluster CLI command\. You use `pcluster` to launch and manage HPC clusters in the AWS Cloud\.
 
+To use `pcluster`, you must have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run it\.
+
 ```
 pcluster [-h]
 ```

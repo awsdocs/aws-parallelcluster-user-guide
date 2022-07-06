@@ -240,6 +240,8 @@ Specifies the mount directory for the instance store volume\. The default is `/s
 
 **\(Optional\)** Defines configuration settings for the NICE DCV server running on the head node\.
 
+For more information, see [Connect to the head node through NICE DCV](dcv-v3.md)\.
+
 ```
 Dcv:
   Enabled: boolean
@@ -248,7 +250,7 @@ Dcv:
 ```
 
 **Important**  
-By default, the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, you can connect to a NICE DCV port only if you have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv connect`\. Use the `AllowedIps` setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the `Port` setting to set a nonstandard port\.
+By default, the NICE DCV port setup by AWS ParallelCluster is open to all IPv4 addresses\. However, you can connect to a NICE DCV port only if you have the URL for the NICE DCV session and connect to the NICE DCV session within 30 seconds of when the URL is returned from `pcluster dcv-connect`\. Use the `AllowedIps` setting to further restrict access to the NICE DCV port with a CIDR\-formatted IP range, and use the `Port` setting to set a nonstandard port\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 

@@ -11,6 +11,12 @@ You can use these options to provide a customer managed AWS KMS key for Amazon E
 + [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalIamPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) / [`Policy`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies-Policy)
 + [`Scheduler`](Scheduling-v3.md#yaml-Scheduling-Scheduler) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalIamPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) / [`Policy`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies-Policy) 
 
+**Prerequisites**
++ AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI\.
+
 **Topics**
 + [Create the policy](#creating-the-role-v3)
 + [Configure and create the cluster](#creating-the-cluster-v3)

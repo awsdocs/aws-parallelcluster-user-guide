@@ -2,7 +2,11 @@
 
 This tutorial walks you through running your first Hello World job on AWS ParallelCluster\.
 
-If you haven't yet completed installation of AWS ParallelCluster, and configured your CLI, follow the instructions in the [getting started](getting_started.md) guide before continuing with this tutorial\.
+**Prerequisites**
++ AWS ParallelCluster [is installed](install.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam.md#example-parallelcluser-policies) required to run the [`pcluster`](pcluster.md) CLI\.
 
 ## Verifying your installation<a name="verifying-your-installation"></a>
 
@@ -119,3 +123,5 @@ Hello World from ip-192-168-1-125
 ```
 
 The output also shows that our job ran successfully on instance `ip-192-168-1-125`\.
+
+To learn more about creating and using clusters, see [Best practices](best-practices.md)\.

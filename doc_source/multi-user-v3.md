@@ -144,7 +144,7 @@ DirectoryService:
     --override-runlist aws-parallelcluster-config::directory_service
   ```
 
-For another example, see also [Integrate Active Directory over LDAP](tutorials_05_multi-user-ad.md)\.
+For another example, see also [Integrating Active Directory](tutorials_05_multi-user-ad.md)\.
 
 ## Log in to a cluster integrated with an AD domain<a name="login-addircluster-v3"></a>
 

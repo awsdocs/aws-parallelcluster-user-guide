@@ -2,9 +2,11 @@
 
 NICE DCV is a remote visualization technology that enables users to securely connect to graphic\-intensive 3D applications that are hosted on a remote high\-performance server\. For more information, see [NICE DCV](https://docs.aws.amazon.com/dcv/)\.
 
-The NICE DCV software is automatically installed on the head node when using [`base_os`](cluster-definition.md#base-os)` = alinux2`, [`base_os`](cluster-definition.md#base-os)` = centos7`, or [`base_os`](cluster-definition.md#base-os)` = ubuntu1804`\.
+NICE DCV software is automatically installed on the head node when using [`base_os`](cluster-definition.md#base-os)` = alinux2`, [`base_os`](cluster-definition.md#base-os)` = centos7`, [`base_os`](cluster-definition.md#base-os)` = ubuntu1804` or [`base_os`](cluster-definition.md#base-os)` = ubuntu2004`\.
 
-To enable NICE DCV on the head node, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [`[dcv]` section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable)` = master` and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7`, or `ubuntu1804`\.
+If the head node is an ARM instance, the NICE DCV software is automatically installed on it when using [`base_os`](cluster-definition.md#base-os)` = alinux2`, [`base_os`](cluster-definition.md#base-os)` = centos7`, or [`base_os`](cluster-definition.md#base-os)` = ubuntu1804`\.
+
+To enable NICE DCV on the head node, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [`[dcv]` section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable)` = master` and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`\. If the head node is an ARM instance, [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7`, or `ubuntu1804`\. This way, AWS ParallelCluster sets the cluster configuration parameter [`shared_dir`](cluster-definition.md#cluster-shared-dir) to the [DCV server storage folder](https://docs.aws.amazon.com/dcv/latest/adminguide/manage-storage.html)\.
 
 ```
 [cluster custom-cluster]

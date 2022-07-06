@@ -151,8 +151,8 @@ AdditionalPackages:
     IntelHpcPlatform: true
 ```
 
- Notes: 
-+  The installation of Intel HPC Platform Specification software is subject to the terms and conditions of the applicable [Intel End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) 
+Notes: 
++  The installation of Intel HPC Platform Specification software is subject to the terms and conditions of the applicable [Intel End User License Agreement](https://software.intel.com/en-us/articles/end-user-license-agreement)\.
 
  **Example of custom IAM configurations including: instance profile, instance role, additional policies for instances and the role for the lambda functions associated with the cluster** 
 
@@ -192,10 +192,10 @@ Scheduling:
           - Policy: arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess
 ```
 
- Notes: 
-+ For AWS ParallelCluster 2 the IAM settings are applied to all the instances of a cluster and `additional_iam_policies` can't be used in conjunction with `ec2_iam_role` 
-+ For AWS ParallelCluster 3, you can have different IAM settings for head and compute nodes and even specify different IAM settings for each compute queue\. 
-+ For AWS ParallelCluster 3, you can use an IAM instance profile as an alternative to an IAM role\. `InstanceProfile`, `InstanceRole` or `AdditionalIamPolicies` can't be configured together\. 
+Notes: 
++ For AWS ParallelCluster 2, the IAM settings are applied to all the instances of a cluster and `additional_iam_policies` can't be used in conjunction with `ec2_iam_role`\.
++ For AWS ParallelCluster 3, you can have different IAM settings for head and compute nodes and even specify different IAM settings for each compute queue\.
++ For AWS ParallelCluster 3, you can use an IAM instance profile as an alternative to an IAM role\. `InstanceProfile`, `InstanceRole` or `AdditionalIamPolicies` can't be configured together\.
 
 **Example of custom bootstrap actions**
 
@@ -289,36 +289,36 @@ Scheduling:
 
 ## Inclusive language<a name="inclusive_language"></a>
 
- AWS ParallelCluster 3 uses the words "head node" in places where "master" was used in AWS ParallelCluster 2\. This includes the following: 
-+  Variable exported in the AWS Batch job environment changed: from `MASTER_IP` to `PCLUSTER_HEAD_NODE_IP`\. 
-+  All AWS CloudFormation outputs changed from `Master*` to `HeadNode*` 
-+  All NodeType and tags changed from `Master` to `HeadNode`\. 
+AWS ParallelCluster 3 uses the words "head node" in places where "master" was used in AWS ParallelCluster 2\. This includes the following: 
++ Variable exported in the AWS Batch job environment changed: from `MASTER_IP` to `PCLUSTER_HEAD_NODE_IP`\.
++ All AWS CloudFormation outputs changed from `Master*` to `HeadNode*`\.
++ All NodeType and tags changed from `Master` to `HeadNode`\.
 
 ## Scheduler Support<a name="scheduler_support"></a>
 
- AWS ParallelCluster 3\.x doesn't support Son of Grid Engine \(SGE\) and Torque schedulers\.
+AWS ParallelCluster 3\.x doesn't support Son of Grid Engine \(SGE\) and Torque schedulers\.
 
- The AWS Batch commands `awsbhosts`, `awsbkill`, `awsbout`, `awsbqueues`, `awsbstat`, and `awsbsub` are distributed as a separate `aws-parallelcluster-awsbatch-cli` PyPI package\. This package is installed by AWS ParallelCluster on the head node\. You can still use these AWS Batch commands from the cluster's head node\. However, if you wish to use AWS Batch commands from a location other than the head node, you must first install the `aws-parallelcluster-awsbatch-cli` PyPI package\. 
+The AWS Batch commands `awsbhosts`, `awsbkill`, `awsbout`, `awsbqueues`, `awsbstat`, and `awsbsub` are distributed as a separate `aws-parallelcluster-awsbatch-cli` PyPI package\. This package is installed by AWS ParallelCluster on the head node\. You can still use these AWS Batch commands from the cluster's head node\. However, if you wish to use AWS Batch commands from a location other than the head node, you must first install the `aws-parallelcluster-awsbatch-cli` PyPI package\.
 
 ## AWS ParallelCluster CLI<a name="parallelcluster_cli"></a>
 
-The AWS ParallelCluster command line interface \(CLI\) has been changed\. The new syntax is described in [AWS ParallelCluster CLI commands](commands-v3.md)\. The output format for the CLI is a [JSON](https://json.org/) string\. 
+The AWS ParallelCluster command line interface \(CLI\) has been changed\. The new syntax is described in [AWS ParallelCluster CLI commands](commands-v3.md)\. The output format for the CLI is a [JSON](https://json.org/) string\.
 
  **Configuring a new cluster** 
 
-The `pcluster configure` command includes different parameters in AWS ParallelCluster 3 as compared to AWS ParallelCluster 2\. For more information, see [`pcluster configure`](pcluster.configure-v3.md)\. 
+The `pcluster configure` command includes different parameters in AWS ParallelCluster 3 as compared to AWS ParallelCluster 2\. For more information, see [`pcluster configure`](pcluster.configure-v3.md)\.
 
-Note also that the configuration file syntax has changed from AWS ParallelCluster 2\. For a full reference of the cluster configuration settings, see [Cluster configuration file](cluster-configuration-file-v3.md)\. 
+Note also that the configuration file syntax has changed from AWS ParallelCluster 2\. For a full reference of the cluster configuration settings, see [Cluster configuration file](cluster-configuration-file-v3.md)\.
 
  **Creating a new cluster** 
 
 AWS ParallelCluster 2's `pcluster create` command has been replaced by the [`pcluster create-cluster`](pcluster.create-cluster-v3.md) command\. 
 
-Note the default behavior in AWS ParallelCluster 2\.x, without the `-nw` option, is to wait on cluster creation events, while AWS ParallelCluster 3\.x command returns immediately\. The progress of the cluster creation can be monitored using [`pcluster describe-cluster`](pcluster.describe-cluster-v3.md) 
+Note the default behavior in AWS ParallelCluster 2\.x, without the `-nw` option, is to wait on cluster creation events, while AWS ParallelCluster 3\.x command returns immediately\. The progress of the cluster creation can be monitored using [`pcluster describe-cluster`](pcluster.describe-cluster-v3.md)\.
 
- An AWS ParallelCluster 3 configuration file contains a single cluster definition, so the `-t` parameter is no more needed\. 
+An AWS ParallelCluster 3 configuration file contains a single cluster definition, so the `-t` parameter is no more needed\.
 
- The following is an example configuration file\. 
+The following is an example configuration file\.
 
 ```
 # AWS ParallelCluster v2
@@ -338,7 +338,7 @@ $ pcluster create-cluster \
 
  **Listing clusters** 
 
- The `pcluster list` AWS ParallelCluster 2\.x command must be replaced with [`pcluster list-clusters`](pcluster.list-clusters-v3.md) command\. 
+The `pcluster list` AWS ParallelCluster 2\.x command must be replaced with [`pcluster list-clusters`](pcluster.list-clusters-v3.md) command\. 
 
  Note: You need AWS ParallelCluster v2 CLI to list clusters created with 2\.x versions of AWS ParallelCluster\. See [Install AWS ParallelCluster in a virtual environment \(recommended\)](install-v3-virtual-environment.md) for how to install multiple versions of AWS ParallelCluster using virtual environments\. 
 
@@ -352,7 +352,7 @@ $ pcluster list-clusters --region REGION
 
  **Starting and Stopping a cluster** 
 
- The `pcluster start` and `pcluster stop` AWS ParallelCluster 2\.x commands must be replaced with [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md) commands\. 
+The `pcluster start` and `pcluster stop` AWS ParallelCluster 2\.x commands must be replaced with [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md) commands\. 
 
  Starting a compute fleet: 
 
@@ -398,9 +398,9 @@ $ pcluster update-compute-fleet \
 
  **Connecting to a cluster** 
 
- The `pcluster ssh` AWS ParallelCluster 2\.x command has different parameters names in AWS ParallelCluster 3\.x\. See [`pcluster ssh`](pcluster.ssh-v3.md) 
+The `pcluster ssh` AWS ParallelCluster 2\.x command has different parameters names in AWS ParallelCluster 3\.x\. See [`pcluster ssh`](pcluster.ssh-v3.md)\.
 
- Connecting to a cluster: 
+Connecting to a cluster: 
 
 ```
 # AWS ParallelCluster v2

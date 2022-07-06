@@ -10,7 +10,7 @@ HeadNode:
     Enabled: true
 ```
 
-For more information about NICE DCV configuration parameters, see [`HeadNode`](HeadNode-v3.md) / [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv)\. To connect to the NICE DCV session, use the [`pcluster dcv-connect`](pcluster.dcv-connect-v3.md) command\.
+This way, AWS ParallelCluster sets `/home/<DEFAULT_AMI_USER>` in the head node to the [DCV server storage folder](https://docs.aws.amazon.com/dcv/latest/adminguide/manage-storage.html)\. For more information about NICE DCV configuration parameters, see [`HeadNode`](HeadNode-v3.md) / [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv)\. To connect to the NICE DCV session, use the [`pcluster dcv-connect`](pcluster.dcv-connect-v3.md) command\.
 
 ## NICE DCV HTTPS certificate<a name="dcv-v3-certificate"></a>
 

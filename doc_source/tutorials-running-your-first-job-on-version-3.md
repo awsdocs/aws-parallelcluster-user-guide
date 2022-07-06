@@ -1,6 +1,12 @@
 # Running your first job on AWS ParallelCluster<a name="tutorials-running-your-first-job-on-version-3"></a>
 
-This tutorial walks you through running your first Hello World job on AWS ParallelCluster\. If you haven't yet completed installation of AWS ParallelCluster, and configured your CLI, follow the instructions at [Setting up AWS ParallelCluster](install-v3.md) before continuing with this tutorial\.
+This tutorial walks you through running your first Hello World job on AWS ParallelCluster
+
+**Prerequisites**
++ AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
++ The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
++ You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
++ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI\.
 
 ## Verifying your installation<a name="tutorial-1stjob-verify-install"></a>
 
@@ -128,6 +134,8 @@ Hello World from queue1-dy-queue1t2micro-1
 The output also shows that our job ran successfully on instance `queue1-dy-queue1t2micro-1`\.
 
 In the cluster you just created, only the home directory is shared among all nodes of the cluster\.
+
+To learn more about creating and using clusters, see [Best practices](best-practices-v3.md)\.
 
 If your application requires shared software, libraries, or data, consider the following options:
 + Build a AWS ParallelCluster enabled custom AMI that includes your software as described in [Building a Custom AWS ParallelCluster AMI](building-custom-ami-v3.md)\.
