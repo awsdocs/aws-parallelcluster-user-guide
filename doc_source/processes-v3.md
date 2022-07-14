@@ -16,6 +16,10 @@ The following tasks are performed by the cluster management daemon\.
 + Scheduled maintenance events management
 + Unhealthy Scheduler nodes management \(failing Scheduler health checks\)
 
+## `clusterstatusmgtd`<a name="clusterstatusmgtd-v3"></a>
+
+The cluster status management daemon manages the compute fleet status update. Every minute it fetches the fleet status stored in a DynamoDB table and manages any STOP/START request.  
+
 ## `computemgtd`<a name="computemgtd-v3"></a>
 
 Compute management daemon \(`computemgtd`\) processes run on each of the cluster compute nodes\. Every five \(5\) minutes, the compute management daemon confirms that the head node can be reached and is healthy\. If five \(5\) minutes pass during which the head node cannot be reached or is not healthy, the compute node is shut down\.
