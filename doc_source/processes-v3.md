@@ -18,7 +18,7 @@ The following tasks are performed by the cluster management daemon\.
 
 ## `clusterstatusmgtd`<a name="clusterstatusmgtd-v3"></a>
 
-Cluster status management daemon is in charge to manage the compute fleet status update. Every minute it fetches the fleet status stored in a DynamoDB table and manages any STOP/START request.  
+The cluster status management daemon manages the compute fleet status update. Every minute it fetches the fleet status stored in a DynamoDB table and manages any STOP/START request.  
 
 ## `computemgtd`<a name="computemgtd-v3"></a>
 
