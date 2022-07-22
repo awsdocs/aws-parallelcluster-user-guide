@@ -221,5 +221,4 @@ Example to set Slurm node to `DOWN` or `DRAIN`:
 
 ```
 $ scontrol update nodename=my-queue-dy-my-compute-resource-1 state=down reason=your_reason
-scontrol update nodename=my-queue-dy-my-compute-resource-1 state=drain reason=your_reason
 ```
