@@ -223,6 +223,7 @@ For clusters created with [`SlurmSettings`](Scheduling-v3.md#Scheduling-v3-Slurm
 When `UseEc2Hostnames` is set to `true`, the Slurm configuration file is set with the AWS ParallelCluster `prolog` and `epilog` scripts:  
 `prolog` runs to add nodes info to `/etc/hosts` on compute nodes when each job is allocated\.
 `epilog` runs to clean contents written by `prolog`\.
+To add custom `prolog`/`epilog` scripts, add them into the folders `/opt/slurm/etc/pcluster/prolog.d/` or `/opt/slurm/etc/pcluster/epilog.d/`\.
 
 **Cluster configuration**
 
