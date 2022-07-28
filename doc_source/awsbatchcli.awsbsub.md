@@ -10,6 +10,9 @@ awsbsub [-h] [-jn JOB_NAME] [-c CLUSTER] [-cf] [-w WORKING_DIR]
         [command] [arguments [arguments ...]]
 ```
 
+**Important**  
+AWS ParallelCluster doesn't support GPU jobs for AWS Batch\. For more information, see [GPU jobs](https://docs.aws.amazon.com/batch/latest/userguide/gpu-jobs.html)\.
+
 ## Positional Arguments<a name="awsbatchcli.awsbsub.args"></a>
 
 `command`  

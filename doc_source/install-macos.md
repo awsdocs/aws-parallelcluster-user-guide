@@ -6,7 +6,7 @@
 + [Add the AWS ParallelCluster executable to your command line path](#install-macos-path)
 
 ## Prerequisites<a name="install-bundle-macos-os-prereq"></a>
-+ Python 3 version 3\.6\+ or Python 2 version 2\.7
++ Python 3 version 3\.7\+ or Python 2 version 2\.7
 
 Check your Python installation\.
 

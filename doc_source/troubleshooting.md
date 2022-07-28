@@ -25,7 +25,7 @@ If one of your running clusters is experiencing issues, you should place the clu
 
 ## Troubleshooting stack deployment issues<a name="troubleshooting-stack-creation-failures"></a>
 
-If your cluster fails to be created and rolls back stack creation, you can look through the following log files to diagose the issue\. You want to look for the output of `ROLLBACK_IN_PROGRESS` in these logs\. The failure message should look like the following:
+If your cluster fails to be created and rolls back stack creation, you can look through the following log files to diagnose the issue\. You want to look for the output of `ROLLBACK_IN_PROGRESS` in these logs\. The failure message should look like the following:
 
 ```
 $ pcluster create mycluster
@@ -51,6 +51,13 @@ After you're logged into the head node, you should find three primary log files 
 ## Troubleshooting issues in multiple queue mode clusters<a name="multiple-queue-mode"></a>
 
  This section is relevant to clusters that were installed using AWS ParallelCluster version 2\.9\.0 and later with the Slurm job scheduler\. For more information about multiple queue mode, see [Multiple queue mode](queue-mode.md)\.
+
+**Topics**
++ [Key logs](#key-logs)
++ [**Troubleshooting node initialization issues**](#troubleshooting-node-initialization-issues)
++ [**Troubleshooting unexpected node replacements and terminations**](#troubleshooting-unexpected-node-replacements-and-terminations)
++ [**Replacing, terminating, or powering down problem instances and nodes**](#replacing-terminating-or-powering-down-problematic-instances-and-nodes)
++ [**Troubleshooting other known node and job issues**](#troubleshooting-other-known-node-and-job-issues)
 
 ### Key logs<a name="key-logs"></a>
 
@@ -164,25 +171,34 @@ Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of S
 + Launched using a AWS ParallelCluster version earlier than 2\.9\.0 and SGE, Torque, or Slurm job schedulers\.
 + Launched using AWS ParallelCluster version 2\.9\.0 or later and SGE or Torque job schedulers\.
 
+**Topics**
++ [Key logs](#key-logs-1)
++ [**Troubleshooting failed launch and join operations**](#troubleshooting-failed-launch-and-join-operations)
++ [Troubleshooting scaling issues](#troubleshooting-scaling-issues)
++ [Troubleshooting other cluster related issues](#troubleshooting-other-cluster-related-issues)
+
 ### Key logs<a name="key-logs-1"></a>
 
- The following log files are the key logs for the head node\.
+The following log files are the key logs for the head node\.
 
 For AWS ParallelCluster version 2\.9\.0 or later:
 
 `/var/log/chef-client.log`  
 This is the CINC \(chef\) client log\. It contains all commands that were run through CINC\. It's useful for troubleshooting initialization issues\.
 
-Forall AWS ParallelCluster versions:
+For all AWS ParallelCluster versions:
 
 `/var/log/cfn-init.log`  
 This is the `cfn-init` log\. It contains all commands that were run when an instance is set up, and is therefore useful for troubleshooting initialization issues\. For more information, see [cfn\-init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-init.html)\.
 
+`/var/log/clustermgtd.log`  
+This is the `clustermgtd` log for Slurm schedulers\. `clustermgtd` runs as the centralized daemon that manages most cluster operation actions\. It's useful for troubleshooting any launch, termination, or cluster operation issue\.
+
 `/var/log/jobwatcher`  
-This is the `jobwatcher` log\. `jobwatcher` monitors the scheduler queue and updates the Auto Scaling Group\. It's useful for troubleshooting issues related to scaling up nodes\.
+This is the `jobwatcher` log for SGE and Torque schedulers\. `jobwatcher` monitors the scheduler queue and updates the Auto Scaling Group\. It's useful for troubleshooting issues related to scaling up nodes\.
 
 `/var/log/sqswatcher`  
-This is the `sqswatcher` log\. `sqswatcher` processes the instance ready event sent by a compute instance after successful initialization\. It also adds compute nodes to the scheduler configuration\. This log is useful for troubleshooting why a node or nodes failed to join a cluster\.
+This is the `sqswatcher` log for SGE and Torque schedulers\. `sqswatcher` processes the instance ready event sent by a compute instance after successful initialization\. It also adds compute nodes to the scheduler configuration\. This log is useful for troubleshooting why a node or nodes failed to join a cluster\.
 
 The following are the key logs for the compute nodes\.
 
@@ -199,14 +215,14 @@ This is the CloudFormation init log\. It contains all commands that were run whe
 All versions
 
 `/var/log/nodewatcher`  
-This is the `nodewatcher` log\. `nodewatcher` daemons that run on each Compute node\. They scale down a node if it’s idle\. This log is useful for any issues related to scaling down resources\.
+This is the `nodewatcher` log\. `nodewatcher` daemons that run on each Compute node when using SGE and Torque schedulers\. They scale down a node if it’s idle\. This log is useful for any issues related to scaling down resources\.
 
 ### **Troubleshooting failed launch and join operations**<a name="troubleshooting-failed-launch-and-join-operations"></a>
 + **Applicable logs:**
   + `/var/log/cfn-init-cmd.log` \(head node and compute node\)
   + `/var/log/sqswatcher` \(head node\)
 + If nodes failed to launch, check in the `/var/log/cfn-init-cmd.log` log to see the specific error message\. In most cases, node launch failures are due to a setup failure\.
-+  If compute nodes failed to join the scheduler configuration despite successful setup, check the `/var/log/sqswatcher` log to see whether `sqswatcher` processed the event\. Theseissues in most cases are because `sqswatcher` didn’t process the event\.
++  If compute nodes failed to join the scheduler configuration despite successful setup, check the `/var/log/sqswatcher` log to see whether `sqswatcher` processed the event\. These issues in most cases are because `sqswatcher` didn’t process the event\.
 
 ### Troubleshooting scaling issues<a name="troubleshooting-scaling-issues"></a>
 + **Applicable logs:**

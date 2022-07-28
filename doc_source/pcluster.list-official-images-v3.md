@@ -17,7 +17,7 @@ pcluster list-official-images [-h]
 Shows the help text for `pcluster list-official-images`\.
 
 `--architecture ARCHITECTURE`  
-Specifies the architecture to use to filter the results\. If this parameter is not specified, all archiectures are returned\.
+Specifies the architecture to use to filter the results\. If this parameter is not specified, all architectures are returned\.
 
 `--debug`  
 Enables debug logging\.

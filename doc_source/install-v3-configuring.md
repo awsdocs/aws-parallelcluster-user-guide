@@ -98,8 +98,18 @@ Name of queue 1 [queue1]:
 Number of compute resources for queue1 [1]: 2
 Compute instance type for compute resource 1 in queue1 [t2.micro]:
 Maximum instance count [10]:
-Compute instance type for compute resource 2 in queue1 [t2.micro]: t3.micro
+```
+
+Enable EFA to run applications that require high levels of inter\-instance communication at scale on AWS at no additional charge:
++ Choose an instance type that [supports Elastic Fabric Adapter \(EFA\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types)\.
++ Enable [EFA](efa-v3.md)\.
++ Specify an existing [Placement Group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) name\. If you leave it blank, AWS ParallelCluster creates one for you\.
+
+```
+Compute instance type for compute resource 2 in queue1 [t2.micro]: c5n.18xlarge
+Enable EFA on c5n.18xlarge (y/n) [y]: y
 Maximum instance count [10]:
+Placement Group name []:
 ```
 
 After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your quota for the number of VPCs allowed in a Region\. The default quota is five VPCs for a Region\. For more information about this quota and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
@@ -281,7 +291,7 @@ $ pcluster create-cluster --cluster-name test-cluster --cluster-configuration cl
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/test-cluster/abcdef0-f678-890a-5abc-021345abcdef",
     "region": "eu-west-1",
-    "version": "3.1.4",
+    "version": "3.2.0",
     "clusterStatus": "CREATE_IN_PROGRESS"
   },
   "validationMessages": []

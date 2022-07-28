@@ -14,6 +14,8 @@ The following Amazon Web Services \(AWS\) services are used by AWS ParallelClust
 + [Amazon Elastic Container Registry](#amazon-elastic-container-registry-ecr-v3)
 + [Amazon EFS](#amazon-efs-v3)
 + [Amazon FSx for Lustre](#amazon-fsx-for-lustre-v3)
++ [Amazon FSx for NetApp ONTAP](#amazon-fsx-ontap-v3)
++ [Amazon FSx for OpenZFS](#amazon-fsx-openzfs-v3)
 + [AWS Identity and Access Management](#aws-identity-and-access-management-iam-v3)
 + [AWS Lambda](#aws-lambda-v3)
 + [NICE DCV](#nice-dcv-v3)
@@ -49,7 +51,7 @@ Amazon CloudWatch Logs \(CloudWatch Logs\) is one of the core features of Amazon
 
 Before AWS ParallelCluster version 2\.6\.0, CloudWatch Logs was only used with AWS Batch clusters\.
 
-For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)\.
+For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md)\.
 
 ## AWS CodeBuild<a name="aws-codebuild-v3"></a>
 
@@ -98,6 +100,18 @@ For more information about Amazon EFS, see [https://aws\.amazon\.com/efs/](http:
 FSx for Lustre provides a high\-performance file system that uses the open\-source Lustre file system\. FSx for Lustre is used when the [`FsxLustreSettings` Properties](SharedStorage-v3.md#SharedStorage-v3-FsxLustreSettings.properties) are specified\. Support for FSx for Lustre was added in AWS ParallelCluster version 2\.2\.1\.
 
 For more information about FSx for Lustre, see [https://aws\.amazon\.com/fsx/lustre/](http://aws.amazon.com/fsx/lustre/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
+
+## Amazon FSx for NetApp ONTAP<a name="amazon-fsx-ontap-v3"></a>
+
+FSx for ONTAP provides a fully managed shared storage system built on NetApp's popular ONTAP file system\. FSx for ONTAP is used when [`FsxOntapSettings` Properties](SharedStorage-v3.md#SharedStorage-v3-FsxOntapSettings.properties) are specified\. Support for FSx for ONTAP was added in AWS ParallelCluster version 3\.2\.0\.
+
+For more information about FSx for ONTAP, see [https://aws\.amazon\.com/fsx/netapp\-ontap/](http://aws.amazon.com/fsx/netapp-ontap/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
+
+## Amazon FSx for OpenZFS<a name="amazon-fsx-openzfs-v3"></a>
+
+FSx for OpenZFS provides a fully managed shared storage system built on the popular OpenZFS file system\. FSx for OpenZFS is used when the [`FsxOpenZfsSettings` Properties](SharedStorage-v3.md#SharedStorage-v3-FsxOpenZfsSettings.properties) are specified\. Support for FSx for OpenZFS was added in AWS ParallelCluster version 3\.2\.0\.
+
+For more information about FSx for OpenZFS, see [https://aws\.amazon\.com/fsx/openzfs/](http://aws.amazon.com/fsx/openzfs/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
 
 ## AWS Identity and Access Management<a name="aws-identity-and-access-management-iam-v3"></a>
 

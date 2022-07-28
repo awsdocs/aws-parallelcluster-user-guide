@@ -6,7 +6,7 @@ You can configure `open` or `targeted` ODCRs\. *Open* ODCRs cover any instances 
 
 You can also create an ODCR in a cluster placement group called a [CPG ODCR](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html) \(or CPG/ODCR\)\.
 
-Multipe ODCRs can be grouped in a resource group\. This can be used in the `run-instances` override to target multiple ODCRs at the same time\. For more information on resource groups, see [What are resource groups?](https://docs.aws.amazon.com/ARG/latest/userguide/resource-groups.html) in the *Resource Groups and Tags User Guide*\.
+Multiple ODCRs can be grouped in a resource group\. This can be used in the `run-instances` override to target multiple ODCRs at the same time\. For more information on resource groups, see [What are resource groups?](https://docs.aws.amazon.com/ARG/latest/userguide/resource-groups.html) in the *Resource Groups and Tags User Guide*\.
 
 ## Using ODCR with AWS ParallelCluster<a name="odcr-parallelcuster-v3"></a>
 

@@ -30,7 +30,7 @@ The template used to deploy the API is available at the following URL:
 https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/parallelcluster-api.yaml
 ```
 
-where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.1\.4\)\. 
+where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.2\.0\)\. 
 
 The [Docker](https://aws.amazon.com/docker/) image used to deploy the AWS Lambda function implementing AWS ParallelCluster features is available at:  [https://gallery\.ecr\.aws/parallelcluster/pcluster\-api](https://gallery.ecr.aws/parallelcluster/pcluster-api) 
 
@@ -50,7 +50,7 @@ Run the following commands to deploy the API
 ```
 $ REGION=<region>
 $ API_STACK_NAME=<stack-name>  # This can be any name
-$ VERSION=3.1.4
+$ VERSION=3.2.0
 $ aws cloudformation create-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \
@@ -94,7 +94,7 @@ The `ParallelClusterApiUserRole` has permission to invoke all AWS ParallelClus
 ```
 $ REGION=<region>
 $ API_STACK_NAME=<stack-name>  # This needs to correspond to the existing API stack name
-$ VERSION=3.1.4
+$ VERSION=3.2.0
 $ aws cloudformation update-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \
@@ -155,7 +155,7 @@ https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<
  To implement more advanced access control mechanism, such as Amazon Cognito or Lambda Authorizers, or to further protect the API with AWS WAF or API keys please follow the [Amazon API Gateway documentation](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html)\. 
 
 **Warning**  
-An IAM user authorized to invoke the AWS ParallelCluster API will be able to indirectly control all AWS resources managed by AWS ParallelCluster in the AWS account\. This includes the creation of AWS resources that the IAM user cannot control directly due to restrictions on the user IAM policy\. For example the creation of a AWS ParallelCluster cluster, depending on its configuration, may include the deployment of Amazon EC2 instances, Amazon Route 53, Amazon Elastic File System filesystems, Amazon FSx filesystems, IAM roles, and resources from other AWS services used by AWS ParallelCluster that the IAM user might not have direct control over\. 
+An IAM user authorized to invoke the AWS ParallelCluster API will be able to indirectly control all AWS resources managed by AWS ParallelCluster in the AWS account\. This includes the creation of AWS resources that the IAM user cannot control directly due to restrictions on the user IAM policy\. For example the creation of a AWS ParallelCluster cluster, depending on its configuration, may include the deployment of Amazon EC2 instances, Amazon Route 53, Amazon Elastic File System file systems, Amazon FSx file systems, IAM roles, and resources from other AWS services used by AWS ParallelCluster that the IAM user might not have direct control over\. 
 
 **Warning**  
 When creating a cluster with `AdditionalIamPolicies` specified in the configuration, the additional policies must match one of the following patterns:  

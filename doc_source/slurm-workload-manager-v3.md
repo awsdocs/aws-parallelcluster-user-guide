@@ -23,3 +23,5 @@ For information about Slurm, see [https://slurm\.schedmd\.com](https://slurm.sch
 + [Configuration of Multiple Queues](configuration-of-multiple-queues-v3.md)
 + [Slurm guide for multiple queue mode](multiple-queue-mode-slurm-user-guide-v3.md)
 + [Slurm cluster protected mode](slurm-protected-mode-v3.md)
++ [Slurm cluster fast insufficient capacity fail\-over](slurm-short-capacity-fail-mode-v3.md)
++ [Slurm memory\-based scheduling](slurm-mem-based-scheduling-v3.md)

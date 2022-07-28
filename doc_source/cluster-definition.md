@@ -390,11 +390,11 @@ ec2_iam_role = ParallelClusterInstanceRole
 
 ## `efs_settings`<a name="efs-settings"></a>
 
-**\(Optional\)** Specifies settings related to the Amazon EFS filesystem\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
+**\(Optional\)** Specifies settings related to the Amazon EFS file system\. The section name must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
 For more information, see the [`[efs]` section](efs-section.md)\.
 
-For example, the following setting specifies that the section that starts `[efs customfs]` is used for the Amazon EFS filesystem configuration\.
+For example, the following setting specifies that the section that starts `[efs customfs]` is used for the Amazon EFS file system configuration\.
 
 ```
 efs_settings = customfs
@@ -862,7 +862,8 @@ scaling_settings = custom
 Valid options are the following values:
 
 `awsbatch`  
-AWS Batch
+AWS Batch  
+For more information about the `awsbatch` scheduler, see [networking setup](networking.md#awsbatch-networking) and [AWS Batch \(`awsbatch`\)](awsbatchcli.md)\.
 
 `sge`  
 Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
@@ -874,8 +875,6 @@ Slurm Workload Manager \(Slurm\)
 `torque`  
 Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\.
 Torque Resource Manager \(Torque\)
-
-For more information about the `awsbatch` scheduler, see [networking setup](networking.md#awsbatch-networking)\.
 
 **Note**  
 Before AWS ParallelCluster version 2\.7\.0, the `scheduler` parameter was optional, and the default was `sge`\. Starting with AWS ParallelCluster version 2\.7\.0, the `scheduler` parameter is required\.

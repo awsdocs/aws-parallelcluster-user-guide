@@ -27,6 +27,11 @@ Key points:
 + Starting from AWS ParallelCluster 3\.0\.0, a new set of CLI commands can be used to manage the life\-cycle of images, including [`build-image`](pcluster.build-image-v3.md), [`list-images`](pcluster.list-images-v3.md), [`describe-image`](pcluster.describe-image-v3.md) and [`delete-image`](pcluster.delete-image-v3.md)\.
 + This method is repeatable\. You can re\-run it to keep AMIs updated, such as OS updates, and then use them when you update an existing cluster\.
 
+**Note**  
+If you use this method in AWS China Partitions you might get network errors\. For example, you might see these errors from the `pcluster build-image` command when it downloads packages from GitHub or from an OS repo\. In this case, we recommend that you use one of the following alternative methods:  
+Follow the [Modify an AWS ParallelCluster AMI](#modify-an-aws-parallelcluster-ami-v3) approach that bypasses this command\.
+Build the image in another Partition/Region, such as `us-east-1`, and then store\-restore it to move it to the China Region\. For more information, see [Store and restore an AMI using S3](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 Steps:
 
 1. Configure your AWS account credentials so that the AWS ParallelCluster client can make calls to AWS API operations on your behalf\. The set of required permissions are documented in [AWS Identity and Access Management roles in AWS ParallelCluster 3\.x](iam-roles-in-parallelcluster-v3.md)\.
@@ -50,7 +55,7 @@ Steps:
       "cloudformationStackStatus": "CREATE_IN_PROGRESS",
       "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
       "region": "us-east-1",
-      "version": "3.1.4"
+      "version": "3.2.0"
     }
    }
    ```
@@ -73,7 +78,7 @@ Steps:
    # BEFORE COMPLETE
    {
     "imageConfiguration": {
-      "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?...",
+      "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.amazonaws.com/parallelcluster/3.2.0/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?...",
     },
     "imageId": "IMAGE_ID",
     "imagebuilderImageStatus": "BUILDING",
@@ -81,10 +86,10 @@ Steps:
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
     "region": "us-east-1",
-    "version": "3.1.4",
+    "version": "3.2.0",
     "cloudformationStackTags": [
       {
-        "value": "3.1.4",
+        "value": "3.2.0",
         "key": "parallelcluster:version"
       },
       {
@@ -100,7 +105,7 @@ Steps:
    # AFTER COMPLETE
    {
     "imageConfiguration": {
-      "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
+      "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.2.0/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
     },
     "imageId": "IMAGE_ID",
     "imageBuildStatus": "BUILD_COMPLETE",
@@ -119,7 +124,7 @@ Steps:
         ],
       "architecture": "x86_64"
     },
-    "version": "3.1.4"      
+    "version": "3.2.0"      
    }
    ```
 
@@ -141,10 +146,10 @@ After running the [`build-image`](pcluster.build-image-v3.md) command, it's poss
 $ pcluster get-image-stack-events --image-id IMAGE_ID --region REGION --query "events[0]"
 {
  "eventId": "ParallelClusterImage-CREATE_IN_PROGRESS-2022-04-05T21:39:24.725Z",
- "physicalResourceId": "arn:aws:imagebuilder:us-east-1:123456789012:image/parallelclusterimage-IMAGE_ID/3.1.4/1",
+ "physicalResourceId": "arn:aws:imagebuilder:us-east-1:123456789012:image/parallelclusterimage-IMAGE_ID/3.2.0/1",
  "resourceStatus": "CREATE_IN_PROGRESS",
  "resourceStatusReason": "Resource creation Initiated",
- "resourceProperties": "{\"InfrastructureConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:infrastructure-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"ImageRecipeArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:image-recipe/parallelclusterimage-IMAGE_ID/3.1.4\",\"DistributionConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:distribution-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"Tags\":{\"parallelcluster:image_name\":\"IMAGE_ID\",\"parallelcluster:image_id\":\"IMAGE_ID\"}}",
+ "resourceProperties": "{\"InfrastructureConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:infrastructure-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"ImageRecipeArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:image-recipe/parallelclusterimage-IMAGE_ID/3.2.0\",\"DistributionConfigurationArn\":\"arn:aws:imagebuilder:us-east-1:123456789012:distribution-configuration/parallelclusterimage-abcd1234-ef56-gh78-ij90-1234abcd5678\",\"Tags\":{\"parallelcluster:image_name\":\"IMAGE_ID\",\"parallelcluster:image_id\":\"IMAGE_ID\"}}",
  "stackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/IMAGE_ID/abcd1234-ef56-gh78-ij90-1234abcd5678",
  "stackName": "IMAGE_ID",
  "logicalResourceId": "ParallelClusterImage",
@@ -159,11 +164,11 @@ After about 15 minutes the stack events appear in the log event entry related to
 $ pcluster list-image-log-streams --image-id IMAGE_ID --region REGION \
     --query 'logStreams[*].logStreamName'
 
- "3.1.4/1"
+ "3.2.0/1"
 ]
 
 $ pcluster get-image-log-events --image-id IMAGE_ID --region REGION \
---log-stream-name 3.1.4/1 --limit 3
+--log-stream-name 3.2.0/1 --limit 3
 {
  "nextToken": "f/36295977202298886557255241372854078762600452615936671762",
  "prevToken": "b/36295977196879805474012299949460899222346900769983430672",
@@ -173,7 +178,7 @@ $ pcluster get-image-log-events --image-id IMAGE_ID --region REGION \
      "timestamp": "2022-04-05T22:13:26.633Z"
    },
    {
-     "message": "Document arn:aws:imagebuilder:us-east-1:123456789012:component/parallelclusterimage-test-abcd1234-ef56-gh78-ij90-1234abcd5678/3.1.4/1",
+     "message": "Document arn:aws:imagebuilder:us-east-1:123456789012:component/parallelclusterimage-test-abcd1234-ef56-gh78-ij90-1234abcd5678/3.2.0/1",
      "timestamp": "2022-04-05T22:13:26.741Z"
    },
    {
@@ -190,7 +195,7 @@ Continue to check with the [`describe-image`](pcluster.describe-image-v3.md) com
 $ pcluster describe-image --image-id IMAGE_ID --region REGION
 {
  "imageConfiguration": {
-   "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.1.4/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
+   "url": "https://parallelcluster-1234abcd5678efgh-v1-do-not-delete.s3.us-east-1.amazonaws.com/parallelcluster/3.2.0/images/IMAGE_ID-abcd1234efgh5678/configs/image-config.yaml?Signature=..."
  },
  "imageId": "IMAGE_ID",
  "imageBuildStatus": "BUILD_COMPLETE",
@@ -209,7 +214,7 @@ $ pcluster describe-image --image-id IMAGE_ID --region REGION
      ],
    "architecture": "x86_64"
  },
- "version": "3.1.4"      
+ "version": "3.2.0"      
 }
 ```
 
@@ -251,9 +256,11 @@ Steps:
 
 1. Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Images**, and then **AMIs**\. Search for the retrieved EC2 Image ID, choose **Actions**, and then **Launch**\.
+1. In the navigation pane, choose **Images**, and then **AMIs**\. Search for the retrieved EC2 Image ID, select the AMI, and choose **Launch instance from AMI**\.
 
-1. Choose your instance type and properties, and launch your instance\.
+1. Scroll down and choose your **Instance type**\.
+
+1. Choose your **Key pair** and **Launch Instance**\.
 
 1. Log into your instance using the OS user and your SSH key\.
 
@@ -265,7 +272,7 @@ Steps:
    sudo /usr/local/sbin/ami_cleanup.sh
    ```
 
-1. Stop the instance\.
+1. From the console, choose **Instance state** and **Stop instance**\.
 
 1. Create a new AMI from the instance using the EC2 console or AWS CLI [create\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-image.html)\.
 
@@ -275,6 +282,6 @@ Steps:
 
    1. Choose the instance you created and modified\.
 
-   1. Choose **Image and templates** and then **Create image**\.
+   1. In **Actions**, choose **Image and templates** and then **Create image**\.
 
 1. Enter the new AMI ID in the [`CustomAmi`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Image-CustomAmi) field in your cluster configuration and create a cluster\.

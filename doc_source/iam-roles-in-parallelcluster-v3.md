@@ -34,6 +34,9 @@ The following policy shows the permissions required to run AWS ParallelCluster c
 
 The last action listed in the policy is included to provide validation of any secrets specified in the cluster configuration\. For example, an AWS Secrets Manager secret is used to configure the [`DirectoryService`](DirectoryService-v3.md) integration\. In this case, a cluster is created only if a valid secret exists in the [`PasswordSecretArn`](DirectoryService-v3.md#yaml-DirectoryService-PasswordSecretArn)\. If this action is omitted, secret validation is skipped\. To improve your security posture, we recommend that you can scope down this policy statement by adding only the secrets specified in your cluster configuration\.
 
+**Note**  
+If existing Amazon EFS file systems are the only file systems used in your cluster, you can scope down the example Amazon EFS policy statements to the specific file systems referenced in the [`SharedStorage` section](SharedStorage-v3.md) of the cluster configuration file\.
+
 ```
 {
   "Version": "2012-10-17",
@@ -346,6 +349,9 @@ In case you need to create and manage a cluster with AWS Batch scheduler, the fo
 ### Additional user policy when using Amazon FSx for Lustre<a name="iam-roles-in-parallelcluster-v3-user-policy-fsxlustre"></a>
 
 In case you need to create and manage a cluster with Amazon FSx for Lustre, the following additional policy is required\.
+
+**Note**  
+If existing Amazon FSx file systems are the only file systems used in your cluster, you can scope down the example Amazon FSx policy statements to the specific file systems referenced in the [`SharedStorage` section](SharedStorage-v3.md) of the cluster configuration file\.
 
 ```
 {

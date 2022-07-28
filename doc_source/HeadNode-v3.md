@@ -195,7 +195,7 @@ Specifies the head node root volume size in gibibytes \(GiB\)\. The default size
 Specifies if the root volume is encrypted\. The default value is `true`\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
 `VolumeType` \(**Optional**, `String`\)  
-Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `st1`, and `standard`\. The default value is `gp2`\.  
+Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `st1`, and `standard`\. The default value is `gp3`\.  
 For more information, see [Amazon EBS volume types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
 `Iops` \(**Optional**, `Integer`\)  
@@ -390,7 +390,6 @@ Imds:
 
 `Secured` \(**Optional**, `Boolean`\)  
 If `true`, restricts access to the head node's IMDS \(and the instance profile credentials\) to a subset of superusers\.  
-This only restricts cluster head node IMDS access through the IPv4 IMDS endpoint\.
 If `false`, every user in the head node has access to the head node's IMDS\.  
 
 The following users are permitted access to the head node's IMDS:
@@ -408,6 +407,6 @@ $ sudo /opt/parallelcluster/scripts/imds/imds-access.sh --allow <USERNAME>
 ```
 You can disable user IMDS access with the `--deny` option for this command\.  
 If you unknowingly disable `default` user IMDS access, you can restore the permission by using the `--allow` option\.  
-Any customization of `iptables` rules can interfere with the mechanism used to restrict IMDS access on the head node\.
+Any customization of `iptables` or `ip6tables` rules can interfere with the mechanism used to restrict IMDS access on the head node\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

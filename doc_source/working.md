@@ -7,7 +7,6 @@
 + [Working with Spot Instances](spot.md)
 + [AWS Identity and Access Management roles in AWS ParallelCluster](iam.md)
 + [Schedulers supported by AWS ParallelCluster](schedulers.md)
-+ [Multiple queue mode](queue-mode.md)
 + [Tagging](resources-tags.md)
 + [Amazon CloudWatch dashboard](cloudwatch-dashboard.md)
 + [Integration with Amazon CloudWatch Logs](cloudwatch-logs.md)

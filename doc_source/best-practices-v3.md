@@ -46,12 +46,12 @@ Network performance is critical to ensuring high performance computing \(HPC\) a
 
 To manage AWS ParallelCluster resource costs, we recommend that you use AWS Budgets actions to create a budget and defined budget threshold alerts for selected AWS resources\. For more information, see [Configuring a budget action](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html) in the *AWS Budgets User Guide*\. You can also use Amazon CloudWatch to create a billing alarm\. For more information, see [Creating a billing alarm to monitor your estimated AWS charges](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html)\.
 
-## Best practices: moving a cluster to a new AWS ParallelCluster minor version<a name="best-practices-cluster-upgrades-v3"></a>
+## Best practices: moving a cluster to a new AWS ParallelCluster minor or patch version<a name="best-practices-cluster-upgrades-v3"></a>
 
-Currently each AWS ParallelCluster minor version is self\-contained along with its `pcluster` CLI\. To move a cluster to a new minor version, you must update the [Cluster configuration file](cluster-configuration-file-v3.md) to the new version and re\-create the cluster using the new version's CLI\.
+Currently each AWS ParallelCluster minor version is self\-contained along with its `pcluster` CLI\. To move a cluster to a new minor or patch version, you must re\-create the cluster using the new version's CLI\.
 
-To optimize the process of moving a cluster to a new minor version, we recommend that you use the following best practices\.
-+ Save personal data in external volumes, such as Amazon EFS and FSx for Lustre\. By doing this, you can easily move the data from one cluster to another\.
+To optimize the process of moving a cluster to a new minor or patch version, we recommend that you use the following best practices\.
++ Save personal data in external volumes created outside the cluster, such as Amazon EFS and FSx for Lustre\. By doing this, you can easily move the data from one cluster to another\.
 + Create shared storage systems of the types listed below using the AWS CLI or AWS Management Console:
   + [`SharedStorage`](SharedStorage-v3.md) / [`EbsSettings`](SharedStorage-v3.md#SharedStorage-v3-EbsSettings) / [`VolumeId`](SharedStorage-v3.md#yaml-SharedStorage-EbsSettings-VolumeId)
   + [`SharedStorage`](SharedStorage-v3.md) / [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings) / [`FileSystemId`](SharedStorage-v3.md#yaml-SharedStorage-EfsSettings-FileSystemId)
@@ -63,7 +63,7 @@ To optimize the process of moving a cluster to a new minor version, we recommend
 + Use [custom bootstrap actions](custom-bootstrap-actions-v3.md) to customize your instances rather than a custom AMI\. This optimizes the creation process because a new custom AMI doesn't need to be created for each new version\.
 + Recommended sequence\.
 
-  1. Review and update the cluster configuration to the new version\. Include existing file systems definitions\. Update your bootstrap scripts\.
+  1. Update the existing cluster configuration to use existing file system definitions\.
 
   1. Verify the `pcluster` version and update it if needed\.
 
@@ -71,4 +71,4 @@ To optimize the process of moving a cluster to a new minor version, we recommend
      + Make sure your data is available in the new cluster\.
      + Make sure your application works in the new cluster\.
 
-  1. If you're new cluster is fully tested and operational and you're sure you aren't going to use the old cluster, delete it\.
+  1. If your new cluster is fully tested and operational and you're sure you aren't going to use the old cluster, delete it\.

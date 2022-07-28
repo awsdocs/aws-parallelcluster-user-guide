@@ -92,7 +92,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
     "region": "eu-west-1",
-    "version": "3.1.4",
+    "version": "3.2.0",
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -264,7 +264,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
      "cloudformationStackStatus": "CREATE_IN_PROGRESS",
      "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
      "region": "eu-west-1",
-     "version": "3.1.4",
+     "version": "3.2.0",
      "clusterStatus": "CREATE_IN_PROGRESS"
    }
  } 
@@ -805,12 +805,12 @@ When you use a custom AMI, you can see the following warnings:
 
 If you're sure that the correct AMI is being used, you can ignore these warnings\.
 
-If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.1\.4"* is the `pcluster` version in use:
+If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.2\.0"* is the `pcluster` version in use:
 
 ```
 $ aws ec2 create-tags \
   --resources ami-yourcustomAmi \
-  --tags Key="parallelcluster:version",Value="3.1.4" Key="parallelcluster:os",Value="my-os"
+  --tags Key="parallelcluster:version",Value="3.2.0" Key="parallelcluster:os",Value="my-os"
 ```
 
 ## Troubleshooting a cluster update timeout when `cfn-hup` isn't running<a name="troubleshooting-v3-cluster-update-timeout"></a>

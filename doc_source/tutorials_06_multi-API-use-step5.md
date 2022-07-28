@@ -1,6 +1,6 @@
 # Step 5: Copy client code script and delete cluster<a name="tutorials_06_multi-API-use-step5"></a>
 
-1. Copy the following example client code to `delete_cluster_client.py`\. The client code makes a request request to delete the cluster\.
+1. Copy the following example client code to `delete_cluster_client.py`\. The client code makes a request to delete the cluster\.
 
    ```
    # Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.

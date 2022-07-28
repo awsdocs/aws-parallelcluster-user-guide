@@ -4,7 +4,7 @@ AWS ParallelCluster version 3 uses separate configuration files to control the d
 
 These objects are used for the AWS ParallelCluster version 3 cluster configuration\.
 
-Current AWS ParallelCluster 3 version: 3\.1\.4\.
+Current AWS ParallelCluster 3 version: 3\.2\.0\.
 
 **Topics**
 + [Cluster configuration file properties](#cluster-configuration-file-v3.properties)

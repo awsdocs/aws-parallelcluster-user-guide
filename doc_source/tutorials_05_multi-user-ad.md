@@ -39,7 +39,7 @@ Choose the *Manual* tab to manually create the AD infrastructure\.
        "cloudformationStackStatus": "DELETE_IN_PROGRESS",
        "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
        "region": "region-id",
-       "version": "3.1.4",
+       "version": "3.2.0",
        "clusterStatus": "DELETE_IN_PROGRESS"
      }
    }
@@ -78,7 +78,7 @@ Choose the *Manual* tab to manually create the AD infrastructure\.
 
    1. From the list of instances, choose the instance that you created to add users to the directory\.
 
-   1. Choose **Instance state**, then **Terminate**\.
+   1. Choose **Instance state**, then **Terminate instance**\.
 
 1. 
 

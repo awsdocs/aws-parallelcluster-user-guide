@@ -2,9 +2,9 @@
 
 In AWS ParallelCluster 3\.x, [`pcluster update-cluster`](pcluster.update-cluster-v3.md) analyzes the settings used to create the current cluster and the settings in the configuration file for issues\. If any issues are discovered, they are reported, and the steps to take to fix the issues are displayed\. For example, if the compute [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) is changed, the compute fleet must be stopped before an update can proceed\. This issue is reported when it is discovered\. If no blocking issues are discovered, update process is started and the changes are reported\.
 
-You can use the [`pcluster update-cluster`](pcluster.update-cluster-v3.md) \-\-dryrun option to see the changes before their run\. For more information, see [`pcluster update-cluster` examples](#pcluster-update-cluster-examples)\.
+You can use the [`pcluster update-cluster`](pcluster.update-cluster-v3.md) `--dryrun option` to see the changes before their run\. For more information, see [`pcluster update-cluster` examples](#pcluster-update-cluster-examples)\.
 
-For troubleshooting guidance, see [AWS ParallelCluster Troubleshooting](troubleshooting-v3.md)
+For troubleshooting guidance, see [AWS ParallelCluster Troubleshooting](troubleshooting-v3.md)\.
 
 ## Update Policy: definitions<a name="pcluster-update-policy-definitions"></a>
 
@@ -32,6 +32,14 @@ These settings can be changed, but if the change would reduce the number of stat
 **Update policy: If this setting is changed, the update is not allowed\. If you force the update, the new value will be ignored and the old value will be used\.**  
 After changing this setting, the cluster can't be updated\. You must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use [`pcluster create-cluster`](pcluster.create-cluster-v3.md)\. To delete the original cluster, use [`pcluster delete-cluster`](pcluster.delete-cluster-v3.md)\.
 
+**Update policy: The compute fleet must be stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set for this setting to be changed for an update\.**  
+These settings can be changed\. Either the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\) or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set\. After the compute fleet is stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) is set, you can update the cluster \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\) to activate the changes\.
+
+**Update policy: For this list values setting, a new value can be added during an update or the compute fleet must be stopped when removing an existing value\.**  
+A new value for these settings can be added during an update\. After adding a new value to the list, the cluster can be updated using \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\)\.  
+To remove an existing value from the list, the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\.  
+For example, if you are using a Slurm scheduler and adding a new queue to [SlurmQueues](Scheduling-v3.md#Scheduling-v3-SlurmQueues), you can update the cluster without stopping the compute fleet\. To remove an existing queue from [SlurmQueues](Scheduling-v3.md#Scheduling-v3-SlurmQueues), the compute fleet must be stopped first \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\.
+
 ## `pcluster update-cluster` examples<a name="pcluster-update-cluster-examples"></a>
 + This example demonstrates an update with some allowed changes and the update is started directly\.
 
@@ -43,7 +51,7 @@ After changing this setting, the cluster can't be updated\. You must revert the 
       "cloudformationStackStatus": "UPDATE_IN_PROGRESS",
       "cloudformationStackArn": stack_arn,
       "region": "us-east-1",
-      "version": "3.1.4",
+      "version": "3.2.0",
       "clusterStatus": "UPDATE_IN_PROGRESS"
     },
     "changeSet": [

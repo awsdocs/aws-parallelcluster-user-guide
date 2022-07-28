@@ -9,7 +9,7 @@ Starting with the release of AWS ParallelCluster version 2\.11\.0, releases prio
  AWS ParallelCluster aims to provide consistency and predictability in our *feature\-stable* releases, but note that this does not extend to product components that have reached end\-of\-life\. For example, in the case of SGE, Torque, and the CentOS 8 operating system, these features are all marked for end\-of\-life on December 31, 2021, and will not be included in 2\.11\.*x* releases beyond that date\. 
 
 AWS ParallelCluster 3 minor releases are supported for 18 months after their release date\. This is subject to the following:
-+ Bugs and security issues will be addressed in a minor release \(e\.g\., 3\.1\) unless severity requires a more immediate patch release \(e\.g, 3\.1\.1\)\.
++ Bugs and security issues will be addressed in a minor release \(e\.g\., 3\.1\) unless severity requires a more immediate patch release \(for example, 3\.1\.1\)\.
 + To receive bug and security fixes you must upgrade to a minor or patch release in which these fixes are provided\.
 +  To receive feature enhancements, you need to upgrade to the most recent version of AWS ParallelCluster 3\. 
 

@@ -191,7 +191,7 @@ In some cases, you might want to have some manual control over the nodes or queu
 + `ResumeProgram` launches two EC2 instances and assigns the private IP addresses and hostnames of `queue1-dy-spotcompute1-[1-2]`, waiting for `ResumeTimeout` \(the default period is 30 minutes before resetting the nodes\.
 + Instances are configured and join the cluster\. A job starts running on instances\.
 + The job completes and stops running\.
-+ After the configured `SuspendTime` has elapsed \(which is set to [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\), the scheduler sets the instances to the the `POWER_SAVING` state\. The scheduler then sets `queue1-dy-spotcompute1-[1-2]` to the `POWER_DOWN` state and calls `SuspendProgram` with the node names\.
++ After the configured `SuspendTime` has elapsed \(which is set to [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\), the scheduler sets the instances to the `POWER_SAVING` state\. The scheduler then sets `queue1-dy-spotcompute1-[1-2]` to the `POWER_DOWN` state and calls `SuspendProgram` with the node names\.
 + `SuspendProgram` is called for two nodes\. Nodes remain in the `POWER_DOWN` state, for example, by remaining `idle%` for a `SuspendTimeout` \(the default period is 120 seconds \(2 minutes\)\)\. After `clustermgtd` detects that nodes are powering down, it terminates the backing instances\. Then, it transitions `queue1-dy-spotcompute1-[1-2]` to the idle state and resets the private IP address and hostname so it is ready to power up for future jobs\.
 
 **If things go wrong and an instance for a particular node can't be launched for some reason, then the following happens:**
