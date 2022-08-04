@@ -202,6 +202,20 @@ Create and configure the following [VPC endpoints](https://docs.aws.amazon.com/v
 
 All instances in the VPC must have proper security groups to communicate with the endpoints\. You can do this by adding security groups to [`AdditionalSecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-AdditionalSecurityGroups) under the [`HeadNode`](HeadNode-v3.md) and [`AdditionalSecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-AdditionalSecurityGroups) under the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) configurations\. For example, if the VPC endpoints are created without explicitly specifying a security group, the default security group that's associated with the endpoint\. By adding the default security group to `AdditionalSecurityGroups`, you enable the communication between the cluster and the endpoints\.
 
+**Note**
+When you use IAM policies to restrict access to VPC endpoints, you must add the following to the S3 VPC endpoint:
+```
+PolicyDocument:
+  Version: 2012-10-17
+  Statement:
+    - Effect: Allow
+      Principal: "*"
+      Action:
+        - "s3:PutObject"
+      Resource:
+        - !Sub "arn:${AWS::Partition}:s3:::cloudformation-waitcondition-${AWS::Region}/*"    
+```
+
 **Disable Route 53 and use EC2 hostnames**
 
 When creating a Slurm cluster, AWS ParallelCluster creates a private Route 53 hosted zone that is used to resolve the custom compute node hostnames, such as `{queue_name}-{st|dy}-{compute_resource}-{N}`\. Because Route 53 doesn't support VPC endpoints, this feature must be disabled\. Additionally, AWS ParallelCluster must be configured to use the default EC2 hostnames, such as `ip-1-2-3-4`\. Apply the following settings to your cluster configuration:
