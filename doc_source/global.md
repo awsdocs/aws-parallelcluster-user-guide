@@ -1,15 +1,15 @@
 # `[global]` section<a name="global"></a>
 
-**Topics**
-+ [`cluster_template`](#cluster-template)
-+ [`update_check`](#update-check)
-+ [`sanity_check`](#sanity-check)
-
 Specifies global configuration options related to `pcluster`\.
 
 ```
 [global]
 ```
+
+**Topics**
++ [`cluster_template`](#cluster-template)
++ [`update_check`](#update-check)
++ [`sanity_check`](#sanity-check)
 
 ## `cluster_template`<a name="cluster-template"></a>
 

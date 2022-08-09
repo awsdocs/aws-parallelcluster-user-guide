@@ -30,7 +30,7 @@ Specifies the name of the cluster to be created\.
 Enables debug logging\.
 
 `--dryrun DRYRUN`  
-Specifies that the command will only perform validation without creating any resources\. May be used to validate the cluster configuration\. \(Defaults to `false`\.\)
+When `true`, the command performs validation without creating any resources\. You can use this to validate the cluster configuration\. \(Defaults to `false`\.\)
 
 `--query QUERY`  
 Specifies the JMESPath query to perform on the output\.
@@ -47,3 +47,19 @@ Identifies one or more config validators to suppress\.
 
 `--validation-failure-level {INFO,WARNING,ERROR}`  
 Specifies the minimum validation level that will cause the creation to fail\. \(Defaults to `ERROR`\.\)
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster create-cluster -c cluster-config.yaml -n cluster-v3
+{
+  "cluster": {
+    "clusterName": "cluster-v3",
+    "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+    "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/cluster-v3/1234abcd-56ef-78gh-90ij-abcd1234efgh",
+    "region": "us-east-1",
+    "version": "3.1.4",
+    "clusterStatus": "CREATE_IN_PROGRESS"
+  }
+}
+```

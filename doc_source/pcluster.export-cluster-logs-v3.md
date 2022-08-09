@@ -4,7 +4,7 @@ Export the logs of the cluster to a local `tar.gz` archive by passing through an
 
 ```
 pcluster export-cluster-logs [-h]
-                 --bucket BUCKET
+                 --bucket BUCKET_NAME
                  --cluster-name CLUSTER_NAME 
                 [--bucket-prefix BUCKET_PREFIX]
                 [--debug]
@@ -21,8 +21,9 @@ pcluster export-cluster-logs [-h]
 `-h, --help`  
 Shows the help text for `pcluster export-cluster-logs`\.
 
-`--bucket BUCKET`  
-Specifies the Amazon S3 bucket to export cluster logs data to\. It must be in the same Region as the cluster\.
+`--bucket BUCKET_NAME`  
+Specifies the name of the Amazon S3 bucket to export cluster logs data to\. It must be in the same Region as the cluster\.  
+You must add permissions to the Amazon S3 bucket policy to grant CloudWatch access\. For more information, see [Set permissions on an Amazon S3 bucket](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html#S3Permissions) in the *CloudWatch Logs User Guide*\.
 
 `--cluster-name, -n CLUSTER_NAME`  
 Specifies the name of the cluster\.
@@ -54,3 +55,12 @@ Specifies the AWS Region to use\. The Region must be specified, using the `AWS_D
 
 `--start-time START_TIME`  
 Specifies the start of the time range, expressed in ISO 8601 format \(`YYYY-MM-DDThh:mm:ssZ`, for example `2021-01-01T20:00:00Z`\)\. Log events with a timestamp equal to this time or later than this time are included\. If not specified, the default is the time the cluster was created\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster export-cluster-logs --bucket cluster-v3-bucket -n cluster-v3
+{
+  "url": "https://cluster-v3-bucket..."
+}
+```

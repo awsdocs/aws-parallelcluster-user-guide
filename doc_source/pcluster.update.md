@@ -49,4 +49,24 @@ Defaults to `False`\.
 `--yes`  
 Automatically assumes that the answer to all prompts is yes\. This should not be combined with the `--force` argument\.
 
+```
+$ pcluster update -c path/to/config mycluster
+Retrieving configuration from CloudFormation for cluster mycluster...
+Validating configuration file .parallelcluster/config...
+Found Configuration Changes:
+
+#    parameter                   old value    new value
+---  --------------------------  -----------  -----------
+     [compute_resource default]
+01   min_count                   1            2
+02   max_count                   5            12
+
+Validating configuration update...
+Congratulations! The new configuration can be safely applied to your cluster.
+Do you want to proceed with the update? - Y/N: Y
+Updating: mycluster
+Calling update_stack
+Status: parallelcluster-mycluster - UPDATE_COMPLETE
+```
+
 When the command is called and begins polling for the status of that call, it's safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.

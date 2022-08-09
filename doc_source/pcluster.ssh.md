@@ -23,16 +23,21 @@ Defaults to `False`\.
 `-r REGION, --region REGION`  
 Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
-Example:
+**Examples using AWS ParallelCluster version 2\.11\.7:**
 
 ```
 $ pcluster ssh -d mycluster -i ~/.ssh/id_rsa
+SSH command: ssh ec2-user@1.1.1.1 -i /home/user/.ssh/id_rsa
 ```
 
-Returns an `ssh` command with the user name and IP address of the cluster pre\-populated:
+```
+$ pcluster ssh mycluster -i ~/.ssh/id_rsa
+```
+
+Runs `ssh` command with the user name and IP address of the cluster pre\-populated:
 
 ```
-$ ssh ec2-user@1.1.1.1 -i ~/.ssh/id_rsa
+ssh ec2-user@1.1.1.1 -i ~/.ssh/id_rsa
 ```
 
 The `ssh` command is defined in the global configuration file under the [`[aliases]` section](aliases.md)\. It can be customized as follows\.

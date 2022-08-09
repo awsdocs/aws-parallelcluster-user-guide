@@ -1,6 +1,6 @@
 # `pcluster configure`<a name="pcluster.configure"></a>
 
-Begins an AWS ParallelCluster configuration\.
+Begins an AWS ParallelCluster configuration\. For more information, see [Configuring AWS ParallelCluster](getting-started-configuring-parallelcluster.md)\.
 
 ```
 pcluster configure [ -h ] [ -c CONFIG_FILE ] [ -r REGION ]

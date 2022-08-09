@@ -59,7 +59,7 @@ To optimize the process of moving a cluster to a new minor or patch version, we 
 
   Add them to the new cluster configuration as existing file systems\. This way, they are preserved when you delete the cluster and can be attached to a new cluster\.
 
-  We recommend that you use Amazon EFS, or FSx for Lustre file systems because they can be attached to multiple clusters at the same time and you can attach them to the new cluster before deleting the previous one\.
+  We recommend that you use Amazon EFS, or FSx for Lustre file systems because they can be attached to multiple clusters at the same time and you can attach them to the new cluster before deleting the old one\.
 + Use [custom bootstrap actions](custom-bootstrap-actions-v3.md) to customize your instances rather than a custom AMI\. This optimizes the creation process because a new custom AMI doesn't need to be created for each new version\.
 + Recommended sequence\.
 

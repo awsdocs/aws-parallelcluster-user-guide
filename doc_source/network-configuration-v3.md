@@ -47,7 +47,8 @@ Scheduling:
 In this configuration, all instances of the cluster must be assigned a public IP in order to get internet access\. To achieve this, do the following:
 + Make sure the head node is assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SubnetId`](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId) or by assigning an Elastic IP in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp)\.
 + Make sure the compute nodes are assigned a public IP address by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SubnetIds`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SubnetIds) or by setting [`AssignPublicIp`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-AssignPublicIp): true in [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking)\.
-+ If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
++ If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card to the head node, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
++ You can't define a p4d instance type or another instance type that has multiple network interfaces or a network interface card to compute nodes because AWS public IPs can only be assigned to instances launched with a single network interface\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 For more information, see [ Enabling internet access](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#vpc-igw-internet-access) in *Amazon VPC User Guide*\.
 
@@ -76,7 +77,7 @@ Scheduling:
 
 In this configuration, only the head node of the cluster is required to have a public IP assigned\. You can achieve this by either turning on the "Enable auto\-assign public IPv4 address" setting for the subnet used in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SubnetId`](HeadNode-v3.md#yaml-HeadNode-Networking-SubnetId) or by assigning an Elastic IP in [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp)\.
 
-If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card to the head node, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 This configuration requires a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) or an internal proxy in the subnet used for the queues, to give internet access to the compute instances\.
 
@@ -202,8 +203,9 @@ Create and configure the following [VPC endpoints](https://docs.aws.amazon.com/v
 
 All instances in the VPC must have proper security groups to communicate with the endpoints\. You can do this by adding security groups to [`AdditionalSecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-AdditionalSecurityGroups) under the [`HeadNode`](HeadNode-v3.md) and [`AdditionalSecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-AdditionalSecurityGroups) under the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) configurations\. For example, if the VPC endpoints are created without explicitly specifying a security group, the default security group that's associated with the endpoint\. By adding the default security group to `AdditionalSecurityGroups`, you enable the communication between the cluster and the endpoints\.
 
-**Note**
-When you use IAM policies to restrict access to VPC endpoints, you must add the following to the S3 VPC endpoint:
+**Note**  
+When you use IAM policies to restrict access to VPC endpoints, you must add the following to the Amazon S3 VPC endpoint:  
+
 ```
 PolicyDocument:
   Version: 2012-10-17
@@ -213,7 +215,7 @@ PolicyDocument:
       Action:
         - "s3:PutObject"
       Resource:
-        - !Sub "arn:${AWS::Partition}:s3:::cloudformation-waitcondition-${AWS::Region}/*"    
+        - !Sub "arn:${AWS::Partition}:s3:::cloudformation-waitcondition-${AWS::Region}/*"
 ```
 
 **Disable Route 53 and use EC2 hostnames**

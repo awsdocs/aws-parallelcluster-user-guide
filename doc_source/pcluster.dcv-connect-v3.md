@@ -30,3 +30,11 @@ Specifies the AWS Region to use\. The Region must be specified, using the `AWS_D
 
 `--show-url`  
 Prints the URL that would be used for the DCV connection and exits\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster dcv-connect -n cluster-3Dcv -r us-east-1 --key-path /home/user/.ssh/key.pem
+```
+
+ ![\[A screenshot of the DCV console.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/Dcv-image.png) 

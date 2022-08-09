@@ -50,3 +50,27 @@ If the value is `true`, the earliest log events are returned first\. If the valu
 
 `--start-time START_TIME`  
 Specifies the start of the time range, expressed in ISO 8601 format \(`YYYY-MM-DDThh:mm:ssZ`, for example `2021-01-01T20:00:00Z`\)\. Events with a timestamp equal to or later than this time are included\.
+
+**Example using AWS ParallelCluster version 3\.1\.2:**
+
+```
+$ pcluster get-image-log-events --image-id custom-alinux2-image --region us-east-1 --log-stream-name 3.1.2/1 --limit 3
+   {
+  "nextToken": "f/36778317771100849897800729464621464113270312017760944178/s",
+  "prevToken": "b/36778317766952911290874033560295820514557716777648586800/s",
+  "events": [
+    {
+      "message": "ExecuteBash: FINISHED EXECUTION",
+      "timestamp": "2022-04-05T22:13:26.633Z"
+    },
+    {
+      "message": "Document arn:aws:imagebuilder:us-east-1:123456789012:component/parallelclusterimage-test-1234abcd-56ef-78gh-90ij-abcd1234efgh/3.1.2/1",
+      "timestamp": "2022-04-05T22:13:26.741Z"
+    },
+    {
+      "message": "TOE has completed execution successfully",
+      "timestamp": "2022-04-05T22:13:26.819Z"
+    }
+  ]
+}
+```

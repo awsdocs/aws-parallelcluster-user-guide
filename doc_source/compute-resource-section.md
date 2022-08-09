@@ -1,12 +1,5 @@
 # `[compute_resource]` section<a name="compute-resource-section"></a>
 
-**Topics**
-+ [`initial_count`](#compute-resource-initial-count)
-+ [`instance_type`](#compute-resource-instance-type)
-+ [`max_count`](#compute-resource-max-count)
-+ [`min_count`](#compute-resource-min-count)
-+ [`spot_price`](#compute-resource-spot-price)
-
 Defines configuration settings for a compute resource\. [`[compute_resource]` sections](#compute-resource-section) are referenced by the [`compute_resource_settings`](queue-section.md#queue-compute-resource-settings) setting in the [`[queue]` section](queue-section.md)\. [`[compute_resource]` sections](#compute-resource-section) are only supported when [`scheduler`](cluster-definition.md#scheduler) is set to `slurm`\.
 
 The format is `[compute_resource <compute-resource-name>]`\. *compute\-resource\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
@@ -22,6 +15,13 @@ spot_price = 0.5
 
 **Note**  
 Support for the [`[compute_resource]` section](#compute-resource-section) was added in AWS ParallelCluster version 2\.9\.0\.
+
+**Topics**
++ [`initial_count`](#compute-resource-initial-count)
++ [`instance_type`](#compute-resource-instance-type)
++ [`max_count`](#compute-resource-max-count)
++ [`min_count`](#compute-resource-min-count)
++ [`spot_price`](#compute-resource-spot-price)
 
 ## `initial_count`<a name="compute-resource-initial-count"></a>
 

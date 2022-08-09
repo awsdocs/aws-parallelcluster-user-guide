@@ -51,6 +51,9 @@ For example:
 
   Fast insufficient capacity failure\-over mode is disabled\. The compute resource isn't disabled\.
 
+**Note**  
+There might be a delay of up to one minute between the time when nodes fail with insufficient capacity errors and the time when the cluster management daemon detects the node failures\. This is because the cluster management daemon checks for node insufficient capacity failures and sets the compute resources to the `down` state at one minute intervals\.
+
 ## Fast insufficient capacity fail\-over mode status<a name="slurm-short-capacity-fail-mode-status-v3"></a>
 
 When a cluster is in fast insufficient capacity fail\-over mode, you can check its status and node states\.

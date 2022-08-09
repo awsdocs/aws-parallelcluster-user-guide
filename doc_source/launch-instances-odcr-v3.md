@@ -83,6 +83,29 @@ Found RunInstances parameters override. Launching instances with: <parameters_li
    $ aws resource-groups create-group --name EC2CRGroup \ 
        --configuration '{"Type":"AWS::EC2::CapacityReservationPool"}' '{"Type":"AWS::ResourceGroups::Generic", "Parameters": [{"Name": "allowed-resource-types", "Values": ["AWS::EC2::CapacityReservation"]}]}'
    ```
+**Note**  
+A resource group doesn't support resources shared by other accounts\.  
+If the target ODCR is shared by another account, you don't need to create a resource group\. Use `CapacityReservationId` instead of resource group in step 3:  
+
+   ```
+   #!/bin/bash
+   set -e
+   
+   # Override run_instance attributes
+   cat > /opt/slurm/etc/pcluster/run_instances_overrides.json << EOF
+   {
+       "my-queue": {
+           "my-compute-resource": {
+               "CapacityReservationSpecification": {
+                   "CapacityReservationTarget": {
+                       "CapacityReservationId": "cr-abcdef01234567890"
+                   }
+               }
+           }
+       }
+   }
+   EOF
+   ```
 
    Add capacity reservations to the resource group\. Every time you create a new ODCR, add it to the Group Reservation\. Be sure to replace *`ACCOUNT_ID`* with your account ID, *`PLACEHOLDER_CAPACITY_RESERVATION`* with the ID of your capacity reservation and *`REGION_ID`* with your AWS region ID \(us\-east\-1 for example\)\.
 

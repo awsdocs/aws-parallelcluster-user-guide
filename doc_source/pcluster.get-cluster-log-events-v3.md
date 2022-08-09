@@ -50,3 +50,31 @@ If the value is `true`, the earliest log events are returned first\. If the valu
 
 `--start-time START_TIME`  
 Specifies the start of the time range, expressed in ISO 8601 format \(`YYYY-MM-DDThh:mm:ssZ`, for example `2021-01-01T20:00:00Z`\)\. Events with a timestamp equal to this time or later than this time are included\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster get-cluster-log-events \
+    -c cluster-v3 \
+    -r us-east-1 \
+    --log-stream-name ip-198-51-100-44.i-1234567890abcdef0.clustermgtd \
+    --limit 3
+{
+  "nextToken": "f/36966906399261933213029082268132291405859205452101451780/s",
+  "prevToken": "b/36966906399239632467830551644990755687586557090595471362/s",
+  "events": [
+    {
+      "message": "2022-07-12 19:16:53,379 - [slurm_plugin.clustermgtd:_maintain_nodes] - INFO - Performing node maintenance actions",
+      "timestamp": "2022-07-12T19:16:53.379Z"
+    },
+    {
+      "message": "2022-07-12 19:16:53,380 - [slurm_plugin.clustermgtd:_maintain_nodes] - INFO - Following nodes are currently in replacement: (x0) []",
+      "timestamp": "2022-07-12T19:16:53.380Z"
+    },
+    {
+      "message": "2022-07-12 19:16:53,380 - [slurm_plugin.clustermgtd:_terminate_orphaned_instances] - INFO - Checking for orphaned instance",
+      "timestamp": "2022-07-12T19:16:53.380Z"
+    }
+  ]
+}
+```

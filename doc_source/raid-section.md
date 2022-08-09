@@ -1,16 +1,5 @@
 # `[raid]` section<a name="raid-section"></a>
 
-**Topics**
-+ [`shared_dir`](#raid-shared-dir)
-+ [`ebs_kms_key_id`](#raid-ebs_kms_key_id)
-+ [`encrypted`](#raid-encrypted)
-+ [`num_of_raid_volumes`](#num-of-raid-volumes)
-+ [`raid_type`](#raid-type)
-+ [`volume_iops`](#raid-volume-iops)
-+ [`volume_size`](#raid-volume-size)
-+ [`volume_throughput`](#raid-volume-throughput)
-+ [`volume_type`](#raid-volume-type)
-
 Defines configuration settings for a RAID array that's built from a number of identical Amazon EBS volumes\. The RAID drive is mounted on the head node and is exported to compute nodes with NFS\.
 
 The format is `[raid raid-name]`\. *raid\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
@@ -22,6 +11,17 @@ raid_type = 1
 num_of_raid_volumes = 2
 encrypted = true
 ```
+
+**Topics**
++ [`shared_dir`](#raid-shared-dir)
++ [`ebs_kms_key_id`](#raid-ebs_kms_key_id)
++ [`encrypted`](#raid-encrypted)
++ [`num_of_raid_volumes`](#num-of-raid-volumes)
++ [`raid_type`](#raid-type)
++ [`volume_iops`](#raid-volume-iops)
++ [`volume_size`](#raid-volume-size)
++ [`volume_throughput`](#raid-volume-throughput)
++ [`volume_type`](#raid-volume-type)
 
 ## `shared_dir`<a name="raid-shared-dir"></a>
 

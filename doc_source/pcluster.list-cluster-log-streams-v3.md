@@ -37,3 +37,21 @@ Specifies the JMESPath query to perform on the output\.
 
 `--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster list-cluster-log-streams \
+    -n cluster-v3 \
+    -r us-east-1 \
+    --query 'logStreams[*].logStreamName'
+[
+  "ip-172-31-58-205.i-1234567890abcdef0.cfn-init",
+  "ip-172-31-58-205.i-1234567890abcdef0.chef-client",
+  "ip-172-31-58-205.i-1234567890abcdef0.cloud-init",
+  "ip-172-31-58-205.i-1234567890abcdef0.clustermgtd",
+  "ip-172-31-58-205.i-1234567890abcdef0.slurmctld",
+  "ip-172-31-58-205.i-1234567890abcdef0.supervisord",
+  "ip-172-31-58-205.i-1234567890abcdef0.system-messages"
+]
+```

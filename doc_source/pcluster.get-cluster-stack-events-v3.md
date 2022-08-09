@@ -30,3 +30,22 @@ Specifies the JMESPath query to perform on the output\.
 
 `--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster get-cluster-stack-events \
+    -n cluster-v3 \
+    -r us-east-1 \
+    --query "events[0]"
+{
+  "eventId": "1234abcd-56ef-78gh-90ij-abcd1234efgh",
+  "physicalResourceId": "arn:aws:cloudformation:us-east-1:123456789012:stack/cluster-v3/1234abcd-56ef-78gh-90ij-abcd1234efgh",
+  "resourceStatus": "CREATE_COMPLETE",
+  "stackId": "arn:aws:cloudformation:us-east-1:123456789012:stack/cluster-v3/1234abcd-56ef-78gh-90ij-abcd1234efgh",
+  "stackName": "cluster-v3",
+  "logicalResourceId": "cluster-v3",
+  "resourceType": "AWS::CloudFormation::Stack",
+  "timestamp": "2022-07-12T18:29:12.140Z"
+}
+```

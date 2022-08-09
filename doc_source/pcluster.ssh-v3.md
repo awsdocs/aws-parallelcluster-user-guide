@@ -22,7 +22,7 @@ Specifies the name of the cluster to connect to\.
 Enables debug logging\.
 
 `--dryrun DRYRUN`  
-Prints the command line that would be run and exits\.
+When `true`, prints the command line that would be run and exits\. \(Defaults to `false`\.\)
 
 `--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.

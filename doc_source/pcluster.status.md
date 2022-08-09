@@ -26,3 +26,10 @@ Specifies the AWS Region to use\. Defaults to the Region specified by using the 
 `-nw, --nowait`  
 Indicates not to wait for stack events after processing a stack command\.  
 Defaults to `False`\.
+
+**Example using AWS ParallelCluster version 2\.11\.7:**
+
+```
+$ pcluster status -c path/to/config -r us-east-1 mycluster
+Status: ComputeFleetHITSubstack - CREATE_IN_PROGRESS
+```

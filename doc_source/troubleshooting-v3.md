@@ -44,6 +44,9 @@ $ /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-conf
 
 You can archive the logs in S3 or in a local file \(depending on the `--output-file` parameter\)\.
 
+**Note**  
+You must add permissions to the Amazon S3 bucket policy to grant CloudWatch access\. For more information, see [Set permissions on an Amazon S3 bucket](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html#S3Permissions) in the *CloudWatch Logs User Guide*\.
+
 ```
 $ pcluster export-cluster-logs --cluster-name mycluster --region eu-west-1 \
   --bucket bucketname --bucket-prefix logs
@@ -847,6 +850,6 @@ ruby_block[retrieve compute node info] action run[2022-03-11T17:47:11+00:00] INF
 
 ## Additional support<a name="troubleshooting-v3-additional-support"></a>
 
-For a list of known issues, see the main [GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki) 
+For a list of known issues, see the main [GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki)\.
 
 page or the [issues](https://github.com/aws/aws-parallelcluster/issues) page\. For more urgent issues, contact AWS Support or open a [new GitHub issue](https://github.com/aws/aws-parallelcluster/issues)\.

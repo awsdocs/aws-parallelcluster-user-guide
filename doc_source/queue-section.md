@@ -1,13 +1,5 @@
 # `[queue]` section<a name="queue-section"></a>
 
-**Topics**
-+ [`compute_resource_settings`](#queue-compute-resource-settings)
-+ [`compute_type`](#queue-compute-type)
-+ [`disable_hyperthreading`](#queue-disable-hyperthreading)
-+ [`enable_efa`](#queue-enable-efa)
-+ [`enable_efa_gdr`](#queue-enable-efa-gdr)
-+ [`placement_group`](#queue-placement-group)
-
 Defines configuration settings for a single queue\. [`[queue]` sections](#queue-section) are only supported when [`scheduler`](cluster-definition.md#scheduler) is set to `slurm`\.
 
 The format is `[queue <queue-name>]`\. *queue\-name* must start with a lowercase letter, contain no more than 30 characters, and only contain lowercase letters, numbers, and hyphens \(\-\)\.
@@ -23,6 +15,14 @@ compute_type = spot
 
 **Note**  
 Support for the [`[queue]` section](#queue-section) was added in AWS ParallelCluster version 2\.9\.0\.
+
+**Topics**
++ [`compute_resource_settings`](#queue-compute-resource-settings)
++ [`compute_type`](#queue-compute-type)
++ [`disable_hyperthreading`](#queue-disable-hyperthreading)
++ [`enable_efa`](#queue-enable-efa)
++ [`enable_efa_gdr`](#queue-enable-efa-gdr)
++ [`placement_group`](#queue-placement-group)
 
 ## `compute_resource_settings`<a name="queue-compute-resource-settings"></a>
 

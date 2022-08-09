@@ -13,3 +13,12 @@ Shows the help text for `pcluster version`\.
 
 `--debug`  
 Enables debug logging\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster version
+{
+  "version": "3.1.4"
+}
+```

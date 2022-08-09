@@ -56,9 +56,13 @@ Specifies additional tags to add to the stack\.
 
 When the command is called and begins polling for the status of that call, it's safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
 
-Examples:
+**Examples using AWS ParallelCluster version 2\.11\.7:**
 
 ```
 $ pcluster create mycluster
+    Beginning cluster creation for cluster: mycluster
+Info: There is a newer version 3.1.4 of AWS ParallelCluster available.
+Creating stack named: parallelcluster-mycluster
+Status: ComputeFleetHITSubstack - CREATE_IN_PROGRESS
 $ pcluster create mycluster --tags '{ "Key1" : "Value1" , "Key2" : "Value2" }'
 ```

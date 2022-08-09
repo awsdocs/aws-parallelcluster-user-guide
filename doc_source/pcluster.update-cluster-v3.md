@@ -30,10 +30,10 @@ Specifies the name of the cluster\.
 Enables debug logging\.
 
 `--dryrun DRYRUN`  
-Only perform the requested validation without creating any resources\. It can be used to validate the image configuration and update requirements\. \(Defaults to `false`\.\)
+When `true`, performs the validation without updating the cluster and creating any resources\. It can be used to validate the image configuration and update requirements\. \(Defaults to `false`\.\)
 
 `--force-update FORCE_UPDATE`  
-Forces the update by ignoring the update validation errors\. \(Defaults to `false`\.\)
+When `true`, forces the update by ignoring the update validation errors\. \(Defaults to `false`\.\)
 
 `--query QUERY`  
 Specifies the JMESPath query to perform on the output\.
@@ -47,3 +47,37 @@ Format: \(`ALL`\|`type:[A-Za-z0-9]+`\)
 
 `--validation-failure-level {INFO,WARNING,ERROR}`  
 Specifies the level of validation failures reported for update\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster update-cluster -c cluster-config.yaml -n cluster-v3 -r us-east-1
+{
+  "cluster": {
+    "clusterName": "cluster-v3",
+    "cloudformationStackStatus": "UPDATE_IN_PROGRESS",
+    "cloudformationStackArn": "arn:aws:cloudformation:us-east-1:123456789012:stack/cluster-v3/1234abcd-56ef-78gh-90ij-abcd1234efgh",
+    "region": "us-east-1",
+    "version": "3.1.4",
+    "clusterStatus": "UPDATE_IN_PROGRESS"
+  },
+  "changeSet": [
+    {
+      "parameter": "HeadNode.Iam.S3Access",
+      "requestedValue": {
+        "BucketName": "pc-beta-test",
+        "KeyName": "output",
+        "EnableWriteAccess": false
+      }
+    },
+    {
+      "parameter": "HeadNode.Iam.S3Access",
+      "currentValue": {
+        "BucketName": "pcluster-east-test-bucket",
+        "KeyName": "logs",
+        "EnableWriteAccess": true
+      }
+    }
+  ]
+}
+```

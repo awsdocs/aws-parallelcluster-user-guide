@@ -1,15 +1,5 @@
 # `[vpc]` section<a name="vpc-section"></a>
 
-**Topics**
-+ [`additional_sg`](#additional-sg)
-+ [`compute_subnet_cidr`](#compute-subnet-cidr)
-+ [`compute_subnet_id`](#compute-subnet-id)
-+ [`master_subnet_id`](#master-subnet-id)
-+ [`ssh_from`](#ssh-from)
-+ [`use_public_ips`](#use-public-ips)
-+ [`vpc_id`](#vpc-id)
-+ [`vpc_security_group_id`](#vpc-security-group-id)
-
 Specifies Amazon VPC configuration settings\. For more information about VPCs, see [What is Amazon VPC?](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) and [Security best practices for your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-best-practices.html) in the *Amazon VPC User Guide*\.
 
 The format is `[vpc vpc-name]`\. *vpc\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
@@ -19,6 +9,16 @@ The format is `[vpc vpc-name]`\. *vpc\-name* must start with a letter, contain n
 vpc_id = vpc-xxxxxx
 master_subnet_id = subnet-xxxxxx
 ```
+
+**Topics**
++ [`additional_sg`](#additional-sg)
++ [`compute_subnet_cidr`](#compute-subnet-cidr)
++ [`compute_subnet_id`](#compute-subnet-id)
++ [`master_subnet_id`](#master-subnet-id)
++ [`ssh_from`](#ssh-from)
++ [`use_public_ips`](#use-public-ips)
++ [`vpc_id`](#vpc-id)
++ [`vpc_security_group_id`](#vpc-security-group-id)
 
 ## `additional_sg`<a name="additional-sg"></a>
 

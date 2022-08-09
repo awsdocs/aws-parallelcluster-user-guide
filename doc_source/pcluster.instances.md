@@ -22,3 +22,11 @@ Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
 Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
+
+**Example using AWS ParallelCluster version 2\.11\.7:**
+
+```
+$ pcluster instances -c path/to/config -r us-east-1 mycluster
+MasterServer         i-1234567890abcdef0
+ComputeFleet         i-abcdef01234567890
+```

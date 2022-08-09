@@ -26,3 +26,13 @@ Specifies the JMESPath query to perform on the output\.
 
 `--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster describe-compute-fleet -n pcluster-v3
+{
+  "status": "RUNNING",
+  "lastStatusUpdatedTime": "2022-07-12T17:24:26.000Z"
+}
+```

@@ -53,12 +53,14 @@ Specifies the AWS Region to use\. Defaults to the Region specified by using the 
 Displays a one\-time URL for connecting to the NICE DCV session\. The default browser isn't opened when this option is specified\.  
 Support for the `--show-url` argument was added in AWS ParallelCluster version 2\.5\.1\.
 
-Example:
+**Example using AWS ParallelCluster version 2\.11\.7:**
 
 ```
-$ pcluster dcv connect -k ~/.ssh/id_rsa
+$ pcluster dcv connect -k ~/.ssh/id_rsa mycluster
 ```
 
 Opens the default browser to connect to the NICE DCV session running on the head node\.
 
 A new NICE DCV session is created if one isn't already started\.
+
+ ![\[A screenshot of the DCV console.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/Dcv-image.png) 

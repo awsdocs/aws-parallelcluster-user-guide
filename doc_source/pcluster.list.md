@@ -23,3 +23,11 @@ Defaults to `c`\.
 Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 Lists the name of any AWS CloudFormation stacks named `parallelcluster-*`\.
+
+**Example using AWS ParallelCluster version 2\.11\.7:**
+
+```
+$ pcluster list -c path/to/config -r us-east-1
+mycluster            CREATE_IN_PROGRESS  2.11.7
+myothercluster       CREATE_IN_PROGRESS  2.11.7
+```

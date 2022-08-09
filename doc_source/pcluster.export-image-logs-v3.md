@@ -20,8 +20,9 @@ pcluster export-image-logs [-h]
 `-h, --help`  
 Shows the help text for `pcluster export-image-logs`\.
 
-`--bucket BUCKET`  
-Specifies the Amazon S3 bucket to export image build logs to\. It must be in the same Region as the image\.
+`--bucket BUCKET_NAME`  
+Specifies the Amazon S3 bucket name to export image build logs to\. It must be in the same Region as the image\.  
+You must add permissions to the Amazon S3 bucket policy to grant CloudWatch access\. For more information, see [Set permissions on an Amazon S3 bucket](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html#S3Permissions) in the *CloudWatch Logs User Guide*\.
 
 `--image-id, -i IMAGE_ID`  
 The image ID whose logs will be exported\.
@@ -46,3 +47,12 @@ Specifies the AWS Region to use\. The Region must be specified, using the `AWS_D
 
 `--start-time START_TIME`  
 Specifies the start of the time range, expressed in ISO 8601 format \(`YYYY-MM-DDThh:mm:ssZ`, for example `2021-01-01T20:00:00Z`\)\. Log events with a timestamp equal to this time or later than this time are included\. If not specified, the default is the time the cluster was created\.
+
+**Example using AWS ParallelCluster version 3\.1\.4:**
+
+```
+$ pcluster export-image-logs --bucket image-v3-bucket --image-id ami-1234abcd5678efgh
+{
+  "url": "https://image-v3-bucket..."
+}
+```

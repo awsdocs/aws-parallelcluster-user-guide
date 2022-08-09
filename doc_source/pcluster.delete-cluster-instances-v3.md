@@ -23,10 +23,14 @@ Specifies the name of the cluster\.
 Enables debug logging\.
 
 `--force FORCE`  
-Forces the update by ignoring the update validation errors\. \(Defaults to `false`\.\)
+When `true`, forces the deletion by ignoring validation errors\. \(Defaults to `false`\.\)
 
 `--query QUERY`  
 Specifies the JMESPath query to perform on the output\.
 
 `--region, -r REGION`  
 Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+
+```
+$ pcluster delete-cluster-instances -n cluster-v3
+```

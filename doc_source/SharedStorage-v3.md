@@ -2,9 +2,15 @@
 
 **\(Optional\)** The shared storage settings for the cluster\.
 
-For Amazon Elastic Block Store, you can use [`EbsSettings`](#SharedStorage-v3-EbsSettings) / [`VolumeId`](#yaml-SharedStorage-EbsSettings-VolumeId) to specify whether AWS ParallelCluster creates and mounts new shared file storage or mounts existing shared file storage for your cluster\.
+In the `SharedStorage` section, you can define existing file systems for long term permanent shared storage solutions that are independent of the cluster lifecycle\.
 
-For Amazon Elastic File System and Amazon FSx for Lustre, you can use [`EfsSettings`](#SharedStorage-v3-EfsSettings) / [`FileSystemId`](#yaml-SharedStorage-EfsSettings-FileSystemId) and [`FsxLustreSettings`](#SharedStorage-v3-FsxLustreSettings) / [`FileSystemId`](#yaml-SharedStorage-EfsSettings-FileSystemId) to specify whether AWS ParallelCluster creates and mounts new shared file storage or mounts existing shared file storage for your cluster\.
+You can also define AWS ParallelCluster managed file systems for short term temporary shared storage\. By default, AWS ParallelCluster managed file systems are created and deleted with cluster creation and deletion\. If you don't back up data from AWS ParallelCluster managed file systems, your data is deleted when the cluster is deleted\.
+
+For more information, see [Best practices: moving a cluster to a new AWS ParallelCluster minor or patch version](best-practices-v3.md#best-practices-cluster-upgrades-v3)\.
+
+To use an existing Amazon EBS volume for long term permanent storage that is independent of the cluster life cycle, specify [`EbsSettings`](#SharedStorage-v3-EbsSettings) / [`VolumeId`](#yaml-SharedStorage-EbsSettings-VolumeId)\. If you don't specify [`VolumeId`](#yaml-SharedStorage-EbsSettings-VolumeId), AWS ParallelCluster creates the EBS volume from [`EbsSettings`](#SharedStorage-v3-EbsSettings) when it creates the cluster and deletes the volume and data when the cluster is deleted\. If you use the AWS ParallelCluster managed EBS file system, you can use the [`EbsSettings`](#SharedStorage-v3-EbsSettings) / [DeletionPolicy](#yaml-SharedStorage-EbsSettings-DeletionPolicy) to instruct AWS ParallelCluster to retain or snapshot the volume when the cluster is deleted\.
+
+To use an existing Amazon Elastic File System and Amazon FSx for Lustre file system for long term permanent storage that is independent of the cluster life cycle, specify [`EfsSettings`](#SharedStorage-v3-EfsSettings) / [`FileSystemId`](#yaml-SharedStorage-EfsSettings-FileSystemId) and [`FsxLustreSettings`](#SharedStorage-v3-FsxLustreSettings) / [`FileSystemId`](#yaml-SharedStorage-EfsSettings-FileSystemId)\. If you don't specify `FileSystemId`, AWS ParallelCluster creates the file system from [`EfsSettings`](#SharedStorage-v3-EfsSettings) and [`FsxLustreSettings`](#SharedStorage-v3-FsxLustreSettings) when it creates the cluster and deletes the file system and data when the cluster is deleted\.
 
 For FSx for ONTAP and FSx for OpenZFS, you can use [`FsxOntapSettings`](#SharedStorage-v3-FsxOntapSettings) / [`VolumeId`](#yaml-SharedStorage-FsxOntapSettings-VolumeId) and [`FsxOpenZfsSettings`](#SharedStorage-v3-FsxOpenZfsSettings) / [`VolumeId`](#yaml-SharedStorage-FsxOpenZfsSettings-VolumeId) to specify whether AWS ParallelCluster mounts existing shared file storage for your cluster\.
 
@@ -256,7 +262,7 @@ If you set this option, it only supports file systems:
   + Configure the security groups of the mount target to allow the traffic to and from the CIDR or prefix list of cluster subnets\.
 **Note**  
 AWS ParallelCluster validates that port\(s\) are open and that the CIDR or prefix list is configured\. AWS ParallelCluster doesn't validate the content of CIDR block or prefix list\.
-  + Set custom security groups for cluster nodes by using [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups)\. This way, custom security groups and the security groups of the mount target allow traffic between each other\.
+  + Set custom security groups for cluster nodes by using [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups)\. The custom security groups must be configured to allow traffic between the cluster and the file system\.
 **Note**  
 If all cluster nodes use custom security groups, AWS ParallelCluster only validates that the port\(s\) are open\. AWS ParallelCluster doesn't validate that the source and destination are properly configured\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
@@ -369,13 +375,15 @@ The ID of the AWS Key Management Service \(AWS KMS\) key used to encrypt the FSx
 `FileSystemId` \(**Optional**, `String`\)  
 Specifies the id of an existing FSx for Lustre file system\.  
 If this option is specified, only the `MountDir` and `FileSystemId` settings in the `FsxLustreSettings` are used and any other settings in the `FsxLustreSettings` are ignored\.  
-If you set this option, it only supports file systems:  
-+ That don't have a mount target in the stack's Availability Zone
-
-  OR
-+ That do have an existing mount target in the stack's Availability Zone, with FSx for Lustre file servers and FSx for Lustre client traffic allowed from the `HeadNode` and `ComputeNodes`\. For more information, see [FSx for Lustre inbound and outbound rules](https://docs.aws.amazon.com/fsx/latest/LustreGuide/limit-access-security-groups.html#lustre-client-inbound-outbound-rules)\.
-
-  Verify that [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups) are set correctly for FSx for Lustre file systems\.
+If AWS Batch scheduler is used, FSx for Lustre is only available on the head node\.  
+The file system must be associated to a security group that allows inbound and outbound TCP traffic through ports \[988, 1021, 1022, 1023\]\.
+To make sure traffic is allowed between the cluster and file system, you can do one of the following:  
++ Configure the security groups of the file system to allow the traffic to and from the CIDR or prefix list of cluster subnets\.
+**Note**  
+AWS ParallelCluster validates that port\(s\) are open and that the CIDR or prefix list is configured\. AWS ParallelCluster doesn't validate the content of CIDR block or prefix list\.
++ Set custom security groups for cluster nodes by using [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups)\. The custom security groups must be configured to allow traffic between the cluster and the file system\.
+**Note**  
+If all cluster nodes use custom security groups, AWS ParallelCluster only validates that the port\(s\) are open\. AWS ParallelCluster doesn't validate that the source and destination are properly configured\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `AutoImportPolicy` \(**Optional**, `String`\)  
@@ -391,7 +399,7 @@ This parameter is not supported for file systems using the `PERSISTENT_2` deploy
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `DriveCacheType` \(**Optional**, `String`\)  
-Specifies that the file system has an SSD drive cache\. This can only be set if the `StorageType` setting is set to `HDD`, and the `DeploymentType` setting is set to `PERSISTENT_1`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#file-system-options) in the *Amazon FSx for Lustre User Guide*\.  
+Specifies that the file system has an SSD drive cache\. This can only be set if the `StorageType` setting is set to `HDD`, and the `DeploymentType` setting is set to `PERSISTENT_1`\. This corresponds to the [DriveCacheType](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-drivecachetype) property\. For more information, see [FSx for Lustre deployment options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-fsx-lustre.html) in the *Amazon FSx for Lustre User Guide*\.  
 The only valid value is `READ`\. To disable the SSD drive cache, don’t specify the `DriveCacheType` setting\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
@@ -411,24 +419,26 @@ FsxOntapSettings:
   VolumeId: string
 ```
 
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
-
 ### `FsxOntapSettings` Properties<a name="SharedStorage-v3-FsxOntapSettings.properties"></a>
 
 `VolumeId` \(**Required**, `String`\)  
-Specifies the volume ID of the existing FSx for ONTAP system\.  
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+Specifies the volume ID of the existing FSx for ONTAP system\.
 
 **Note**  
 If an AWS Batch scheduler is used, FSx for ONTAP is only available on the head node\.
 If the FSx for ONTAP deployment type is `Multi-AZ`, make sure the route table of the head node subnet is properly configured\.
 Support for FSx for ONTAP was added in AWS ParallelCluster version 3\.2\.0\.
-The file system must be associated to a security group that allows inbound and outbound TCP and UDP traffic through ports \[111, 635, 2049, 4046\]\.  
-To make sure traffic is allowed between the cluster and file system, you can do one of the following:  
-Configure the security groups of the file system to allow the traffic to and from the CIDR or prefix list of cluster subnets\.  
+The file system must be associated to a security group that allows inbound and outbound TCP and UDP traffic through ports \[111, 635, 2049, 4046\]\.
+
+To make sure traffic is allowed between the cluster and file system, you can do one of the following:
++ Configure the security groups of the file system to allow the traffic to and from the CIDR or prefix list of cluster subnets\.
+**Note**  
 AWS ParallelCluster validates that port\(s\) are open and that the CIDR or prefix list is configured\. AWS ParallelCluster doesn't validate the content of CIDR block or prefix list\.
-Set custom security groups for cluster nodes by using [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups)\. This way, custom security groups and the security groups of the file system allow traffic between each other\.  
++ Set custom security groups for cluster nodes by using [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups)\. The custom security groups must be configured to allow traffic between the cluster and the file system\.
+**Note**  
 If all cluster nodes use custom security groups, AWS ParallelCluster only validates that the port\(s\) are open\. AWS ParallelCluster doesn't validate that the source and destination are properly configured\.
+
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ## `FsxOpenZfsSettings`<a name="SharedStorage-v3-FsxOpenZfsSettings"></a>
 
@@ -444,15 +454,19 @@ FsxOpenZfsSettings:
 ### `FsxOpenZfsSettings` Properties<a name="SharedStorage-v3-FsxOpenZfsSettings.properties"></a>
 
 `VolumeId` \(**Required**, `String`\)  
-Specifies the volume ID of the existing FSx for OpenZFS system\.  
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+Specifies the volume ID of the existing FSx for OpenZFS system\.
 
 **Note**  
 If an AWS Batch scheduler is used, FSx for OpenZFS is only available on the head node\.
 Support for FSx for OpenZFS was added in AWS ParallelCluster version 3\.2\.0\.
-The file system must be associated to a security group that allows inbound and outbound TCP and UDP traffic through ports \[111, 2049, 20001, 20002, 20003\]\.  
-To make sure traffic is allowed between the cluster and file system, you can do one of the following:  
-Configure the security groups of the file system to allow the traffic to and from the CIDR or prefix list of cluster subnets\.  
+The file system must be associated to a security group that allows inbound and outbound TCP and UDP traffic through ports \[111, 2049, 20001, 20002, 20003\]\.
+
+To make sure traffic is allowed between the cluster and file system, you can do one of the following:
++ Configure the security groups of the file system to allow the traffic to and from the CIDR or prefix list of cluster subnets\.
+**Note**  
 AWS ParallelCluster validates that port\(s\) are open and that the CIDR or prefix list is configured\. AWS ParallelCluster doesn't validate the content of CIDR block or prefix list\.
-Set custom security groups for cluster nodes by using [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups)\. This way, custom security groups and the security groups of the file system allow traffic between each other\.  
++ Set custom security groups for cluster nodes by using [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`SecurityGroups`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups) and [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`SecurityGroups`](HeadNode-v3.md#yaml-HeadNode-Networking-SecurityGroups)\. The custom security groups must be configured to allow traffic between the cluster and the file system\.
+**Note**  
 If all cluster nodes use custom security groups, AWS ParallelCluster only validates that the port\(s\) are open\. AWS ParallelCluster doesn't validate that the source and destination are properly configured\.
+
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

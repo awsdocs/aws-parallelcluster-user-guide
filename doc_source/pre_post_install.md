@@ -29,7 +29,7 @@ case "${cfn_node_type}" in
 esac
 ```
 
-## Configuration<a name="configuration"></a>
+## Configuration<a name="pre_post_install-configuration"></a>
 
 The following configuration settings are used to define pre\-install and post\-install actions and arguments\.
 

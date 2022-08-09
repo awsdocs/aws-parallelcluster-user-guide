@@ -1,17 +1,14 @@
 # `[efs]` section<a name="efs-section"></a>
 
-**Topics**
-+ [`efs_fs_id`](#efs-efs-fs-id)
-+ [`efs_kms_key_id`](#efs-efs-kms-key-id)
-+ [`encrypted`](#efs-encrypted)
-+ [`performance_mode`](#efs-performance-mode)
-+ [`provisioned_throughput`](#efs-provisioned-throughput)
-+ [`shared_dir`](#efs-shared-dir)
-+ [`throughput_mode`](#efs-throughput-mode)
+Defines configuration settings for the Amazon EFS that's mounted on the head and compute nodes\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the *Amazon EFS API Reference*\.
 
-Defines configuration settings for the Amazon EFS that's mounted on the head and compute nodes\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the Amazon EFS documentation\.
+To include Amazon EFS file systems in your cluster definition, see ``[cluster]` section` / ``efs_settings``\.
 
-To include Amazon EFS volumes in your cluster definition, see ``[cluster]` section` / ``efs_settings``\.
+To use an existing Amazon EFS file system for long term permanent storage that is independent of the cluster life cycle, specify [`efs_fs_id`](#efs-efs-fs-id)\.
+
+If you don't specify [`efs_fs_id`](#efs-efs-fs-id), AWS ParallelCluster creates the Amazon EFS file system from the `[efs]` settings when it creates the cluster and deletes the file system and data when the cluster is deleted\.
+
+For more information, see [Best practices: moving a cluster to a new AWS ParallelCluster minor or patch version](best-practices.md#best-practices-cluster-upgrades)\.
 
 The format is `[efs efs-name]`\. *efs\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
@@ -21,6 +18,15 @@ shared_dir = efs
 encrypted = false
 performance_mode = generalPurpose
 ```
+
+**Topics**
++ [`efs_fs_id`](#efs-efs-fs-id)
++ [`efs_kms_key_id`](#efs-efs-kms-key-id)
++ [`encrypted`](#efs-encrypted)
++ [`performance_mode`](#efs-performance-mode)
++ [`provisioned_throughput`](#efs-provisioned-throughput)
++ [`shared_dir`](#efs-shared-dir)
++ [`throughput_mode`](#efs-throughput-mode)
 
 ## `efs_fs_id`<a name="efs-efs-fs-id"></a>
 

@@ -20,7 +20,7 @@ The Region where the cluster is launched must have at least one Amazon EC2 key p
 $ pcluster configure
 ```
 
-The configure wizard prompts you for all of the information that's needed to create your cluster\. The details of the sequence differ when using AWS Batch as the scheduler compared to using Slurm\.
+The configure wizard prompts you for all of the information that's needed to create your cluster\. The details of the sequence differ when using AWS Batch as the scheduler compared to using Slurm\. For more information about a cluster configuration, see [Configuration](configuration.md)\.
 
 **Note**  
 Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\. You can continue using them in versions up to and including 2\.11\.4, but they aren't eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\.

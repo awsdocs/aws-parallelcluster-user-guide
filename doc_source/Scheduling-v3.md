@@ -28,7 +28,7 @@ Scheduling:
             Encrypted: boolean
             VolumeType: string
             Iops: integer
-            Throughput: string
+            Throughput: integer
           EphemeralVolume:
             MountDir: string
       CapacityType: string
@@ -240,7 +240,7 @@ SlurmQueues:
           Encrypted: boolean
           VolumeType: string
           Iops: integer
-          Throughput: string
+          Throughput: integer
         EphemeralVolume:
           MountDir: string
     CapacityType: string
@@ -452,8 +452,8 @@ Name for the compute environment for the Slurm queue\.
 
 `InstanceType` \(**Required**, `String`\)  
 The instance type to use in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture, either `x86_64` or `arm64`\.  
-If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information on IP addresses, see [Assign a secondary private IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#ManageMultipleIP)\.  
-[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must launch the compute instances in private subnet as describe in [AWS ParallelCluster using two subnets](network-configuration-v3.md#network-configuration-v3-two-subnets)\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)\.
 
 `MinCount` \(**Optional**, `Integer`\)  
 The minimum number of instances for the Slurm compute resource\. The default is 0\.  
@@ -516,7 +516,7 @@ ComputeSettings:
       Encrypted: boolean
       VolumeType: string
       Iops: integer
-      Throughput: string
+      Throughput: integer
      EphemeralVolume:
       MountDir: string
 ```
@@ -533,7 +533,7 @@ LocalStorage:
     Encrypted: boolean
     VolumeType: string
     Iops: integer
-    Throughput: string
+    Throughput: integer
   EphemeralVolume:
     MountDir: string
 ```
@@ -547,7 +547,7 @@ RootVolume:
   Encrypted: boolean
   VolumeType: string
   Iops: integer
-  Throughput: string
+  Throughput: integer
 ```
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)    
 `Size` \(**Optional**, `Integer`\)  

@@ -1,5 +1,17 @@
 # `[cluster]` section<a name="cluster-definition"></a>
 
+Defines a cluster template that can be used to create a cluster\. A config file can contain multiple `[cluster]` sections\.
+
+The same cluster template can be used to create multiple clusters\.
+
+The format is `[cluster cluster-template-name]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used by default, but can be overridden on the [`pcluster`](pcluster.md) command line\.
+
+*cluster\-template\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
+
+```
+[cluster default]
+```
+
 **Topics**
 + [`additional_cfn_template`](#additional-cfn-template)
 + [`additional_iam_policies`](#additional-iam-policies)
@@ -53,18 +65,6 @@
 + [`tags`](#tags)
 + [`template_url`](#template-url)
 + [`vpc_settings`](#vpc-settings)
-
-Defines a cluster template that can be used to create a cluster\. A config file can contain multiple `[cluster]` sections\.
-
-The same cluster template can be used to create multiple clusters\.
-
-The format is `[cluster cluster-template-name]`\. The [`[cluster]` section](#cluster-definition) named by the [`cluster_template`](global.md#cluster-template) setting in the [`[global]` section](global.md) is used by default, but can be overridden on the [`pcluster`](pcluster.md) command line\.
-
-*cluster\-template\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
-
-```
-[cluster default]
-```
 
 ## `additional_cfn_template`<a name="additional-cfn-template"></a>
 

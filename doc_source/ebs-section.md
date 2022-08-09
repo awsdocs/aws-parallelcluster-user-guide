@@ -1,19 +1,14 @@
 # `[ebs]` section<a name="ebs-section"></a>
 
-**Topics**
-+ [`shared_dir`](#ebs-shared-dir)
-+ [`ebs_kms_key_id`](#ebs-kms-key-id)
-+ [`ebs_snapshot_id`](#ebs-snapshot-id)
-+ [`ebs_volume_id`](#ebs-volume-id)
-+ [`encrypted`](#encrypted)
-+ [`volume_iops`](#volume-iops)
-+ [`volume_size`](#volume-size)
-+ [`volume_throughput`](#volume-throughput)
-+ [`volume_type`](#volume-type)
-
 Defines Amazon EBS volume configuration settings for volumes that are mounted on the head node and shared via NFS to the compute nodes\.
 
 To include Amazon EBS volumes in your cluster definition, see ``[cluster]` section` / ``ebs_settings``\.
+
+To use an existing Amazon EBS volume for long term permanent storage that is independent of the cluster life cycle, specify [`ebs_volume_id`](#ebs-volume-id)\.
+
+If you don't specify [`ebs_volume_id`](#ebs-volume-id), AWS ParallelCluster creates the EBS volume from the `[ebs]` settings when it creates the cluster and deletes the volume and data when the cluster is deleted\.
+
+For more information, see [Best practices: moving a cluster to a new AWS ParallelCluster minor or patch version](best-practices.md#best-practices-cluster-upgrades)\.
 
 The format is `[ebs ebs-name]`\. *ebs\-name* must start with a letter, contain no more than 30 characters, and only contain letters, numbers, hyphens \(\-\), and underscores \(\_\)\.
 
@@ -31,6 +26,17 @@ shared_dir = vol2
 
 ...
 ```
+
+**Topics**
++ [`shared_dir`](#ebs-shared-dir)
++ [`ebs_kms_key_id`](#ebs-kms-key-id)
++ [`ebs_snapshot_id`](#ebs-snapshot-id)
++ [`ebs_volume_id`](#ebs-volume-id)
++ [`encrypted`](#encrypted)
++ [`volume_iops`](#volume-iops)
++ [`volume_size`](#volume-size)
++ [`volume_throughput`](#volume-throughput)
++ [`volume_type`](#volume-type)
 
 ## `shared_dir`<a name="ebs-shared-dir"></a>
 

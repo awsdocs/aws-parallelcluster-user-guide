@@ -29,6 +29,15 @@ Specifies the AWS Region to use\. Defaults to the Region specified by using the 
 
 When the command is called and begins polling for the status of that call, it's safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
 
+**Example using AWS ParallelCluster version 2\.11\.7:**
+
+```
+$ pcluster delete -c path/to/config -r us-east-1 mycluster
+Deleting: mycluster
+Status: RootRole - DELETE_COMPLETE                                              
+Cluster deleted successfully.
+```
+
 To delete the network resources in the VPC, you can delete the CloudFormation networking stack\. The stack name starts with "parallelclusternetworking\-" and contains the creation time in "YYYYMMDDHHMMSS" format\. You can list the stacks using the [list\-stacks](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/ListStacks) command\.
 
 ```
