@@ -206,5 +206,4 @@ Amazon's trademarks and trade dress may not be used in
    + [Identity and Access Management for AWS ParallelCluster](security-iam.md)
    + [Compliance validation for AWS ParallelCluster](security-compliance-validation.md)
    + [Enforcing a Minimum Version of TLS 1.2](security-enforcing-tls.md)
-+ [Document history](document_history.md)
 + [Document history](document_history_md.md)
