@@ -56,6 +56,7 @@ If existing Amazon EFS file systems are the only file systems used in your clust
               "ec2:AttachNetworkInterface",
               "ec2:AuthorizeSecurityGroupEgress",
               "ec2:AuthorizeSecurityGroupIngress",
+              "ec2:CreateFleet",
               "ec2:CreateLaunchTemplate",
               "ec2:CreateLaunchTemplateVersion",
               "ec2:CreateNetworkInterface",
