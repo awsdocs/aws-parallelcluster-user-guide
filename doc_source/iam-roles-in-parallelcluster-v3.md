@@ -93,6 +93,7 @@ If existing Amazon EFS file systems are the only file systems used in your clust
               "dynamodb:DeleteTable",
               "dynamodb:GetItem",
               "dynamodb:PutItem",
+              "dynamodb:UpdateItem",
               "dynamodb:Query",
               "dynamodb:TagResource"
           ],
@@ -870,6 +871,7 @@ Here is the minimal set of policies to be used as part of this role when the sch
               "Action": [
                   "dynamodb:GetItem",
                   "dynamodb:PutItem",
+                  "dynamodb:UpdateItem",
                   "dynamodb:BatchWriteItem"
               ],
               "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",
