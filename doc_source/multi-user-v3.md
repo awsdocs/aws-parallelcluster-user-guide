@@ -40,9 +40,9 @@ Configure your cluster to integrate with a directory by specifying the relevant 
 You can use this following example to integrate your cluster with an AWS Managed Microsoft AD over LDAP\.
 
 **Specific definitions that are required for an AWS Managed Microsoft AD over LDAP configuration:**
-+ You must set the `ldap_auth_disable_tls_never_use_in_production` parameter to `True` under `AdditionalSssdConfigs`\.
-+ You can specify either controllers hostnames or IP addresses for `DomainAddr`\.
-+ `DomainReadOnlyUser` syntax must be as follows:
++ You must set the `ldap_auth_disable_tls_never_use_in_production` parameter to `True` under [`DirectoryService`](DirectoryService-v3.md) / [`AdditionalSssdConfigs`](DirectoryService-v3.md#yaml-DirectoryService-AdditionalSssdConfigs)\.
++ You can specify either controllers hostnames or IP addresses for [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr)\.
++ [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```
   cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
@@ -127,34 +127,28 @@ DirectoryService:
 
 **Considerations:**
 + We recommend that you use LDAP over TLS/SSL \(or LDAPS\) rather than LDAP alone\. TLS/SSL ensures that the connection is encrypted\.
-+ The `DomainAddr` property value matches the entries in the `DnsIpAddrs` list from the `describe-directories` output\.
-+ We recommend that your cluster use subnets that are located in the same Availability Zone that the `DomainAddr` points to\. If you use [custom Dynamic Host Configuration Protocol \(DHCP\) configuration](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/dhcp_options_set.html) that's recommended for directory VPCs and your subnets *aren't* located in the `DomainAddr` Availability Zone, cross traffic among Availability Zones is possible\. The use of custom DHCP configurations *isn't* required to make use of the multi\-user AD integration feature\.
-+ The `DomainReadOnlyUser` property value specifies a user that must be created in the directory\. This user *isn't* created by default\. We recommend that you *don't* give this user permission to modify directory data\.
-+ The `PasswordSecretArn` property value points to an AWS Secrets Manager secret that contains the password of the user that you specified for the `DomainReadOnlyUser` property\. If this user’s password changes, update the secret value and update the configuration on the cluster instances\. Before you update the instances, make sure to stop the cluster’s compute fleet\. Alternatively, you can run the following command on any active cluster nodes, starting first with the head node\.
++ The [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) property value matches the entries in the `DnsIpAddrs` list from the `describe-directories` output\.
++ We recommend that your cluster use subnets that are located in the same Availability Zone that the [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) points to\. If you use [custom Dynamic Host Configuration Protocol \(DHCP\) configuration](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/dhcp_options_set.html) that's recommended for directory VPCs and your subnets *aren't* located in the [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) Availability Zone, cross traffic among Availability Zones is possible\. The use of custom DHCP configurations *isn't* required to make use of the multi\-user AD integration feature\.
++ The [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) property value specifies a user that must be created in the directory\. This user *isn't* created by default\. We recommend that you *don't* give this user permission to modify directory data\.
++ The [`DirectoryService`](DirectoryService-v3.md) / [`PasswordSecretArn`](DirectoryService-v3.md#yaml-DirectoryService-PasswordSecretArn) property value points to an AWS Secrets Manager secret that contains the password of the user that you specified for the [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) property\. If this user’s password changes, update the secret value and update the cluster\. To update the cluster for the new secret value, you must stop the compute fleet with the `pcluster update-compute-fleet` command and then run the following command from within the cluster head node\.
 
   ```
-  sudo cinc-client \
-    --local-mode \
-    --config /etc/chef/client.rb \
-    --log_level auto \
-    --force-formatter \
-    --no-color \
-    --chef-zero-port 8889 \
-    --json-attributes /etc/chef/dna.json \
-    --override-runlist aws-parallelcluster-config::directory_service
+   sudo ./opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
   ```
 
 For another example, see also [Integrating Active Directory](tutorials_05_multi-user-ad.md)\.
 
 ## Log in to a cluster integrated with an AD domain<a name="login-addircluster-v3"></a>
 
-If you enabled the AD domain integration feature, authentication by password is enabled on the cluster head node\. The home directory of an AD user is created at the first user login into the head node or the first time a sudo\-user switches to the AD user on the head node\.
+If you enabled the AD domain integration feature, authentication by password is enabled on the cluster head node\. The home directory of an AD user is created at the first user login to the head node or the first time a sudo\-user switches to the AD user on the head node\.
 
 Password authentication isn't enabled for cluster compute nodes\. AD users must log in to compute nodes with SSH keys\.
 
-By default, SSH keys are set up in the AD user `/${HOME}/.ssh` directory at the first SSH login to the head node\. This behavior can be disabled by setting `GenerateSshKeysForUsers` boolean property to `false` in the cluster configuration\. By default, `GenerateSshKeysForUsers` is set to `true`\.
+By default, SSH keys are set up in the AD user `/${HOME}/.ssh` directory at the first SSH login to the head node\. This behavior can be disabled by setting [`DirectoryService`](DirectoryService-v3.md) / [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) boolean property to `false` in the cluster configuration\. By default, [`DirectoryService`](DirectoryService-v3.md) / [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) is set to `true`\.
 
 If a AWS ParallelCluster application requires password\-less SSH between cluster nodes, make sure that the SSH keys have been correctly set up in the user's home directory\.
+
+AWS Managed Microsoft AD passwords expire after 42 days\. For more information, see [Manage password policies for AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_password_policies.html) in the *AWS Directory Service Administration Guide*\. If your password expires, it must be reset to restore cluster access\. For more information, see [How to reset a user password and expired passwords](troubleshooting-v3.md#troubleshooting-v3-multi-user-reset-passwd)\.
 
 **Note**  
 If the AD integration feature doesn't work as expected, the SSSD logs can provide useful diagnostic information for troubleshooting the issue\. These logs are located in the `/var/log/sssd` directory on cluster nodes\. By default, they're also stored in a cluster’s Amazon CloudWatch log group\.  
@@ -182,14 +176,14 @@ The following examples show how to create cluster configurations to integrate wi
 You can use this example to integrate your cluster with an AWS Managed Microsoft AD over LDAPS, with certificate verification\.
 
 **Specific definitions for an AWS Managed Microsoft AD over LDAPS with certificates configuration:**
-+ `LdapTlsReqCert` must be set to `hard` \(default\) for LDAPS with certificate verification\.
-+ `LdapTlsCaCert` must specify the path to your certificate of authority \(CA\) certificate\.
++ [`DirectoryService`](DirectoryService-v3.md) / [`LdapTlsReqCert`](DirectoryService-v3.md#yaml-DirectoryService-LdapTlsReqCert) must be set to `hard` \(default\) for LDAPS with certificate verification\.
++ [`DirectoryService`](DirectoryService-v3.md) / [`LdapTlsCaCert`](DirectoryService-v3.md#yaml-DirectoryService-LdapTlsCaCert) must specify the path to your certificate of authority \(CA\) certificate\.
 
   The CA certificate is a certificate bundle that contains the certificates of the entire CA chain that issued certificates for the AD domain controllers\.
 
   Your CA certificate and certificates must be installed on the cluster nodes\.
-+ Controllers hostnames must be specified for `DomainAddr`, not IP addresses\.
-+ `DomainReadOnlyUser` syntax must be as follows:
++ Controllers hostnames must be specified for [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr), not IP addresses\.
++ [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```
   cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
@@ -297,9 +291,9 @@ $ nslookup 192.0.2.254
 You can use this example to integrate your cluster with an AWS Managed Microsoft AD over LDAPS, without certificate verification\.
 
 **Specific definitions for an AWS Managed Microsoft AD over LDAPS without certificate verification configuration:**
-+ `LdapTlsReqCert` must be set to `never`\.
-+ Either controllers hostnames or IP addresses can be specified for `DomainAddr`\.
-+ `DomainReadOnlyUser` syntax must be as follows:
++ [`DirectoryService`](DirectoryService-v3.md) / [`LdapTlsReqCert`](DirectoryService-v3.md#yaml-DirectoryService-LdapTlsReqCert) must be set to `never`\.
++ Either controllers hostnames or IP addresses can be specified for [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr)\.
++ [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```
   cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com

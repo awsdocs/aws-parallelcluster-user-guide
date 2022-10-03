@@ -2,7 +2,7 @@
 
 **Note**  
 This section only applies to AWS ParallelCluster versions up to and including version 2\.11\.4\. Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of SGE or Torque schedulers\. You can continue using them in versions up to and including 2\.11\.4, but they aren't eligible for future updates or troubleshooting support from the AWS service and AWS Support teams\.  
-Before AWS ParallelCluster version 2\.9\.0, Auto Scaling was used with Slurm Workload Manager \(Slurm\)\. To learn about Slurm and multiple queue scaling, see the [Multiple queue mode tutorial](tutorial-mqm.md)\.
+Starting with AWS ParallelCluster version 2\.9\.0, Auto Scaling isn't supported for use with Slurm Workload Manager \(Slurm\)\. To learn about Slurm and multiple queue scaling, see the [Multiple queue mode tutorial](tutorial-mqm.md)\.
 
 The auto scaling strategy that's described in this topic applies to HPC clusters that are deployed with either Son of Grid Engine \(SGE\) or Torque Resource Manager \(Torque\)\. When deployed with one of these schedulers, AWS ParallelCluster implements the scaling capabilities by managing the Auto Scaling group of the compute nodes, and then changing the scheduler configuration as needed\. For HPC clusters that are based on AWS Batch, AWS ParallelCluster relies on the elastic scaling capabilities provided by the AWS managed job scheduler\. For more information, see [What is Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html) in the *Amazon EC2 Auto Scaling User Guide*\.
 

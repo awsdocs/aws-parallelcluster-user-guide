@@ -5,7 +5,7 @@ For information about Slurm, see [https://slurm\.schedmd\.com](https://slurm.sch
 
 | AWS ParallelCluster version\(s\) | Supported Slurm version | 
 | --- | --- | 
-|  3\.1\.4  |  21\.08\.8\-2  | 
+|  3\.1\.4, 3\.2\.0  |  21\.08\.8\-2  | 
 |  3\.1\.2, 3\.1\.3  |  21\.08\.6  | 
 |  3\.1\.1  |  21\.08\.5  | 
 |  3\.0\.0  |  20\.11\.8  | 

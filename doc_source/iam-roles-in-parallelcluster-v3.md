@@ -871,7 +871,6 @@ Here is the minimal set of policies to be used as part of this role when the sch
               "Action": [
                   "dynamodb:GetItem",
                   "dynamodb:PutItem",
-                  "dynamodb:UpdateItem",
                   "dynamodb:BatchWriteItem"
               ],
               "Resource": "arn:aws:dynamodb:<REGION>:<AWS ACCOUNT ID>:table/parallelcluster-*",

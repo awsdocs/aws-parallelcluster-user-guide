@@ -6,7 +6,7 @@
 
  AWS ParallelCluster API is distributed as a self\-contained [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) template mainly consisting of an [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) endpoint, that exposes AWS ParallelCluster features, and an [AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) function, that takes care of executing the invoked features\. 
 
- The image below shows a high level architecture diagram of the AWS ParallelCluster API infrastructure\.
+The following image shows a high level architecture diagram of the AWS ParallelCluster API infrastructure\.
 
  ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/API-Architecture.png) 
 

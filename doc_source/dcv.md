@@ -6,6 +6,8 @@ NICE DCV software is automatically installed on the head node when using [`base_
 
 If the head node is an ARM instance, the NICE DCV software is automatically installed on it when using [`base_os`](cluster-definition.md#base-os)` = alinux2`, [`base_os`](cluster-definition.md#base-os)` = centos7`, or [`base_os`](cluster-definition.md#base-os)` = ubuntu1804`\.
 
+If [`base_os`](cluster-definition.md#base-os) is `ubuntu1804` or `ubuntu2004` and the cluster is configured to use [Intel MPI](intelmpi.md) modules, see [Ubuntu, Intel MPI modules, and NICE DCV](troubleshooting.md#nice-dcv-troubleshooting-modules)\.
+
 To enable NICE DCV on the head node, [`dcv_settings`](cluster-definition.md#dcv-settings) must contain the name of a [`[dcv]` section](dcv-section.md) that has [`enable`](dcv-section.md#dcv-section-enable)` = master` and [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`\. If the head node is an ARM instance, [`base_os`](cluster-definition.md#base-os) must be set to `alinux2`, `centos7`, or `ubuntu1804`\. This way, AWS ParallelCluster sets the cluster configuration parameter [`shared_dir`](cluster-definition.md#cluster-shared-dir) to the [DCV server storage folder](https://docs.aws.amazon.com/dcv/latest/adminguide/manage-storage.html)\.
 
 ```

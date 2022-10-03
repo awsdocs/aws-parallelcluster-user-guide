@@ -15,6 +15,8 @@ module-git                 modules                    openmpi/4.0.2
 intelmpi
 ```
 
+If you are using a [DCV](dcv.md) client and [`base_os`](cluster-definition.md#base-os) is `ubuntu1804` or `ubuntu2004`, see [Ubuntu, Intel MPI modules, and NICE DCV](troubleshooting.md#nice-dcv-troubleshooting-modules)\.
+
 To load a module, run `module load modulename`\. You can add this to the script used to run `mpirun`\.
 
 ```

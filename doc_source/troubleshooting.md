@@ -270,9 +270,46 @@ This includes Torque Resource Manager and related files\. \(Conditional, only if
 
 ## Troubleshooting issues in NICE DCV<a name="nice-dcv-troubleshooting"></a>
 
+**Topics**
++ [Logs for NICE DCV](#nice-dcv-troubleshooting-logs)
++ [NICE DCV instance type memory](#nice-dcv-troubleshooting-memory)
++ [Ubuntu, Intel MPI modules, and NICE DCV](#nice-dcv-troubleshooting-modules)
+
+### Logs for NICE DCV<a name="nice-dcv-troubleshooting-logs"></a>
+
 The logs for NICE DCV are written to files in the `/var/log/dcv/` directory\. Reviewing these logs can help to troubleshoot issues\.
 
+### NICE DCV instance type memory<a name="nice-dcv-troubleshooting-memory"></a>
+
 The instance type should have at least 1\.7 gibibyte \(GiB\) of RAM to run NICE DCV\. Nano and micro instance types don't have enough memory to run NICE DCV\.
+
+### Ubuntu, Intel MPI modules, and NICE DCV<a name="nice-dcv-troubleshooting-modules"></a>
+
+If [`base_os`](cluster-definition.md#base-os) is `ubuntu1804` or `ubuntu2004` and the cluster is configured to use [Intel MPI](intelmpi.md) modules, you'll see the following from the Ubuntu terminal in the [DCV](dcv.md) client when you run `module avail`:
+
+```
+$ module avail
+module: command not found
+```
+
+You must source from `/etc/profile`:
+
+```
+$ . /etc/profile
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+module avail
+----------------------------- /usr/share/modules/modulefiles ------------------------------
+dot                           module-git   modules  openmpi/4.1.4  
+libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+
+----------------------------- /usr/share/modules/modulefiles ------------------------------
+dot                           module-git   modules  openmpi/4.1.4  
+libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+
+--------------------------- /opt/intel/mpi/2021.4.0/modulefiles ---------------------------
+intelmpi
+```
 
 ## Troubleshooting issues in clusters with AWS Batch integration<a name="clusters-with-aws-batch-integration"></a>
 

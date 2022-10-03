@@ -443,11 +443,45 @@ The following directories are shared between the nodes and cannot be replaced\.
 
 ## Troubleshooting issues in NICE DCV<a name="troubleshooting-v3-nice-dcv"></a>
 
+**Topics**
++ [Logs for NICE DCV](#troubleshooting-v3-nice-dcv-logs)
++ [Ubuntu, Intel MPI modules, and NICE DCV](#troubleshooting-v3-nice-dcv-modules)
+
+### Logs for NICE DCV<a name="troubleshooting-v3-nice-dcv-logs"></a>
+
 The logs for NICE DCV are written to files in the `/var/log/dcv/` directory\. Reviewing these logs can help to troubleshoot issues\.
 
 The instance type should have at least 1\.7 gibibyte \(GiB\) of RAM to run NICE DCV\. Nano and micro instance types don't have enough memory to run NICE DCV\.
 
 AWS ParallelCluster creates NICE DCV log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
+
+### Ubuntu, Intel MPI modules, and NICE DCV<a name="troubleshooting-v3-nice-dcv-modules"></a>
+
+If [`Image`](Image-v3.md) / [`Os`](Image-v3.md#yaml-Image-Os) is `ubuntu1804` or `ubuntu2004` and the cluster is configured to use [Intel MPI](intelmpi-v3.md) modules, you'll see the following from the Ubuntu terminal in the [DCV](dcv-v3.md) client when you run `module avail`:
+
+```
+$ module avail
+module: command not found
+```
+
+You must source from `/etc/profile`:
+
+```
+$ . /etc/profile
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+module avail
+----------------------------- /usr/share/modules/modulefiles ------------------------------
+dot                           module-git   modules  openmpi/4.1.4  
+libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+
+----------------------------- /usr/share/modules/modulefiles ------------------------------
+dot                           module-git   modules  openmpi/4.1.4  
+libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+
+--------------------------- /opt/intel/mpi/2021.4.0/modulefiles ---------------------------
+intelmpi
+```
 
 ## Troubleshooting issues in clusters with AWS Batch integration<a name="troubleshooting-v3-batch"></a>
 
@@ -491,7 +525,7 @@ If the Active Directory \(AD\) integration feature isn't working as expected the
 + [How to move from LDAPS to LDAP](#troubleshooting-v3-multi-user-ldaps-ldap)
 + [How to disable LDAPS server certificate verification](#troubleshooting-v3-multi-user-ldaps-verify)
 + [How to log in with a SSH key rather than password](#troubleshooting-v3-multi-user-ssh-login)
-+ [How to reset a user password](#troubleshooting-v3-multi-user-reset-passwd)
++ [How to reset a user password and expired passwords](#troubleshooting-v3-multi-user-reset-passwd)
 + [How to verify the joined domain](#troubleshooting-v3-multi-user-domain-verify)
 + [How to troubleshoot issues with certificates](#troubleshooting-v3-multi-user-certificates)
 + [How to verify that the integration with AD is working](#troubleshooting-v3-multi-user-ad-verify)
@@ -578,9 +612,11 @@ The SSH key is created in `/home/$user/.ssh/id_rsa` after the first time you log
 $ ssh -i $LOCAL_PATH_TO_SSH_KEY $username@$head_node_ip
 ```
 
-### How to reset a user password<a name="troubleshooting-v3-multi-user-reset-passwd"></a>
+### How to reset a user password and expired passwords<a name="troubleshooting-v3-multi-user-reset-passwd"></a>
 
-Run the following command with a user and role having write permission on the directory:
+If a user loses access to a cluster, their [AWS Managed Microsoft AD password might have expired](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_password_policies.html)\.
+
+To reset the password, run the following command with a user and role having write permission on the directory:
 
 ```
 $ aws ds reset-user-password \
@@ -589,6 +625,22 @@ $ aws ds reset-user-password \
   --new-password "NEW_PASSWORD" \
   --region "region-id"
 ```
+
+If you reset the password for the [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser):
+
+1. Be sure to update the [`DirectoryService`](DirectoryService-v3.md) / [`PasswordSecretArn`](DirectoryService-v3.md#yaml-DirectoryService-PasswordSecretArn) secret with the new password\.
+
+1. Update the cluster for the new secret value:
+
+   1. Stop the compute fleet with the `pcluster update-compute-fleet` command\.
+
+   1. Run the following command from within the cluster head node\.
+
+      ```
+      $ sudo ./opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
+      ```
+
+After the password reset and cluster update, the user's cluster access should be restored\.
 
 For more information, see [Reset a user password](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_manage_users_groups_reset_password.html) in the *AWS Directory Service Administration Guide*\.
 

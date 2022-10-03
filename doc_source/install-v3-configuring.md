@@ -112,9 +112,11 @@ Maximum instance count [10]:
 Placement Group name []:
 ```
 
-After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your quota for the number of VPCs allowed in a Region\. The default quota is five VPCs for a Region\. For more information about this quota and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one for you\. It either places both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all compute nodes in a private subnet\. If you let AWS ParallelCluster create a VPC, you must decide if all nodes are to be in a public subnet\. For more information, see [Network configurations](network-configuration-v3.md)\.
 
-If you let AWS ParallelCluster create a VPC, you must decide if all nodes should be in a public subnet\.
+If you configure your cluster to use instance types that have multiple network interfaces or a network card, see [Network configurations](network-configuration-v3.md) for additional networking requirements\.
+
+It's possible to reach your quota for the number of VPCs allowed in a Region\. The default quota is five VPCs for a Region\. For more information about this quota and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
 **Important**  
 VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.

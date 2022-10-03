@@ -28,7 +28,13 @@ You must add permissions to the Amazon S3 bucket policy to grant CloudWatch acce
 The image ID whose logs will be exported\.
 
 `--bucket-prefix BUCKET_PREFIX`  
-Specifies prefix for the path under which exported logs data will be stored in the Amazon S3 bucket\.
+Specifies the path in the Amazon S3 bucket where exported logs data is to be stored\.  
+By default, the bucket\-prefix is:  
+
+```
+ami-id-logs-202209061743.tar.gz
+```
+`202209061743` is the current time in `%Y%m%d%H%M` format\.
 
 `--debug`  
 Enables debug logging\.

@@ -1,6 +1,6 @@
 # AWS ParallelCluster AMI customization<a name="custom-ami-v3"></a>
 
-Though building a custom AMI isn't ideal, there are scenarios where building a custom AMI for AWS ParallelCluster is necessary\. In this section, learn how AWS ParallelCluster supports customization of AWS ParallelCluster AMIs and what you need to consider when building them\.
+There are scenarios where building a custom AMI for AWS ParallelCluster is necessary\. In this section, learn how AWS ParallelCluster supports customization of AWS ParallelCluster AMIs and what you need to consider when building them\.
 
 There are two ways to build a custom AWS ParallelCluster AMI\.
 

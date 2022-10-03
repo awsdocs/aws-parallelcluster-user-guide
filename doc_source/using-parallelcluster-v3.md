@@ -11,6 +11,7 @@
 + [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)
 + [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md)
 + [Elastic Fabric Adapter](efa-v3.md)
++ [Enable Intel MPI](intelmpi-v3.md)
 + [AWS ParallelCluster API](api-reference-v3.md)
 + [Connect to the head node through NICE DCV](dcv-v3.md)
 + [Using `pcluster update-cluster`](using-pcluster-update-cluster-v3.md)
