@@ -888,7 +888,10 @@ Here is the minimal set of policies to be used as part of this role when the sch
               "Effect": "Allow"
           },
           {
-              "Action": "ec2:RunInstances",
+              "Action": [
+                   "ec2:RunInstances",
+                   "ec2:CreateFleet"
+              ],
               "Resource": "*",
               "Effect": "Allow"
           },
@@ -914,7 +917,8 @@ Here is the minimal set of policies to be used as part of this role when the sch
                   "ec2:DescribeInstances",
                   "ec2:DescribeInstanceStatus",
                   "ec2:DescribeVolumes",
-                  "ec2:DescribeInstanceAttribute"
+                  "ec2:DescribeInstanceAttribute",
+                  "ec2:DescribeCapacityReservations"
               ],
               "Resource": "*",
               "Effect": "Allow"
