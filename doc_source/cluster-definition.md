@@ -951,10 +951,11 @@ For more information, see [AWS CloudFormation resource tags type](https://docs.a
 tags = {"key" : "value", "key2" : "value2"}
 ```
 
-[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 **Note**  
 The update policy did not support changing the `tags` setting for AWS ParallelCluster version 2\.8\.0 through version 2\.9\.1\.
+For versions from 2\.10\.0 through version 2\.11\.7 the update policy wrongly supports changing the `tags` setting, but the cluster update when modifying this setting is not really supported\.
 
 ## `template_url`<a name="template-url"></a>
 
