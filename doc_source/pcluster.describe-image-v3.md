@@ -33,7 +33,7 @@ Specifies the AWS Region to use\. The Region must be specified, using the `AWS_D
 $ pcluster describe-image --image-id custom-alinux2-image
 {
   "imageConfiguration": {
-    "url": "https://parallelcluster-1234abcd5678-v1-do-not-delete..."
+    "url": "https://parallelcluster-1234abcd5678-v1-do-not-delete.../configs/image-config.yaml"
   },
   "imageId": "custom-alinux2-image",
   "creationTime": "2022-04-05T20:23:07.000Z"
