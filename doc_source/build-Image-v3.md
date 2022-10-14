@@ -1,6 +1,6 @@
 # `Image` section<a name="build-Image-v3"></a>
 
-**\(Required\)** Defines the image properties for the image build\.
+**\(Optional\)** Defines the image properties for the image build\.
 
 ```
 Image:
