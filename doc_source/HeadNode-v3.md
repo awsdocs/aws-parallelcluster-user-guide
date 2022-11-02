@@ -56,17 +56,9 @@ HeadNode:
       - Policy: string
   Imds:
     Secured: boolean
+  Image:
+    CustomAmi: string
 ```
-
-**Topics**
-+ [`HeadNode` properties](#HeadNode-v3.properties)
-+ [`Networking`](#HeadNode-v3-Networking)
-+ [`Ssh`](#HeadNode-v3-Ssh)
-+ [`LocalStorage`](#HeadNode-v3-LocalStorage)
-+ [`Dcv`](#HeadNode-v3-Dcv)
-+ [`CustomActions`](#HeadNode-v3-CustomActions)
-+ [`Iam`](#HeadNode-v3-Iam)
-+ [`Imds`](#HeadNode-v3-Imds)
 
 ## `HeadNode` properties<a name="HeadNode-v3.properties"></a>
 
@@ -292,16 +284,16 @@ CustomActions:
 ### `CustomActions` properties<a name="HeadNode-v3-CustomActions.properties"></a>
 
 `OnNodeStart` \(**Optional**, `String`\)  
-Specifies a script to run on the head node before any node deployment bootstrap action is started\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\.    
+Specifies a script to run on the head node before any node deployment bootstrap action is started\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
 List of arguments to pass to the script\.
 
 `OnNodeConfigured` \(**Optional**, `String`\)  
-Specifies a script to run on the head node after the node bootstrap actions are complete\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\.    
+Specifies a script to run on the head node after the node bootstrap actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
 `Script` \(**Required**, `String`\)  
-Specifies the file to use\. The file path can start with `https://`, `s3://`, or `file://`\.  
+Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
 List of arguments to pass to the script\.
 
@@ -408,5 +400,44 @@ $ sudo /opt/parallelcluster/scripts/imds/imds-access.sh --allow <USERNAME>
 You can disable user IMDS access with the `--deny` option for this command\.  
 If you unknowingly disable `default` user IMDS access, you can restore the permission by using the `--allow` option\.  
 Any customization of `iptables` or `ip6tables` rules can interfere with the mechanism used to restrict IMDS access on the head node\.
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
+## `Image`<a name="HeadNode-v3-Image"></a>
+
+**\(Optional\)** Defines a custom image for the head node\.
+
+```
+Image:
+     CustomAmi: string
+```
+
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+
+### `Image` Properties<a name="HeadNode-v3-Image.properties"></a>
+
+`CustomAmi` \(**Optional**, `String`\)  
+Specifies the ID of a custom AMI to use for the head node instead of the default AMI\. For more information, see [AWS ParallelCluster AMI customization](custom-ami-v3.md)\.  
+If the custom AMI requires additional permissions for its launch, these permissions must be added to both the user and head node policies\.  
+For example, if a custom AMI has an encrypted snapshot associated with it, the following additional policies are required in both the user and head node policies:  
+
+```
+{
+     "Version": "2012-10-17",
+     "Statement": [
+         {
+             "Effect": "Allow",
+             "Action": [
+                 "kms:DescribeKey",
+                 "kms:ReEncrypt*",
+                 "kms:CreateGrant",
+                 "kms:Decrypt"
+             ],
+             "Resource": [
+                 "arn:aws:kms:<AWS_REGION>:<AWS_ACCOUNT_ID>:key/<AWS_KMS_KEY_ID>"
+             ]                                                    
+         }
+     ]
+  }
+```
+To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3.md#troubleshooting-v3-custom-amis)\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)

@@ -11,12 +11,11 @@ Although the head node doesn't run any job, its functions and its sizing are cru
 ## Best practices: network performance<a name="best-practices-network-performance-v3"></a>
 
 Network performance is critical to ensuring high performance computing \(HPC\) applications perform as expected\. We recommend these three best practices to optimize your network performance\.
-+ **Placement group:** a cluster placement group is a logical grouping of instances within a single Availability Zone\. For more information on placement groups, see [placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\. If you are using Slurm, you can configure each Slurm queue to use a cluster placement group by specifying a [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) in the queue's [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) settings\.
++ **Placement group:** a cluster placement group is a logical grouping of instances within a single Availability Zone\. For more information on placement groups, see [placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\. If you're using Slurm, you can configure each Slurm queue and/or compute resource to use a placement group\. When specifying a [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) in the queue's [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) section, each compute resource is assigned to the queue's placement group\. When specifying a [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Networking-PlacementGroup) in the compute resource's [`Networking`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Networking) section, that specific compute resource is assigned to that placement group\. The compute resource placement group specification overrides the queue specification for the compute resource\. For more information, see [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) and [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`ComputeResources`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) / [`Networking`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Networking) / [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Networking-PlacementGroup)\.
 
   ```
   Networking:
     PlacementGroup:
-      Enabled: true
       Id: your-placement-group-name
   ```
 
@@ -27,6 +26,10 @@ Network performance is critical to ensuring high performance computing \(HPC\) a
     PlacementGroup:
       Enabled: true
   ```
+
+  Starting with AWS ParallelCluster version 3\.3\.0, placement group creation and management is modified\. When you specifiy the placement group to be enabled, without a `name` or `Id`, in the queue, each compute resource is assigned its own managed placement group, instead of one managed group for the entire queue\. This helps to reduce insufficient capacity errors\. If you need to have one placement group for the entire queue, you can use a named placement group\.
+
+  [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Name) was added as a preferred alternative to [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Id`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Id)\.
 
   For more information, see [`Networking`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking)\.
 + **Enhanced networking:** Consider choosing an instance type that supports enhanced networking\. This applies to all [current generation instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#current-gen-instances)\. For more information, see [enhanced networking on Linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enhanced-networking.html) in the *Amazon EC2 User Guide for Linux Instances*\.

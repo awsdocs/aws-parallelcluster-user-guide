@@ -9,3 +9,4 @@ The following tutorials show you how to get started with AWS ParallelCluster ver
 + [Configuring shared storage encryption with a AWS KMS key](tutorials_04_encrypted_kms_fs-v3.md)
 + [Running jobs in a multiple queue mode cluster](multi-queue-tutorial-v3.md)
 + [Using the AWS ParallelCluster API](tutorials_06_API_use.md)
++ [Creating a cluster with Slurm accounting](tutorials_07_slurm-accounting-v3.md)

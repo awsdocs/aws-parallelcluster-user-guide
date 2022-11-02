@@ -217,7 +217,7 @@ compute_root_volume_size = 35
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. For more information, see [Modify an AWS ParallelCluster AMI](tutorials_02_ami_customization.md#modify-an-aws-parallelcluster-ami) or [Build a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md#build-a-custom-aws-parallelcluster-ami)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. For more information, see [Modify an AMI](tutorials_02_ami_customization.md#modify-an-aws-parallelcluster-ami) or [Build a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md#build-a-custom-aws-parallelcluster-ami)\.
 
 There is no default value\.
 
@@ -954,8 +954,8 @@ tags = {"key" : "value", "key2" : "value2"}
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
 **Note**  
-The update policy did not support changing the `tags` setting for AWS ParallelCluster version 2\.8\.0 through version 2\.9\.1\.
-For versions from 2\.10\.0 through version 2\.11\.7 the update policy wrongly supports changing the `tags` setting, but the cluster update when modifying this setting is not really supported\.
+The update policy did not support changing the `tags` setting for AWS ParallelCluster version 2\.8\.0 through version 2\.9\.1\.  
+For versions 2\.10\.0 through version 2\.11\.7, the listed update policy that supported changing the `tags` setting isn't accurate\. A cluster update when modifying this setting isn't supported\.
 
 ## `template_url`<a name="template-url"></a>
 

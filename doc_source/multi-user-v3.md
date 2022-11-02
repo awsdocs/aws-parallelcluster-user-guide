@@ -6,8 +6,7 @@ In this topic, an AWS ParallelCluster user refers to a system user for compute i
 
 AWS ParallelCluster multi\-user access support is available in all the AWS Regions where AWS ParallelCluster is currently available\. It works with other AWS services, including [Amazon FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html) and [Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html)\.
 
-You can use an [AWS Directory Service for Microsoft Active Directory](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) or [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) to manage cluster access\. 
-Be sure to check [AWS Region Availability](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/regions.html) for these services. To set up a cluster, specify an [AWS ParallelCluster DirectoryService](DirectoryService-v3.md) configuration\. AWS Directory Service directories can be connected to multiple clusters\. This allows for centralized management of identities across multiple environments and a unified login experience\.
+You can use an [AWS Directory Service for Microsoft Active Directory](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) or [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) to manage cluster access\. Be sure to check [AWS Region availability](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/regions.html) for these services\. To set up a cluster, specify an [AWS ParallelCluster DirectoryService](DirectoryService-v3.md) configuration\. AWS Directory Service directories can be connected to multiple clusters\. This allows for centralized management of identities across multiple environments and a unified login experience\.
 
 When you use AWS Directory Service for AWS ParallelCluster multiple access, you can log in to the cluster with user credentials that have been defined in the directory\. These credentials consist of a user name and password\. After you log in to the cluster for the first time, a user SSH key is automatically generated\. You can use it to log in without a password\.
 
@@ -134,7 +133,7 @@ DirectoryService:
 + The [`DirectoryService`](DirectoryService-v3.md) / [`PasswordSecretArn`](DirectoryService-v3.md#yaml-DirectoryService-PasswordSecretArn) property value points to an AWS Secrets Manager secret that contains the password of the user that you specified for the [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) property\. If this user’s password changes, update the secret value and update the cluster\. To update the cluster for the new secret value, you must stop the compute fleet with the `pcluster update-compute-fleet` command and then run the following command from within the cluster head node\.
 
   ```
-   sudo ./opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
+   sudo /opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
   ```
 
 For another example, see also [Integrating Active Directory](tutorials_05_multi-user-ad.md)\.

@@ -4,6 +4,8 @@
 
 ```
 Build:
+  Imds:
+    ImdsSupport: string
   InstanceType: string
   SubnetId: string
   ParentImage: string
@@ -40,6 +42,26 @@ Specifies the base image\. The parent image can be either a non AWS ParallelClus
 
 `SecurityGroupIds` \(**Optional**, `[String]`\)  
 Specifies the list of security group IDs for the image\.
+
+### `Imds`<a name="Build-v3-Imds"></a>
+
+#### `Imds` Properties<a name="Build-v3-Imds.properties"></a>
+
+**\(Optional\)** Specifies the EC2 ImageBuilder build and test instance instance metadata service \(IMDS\) settings\.
+
+```
+Imds:
+  ImdsSupport: string
+```
+
+`ImdsSupport` \(**Optional**, `String`\)  
+Specifies which IMDS versions are supported in the EC2 ImageBuilder build and test instances\. Supported values are `v2.0` and `v1.0`\. The default value is `v1.0`\.  
+If `ImdsSupport` is set to `v1.0`, both IMDSv1 and IMDSv2 are supported\.  
+If `ImdsSupport` is set to `v2.0`, only IMDSv2 is supported\.  
+For more information, see [Use IMDSv2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) in the *EC2 User Guide for Linux instances*\.  
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
+At a future date, the `ImdsSupport` default value is going to change from `v1.0` to `v2.0`\. We recommend that you set `ImdsSupport` to `v2.0` and replace IMDSv1 with IMDSv2 in your custom actions calls\.  
+Support for [`Imds`](#Build-v3-Imds) / [`ImdsSupport`](#yaml-build-image-Build-Imds-ImdsSupport) is added with AWS ParallelCluster version 3\.3\.0\.
 
 ### `Iam`<a name="Build-v3-Iam"></a>
 
@@ -127,4 +149,6 @@ UpdateOsPackages:
 ```
 
 `Enabled` \(**Optional**, `Boolean`\)  
-If `true`, the OS is updated and rebooted before installing the AWS ParallelCluster software\. The default is `false`\.
+If `true`, the OS is updated and rebooted before installing the AWS ParallelCluster software\. The default is `false`\.  
+When `UpdateOsPackages` is enabled, all available OS packages are updated, including the kernel\. As a customer, you are responsible for verifying that the update is compatible with the AMI dependencies that aren't included in the update\.  
+For example, suppose you're building an AMI for AWS ParallelCluster version X\.0 that's shipped with kernel version Y\.0 and some component version Z\.0\. Suppose the available update includes updated kernel version Y\.1 without updates to component Z\.0\. Before you enable `UpdateOsPackages`, it's your responsibility to verify that component Z\.0 supports kernel Y\.1\.

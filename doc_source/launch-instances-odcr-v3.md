@@ -2,19 +2,35 @@
 
 With [On\-Demand Capacity Reservations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html) \(ODCRs\), you can reserve capacity for your cluster Amazon EC2 instances in a specific Availability Zone for any duration\. This way you can create and manage Capacity Reservations independently from the billing accounts offered by [Savings Plans](https://aws.amazon.com/savingsplans/) or [regional Reserved Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/reserved-instances-scope.html)\.
 
-You can configure `open` or `targeted` ODCRs\. *Open* ODCRs cover any instances that match the ODCR attributes \(instance type, platform, Availability Zone\)\. *Targeted* ODCRs must be explicitly defined in the AWS CLI ec2 [https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. To determine whether and ODCR is `open` or `targeted`, run the AWS CLI ec2 [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-capacity-reservations.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-capacity-reservations.html) command\.
+You can configure `open` or `targeted` ODCRs\. *Open* ODCRs cover any instances that match the ODCR attributes \(instance type, platform, Availability Zone\)\. *Targeted* ODCRs must be explicitly defined in the cluster configuration file\. To determine whether an ODCR is `open` or `targeted`, run the AWS CLI ec2 [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-capacity-reservations.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-capacity-reservations.html) command\.
 
-You can also create an ODCR in a cluster placement group called a [CPG ODCR](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html) \(or CPG/ODCR\)\.
+You can also create an ODCR in a cluster placement group called a [ cluster placement group on\-demand capacity reservation \(CPG ODCR\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html)\.
 
-Multiple ODCRs can be grouped in a resource group\. This can be used in the `run-instances` override to target multiple ODCRs at the same time\. For more information on resource groups, see [What are resource groups?](https://docs.aws.amazon.com/ARG/latest/userguide/resource-groups.html) in the *Resource Groups and Tags User Guide*\.
+Multiple ODCRs can be grouped in a resource group\. This can be defined in the cluster configuration file\. For more information on resource groups, see [What are resource groups?](https://docs.aws.amazon.com/ARG/latest/userguide/resource-groups.html) in the *Resource Groups and Tags User Guide*\.
 
 ## Using ODCR with AWS ParallelCluster<a name="odcr-parallelcuster-v3"></a>
 
-Open ODCRs are automatically supported by any AWS ParallelCluster\. When using an open ODCR you don’t need to specify anything in AWS ParallelCluster\. Instances are automatically selected for the cluster\. You can specify an existing placement group or have AWS ParallelCluster create a new one\.
+Open ODCRs are automatically supported by any cluster created with AWS ParallelCluster\. When using an open ODCR you don’t need to specify anything in AWS ParallelCluster\. Instances are automatically selected for the cluster\. You can specify an existing placement group or have AWS ParallelCluster create a new one\.
 
-Support for `targeted` ODCRs was added AWS ParallelCluster 3\.1\.1\. We introduced a mechanism that overrides EC2 `RunInstances` parameters and passes information about the reservation to use for each configured compute resource in AWS ParallelCluster\. This mechanism is compatible with the use of `targeted` ODCRs\. For this case, you must specify the `run-instances` override configuration as described in the next sections\.
+### ODCR in the cluster configuration<a name="odcr-parallelcuster-v3"></a>
 
-If you’re using a `targeted` ODCR, you can specify a placement group\. As with the previous case, you need to specify a `run-instances` override configuration\.
+Starting with AWS ParallelCluster version 3\.3\.0, you can define ODCRs in the cluster configuration file, with no need to specify EC2 run\-instances overrides\.
+
+You start by creating [capacity reservations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-using.html) and [resource groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-cr-group.html) using the methods described in the linked documentation for each\. You must use the AWS CLI methods to create capacity reservation groups\. If you use the AWS Management Console, you can only create Tag based or Stack based resource groups\. Tag based and Stack based resource groups aren't supported by AWS ParallelCluster or the AWS CLI when launching instances with capacity reservations\.
+
+After the capacity reservations and resource groups are created, define them in [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`CapacityReservationTarget`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CapacityReservationTarget) or [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`ComputeResources`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) / [`CapacityReservationTarget`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-CapacityReservationTarget)\.
+
+### OBSOLETE / NOT RECOMMENDED \- Targeted ODCR with EC2 instance overrides<a name="odcr-parallelcuster-v3"></a>
+
+**Warning**  
+Starting with AWS ParallelCluster version 3\.3\.0, we don't recommend this method\. This section remains as a reference for implementations using prior versions\.
+This method is not compatible with Multiple instance type allocation with Slurm\.
+
+Support for `targeted` ODCRs is added with AWS ParallelCluster 3\.1\.1\. This feature introduces a mechanism that overrides EC2 `RunInstances` parameters and passes information about the reservation to use for each configured compute resource in AWS ParallelCluster\. This mechanism is compatible with the use of `targeted` ODCRs\. For this case, you must specify the `run-instances` override configuration as described in the next sections\. *Targeted* ODCRs must be explicitly defined in the AWS CLI ec2 [https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. To determine whether an ODCR is `open` or `targeted`, run the AWS CLI ec2 [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-capacity-reservations.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-capacity-reservations.html) command\.
+
+Multiple ODCRs can be grouped in a resource group\. This can be used in the run\-instances override to target multiple ODCRs at the same time\.
+
+If you’re using a targeted ODCR, you can specify a placement group\. As with the previous case, you need to specify an EC2 run\-instances override configuration\.
 
 If AWS created a `targeted` ODCR for you, or you have a specific set of Reserved Instances, you can't specify a placement group because the rules configured by AWS might conflict with the placement group setting\. So if a placement group is required for your application, you need to use a [CPG ODCR](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html)\. In any case you need to specify the `run-instances` override configuration\.
 
@@ -30,7 +46,11 @@ Reserved instances are supported by any AWS ParallelCluster version\. You don't 
 
 When using zonal Reserved Instances, you can avoid potential Insufficient Capacity Errors by omitting the placement group specification in the cluster configuration\.
 
-## Using `RunInstances` customization in AWS ParallelCluster 3 for `targeted` On Demand Capacity Reservations \(ODCRs\)<a name="odcr-run-instances"></a>
+## OBSOLETE / NOT RECOMMENDED \- Using `RunInstances` customization in AWS ParallelCluster 3 for `targeted` On Demand Capacity Reservations \(ODCRs\)<a name="odcr-run-instances"></a>
+
+**Warning**  
+Starting with AWS ParallelCluster version 3\.3\.0, we don't recommend this method\. This section remains as a reference for implementations using prior versions\.
+This method is not compatible with Multiple instance type allocation with Slurm\.
 
 EC2 `RunInstances` parameters can be overridden for each compute resource configured in a cluster queue\. To do so, create the `/opt/slurm/etc/pcluster/run_instances_overrides.json` file on the head node of the cluster with the following code snippet content where:
 + `${queue_name}`: is the name of the queue you want to apply overrides to\.
@@ -75,7 +95,11 @@ If the parameters are being properly used, you'll find a log entry containing:
 Found RunInstances parameters override. Launching instances with: <parameters_list>
 ```
 
-## Create a cluster with `targeted` On Demand Capacity Reservations \(ODCRs\)<a name="odcr-create-cluster"></a>
+## OBSOLETE / NOT RECOMMENDED \- Create a cluster with `targeted` On Demand Capacity Reservations \(ODCRs\)<a name="odcr-create-cluster"></a>
+
+**Warning**  
+Starting with AWS ParallelCluster version 3\.3\.0, we don't recommend this method\. This section remains as a reference for implementations using prior versions\.
+This method is not compatible with [Multiple instance type allocation with Slurm](slurm-multiple-instance-allocation-v3.md)\.
 
 1. **Create a resource group, to group capacity\.**
 

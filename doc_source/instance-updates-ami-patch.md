@@ -14,7 +14,7 @@ Then view [amis\.txt](https://github.com/aws/aws-parallelcluster/blob/release-2.
 
 The AWS ParallelCluster head node is a static instance and you can manually update it\. Restart and reboot of the head node is fully supported starting with AWS ParallelCluster version 2\.11, if the instance type doesn't have an instance store\. For more information, see [Instance types with instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\. You can't update an AMI for an existing cluster\.
 
-Head node restart and reboot with AMI updates of cluster compute instances is fully supported starting with AWS ParallelCluster version 3\.0\.0\. Consider upgrading to the most recent version 3\.2\.0 to use these features\.
+Head node restart and reboot with AMI updates of cluster compute instances is fully supported starting with AWS ParallelCluster version 3\.0\.0\. Consider upgrading to the most recent version 3\.3\.0 to use these features\.
 
 ## Head node instance update or replacement<a name="instance-updates-headnode"></a>
 

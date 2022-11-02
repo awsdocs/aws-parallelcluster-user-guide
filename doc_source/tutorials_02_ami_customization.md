@@ -25,21 +25,24 @@ extra_json = { "cluster" : { "skip_install_recipes" : "no" } }
 
 There are three ways to use a custom AWS ParallelCluster AMI described in the next sections\. Two of these three methods require you to build a new AMI that's available under your AWS account\. The third method \(Use a Custom AMI at Runtime\) doesn't require that you build anything in advance, but does add risk to the deployment\. Choose the method that best fits your needs\.
 
-## Modify an AWS ParallelCluster AMI<a name="modify-an-aws-parallelcluster-ami"></a>
+## Modify an AMI<a name="modify-an-aws-parallelcluster-ami"></a>
 
 This is the safest and most recommended method\. Because the base AWS ParallelCluster AMI is often updated with new releases, this AMI has all of the components required for AWS ParallelCluster to function when it's installed and configured\. You can start with this as the base\.
 
-1. In the AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.11\.7, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.11\.7/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.11\.7** button, select the **Tags** tab, and then select the appropriate version\.
+------
+#### [ New EC2 console ]
+
+1. In the AWS ParallelCluster AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.11\.7, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.11\.7/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.11\.7** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the Amazon EC2 Dashboard, choose **Launch Instance**\.
+1. In the **Amazon EC2 Dashboard**, choose **Launch instance**\.
 
-1. Choose **Browse more AMIs** and navigate to **Community AMIs**, and enter the AMI ID for your Region into the search box\.
+1. In **Application and OS images**, choose **Browse more AMIs**, navigate to **Community AMIs**, and enter the AWS ParallelCluster AMI ID for your Region into the search box\.
 
-1. Select the AMI, choose your instance type and properties, select your key pair, and launch your instance\.
+1. **Select** the AMI, choose your **Instance type** and properties, select your **Key pair**, and **Launch instance**\.
 
-1. Log into your instance using the OS user and your SSH key\.
+1. Log into your instance using the OS user and your SSH key\. For more information, navigate to **Instances**, select the new instance, and **Connect**\.
 
 1. Customize your instance as required\.
 
@@ -49,11 +52,64 @@ This is the safest and most recommended method\. Because the base AWS ParallelCl
    sudo /usr/local/sbin/ami_cleanup.sh
    ```
 
-1. Stop the instance\.
+1. Navigate to **Instances**, choose the new instance, select **Instance state**, and **Stop instance**\.
 
-1. Create a new AMI from the instance\.
+1. Create a new AMI from the instance using the EC2 console or AWS CLI [create\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-image.html)\.
 
-1. Enter the new AMI id in the [custom\_ami](cluster-definition.md#custom-ami-section) field within your cluster configuration\.
+**From the EC2 console**
+
+   1. Choose **Instances** in the navigation pane\.
+
+   1. Choose the instance you created and modified\.
+
+   1. In **Actions**, choose **Image and templates**, and then **Create image**\.
+
+   1. Choose **Create Image**\.
+
+1. Enter the new AMI id in the [custom\_ami](cluster-definition.md#custom-ami-section) field in your cluster configuration\.
+
+------
+#### [ Old EC2 console ]
+
+1. In the AWS ParallelCluster AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.11\.7, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.11\.7/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.11\.7** button, select the **Tags** tab, and then select the appropriate version\.
+
+1. Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. In the **Amazon EC2 Dashboard**, choose **Launch instance**\.
+
+1. Choose **Community AMIs**, search for the AWS ParallelCluster AMI ID, and **Select** it\.
+
+1. Choose your instance type and select **Next: Configure Instance Details**, or **Review and Launch** to launch your instance\.
+
+1. Choose **Launch**, select your **Key pair**, and **Launch Instances**\.
+
+1. Log into your instance using the OS user and your SSH key\. For more information, navigate to **Instances**, select the new instance, and **Connect**\.
+
+1. Customize your instance as required\.
+
+1. Run the following command to prepare your instance for AMI creation:
+
+   ```
+   sudo /usr/local/sbin/ami_cleanup.sh
+   ```
+
+1. Navigate to **Instances**, choose the new instance, select **Instance State**, and **Stop**
+
+1. Create a new AMI from the instance using the EC2 console or AWS CLI [create\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-image.html)\.
+
+**From the EC2 console**
+
+   1. Choose **Instances** in the navigation pane\.
+
+   1. Choose the instance you created and modified\.
+
+   1. In **Actions**, choose **Image**, and then **Create Image**\.
+
+   1. Choose **Create Image**\.
+
+1. Enter the new AMI id in the [custom\_ami](cluster-definition.md#custom-ami-section) field in your cluster configuration\.
+
+------
 
 ## Build a Custom AWS ParallelCluster AMI<a name="build-a-custom-aws-parallelcluster-ami"></a>
 

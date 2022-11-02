@@ -69,7 +69,7 @@ For more information on AWS ParallelCluster logs and Amazon CloudWatch, see [Ama
 If you build and use a custom AMI, you must repeat the steps that you used to create your custom AMI with each new AWS ParallelCluster release\.
 
 **Custom bootstrap actions**  
-Review the [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md) section to determine if the modifications you want to make can be scripted and supported with future AWS ParallelCluster releases\.
+Review the [Custom bootstrap actions](custom-bootstrap-actions-v3.md) section to determine if the modifications you want to make can be scripted and supported with future AWS ParallelCluster releases\.
 
 **Using custom AMIs**  
 You can specify custom AMIs in the cluster configuration in the [`Image`](Image-v3.md) / [`CustomAmi`](Image-v3.md#yaml-Image-CustomAmi) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / \- [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Name) / [`Image`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Image) / [`CustomAmi`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Image-CustomAmi) sections\.  

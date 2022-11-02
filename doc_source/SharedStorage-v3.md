@@ -2,31 +2,13 @@
 
 **\(Optional\)** The shared storage settings for the cluster\.
 
-In the `SharedStorage` section, you can define existing file systems for long term permanent shared storage solutions that are independent of the cluster lifecycle\.
+AWS ParallelCluster supports [Amazon EBS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html), [FSx for ONTAP](https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/what-is-fsx-ontap.html), and [FSx for OpenZFS](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/what-is-fsx.html) shared storage volumes or [Amazon EFS](https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html) and [FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html) shared storage file systems\.
 
-You can also define AWS ParallelCluster managed file systems for short term temporary shared storage\. By default, AWS ParallelCluster managed file systems are created and deleted with cluster creation and deletion\. If you don't back up data from AWS ParallelCluster managed file systems, your data is deleted when the cluster is deleted\.
+In the `SharedStorage` section, you can define either external or managed storage:
++ **External storage** refers to an existing volume or file system that's managed by the customer\. AWS ParallelCluster doesn't create or delete it\.
++ **Managed storage** refers to a volume or file system that's created by and can also be deleted by AWS ParallelCluster\.
 
-For more information, see [Best practices: moving a cluster to a new AWS ParallelCluster minor or patch version](best-practices-v3.md#best-practices-cluster-upgrades-v3)\.
-
-To use an existing Amazon EBS volume for long term permanent storage that is independent of the cluster life cycle, specify [`EbsSettings`](#SharedStorage-v3-EbsSettings) / [`VolumeId`](#yaml-SharedStorage-EbsSettings-VolumeId)\. If you don't specify [`VolumeId`](#yaml-SharedStorage-EbsSettings-VolumeId), AWS ParallelCluster creates the EBS volume from [`EbsSettings`](#SharedStorage-v3-EbsSettings) when it creates the cluster and deletes the volume and data when the cluster is deleted\. If you use the AWS ParallelCluster managed EBS file system, you can use the [`EbsSettings`](#SharedStorage-v3-EbsSettings) / [DeletionPolicy](#yaml-SharedStorage-EbsSettings-DeletionPolicy) to instruct AWS ParallelCluster to retain or snapshot the volume when the cluster is deleted\.
-
-To use an existing Amazon Elastic File System and Amazon FSx for Lustre file system for long term permanent storage that is independent of the cluster life cycle, specify [`EfsSettings`](#SharedStorage-v3-EfsSettings) / [`FileSystemId`](#yaml-SharedStorage-EfsSettings-FileSystemId) and [`FsxLustreSettings`](#SharedStorage-v3-FsxLustreSettings) / [`FileSystemId`](#yaml-SharedStorage-EfsSettings-FileSystemId)\. If you don't specify `FileSystemId`, AWS ParallelCluster creates the file system from [`EfsSettings`](#SharedStorage-v3-EfsSettings) and [`FsxLustreSettings`](#SharedStorage-v3-FsxLustreSettings) when it creates the cluster and deletes the file system and data when the cluster is deleted\.
-
-For FSx for ONTAP and FSx for OpenZFS, you can use [`FsxOntapSettings`](#SharedStorage-v3-FsxOntapSettings) / [`VolumeId`](#yaml-SharedStorage-FsxOntapSettings-VolumeId) and [`FsxOpenZfsSettings`](#SharedStorage-v3-FsxOpenZfsSettings) / [`VolumeId`](#yaml-SharedStorage-FsxOpenZfsSettings-VolumeId) to specify whether AWS ParallelCluster mounts existing shared file storage for your cluster\.
-
-Configure cluster `SharedStorage` to mount existing shared file storage and create new shared file storage according to the quotas listed in the following table\.
-
-
-**File storage quota per cluster**  
-
-| File shared storage type | Quota created and mounted | Quota existing mounted | Quota net total | 
-| --- | --- | --- | --- | 
-|  Amazon EBS  |  5  |  5  |  5  | 
-|  RAID  |  1  |  0  |  1  | 
-|  Amazon EFS  |  1  |  20  |  21  | 
-|  Amazon FSx †  |  1 FSx for Lustre  |  20  |  21  | 
-
-† AWS ParallelCluster only supports mounting existing Amazon FSx for NetApp ONTAP and Amazon FSx for OpenZFS systems\. It doesn't support the creation of new FSx for ONTAP and FSx for OpenZFS systems\.
+For [shared storage quotas](shared-storage-quotas-integration-v3.md#shared-storage-quotas-v3) and additional guidance on configuring your shared storage, see [Shared storage](shared-storage-quotas-integration-v3.md) in *Using AWS ParallelCluster*\.
 
 **Note**  
 If AWS Batch is used as a scheduler, FSx for Lustre is only available on the cluster head node\.
@@ -59,6 +41,7 @@ SharedStorage:
       KmsKeyId: string
       PerformanceMode: string
       FileSystemId: string
+      DeletionPolicy: string
   - MountDir: string
     Name: string
     StorageType: FsxLustre
@@ -80,6 +63,7 @@ SharedStorage:
       AutoImportPolicy: string
       DriveCacheType: string
       StorageType: string
+      DeletionPolicy: string
   - MountDir: string
     Name: string
     StorageType: FsxOntap
@@ -92,7 +76,7 @@ SharedStorage:
       VolumeId: string
 ```
 
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+[Update policy: For this list values setting, the compute fleet must be stopped or QueueUpdateStrategy must be set to add a new value; the compute fleet must be stopped when removing an existing value.](using-pcluster-update-cluster-v3.md#update-policy-update-cluster-v3)
 
 ## `SharedStorage` Properties<a name="SharedStorage-v3.properties"></a>
 
@@ -132,6 +116,10 @@ EbsSettings:
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ### `EbsSettings` Properties<a name="SharedStorage-v3-EbsSettings.properties"></a>
+
+With the [DeletionPolicy](#yaml-SharedStorage-EbsSettings-DeletionPolicy) set to `Delete`, a managed volume, with its data, is deleted if the cluster is deleted or if the volume is removed with a cluster update\. 
+
+For more information, see [Shared storage](shared-storage-quotas-integration-v3.md) in *Using AWS ParallelCluster*\.
 
 `VolumeType` \(**Optional**, `String`\)  
 Specifies the [Amazon EBS volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)\. Supported values are `gp2`, `gp3`, `io1`, `io2`, `sc1`, `st1`, and `standard`\. The default value is `gp3`\.  
@@ -182,8 +170,11 @@ This setting is valid only when `VolumeType` is `gp3`\. The supported range is 1
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 `DeletionPolicy` \(**Optional**, `String`\)  
-Specifies whether the volume should be retained, deleted, or snapshotted when the cluster is deleted\. The supported values are `Delete`, `Retain`, and `Snapshot`\. The default value is `Delete`\.  
-[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
+Specifies whether the volume should be retained, deleted, or snapshotted when the cluster is deleted or the volume is removed\. The supported values are `Delete`, `Retain`, and `Snapshot`\. The default value is `Delete`\.  
+With the [DeletionPolicy](#yaml-SharedStorage-EbsSettings-DeletionPolicy) set to `Delete`, a managed volume, with its data , is deleted if the cluster is deleted or if the volume is removed with a cluster update\.  
+For more information, see [Shared storage](shared-storage-quotas-integration-v3.md)\.  
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
+`DeletionPolicy` is supported starting with AWS ParallelCluster version 3\.2\.0\.
 
 ### `Raid`<a name="SharedStorage-v3-EbsSettings-Raid"></a>
 
@@ -219,11 +210,16 @@ EfsSettings:
   ThroughputMode: string
   ProvisionedThroughput: integer
   FileSystemId: string
+  DeletionPolicy: string
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ### `EfsSettings` Properties<a name="SharedStorage-v3-EfsSettings.properties"></a>
+
+With the [DeletionPolicy](#yaml-SharedStorage-EfsSettings-DeletionPolicy) set to `Delete`, a managed file system, with its data, is deleted if the cluster is deleted, or if the file system is removed with a cluster update\.
+
+For more information, see [Shared storage](shared-storage-quotas-integration-v3.md) in *Using AWS ParallelCluster*\.
 
 `Encrypted` \(**Optional**, `Boolean`\)  
 Specifies if the Amazon EFS file system is encrypted\. The default value is `false`\.  
@@ -267,6 +263,13 @@ AWS ParallelCluster validates that port\(s\) are open and that the CIDR or prefi
 If all cluster nodes use custom security groups, AWS ParallelCluster only validates that the port\(s\) are open\. AWS ParallelCluster doesn't validate that the source and destination are properly configured\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
+`DeletionPolicy` \(**Optional**, `String`\)  
+Specifies whether the file system should be retained or deleted when the file system is removed from the cluster or the cluster is deleted\. The supported values are `Delete` and `Retain`\. The default value is `Delete`\.  
+With the [DeletionPolicy](#yaml-SharedStorage-EfsSettings-DeletionPolicy) set to `Delete`, a managed file system, with its data, is deleted if the cluster is deleted, or if the file system is removed with a cluster update\.  
+For more information, see [Shared storage](shared-storage-quotas-integration-v3.md)\.  
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
+`DeletionPolicy` is supported starting with AWS ParallelCluster version 3\.3\.0\.
+
 ## `FsxLustreSettings`<a name="SharedStorage-v3-FsxLustreSettings"></a>
 
 **Note**  
@@ -293,6 +296,7 @@ FsxLustreSettings:
   AutoImportPolicy: string
   DriveCacheType: string
   StorageType: string
+  DeletionPolicy: string
 ```
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
@@ -301,6 +305,10 @@ FsxLustreSettings:
 If AWS Batch is used as a scheduler, FSx for Lustre is only available on the cluster head node\.
 
 ### `FsxLustreSettings` Properties<a name="SharedStorage-v3-FsxLustreSettings.properties"></a>
+
+With the [DeletionPolicy](#yaml-SharedStorage-FsxLustreSettings-DeletionPolicy) set to `Delete`, a managed file system, with its data, is deleted if the cluster is deleted, or if the file system is removed with a cluster update\.
+
+For more information, see [Shared storage](shared-storage-quotas-integration-v3.md)\.
 
 `StorageCapacity` \(**Required**, `Integer`\)  
 Sets the storage capacity of the FSx for Lustre file system, in GiB\. `StorageCapacity` is required if you are creating a new file system\. Do not include `StorageCapacity` if `BackupId` or `FileSystemId` is specified\.  
@@ -409,6 +417,13 @@ Sets the storage type for the FSx for Lustre file system you're creating\. Valid
 + Set to `HDD` to use hard disk drive storage\. `HDD` is supported on `PERSISTENT` deployment types\. 
 The default value is `SSD`\. For more information, see [ Storage Type Options](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/optimize-fsx-costs.html#storage-type-options) in the *Amazon FSx for Windows User Guide* and [Multiple Storage Options](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options) in the *Amazon FSx for Lustre User Guide*\.   
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+
+`DeletionPolicy` \(**Optional**, `String`\)  
+Specifies whether the file system should be retained or deleted when the file system is removed from the cluster or the cluster is deleted\. The supported values are `Delete` and `Retain`\. The default value is `Delete`\.  
+With the [DeletionPolicy](#yaml-SharedStorage-FsxLustreSettings-DeletionPolicy) set to `Delete`, a managed file system, with its data, is deleted if the cluster is deleted, or if the file system is removed with a cluster update\.  
+For more information, see [Shared storage](shared-storage-quotas-integration-v3.md)\.  
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
+`DeletionPolicy` is supported starting with AWS ParallelCluster version 3\.3\.0\.
 
 ## `FsxOntapSettings`<a name="SharedStorage-v3-FsxOntapSettings"></a>
 

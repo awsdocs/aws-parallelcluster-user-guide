@@ -255,7 +255,15 @@ If existing Amazon EFS file systems are the only file systems used in your clust
           "Action": "secretsmanager:DescribeSecret",
           "Resource": "arn:aws:secretsmanager:<REGION>:<AWS ACCOUNT ID>:secret:<SECRET NAME>",
           "Effect": "Allow"
-      }
+      },
+      {
+          "Action": [
+              "resource-groups:ListGroupResources"
+          ],
+          "Resource": "*",
+          "Effect": "Allow",
+          "Sid": "ResourceGroupRead"
+      },
   ]
 }
 ```
@@ -889,9 +897,9 @@ Here is the minimal set of policies to be used as part of this role when the sch
           },
           {
               "Action": [
-                   "ec2:RunInstances",
-                   "ec2:CreateFleet"
-              ],
+                  "ec2:RunInstances",
+                  "ec2:CreateFleet"
+              ]
               "Resource": "*",
               "Effect": "Allow"
           },

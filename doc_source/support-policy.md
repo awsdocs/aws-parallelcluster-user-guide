@@ -17,5 +17,8 @@ AWS ParallelCluster 3 minor releases are supported for 18 months after their rel
 | AWS ParallelCluster versions | End of supported life \(EOSL\) date | 
 | --- | --- | 
 | 2\.10\.4 and earlier | 12/31/2021 | 
-| 2\.11\.x | 12/31/2022 | 
-| 3\.0\.x | 3/31/2023 | 
+|  2\.11\.*`x`*  | 12/31/2022 | 
+|  3\.0\.*`x`*  | 3/31/2023 | 
+|  3\.1\.*`x`*  | 8/31/2023 | 
+|  3\.2\.*`x`*  | 1/31/2024 | 
+|  3\.3\.*`x`* | 5/31/2024 | 

@@ -1,6 +1,6 @@
-# Configuration of Multiple Queues<a name="configuration-of-multiple-queues-v3"></a>
+# Configuration of multiple queues<a name="configuration-of-multiple-queues-v3"></a>
 
-**Configuration of Multiple Queues**
+**Configuration of multiple queues**
 
 With AWS ParallelCluster version 3, you can configure multiple queues by setting the [`Scheduler`](Scheduling-v3.md#yaml-Scheduling-Scheduler) to `slurm` and specifying more than one queue for [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) in the configuration file\. In this mode, different instance types coexist in the compute nodes that are specified in the [`ComputeResources`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) section of the configuration file\. [`ComputeResources`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) with different instance types are scaled up or down as needed for the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues)\. Currently you can specify a maximum of up to five \(5\) [`ComputeResources`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources) per queue and a maximum of up to ten \(10\) [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues)\. Each specified queue corresponds to a partition in the Slurm Workload Manager\. For more information, see [Slurm Workload Manager \(`slurm`\)](slurm-workload-manager-v3.md)\.
 

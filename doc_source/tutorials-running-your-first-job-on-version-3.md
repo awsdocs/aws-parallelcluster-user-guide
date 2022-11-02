@@ -17,7 +17,7 @@ $ node --version
 v16.8.0
 $ pcluster version
 {
-  "version": "3.2.0"
+  "version": "3.3.0"
 }
 ```
 
@@ -140,4 +140,4 @@ To learn more about creating and using clusters, see [Best practices](best-pract
 If your application requires shared software, libraries, or data, consider the following options:
 + Build a AWS ParallelCluster enabled custom AMI that includes your software as described in [Building a Custom AWS ParallelCluster AMI](building-custom-ami-v3.md)\.
 + Use the [StorageSettings](SharedStorage-v3.md) option in the AWS ParallelCluster configuration file to specify a shared filesystem and store your installed software in the specified mount location\.
-+ Use [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md) to automate the bootstrap procedure of each node of your cluster\.
++ Use [Custom bootstrap actions](custom-bootstrap-actions-v3.md) to automate the bootstrap procedure of each node of your cluster\.

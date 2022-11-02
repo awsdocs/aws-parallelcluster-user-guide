@@ -1,4 +1,4 @@
-# Custom Bootstrap Actions<a name="custom-bootstrap-actions-v3"></a>
+# Custom bootstrap actions<a name="custom-bootstrap-actions-v3"></a>
 
 AWS ParallelCluster can run arbitrary code either right after the node start, for example [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeStart`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeStart), or when the node configuration is correctly completed, for example [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeConfigured`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeConfigured)\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as `root` and can be in any script language that's supported by the cluster OS\. Often the code is in *Bash* or *Python*\.
 

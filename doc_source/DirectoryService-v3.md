@@ -59,7 +59,7 @@ If the user has the permission to [https://docs.aws.amazon.com/secretsmanager/la
 When the value of the secret changes, the cluster *isn't* automatically updated\. To update the cluster for the new secret value, you must stop the compute fleet with the [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md) command and then run the following command from within the head node\.  
 
 ```
-$ sudo ./opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
+$ sudo /opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
 ```
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 

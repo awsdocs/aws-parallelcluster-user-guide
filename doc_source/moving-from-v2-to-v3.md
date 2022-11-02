@@ -2,7 +2,7 @@
 
 ## Custom Bootstrap Actions<a name="custom_bootstrap_actions"></a>
 
-With AWS ParallelCluster 3, you can specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) sections\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\. 
+With AWS ParallelCluster 3, you can specify different custom bootstrap actions scripts for the head node and compute nodes using `OnNodeStart` \(`pre_install` in AWS ParallelCluster version 2\) and `OnNodeConfigured` \(`post_install` in AWS ParallelCluster version 2\) parameters in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) sections\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\. 
 
  Custom bootstrap actions scripts that are developed for AWS ParallelCluster 2 must be adapted to be used in AWS ParallelCluster 3:
 + We don't recommend using `/etc/parallelcluster/cfnconfig` and `cfn_node_type` to differentiate between head and compute nodes\. Instead, we recommend that you specify two different scripts in the [`HeadNode`](HeadNode-v3.md) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues)\.

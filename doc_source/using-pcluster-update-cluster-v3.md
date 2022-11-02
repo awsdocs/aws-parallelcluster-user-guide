@@ -33,12 +33,22 @@ These settings can be changed, but if the change would reduce the number of stat
 After changing this setting, the cluster can't be updated\. You must revert the settings for the original cluster and create a new cluster with the updated settings\. You can delete the original cluster at a later date\. To create the new cluster, use [`pcluster create-cluster`](pcluster.create-cluster-v3.md)\. To delete the original cluster, use [`pcluster delete-cluster`](pcluster.delete-cluster-v3.md)\.
 
 **Update policy: The compute fleet must be stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set for this setting to be changed for an update\.**  
-These settings can be changed\. Either the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\) or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set\. After the compute fleet is stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) is set, you can update the cluster \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\) to activate the changes\.
+These settings can be changed\. Either the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\) or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set\. After the compute fleet is stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) is set, you can update the cluster \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\) to activate the changes\.  
+This update policy is supported starting with AWS ParallelCluster version 3\.2\.0\.
 
 **Update policy: For this list values setting, a new value can be added during an update or the compute fleet must be stopped when removing an existing value\.**  
 A new value for these settings can be added during an update\. After adding a new value to the list, the cluster can be updated using \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\)\.  
 To remove an existing value from the list, the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\.  
-For example, if you are using a Slurm scheduler and adding a new queue to [SlurmQueues](Scheduling-v3.md#Scheduling-v3-SlurmQueues), you can update the cluster without stopping the compute fleet\. To remove an existing queue from [SlurmQueues](Scheduling-v3.md#Scheduling-v3-SlurmQueues), the compute fleet must be stopped first \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\.
+For example, if you are using a Slurm scheduler and adding a new queue to [SlurmQueues](Scheduling-v3.md#Scheduling-v3-SlurmQueues), you can update the cluster without stopping the compute fleet\. To remove an existing queue from [SlurmQueues](Scheduling-v3.md#Scheduling-v3-SlurmQueues), the compute fleet must be stopped first \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\.  
+This update policy is supported starting with AWS ParallelCluster version 3\.2\.0\.
+
+**Update policy: For this list values setting, the compute fleet must be stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set to add a new value; the compute fleet must be stopped when removing an existing value\.**  
+A new value for these settings can be added during an update\. Either the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\) or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set\. After the compute fleet is stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) is set, you can update the cluster \([`pcluster update-cluster`](pcluster.update-cluster-v3.md)\) to activate the changes\.  
+To remove an existing value from the list, the compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\)\.  
+This update policy is supported starting with AWS ParallelCluster version 3\.3\.0\.
+
+**Update policy: All compute nodes must be stopped for a managed placement group deletion\. The compute fleet must be stopped or [`QueueUpdateStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-QueueUpdateStrategy) must be set for this setting to be changed for an update\.**  
+The compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pcluster.update-compute-fleet-v3.md)\) in order to remove a managed placement group\. If you run a cluster update to remove a managed placement group before stopping the compute fleet, an invalid configuration message is returned and the update doesn't proceed\. Stopping the compute fleet guarantees no instances are running\.
 
 ## `pcluster update-cluster` examples<a name="pcluster-update-cluster-examples"></a>
 + This example demonstrates an update with some allowed changes and the update is started directly\.
@@ -51,7 +61,7 @@ For example, if you are using a Slurm scheduler and adding a new queue to [Slurm
       "cloudformationStackStatus": "UPDATE_IN_PROGRESS",
       "cloudformationStackArn": stack_arn,
       "region": "us-east-1",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "clusterStatus": "UPDATE_IN_PROGRESS"
     },
     "changeSet": [

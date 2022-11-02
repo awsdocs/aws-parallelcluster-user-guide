@@ -1,5 +1,7 @@
 # AWS ParallelCluster troubleshooting<a name="troubleshooting"></a>
 
+The AWS ParallelCluster community maintains a Wiki page that provides many troubleshooting tips on the [AWS ParallelCluster GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki/)\. For a list of known issues, see [Known issues](https://github.com/aws/aws-parallelcluster/wiki#known-issues-)\.
+
 **Topics**
 + [Retrieving and preserving logs](#retrieving-and-preserve-logs)
 + [Troubleshooting stack deployment issues](#troubleshooting-stack-creation-failures)
@@ -12,8 +14,6 @@
 + [Troubleshooting when a resource fails to create](#troubleshooting-resource-fails-to-create)
 + [Troubleshooting IAM policy size issues](#troubleshooting-policy-size-issues)
 + [Additional support](#getting-support)
-
-The AWS ParallelCluster community maintains a Wiki page that provides many troubleshooting tips on the [AWS ParallelCluster GitHub Wiki](https://github.com/aws/aws-parallelcluster/wiki/)\. For a list of known issues, see [Known issues](https://github.com/aws/aws-parallelcluster/wiki#known-issues-)\.
 
 ## Retrieving and preserving logs<a name="retrieving-and-preserve-logs"></a>
 
@@ -273,7 +273,7 @@ This includes Torque Resource Manager and related files\. \(Conditional, only if
 **Topics**
 + [Logs for NICE DCV](#nice-dcv-troubleshooting-logs)
 + [NICE DCV instance type memory](#nice-dcv-troubleshooting-memory)
-+ [Ubuntu, Intel MPI modules, and NICE DCV](#nice-dcv-troubleshooting-modules)
++ [Ubuntu NICE DCV issues](#nice-dcv-troubleshooting-modules)
 
 ### Logs for NICE DCV<a name="nice-dcv-troubleshooting-logs"></a>
 
@@ -283,33 +283,29 @@ The logs for NICE DCV are written to files in the `/var/log/dcv/` directory\. Re
 
 The instance type should have at least 1\.7 gibibyte \(GiB\) of RAM to run NICE DCV\. Nano and micro instance types don't have enough memory to run NICE DCV\.
 
-### Ubuntu, Intel MPI modules, and NICE DCV<a name="nice-dcv-troubleshooting-modules"></a>
+### Ubuntu NICE DCV issues<a name="nice-dcv-troubleshooting-modules"></a>
 
-If [`base_os`](cluster-definition.md#base-os) is `ubuntu1804` or `ubuntu2004` and the cluster is configured to use [Intel MPI](intelmpi.md) modules, you'll see the following from the Ubuntu terminal in the [DCV](dcv.md) client when you run `module avail`:
+When running Gnome Terminal over a DCV session on Ubuntu, you might not automatically have access to the user environment that AWS ParallelCluster makes available through the login shell\. The user environment provides environment modules such as openmpi or intelmpi, and other user settings\.
 
-```
-$ module avail
-module: command not found
-```
+Gnome Terminal's default settings prevent the shell from starting as a login shell\. This means that shell profiles aren't automatically sourced and the AWS ParallelCluster user environment isn't loaded\.
 
-You must source from `/etc/profile`:
+To properly source the shell profile and access the AWS ParallelCluster user environment, do one of the following:
++ 
 
-```
-$ . /etc/profile
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
-module avail
------------------------------ /usr/share/modules/modulefiles ------------------------------
-dot                           module-git   modules  openmpi/4.1.4  
-libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+**Change the default terminal settings:**
 
------------------------------ /usr/share/modules/modulefiles ------------------------------
-dot                           module-git   modules  openmpi/4.1.4  
-libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+  1. Choose the **Edit** menu in the Gnome terminal\.
 
---------------------------- /opt/intel/mpi/2021.4.0/modulefiles ---------------------------
-intelmpi
-```
+  1. Select **Preferences**, then **Profiles**\.
+
+  1. Choose **Command** and select **Run Command as login shell**\.
+
+  1. Open a new terminal\.
++ **Use the command line to source the available profiles:**
+
+  ```
+  $ source /etc/profile && source $HOME/.bashrc
+  ```
 
 ## Troubleshooting issues in clusters with AWS Batch integration<a name="clusters-with-aws-batch-integration"></a>
 

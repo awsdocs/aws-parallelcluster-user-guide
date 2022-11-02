@@ -1,6 +1,6 @@
 # `Scheduling` section<a name="Scheduling-v3"></a>
 
-**\(Required\)** Defines the job scheduler to be used in the cluster along with characteristics of the compute instances managed by the job scheduler\. The two job schedulers that can be used are Slurm and AWS Batch, each of which support distinct settings and properties\.
+**\(Required\)**Defines the job scheduler to be used in the cluster along with characteristics of the compute instances managed by the job scheduler\. The two job schedulers that can be used are Slurm and AWS Batch, each of which support distinct settings and properties\.
 
 **Topics**
 + [`Scheduling` Properties](#Scheduling-v3.properties)
@@ -15,12 +15,16 @@ Scheduling:
     ScaledownIdletime: integer    
     QueueUpdateStrategy: string
     EnableMemoryBasedScheduling: integer
+    Database:
+      Uri: string
+      UserName: string
+      PasswordSecretArn: string
     Dns:
       DisableManagedDns: boolean
       HostedZoneId: string
       UseEc2Hostnames: string  
   SlurmQueues:
-    - Name: string
+    - Name: string  
       ComputeSettings:
         LocalStorage:
           RootVolume:
@@ -31,7 +35,11 @@ Scheduling:
             Throughput: integer
           EphemeralVolume:
             MountDir: string
+      CapacityReservationTarget:
+        CapacityReservationId: string
+        CapacityReservationResourceGroupArn: string
       CapacityType: string
+      AllocationStrategy: string
       Networking:
         SubnetIds:
           - string
@@ -43,11 +51,14 @@ Scheduling:
         PlacementGroup:
           Enabled: boolean
           Id: string
+          Name: string
         Proxy:
           HttpProxyAddress: string
       ComputeResources:
         - Name: string
           InstanceType: string
+          Instances:
+            - InstanceType: string
           MinCount: integer
           MaxCount: integer
           SpotPrice: float
@@ -56,6 +67,13 @@ Scheduling:
           Efa:
             Enabled: boolean
             GdrSupport: boolean          
+          CapacityReservationTarget:
+            CapacityReservationId: string
+            CapacityReservationResourceGroupArn: string
+          Networking:   
+            PlacementGroup:
+              Enabled: boolean
+              Name: string
       CustomActions:
         OnNodeStart:
           Script: string
@@ -243,7 +261,11 @@ SlurmQueues:
           Throughput: integer
         EphemeralVolume:
           MountDir: string
+     CapacityReservationTarget:
+       CapacityReservationId: string
+       CapacityReservationResourceGroupArn: string
     CapacityType: string
+    AllocationStrategy: string
     Networking:
       SubnetIds:
         - string
@@ -255,11 +277,14 @@ SlurmQueues:
       PlacementGroup:
         Enabled: boolean
         Id: string
-      Proxy:
+        Name: string
+     Proxy:
         HttpProxyAddress: string
     ComputeResources:
       - Name: string
         InstanceType: string
+        Instances:
+          - InstanceType: string        
         MinCount: integer
         MaxCount: integer
         SpotPrice: float
@@ -268,7 +293,14 @@ SlurmQueues:
         Efa:
           Enabled: boolean
           GdrSupport: boolean    
-     CustomActions:
+        CapacityReservationTarget:
+          CapacityReservationId: string
+          CapacityReservationResourceGroupArn: string     
+        Networking:   
+          PlacementGroup:
+            Enabled: boolean
+            Name: string
+      CustomActions:
       OnNodeStart:
         Script: string
         Args:
@@ -298,6 +330,26 @@ SlurmQueues:
 The name of the Slurm queue\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
+`CapacityReservationTarget`  
+
+```
+CapacityReservationTarget:
+   CapacityReservationId: string
+   CapacityReservationResourceGroupArn: string
+```
+Specifies the on\-demand capacity reservation to use for the queue's compute resources\. For more information, see [Launch instances with ODCR \(On\-Demand Capacity Reservations\)](launch-instances-odcr-v3.md)\.    
+`CapacityReservationId` \(**Optional**, `String`\)  
+Indicates the ID of the existing capacity reservation to target for the queue's compute resources\. For more information, see [Launch instances with ODCR \(On\-Demand Capacity Reservations\)](launch-instances-odcr-v3.md)  
+`CapacityReservationResourceGroupArn` \(**Optional**, `String`\)  
+Indicates the Amazon Resource Name \(ARN\) of the resource group that serves as the service linked group of capacity reservations for the queue's compute resources\. AWS ParallelCluster identifies and uses the most appropriate capacity reservation from the group for the compute resource:  
++ If `PlacementGroup` is enabled in [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking) or [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`ComputeResources`](#Scheduling-v3-SlurmQueues-ComputeResources) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking), AWS ParallelCluster selects a resource group that targets the instance type and `PlacementGroup` for a compute resource if it exists\.
+
+  The `PlacementGroup` must target one of the instances types defined in [`ComputeResources`](#Scheduling-v3-SlurmQueues-ComputeResources)\.
++ If `PlacementGroup` isn't enabled in [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking) or [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`ComputeResources`](#Scheduling-v3-SlurmQueues-ComputeResources) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking), AWS ParallelCluster selects a resource group that targets only the instance type of a compute resource, if it exists\.
+The resource group must have at least one ODCR for each instance type across all the queue's compute resources\. For more information, see [Launch instances with ODCR \(On\-Demand Capacity Reservations\)](launch-instances-odcr-v3.md)\.
+[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
+`CapacityReservationTarget` is added with AWS ParallelCluster version 3\.3\.0\.
+
 `CapacityType` \(**Optional**, `String`\)  
 The type of the compute resources used in the Slurm queue\. Supported values are `ONDEMAND` or `SPOT`\. The default value is `ONDEMAND`\.  
 When `CapacityType` is set to `SPOT`, there must be an `AWSServiceRoleForEC2Spot` service\-linked role in your account\. You can create this role with the following AWS CLI command:  
@@ -307,6 +359,19 @@ $ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com
 ```
 For more information, see [Service\-linked role for Spot Instance requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html#service-linked-roles-spot-instance-requests) in the *Amazon EC2 User Guide for Linux Instances*\.
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
+
+`AllocationStrategy` \(**Optional**, `String`\)  
+Specify the allocation strategy for all the compute resources defined with [`Instances`](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\.  
+Valid values: `lowest-price` \| `capacity-optimized`  
+Default: `lowest-price`    
+`lowest-price`  
++ When using `CapacityType = ONDEMAND`, EC2 Fleet uses price to determine the order and launches the lowest price instances first\.
++ When using `CapacityType = SPOT`, EC2 Fleet launches instances from the lowest price Spot Instance pool that has available capacity\. If a pool runs out of capacity before fulfilling your required capacity, EC2 Fleet fulfills your request by launching instances from the lowest price Spot Instance pool that has available capacity\. EC2 Fleet might launch Spot Instances from several different pools\.  
+`capacity-optimized`  
++ Not available when using `CapacityType = ONDEMAND`\.
++ When using `CapacityType = SPOT`, EC2 Fleet launches instances from Spot Instance pools with optimal capacity for the number of instances to be launched\.
+[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
+`AllocationStrategy` is supported starting with AWS ParallelCluster version 3\.3\.0\.
 
 #### `Networking`<a name="Scheduling-v3-SlurmQueues-Networking"></a>
 
@@ -324,6 +389,7 @@ Networking:
   PlacementGroup:
     Enabled: boolean
     Id: string
+    Name: string
   Proxy:
     HttpProxyAddress: string
 ```
@@ -358,14 +424,26 @@ Specifies the placement group settings for the Slurm queue\.
 PlacementGroup:
   Enabled: boolean
   Id: string
+  Name: string
 ```
-[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)    
+[Update policy: All compute nodes must be stopped for a managed placement group deletion. The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-remove-placement-group-v3)    
 `Enabled` \(**Optional**, `Boolean`\)  
-Indicates whether a placement group is used for the Slurm queue\. If this is not specified, the default value is `false`\.  
+Indicates whether a placement group is used for the Slurm queue\. The default is `false`\.  
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
 `Id` \(**Optional**, `String`\)  
-The placement group name for an existing cluster placement group used for the Slurm queue\. Make sure you provide the placement group *name* and *not the ID*\. If this is not specified, AWS ParallelCluster creates a new cluster placement group for each queue\.  
+The placement group name for an existing cluster placement group that's used for the Slurm queue\. Make sure you provide the placement group *name* and *not the ID*\.  
+[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
+`Name` \(**Optional**, `String`\)  
+The placement group name for an existing cluster placement group that's used for the Slurm queue\. Make sure you provide the placement group *name* and *not the ID*\.  
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
++ If `PlacementGroup` / `Enabled` is set to `true`, without a `Name` or `Id` defined, each compute resource is assigned its own managed placement group, unless [`ComputeResources`](#Scheduling-v3-SlurmQueues-ComputeResources) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking) / [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking-PlacementGroup) is defined to override this setting\.
++ Starting with AWS ParallelCluster version 3\.3\.0, [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Name`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Name) was added as a preferred alternative to [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Id`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Id)\.
+
+  [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Id`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Id) and [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Name`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Name) are equivalent and you can use either one\.
+
+   If you include both [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Id`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Id) and [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Name`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Name), AWS ParallelCluster fails\.
+
+  You don't need to update your cluster to use [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) / [`Name`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup-Name)\.
 
 `Proxy` \(**Optional**\)  
 Specifies the proxy settings for the Slurm queue\.  
@@ -432,6 +510,8 @@ To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI 
 ComputeResources:
   - Name: string
     InstanceType: string
+    Instances:
+      - InstanceType: string    
     MinCount: integer
     MaxCount: integer
     SpotPrice: float
@@ -440,6 +520,13 @@ ComputeResources:
     Efa:
       Enabled: boolean
       GdrSupport: boolean
+    CapacityReservationTarget:
+      CapacityReservationId: string
+      CapacityReservationResourceGroupArn: string
+    Networking:   
+      PlacementGroup:
+        Enabled: boolean
+        Name: string
 ```
 
 [Update policy: For this list values setting, a new value can be added during an update or the compute fleet must be stopped when removing an existing value.](using-pcluster-update-cluster-v3.md#update-policy-list-values-v3)
@@ -452,8 +539,38 @@ Name for the compute environment for the Slurm queue\.
 
 `InstanceType` \(**Required**, `String`\)  
 The instance type to use in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture, either `x86_64` or `arm64`\.  
+The cluster configuration must define either [InstanceType](#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) or [Instances](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\. AWS ParallelCluster fails if both are defined\.  
 If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must launch the compute instances in private subnet as describe in [AWS ParallelCluster using two subnets](network-configuration-v3.md#network-configuration-v3-two-subnets)\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)\.
+
+`Instances` \(**Required**\)  
+Specifies the list of instance types for a compute resource\. To specify the allocation strategy for the list of instance types, see [`AllocationStrategy`](#yaml-Scheduling-SlurmQueues-AllocationStrategy)\.  
+The cluster configuration must define either [`InstanceType`](#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) or [`Instances`](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\. AWS ParallelCluster fails if both are defined\.  
+For more information, see [Multiple instance type allocation with Slurm](slurm-multiple-instance-allocation-v3.md)\.  
+
+```
+`Instances`:
+   - `InstanceType`: string
+```
+[Update policy: For this list values setting, a new value can be added during an update or the compute fleet must be stopped when removing an existing value.](using-pcluster-update-cluster-v3.md#update-policy-list-values-v3)    
+`InstanceType` \(**Required**, `String`\)  
+The instance type to use in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture, either `x86_64` or `arm64`\.  
+The instance types listed in [`Instances`](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances) must have:  
++ The same number of vCPUs or if [`DisableSimultaneousMultithreading`](#yaml-Scheduling-SlurmQueues-ComputeResources-DisableSimultaneousMultithreading) is set to `true`, the same number of cores\.
++ The same number of accelerators of the same manufacturers\.
++ EFA supported, if [`Efa`](#yaml-Scheduling-SlurmQueues-ComputeResources-Efa) / [`Enabled`](#yaml-Scheduling-SlurmQueues-ComputeResources-Efa-Enabled) set to `true`\.
+The instance types listed in [`Instances`](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances) can have:  
++ Different amount of memory\.
+
+  In this case, the minimum memory is to be set as a consumable Slurm resource\. [`EnableMemoryBasedScheduling`](#yaml-Scheduling-SlurmSettings-EnableMemoryBasedScheduling) can't be enabled for multiple instance types\.
++ Different network cards\.
+
+  In this case, the number of network interfaces configured for the compute resource is defined by the instance type with the smallest number of network cards\.
++ Different network bandwitdh\.
++ Different instance store size\.
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must launch the compute instances in private subnet as describe in [AWS ParallelCluster using two subnets](network-configuration-v3.md#network-configuration-v3-two-subnets)\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+`Instances` is supported starting with AWS ParallelCluster version 3\.3\.0\.
 
 `MinCount` \(**Optional**, `Integer`\)  
 The minimum number of instances for the Slurm compute resource\. The default is 0\.  
@@ -468,8 +585,8 @@ The maximum price that will be paid for an EC2 Spot Instance before instances ar
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
 
 `DisableSimultaneousMultithreading` \(**Optional**, `Boolean`\)  
-If `true`, disables hyperthreading on the nodes in the Slurm queue\. The default value is `false`\.  
-Not all instance types can disable hyperthreading\. For a list of instance types that support disabling hyperthreading, see [CPU cores and threads for each CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.   
+If `true`, disables multithreading on the nodes in the Slurm queue\. The default value is `false`\.  
+Not all instance types can disable multithreading\. For a list of instance types that support disabling multithreading, see [CPU cores and threads for each CPU core per instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html#cpu-options-supported-instances-values) in the *Amazon EC2 User Guide for Linux Instances*\.   
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 `SchedulableMemory` \(**Optional**, `Integer`\)  
@@ -483,13 +600,13 @@ Starting with version 3\.2\.0, by default, AWS ParallelCluster configures `RealM
 
 `Efa` \(**Optional**\)  
 Specifies the Elastic Fabric Adapter \(EFA\) settings for the nodes in the Slurm queue\.  
-[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
 
 ```
 Efa:
   Enabled: boolean
   GdrSupport: boolean
-```  
+```
+[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)    
 `Enabled` \(**Optional**, `Boolean`\)  
 Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. To view the list of EC2 instances that support EFA, see [Supported instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types) in the *Amazon EC2 User Guide for Linux Instances*\. For more information, see [Elastic Fabric Adapter](efa-v3.md)\. We recommend that you use a cluster [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) to minimize latencies between instances\.  
 The default value is `false`\.  
@@ -499,6 +616,47 @@ If you're defining a custom security group in [SecurityGroups](#yaml-Scheduling-
 **\(Optional\)** Starting with AWS ParallelCluster version 3\.0\.2, this setting has no effect\. Elastic Fabric Adapter \(EFA\) support for GPUDirect RDMA \(remote direct memory access\) is always enabled if it's supported by the instance type for the Slurm compute resource and the operating system\.  
 AWS ParallelCluster version 3\.0\.0 through 3\.0\.1: Specifies that support for GPUDirect RDMA is enabled for the Slurm compute resource\. Support for GPUDirect RDMA is supported by specific instance types \(`p4d.24xlarge`\) on specific operating systems \([`Os`](Image-v3.md#yaml-Image-Os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`\)\. The default value is false\.
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
+
+`CapacityReservationTarget`  
+
+```
+CapacityReservationTarget:
+   CapacityReservationId: string
+   CapacityReservationResourceGroupArn: string
+```
+Specifies the on\-demand capacity reservation to use for the compute resource\. For more information, see [Launch instances with ODCR \(On\-Demand Capacity Reservations\)](launch-instances-odcr-v3.md)\.    
+`CapacityReservationId` \(**Optional**, `String`\)  
+Indicates the ID of the existing capacity reservation to target for the compute resource\. For more information, see [Launch instances with ODCR \(On\-Demand Capacity Reservations\)](launch-instances-odcr-v3.md)\.  
+`CapacityReservationResourceGroupArn` \(**Optional**, `String`\)  
+Indicates the Amazon Resource Name \(ARN\) of the resource group that serves as the service linked group of capacity reservations for the compute resource\. AWS ParallelCluster identifies and uses the most appropriate capacity reservation from the group\. The resource group must have at least one ODCR for each instance type listed for the compute resource\. For more information, see [Launch instances with ODCR \(On\-Demand Capacity Reservations\)](launch-instances-odcr-v3.md)\.  
++ If `PlacementGroup` is enabled in [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking) or [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`ComputeResources`](#Scheduling-v3-SlurmQueues-ComputeResources) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking), AWS ParallelCluster selects a resource group that targets the instance type and `PlacementGroup` for a compute resource if it exists\.
+
+  The `PlacementGroup` must target one of the instances types defined in [`ComputeResources`](#Scheduling-v3-SlurmQueues-ComputeResources)\.
++ If `PlacementGroup` isn't enabled in [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking) or [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`ComputeResources`](#Scheduling-v3-SlurmQueues-ComputeResources) / [`Networking`](#yaml-Scheduling-SlurmQueues-ComputeResources-Networking), AWS ParallelCluster selects a resource group that targets only the instance type of a compute resource, if it exists\.
+[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
+`CapacityReservationTarget` is added with AWS ParallelCluster version 3\.3\.0\.
+
+`Networking`  
+
+```
+Networking:   
+  PlacementGroup:
+    Enabled: boolean
+    Name: string
+```
+[Update policy: All compute nodes must be stopped for a managed placement group deletion. The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-remove-placement-group-v3)    
+`PlacementGroup` \(**Optional**\)  
+Specifies the placement group settings for the compute resource\.    
+`Enabled` \(**Optional**, `Boolean`\)  
+Indicates whether a placement group is used for the compute resource\.  
++ If set to `true`, without a `Name` defined, that compute resource is assigned its own managed placement group, regardless of the [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) setting\.
++ If set to `true`, with a `Name` defined, that compute resource is assigned the named placement group, regardless of `SlurmQueues` / `Networking` / `PlacementGroup` settings\.
+[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
+`Name` \(**Optional**, `String`\)  
+The placement group name for an existing cluster placement group that's used for the compute resource\.  
+[Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
++ If both `PlacementGroup` / `Enabled` and `Name` aren't set, their respective values default to the [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) settings\.
++ `ComputeResources` / `Networking` / `PlacementGroup` is added with AWS ParallelCluster version 3\.3\.0\.
 
 #### `ComputeSettings`<a name="Scheduling-v3-SlurmQueues-ComputeSettings"></a>
 
@@ -614,7 +772,7 @@ CustomActions:
 ##### `CustomActions` Properties<a name="Scheduling-v3-SlurmQueues-CustomActions.properties"></a>
 
 `OnNodeStart` \(**Optional**, `String`\)  
-Specifies a script to run on the nodes in the Slurm queue before any node deployment bootstrap action is started\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\.    
+Specifies a script to run on the nodes in the Slurm queue before any node deployment bootstrap action is started\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
@@ -624,7 +782,7 @@ List of arguments to pass to the script\.
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
 
 `OnNodeConfigured` \(**Optional**, `String`\)  
-Specifies a script to run on the nodes in the Slurm queue after all of the node bootstrap actions are complete\. For more information, see [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)\.    
+Specifies a script to run on the nodes in the Slurm queue after all of the node bootstrap actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://`or `s3://`\.  
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
@@ -706,6 +864,10 @@ SlurmSettings:
   ScaledownIdletime: integer
   QueueUpdateStrategy: string
   EnableMemoryBasedScheduling: boolean
+  Database:
+    Uri: string
+    UserName: string
+    PasswordSecretArn: string
   Dns:
     DisableManagedDns: boolean
     HostedZoneId: string
@@ -749,6 +911,47 @@ Enabling memory\-based scheduling impacts the way the Slurm scheduler handles jo
 For more information, see [Slurm memory\-based scheduling](slurm-mem-based-scheduling-v3.md)\.
 `EnableMemoryBasedScheduling` is supported starting with AWS ParallelCluster version 3\.2\.0\.
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+
+### `Database`<a name="Scheduling-v3-SlurmSettings-Database"></a>
+
+**\(Optional\)** Defines the settings to enable Slurm Accounting on the cluster\. For more information, see [Slurm accounting with AWS ParallelCluster](slurm-accounting-v3.md)\.
+
+```
+Database:
+   Uri: string
+   UserName: string
+   PasswordSecretArn: string
+```
+
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+
+#### `Database` Properties<a name="Scheduling-v3-SlurmSettings-Database.properties"></a>
+
+`Uri` \(**Required**, `String`\)  
+The address to the database server that's used as the backend for Slurm accounting\. This URI must be formatted as `host:port` and must not contain a scheme, such as `mysql://`\. The host can either be an IP address or a DNS name that's resolvable by the head node\. If a port isn't provided, AWS ParallelCluster uses the mysql default port 3306\.  
+AWS ParallelCluster bootstraps the Slurm accounting database to the cluster and must be able to access the database\.  
+The database must be reachable before:  
++ A cluster is created\.
++ Slurm accounting is enabled with a cluster update\.
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+
+`UserName` \(**Required**, `String`\)  
+The identity used by Slurm to connect to the database, write accounting logs, and perform queries\. The user must have both read and write permissions on the database\.  
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+
+`PasswordSecretArn` \(**Required**, `String`\)  
+The Amazon Resource Name \(ARN\) of the AWS Secrets Manager secret that contains the `UserName` plaintext password\. This password is used together with `UserName` and Slurm accounting to authenticate on the database server\.  
+If the user has the permission to [DescribeSecret](https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_DescribeSecret.html), `PasswordSecretArn` is validated\. `PasswordSecretArn` is valid if the specified secret exists\. If the user IAM policy doesn't include `DescribeSecret`, `PasswordSecretArn` isn't validated and a warning message is displayed\. For more information, see [Base user policy required to invoke AWS ParallelCluster features](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-base-user-policy)\.  
+Updating `PasswordSecretArn` requires the compute fleet to be stopped\. When the secret value changes, with no change to the secret ARN, the cluster isn't automatically updated with the new database password\. To update the cluster for the new secret value, you must run the following command from within the head node after the compute fleet is stopped\.  
+
+```
+$ sudo /opt/parallelcluster/scripts/slurm/update_slurm_database_password.sh
+```
+We recommend that you only change the database password when the compute fleet is stopped to avoid loss of accounting data\.
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+
+**Note**  
+`Database` is added starting with release 3\.3\.0\.
 
 ### `Dns`<a name="Scheduling-v3-SlurmSettings-Dns"></a>
 

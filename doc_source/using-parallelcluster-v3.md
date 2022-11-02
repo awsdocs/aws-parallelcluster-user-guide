@@ -3,10 +3,11 @@
 **Topics**
 + [AWS Identity and Access Management roles in AWS ParallelCluster 3\.x](iam-roles-in-parallelcluster-v3.md)
 + [Network configurations](network-configuration-v3.md)
-+ [Custom Bootstrap Actions](custom-bootstrap-actions-v3.md)
++ [Custom bootstrap actions](custom-bootstrap-actions-v3.md)
 + [Working with Amazon S3](s3_resources-v3.md)
 + [Working with Spot Instances](spot-v3.md)
 + [Schedulers supported by AWS ParallelCluster](schedulers-v3.md)
++ [Shared storage](shared-storage-quotas-integration-v3.md)
 + [Tagging](resources-tags-v3.md)
 + [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)
 + [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md)

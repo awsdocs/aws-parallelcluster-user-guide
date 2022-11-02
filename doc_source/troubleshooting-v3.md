@@ -95,7 +95,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
     "region": "eu-west-1",
-    "version": "3.2.0",
+    "version": "3.3.0",
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -267,7 +267,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
      "cloudformationStackStatus": "CREATE_IN_PROGRESS",
      "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
      "region": "eu-west-1",
-     "version": "3.2.0",
+     "version": "3.3.0",
      "clusterStatus": "CREATE_IN_PROGRESS"
    }
  } 
@@ -281,7 +281,7 @@ After you're logged into the head node, you should find three primary log files 
 
 ## Troubleshooting scaling issues<a name="troubleshooting-v3-scaling-issues"></a>
 
-This section is relevant to clusters that were installed using AWS ParallelCluster version 3\.0\.0 and later with the Slurm job scheduler\. For more information about configuring multiple queues, see [Configuration of Multiple Queues](configuration-of-multiple-queues-v3.md)\.
+This section is relevant to clusters that were installed using AWS ParallelCluster version 3\.0\.0 and later with the Slurm job scheduler\. For more information about configuring multiple queues, see [Configuration of multiple queues](configuration-of-multiple-queues-v3.md)\.
 
 If one of your running clusters is experiencing issues, place the cluster in a `STOPPED` state by running the following command before you begin to troubleshoot\. This prevents incurring any unexpected costs\.
 
@@ -445,7 +445,7 @@ The following directories are shared between the nodes and cannot be replaced\.
 
 **Topics**
 + [Logs for NICE DCV](#troubleshooting-v3-nice-dcv-logs)
-+ [Ubuntu, Intel MPI modules, and NICE DCV](#troubleshooting-v3-nice-dcv-modules)
++ [Ubuntu NICE DCV issues](#troubleshooting-v3-nice-dcv-modules)
 
 ### Logs for NICE DCV<a name="troubleshooting-v3-nice-dcv-logs"></a>
 
@@ -455,33 +455,29 @@ The instance type should have at least 1\.7 gibibyte \(GiB\) of RAM to run NICE 
 
 AWS ParallelCluster creates NICE DCV log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
-### Ubuntu, Intel MPI modules, and NICE DCV<a name="troubleshooting-v3-nice-dcv-modules"></a>
+### Ubuntu NICE DCV issues<a name="troubleshooting-v3-nice-dcv-modules"></a>
 
-If [`Image`](Image-v3.md) / [`Os`](Image-v3.md#yaml-Image-Os) is `ubuntu1804` or `ubuntu2004` and the cluster is configured to use [Intel MPI](intelmpi-v3.md) modules, you'll see the following from the Ubuntu terminal in the [DCV](dcv-v3.md) client when you run `module avail`:
+When running Gnome Terminal over a DCV session on Ubuntu, you might not automatically have access to the user environment that AWS ParallelCluster makes available through the login shell\. The user environment provides environment modules such as openmpi or intelmpi, and other user settings\.
 
-```
-$ module avail
-module: command not found
-```
+Gnome Terminal's default settings prevent the shell from starting as a login shell\. This means that shell profiles aren't automatically sourced and the AWS ParallelCluster user environment isn't loaded\.
 
-You must source from `/etc/profile`:
+To properly source the shell profile and access the AWS ParallelCluster user environment, do one of the following:
++ 
 
-```
-$ . /etc/profile
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
-module avail
------------------------------ /usr/share/modules/modulefiles ------------------------------
-dot                           module-git   modules  openmpi/4.1.4  
-libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+**Change the default terminal settings:**
 
------------------------------ /usr/share/modules/modulefiles ------------------------------
-dot                           module-git   modules  openmpi/4.1.4  
-libfabric-aws/1.16.0~amzn3.0  module-info  null     use.own        
+  1. Choose the **Edit** menu in the Gnome terminal\.
 
---------------------------- /opt/intel/mpi/2021.4.0/modulefiles ---------------------------
-intelmpi
-```
+  1. Select **Preferences**, then **Profiles**\.
+
+  1. Choose **Command** and select **Run Command as login shell**\.
+
+  1. Open a new terminal\.
++ **Use the command line to source the available profiles:**
+
+  ```
+  $ source /etc/profile && source $HOME/.bashrc
+  ```
 
 ## Troubleshooting issues in clusters with AWS Batch integration<a name="troubleshooting-v3-batch"></a>
 
@@ -637,7 +633,7 @@ If you reset the password for the [`DirectoryService`](DirectoryService-v3.md) /
    1. Run the following command from within the cluster head node\.
 
       ```
-      $ sudo ./opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
+      $ sudo /opt/parallelcluster/scripts/directory_service/update_directory_service_password.sh
       ```
 
 After the password reset and cluster update, the user's cluster access should be restored\.
@@ -860,12 +856,12 @@ When you use a custom AMI, you can see the following warnings:
 
 If you're sure that the correct AMI is being used, you can ignore these warnings\.
 
-If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.2\.0"* is the `pcluster` version in use:
+If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.3\.0"* is the `pcluster` version in use:
 
 ```
 $ aws ec2 create-tags \
   --resources ami-yourcustomAmi \
-  --tags Key="parallelcluster:version",Value="3.2.0" Key="parallelcluster:os",Value="my-os"
+  --tags Key="parallelcluster:version",Value="3.3.0" Key="parallelcluster:os",Value="my-os"
 ```
 
 ## Troubleshooting a cluster update timeout when `cfn-hup` isn't running<a name="troubleshooting-v3-cluster-update-timeout"></a>

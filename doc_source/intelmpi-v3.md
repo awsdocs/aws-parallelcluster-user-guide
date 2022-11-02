@@ -19,8 +19,6 @@ module-info                    use.own
 intelmpi
 ```
 
-If you're using a [DCV](dcv-v3.md) client and [`Image`](Image-v3.md) / [`Os`](Image-v3.md#yaml-Image-Os) is `ubuntu1804` or `ubuntu2004`, see [Ubuntu, Intel MPI modules, and NICE DCV](troubleshooting-v3.md#troubleshooting-v3-nice-dcv-modules)\.
-
 To load a module, run `module load modulename`\. You can add this to the script used to run `mpirun`\.
 
 ```
