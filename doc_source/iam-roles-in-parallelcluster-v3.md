@@ -263,7 +263,7 @@ If existing Amazon EFS file systems are the only file systems used in your clust
           "Resource": "*",
           "Effect": "Allow",
           "Sid": "ResourceGroupRead"
-      },
+      }
   ]
 }
 ```
