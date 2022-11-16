@@ -32,7 +32,7 @@ This is the safest and most recommended method\. Because the base AWS ParallelCl
 ------
 #### [ New EC2 console ]
 
-1. In the AWS ParallelCluster AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.11\.7, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.11\.7/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.11\.7** button, select the **Tags** tab, and then select the appropriate version\.
+1. In the AWS ParallelCluster AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.11\.8, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.11\.8/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.11.8/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.11\.8** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -71,7 +71,7 @@ This is the safest and most recommended method\. Because the base AWS ParallelCl
 ------
 #### [ Old EC2 console ]
 
-1. In the AWS ParallelCluster AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.11\.7, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.11\.7/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.11.7/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.11\.7** button, select the **Tags** tab, and then select the appropriate version\.
+1. In the AWS ParallelCluster AMI list, find the AMI that corresponds to the specific Region that you use\. The AMI list that you choose must match the version of AWS ParallelCluster that you use\. Run `pcluster version` to verify the version\. For AWS ParallelCluster version 2\.11\.8, go to [https://github\.com/aws/aws\-parallelcluster/blob/v2\.11\.8/amis\.txt](https://github.com/aws/aws-parallelcluster/blob/v2.11.8/amis.txt)\. To select another version, use the same link, choose the **Tag: 2\.11\.8** button, select the **Tags** tab, and then select the appropriate version\.
 
 1. Sign in to the AWS Management Console and open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 

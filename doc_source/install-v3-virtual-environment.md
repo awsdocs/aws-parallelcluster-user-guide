@@ -40,7 +40,14 @@ We recommend that you install AWS ParallelCluster in a virtual environment to av
    (apc-ve)~$ python3 -m pip install --upgrade "aws-parallelcluster"
    ```
 
-1. Install Node Version Manager and Node\.js\. It's required due to AWS Cloud Development Kit \(AWS CDK\) usage for template generation\.
+1. Install Node Version Manager and the latest Long\-Term Support \(LTS\) Node\.js version\. AWS Cloud Development Kit \(AWS CDK\) \(AWS CDK\) requires Node\.js for CloudFormation for template generation\.
+**Note**  
+If your Node\.js installation isn't working on your platform, you can install an LTS version prior to the latest LTS version\. For more information, see the [Node\.js release schedule](https://github.com/nodejs/release#release-schedule) and the [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/work-with.html#work-with-prerequisites) prerequisites\.  
+Example Node\.js installation command:  
+
+   ```
+   $  nvm install --lts=Gallium
+   ```
 
    ```
    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash

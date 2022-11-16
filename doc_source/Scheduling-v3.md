@@ -22,7 +22,7 @@ Scheduling:
     Dns:
       DisableManagedDns: boolean
       HostedZoneId: string
-      UseEc2Hostnames: string  
+      UseEc2Hostnames: boolean  
   SlurmQueues:
     - Name: string  
       ComputeSettings:
@@ -871,7 +871,7 @@ SlurmSettings:
   Dns:
     DisableManagedDns: boolean
     HostedZoneId: string
-    UseEc2Hostnames: string
+    UseEc2Hostnames: boolean
 ```
 
 ### `SlurmSettings` Properties<a name="Scheduling-v3-SlurmSettings.properties"></a>
@@ -961,7 +961,7 @@ We recommend that you only change the database password when the compute fleet i
 Dns:
   DisableManagedDns: boolean
   HostedZoneId: string
-  UseEc2Hostnames: string
+  UseEc2Hostnames: boolean
 ```
 
 #### `Dns` Properties<a name="Scheduling-v3-SlurmSettings-Dns.properties"></a>
@@ -975,8 +975,10 @@ A name resolution system is required for the cluster to operate properly\. If `D
 Defines a custom Route 53 hosted zone id to use for DNS name resolution for the cluster\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-`UseEc2Hostnames` \(**Optional**, `String`\)  
-Specifies the use of default EC2 hostnames\.  
+`UseEc2Hostnames` \(**Optional**, `Boolean`\)  
+Specifies the use of default EC2 hostnames if set to `true`\. The default is `false`\.  
+**This note isn't relevant starting with AWS ParallelCluster version 3\.3\.0\.**  
+For AWS ParallelCluster supported versions prior to 3\.3\.0:  
 When `UseEc2Hostnames` is set to `true`, the Slurm configuration file is set with the AWS ParallelCluster `prolog` and `epilog` scripts:  
 + `prolog` runs to add nodes info to `/etc/hosts` on compute nodes when each job is allocated\.
 + `epilog` runs to clean contents written by `prolog`\.

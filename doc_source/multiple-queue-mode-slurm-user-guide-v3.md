@@ -12,11 +12,23 @@ Throughout their lifecycle, cloud nodes enter several if not all of the followin
 + **A node in a `POWER_SAVING` state** appears with a `~` suffix \(for example `idle~`\) in `sinfo`\. In this state, no EC2 instances are backing the node\. However, Slurm can still allocate jobs to the node\.
 + **A node transitioning to a `POWER_UP` state** appears with a `#` suffix \(for example `idle#`\) in `sinfo`\. A node automatically transitions to a `POWER_UP` state, when Slurm allocates a job to a node in a `POWER_SAVING` state\.
 
-  Alternatively, nodes can be transitioned to the `POWER_UP` state manually with the `scontrol update nodename=nodename state=power_up` command\. In this stage, the `ResumeProgram` is invoked, EC2 instances are launched and configured, and the node transitions to the `POWER_UP` state\.
+  Alternatively, you can transition the nodes to the `POWER_UP` state manually as an `su` root user with the command:
+
+  ```
+  $ scontrol update nodename=nodename state=power_up
+  ```
+
+  In this stage, the `ResumeProgram` is invoked, EC2 instances are launched and configured, and the node transitions to the `POWER_UP` state\.
 + **A node that is currently available for use** appears without a suffix \(for example `idle`\) in `sinfo`\. After the node is set up and has joined the cluster, it becomes available to run jobs\. In this stage, the node is properly configured and ready for use\.
 
   As a general rule, we recommend that the number of EC2 instances be the same as the number of available nodes\. In most cases, static nodes are available after the cluster is created\.
-+ **A node that is transitioning to a `POWER_DOWN` state** appears with a `%` suffix \(for example `idle%`\) in `sinfo`\. Dynamic nodes automatically enter the `POWER_DOWN` state after [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\. In contrast, static nodes in most cases aren't powered down\. However, nodes can be placed in the `POWER_DOWN` state manually with the `scontrol update nodename=nodename state=powering_down` command\. In this state, the instances associated with a node are terminated, and the node is set back to the `POWER_SAVING` state and available for use after [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\.
++ **A node that is transitioning to a `POWER_DOWN` state** appears with a `%` suffix \(for example `idle%`\) in `sinfo`\. Dynamic nodes automatically enter the `POWER_DOWN` state after [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\. In contrast, static nodes in most cases aren't powered down\. However, you can place the nodes in the `POWER_DOWN` state manually as an `su` root user with the command:
+
+  ```
+  $ scontrol update nodename=nodename state=down reason="manual draining"
+  ```
+
+  In this state, the instances associated with a node are terminated, and the node is set back to the `POWER_SAVING` state and available for use after [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)\.
 
   The [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime) setting is saved to the Slurm configuration `SuspendTimeout` setting\.
 + **A node that is offline** appears with a `*` suffix \(for example `down*`\) in `sinfo`\. A node goes offline if the Slurm controller can't contact the node or if the static nodes are disabled and the backing instances are terminated\.
@@ -42,7 +54,13 @@ All of the other nodes are in `POWER_SAVING` state with no EC2 instances backing
 
 ## Working with an available node<a name="multiple-queue-mode-slurm-user-guide-v3-working-with-available-nodes"></a>
 
-An available node is backed by an EC2 instance\. By default, the node name can be used to directly SSH into the instance \(for example `ssh efa-st-efacompute1-1`\)\. The private IP address of the instance can be retrieved using the `scontrol show nodes nodename` command and checking the `NodeAddr` field\.
+An available node is backed by an EC2 instance\. By default, the node name can be used to directly SSH into the instance \(for example `ssh efa-st-efacompute1-1`\)\. The private IP address of the instance can be retrieved using the command:
+
+```
+$ scontrol show nodes nodename
+```
+
+Check for IP address in the returned `NodeAddr` field\.
 
 For nodes that aren't available, the `NodeAddr` field shouldn't point to a running EC2 instance\. Rather, it should be the same as the node name\.
 
@@ -60,7 +78,13 @@ All nodes are configured with the following features, which can be used in job s
 + An instance type \(for example `c5.xlarge`\)
 + A node type \(This is either `dynamic` or `static`\.\)
 
-You can see the features for a particular node by using the `scontrol show nodes nodename` command and checking the `AvailableFeatures` list\.
+You can see the features for a particular node by using the command:
+
+```
+$ scontrol show nodes nodename
+```
+
+In the return, check the `AvailableFeatures` list\.
 
 Consider the initial state of the cluster, which you can view by running the `sinfo` command\.
 
@@ -167,21 +191,43 @@ When `update-compute-fleet` is run, you can check the state of the cluster by ru
 
 ## Manual control of queues<a name="multiple-queue-mode-slurm-user-guide-v3-manual-control-queue"></a>
 
-In some cases, you might want to have some manual control over the nodes or queue \(known as a partition in Slurm\) in a cluster\. You can manage nodes in a cluster through the following common procedures\.
+In some cases, you might want to have some manual control over the nodes or queue \(known as a partition in Slurm\) in a cluster\. You can manage nodes in a cluster through the following common procedures using the `scontrol` command\.
 + **Power up dynamic nodes in `POWER_SAVING` state**
 
-   Run the `scontrol update nodename=nodename state=power_up` command or submit a placeholder `sleep 1` job requesting a certain number of nodes and then rely on Slurm to power up the required number of nodes\.
+  Run the command as an `su` root user:
+
+  ```
+  $ scontrol update nodename=nodename state=power_up
+  ```
+
+  You can also submit a placeholder `sleep 1` job requesting a certain number of nodes and then rely on Slurm to power up the required number of nodes\.
 + **Power down dynamic nodes before [`ScaledownIdletime`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-ScaledownIdletime)**
 
-  We recommend that you set dynamic nodes to `DOWN` with the `scontrol update nodename=nodename state=down` command\. AWS ParallelCluster automatically terminates and resets the downed dynamic nodes\.
+  We recommend that you set dynamic nodes to `DOWN` as an `su` root user with the command:
+
+  ```
+  $ scontrol update nodename=nodename state=down reason="manually draining"
+  ```
+
+  AWS ParallelCluster automatically terminates and resets the downed dynamic nodes\.
 
   In general, we don't recommend that you set nodes to `POWER_DOWN` directly using the `scontrol update nodename=nodename state=power_down` command\. This is because AWS ParallelCluster automatically handles the power down process\.
 + **Disable a queue \(partition\) or stop all static nodes in specific partition**
 
-  Set a specific queue to `INACTIVE` with the `scontrol update partition=queuename state=inactive` command\. Doing this terminates all instances backing nodes in the partition\.
+  Set a specific queue to `INACTIVE` as an `su` root user with the command:
+
+  ```
+  $ scontrol update partition=queuename state=inactive
+  ```
+
+  Doing this terminates all instances backing nodes in the partition\.
 + **Enable a queue \(partition\)**
 
-  Set a specific queue to `UP` with the `scontrol update partition=queuename state=up` command\.
+  Set a specific queue to `UP` an `su` root user with the command:
+
+  ```
+  $ scontrol update partition=queuename state=up
+  ```
 
 ## Scaling behavior and adjustments<a name="multiple-queue-mode-slurm-user-guide-v3-scaling-behavior"></a>
 
