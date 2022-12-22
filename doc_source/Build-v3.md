@@ -28,7 +28,7 @@ Build:
     Enabled: boolean
 ```
 
-## `Build` Properties<a name="Build-v3.properties"></a>
+## `Build` properties<a name="Build-v3.properties"></a>
 
 `InstanceType` \(**Required**, `String`\)  
 Specifies the instance type for the instance used to build the image\.
@@ -45,9 +45,9 @@ Specifies the list of security group IDs for the image\.
 
 ### `Imds`<a name="Build-v3-Imds"></a>
 
-#### `Imds` Properties<a name="Build-v3-Imds.properties"></a>
+#### `Imds` properties<a name="Build-v3-Imds.properties"></a>
 
-**\(Optional\)** Specifies the EC2 ImageBuilder build and test instance instance metadata service \(IMDS\) settings\.
+**\(Optional\)** Specifies the EC2 ImageBuilder build and test instance metadata service \(IMDS\) settings\.
 
 ```
 Imds:
@@ -65,7 +65,7 @@ Support for [`Imds`](#Build-v3-Imds) / [`ImdsSupport`](#yaml-build-image-Build-I
 
 ### `Iam`<a name="Build-v3-Iam"></a>
 
-#### `Iam` Properties<a name="Build-v3-Iam.properties"></a>
+#### `Iam` properties<a name="Build-v3-Iam.properties"></a>
 
 \(**Optional**\) Specifies the IAM resources for the image build\.
 
@@ -103,7 +103,7 @@ The ARN of the IAM policy to use as permissions boundary for all roles created b
 
 ### `Components`<a name="Build-v3-Components"></a>
 
-#### `Components` Properties<a name="Build-v3-Components.properties"></a>
+#### `Components` properties<a name="Build-v3-Components.properties"></a>
 
 \(**Optional**\) Specifies EC2 ImageBuilder components to use during the AMI build process in addition to the ones provided by default by AWS ParallelCluster\. Such components can be used to customize the AMI build process\. For more information, see [AWS ParallelCluster AMI customization](custom-ami-v3.md)\.
 
@@ -121,7 +121,7 @@ Specifies the value of the type\-value pair for the component\. When type is `ar
 
 ### `Tags`<a name="Build-v3-Tags"></a>
 
-#### `Tags` Properties<a name="Build-v3-Tags.properties"></a>
+#### `Tags` properties<a name="Build-v3-Tags.properties"></a>
 
 \(**Optional**\) Specifies the list of tags to be set in the resources used to build the AMI\.
 
@@ -139,7 +139,7 @@ Defines the value of the tag\.
 
 ### `UpdateOsPackages`<a name="Build-v3-UpdateOsPackages"></a>
 
-#### `UpdateOsPackages` Properties<a name="Build-v3-UpdateOsPackages.properties"></a>
+#### `UpdateOsPackages` properties<a name="Build-v3-UpdateOsPackages.properties"></a>
 
 \(**Optional**\) Specifies whether the operating system is updated before installing AWS ParallelCluster software stack\.
 

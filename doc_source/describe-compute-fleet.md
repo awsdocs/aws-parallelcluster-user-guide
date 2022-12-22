@@ -26,7 +26,7 @@ Type: string
 Required: Yes
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 

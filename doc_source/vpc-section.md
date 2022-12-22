@@ -95,7 +95,7 @@ use_public_ips = true
 ```
 
 **Important**  
-By default, all AWS accounts are limited to five \(5\) Elastic IP addresses for each Region\. For more information, see [Elastic IP address limit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-limit) in *Amazon EC2 User Guide for Linux Instances*\.
+By default, all AWS accounts are limited to five \(5\) Elastic IP addresses for each AWS Region\. For more information, see [Elastic IP address limit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-limit) in *Amazon EC2 User Guide for Linux Instances*\.
 
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update.md#update-policy-compute-fleet)
 
@@ -121,4 +121,8 @@ vpc_security_group_id = sg-xxxxxx
 
 The security group created by AWS ParallelCluster allows SSH access using port 22 from the addresses specified in the [`ssh_from`](#ssh-from) setting, or all IPv4 addresses \(`0.0.0.0/0`\) if the [`ssh_from`](#ssh-from) setting isn't specified\. If NICE DCV is enabled, then the security group allows access to NICE DCV using port 8443 \(or whatever the [`port`](dcv-section.md#dcv-section-port) setting specifies\) from the addresses specified in the [`access_from`](dcv-section.md#dcv-section-access-from) setting, or all IPv4 addresses \(`0.0.0.0/0`\) if the [`access_from`](dcv-section.md#dcv-section-access-from) setting isn't specified\.
 
-[Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
+**Warning**  
+You can change the value of this parameter and update the cluster if [`[cluster]`](cluster-definition.md) [`fsx_settings`](cluster-definition.md#fsx-settings) isn't specified or both `fsx_settings` and an external existing FSx for Lustre file system is specified for [`fsx-fs-id`](fsx-section.md#fsx-fs-id) in [`[fsx fs]`](fsx-section.md)\.  
+You can't change the value of this parameter if an AWS ParallelCluster managed FSx for Lustre file system is specified in `fsx_settings` and `[fsx fs]`\.
+
+[Update policy: If AWS ParallelCluster managed Amazon FSx for Lustre file systems aren't specified in the configuration, this setting can be changed during an update.](using-pcluster-update.md#update-policy-no-managed-fsx-lustre)

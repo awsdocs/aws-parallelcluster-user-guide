@@ -76,4 +76,4 @@ Specifies the ID of the subnet to use to build the AWS ParallelCluster AMI\.
 Support for the `--vpc-id` argument was added in AWS ParallelCluster version 2\.5\.0\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
+Specifies the AWS Region to use\. Defaults to the AWS Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.

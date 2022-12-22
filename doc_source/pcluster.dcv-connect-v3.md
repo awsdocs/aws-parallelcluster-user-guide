@@ -26,7 +26,7 @@ Enables debug logging\.
 Specifies the path of the SSH key to use for the connection\.
 
 `--region, -r REGION`  
-Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+Specifies the AWS Region to use\. The AWS Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--show-url`  
 Prints the URL that would be used for the DCV connection and exits\.

@@ -29,12 +29,12 @@ Valid values: `CREATE_IN_PROGRESS | CREATE_FAILED | CREATE_COMPLETE | DELETE_IN_
 Required: no
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region of the clusters\.  
 Type: string  
 Required: No
 
@@ -93,14 +93,14 @@ Type: string
 The type of scheduler\.  
 Type: string  
 **region**  
-The AWS Region where the cluster is created\.  
+The AWS Region that the cluster is created in\.  
 Type: string  
 **version**  
-The AWS ParallelCluster version used to create the cluster\.  
+The AWS ParallelCluster version that's used to create the cluster\.  
 Type: string
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="list-clusters-example"></a>

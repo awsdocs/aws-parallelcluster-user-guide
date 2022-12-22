@@ -1,6 +1,6 @@
 # deleteCluster<a name="delete-cluster"></a>
 
-Initiate the deletion of a cluster\.
+Initiate deleting a cluster\.
 
 **Topics**
 + [Request syntax](#delete-cluster-request)
@@ -26,7 +26,7 @@ Type: string
 Required: Yes
 
 **region**  
-The AWS Region of the cluster to be deleted\.  
+The AWS Region that the cluster is deleted in\.  
 Type: string  
 Required: No
 
@@ -55,9 +55,9 @@ Required: No
 ## Response body<a name="delete-cluster-response-body"></a>
 
 **cluster**  
-List of cluster instances    
+A list of cluster instances    
 **clusterName**  
-The name of cluster\.  
+The name of a cluster\.  
 Type: string  
 **cloudformationStackArn**  
 The Amazon Resource Name \(ARN\) of the main CloudFormation stack\.  
@@ -69,7 +69,7 @@ Valid values: `CREATE_IN_PROGRESS | CREATE_FAILED | CREATE_COMPLETE | ROLLBACK_I
 Type: string  
 Valid values: `CREATE_IN_PROGRESS | CREATE_FAILED | CREATE_COMPLETE | DELETE_IN_PROGRESS | DELETE_FAILED | DELETE_COMPLETE | UPDATE_IN_PROGRESS | UPDATE_COMPLETE | UPDATE_FAILED`  
 **region**  
-The AWS Region where the cluster is created\.  
+The AWS Region that the cluster is created in\.  
 Type: string  
 **scheduler**    
 **metadata**  
@@ -84,7 +84,7 @@ Type: string
 The scheduler type\.  
 Type: string  
 **version**  
-The AWS ParallelCluster version used to create the cluster\.  
+The AWS ParallelCluster version that's used to create the cluster\.  
 Type: string
 
 ## Example<a name="delete-cluster-example"></a>

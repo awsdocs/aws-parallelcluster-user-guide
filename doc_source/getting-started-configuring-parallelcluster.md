@@ -10,11 +10,11 @@ Set up your AWS credentials\. For more information, see [Configuring the AWS CLI
 $ aws configure
   AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
 AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-Default region name [us-east-1]: us-east-1
+Default AWS Region name [us-east-1]: us-east-1
 Default output format [None]:
 ```
 
-The Region where the cluster is launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+The AWS Region where the cluster is launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
 $ pcluster configure
@@ -28,10 +28,10 @@ Starting with version 2\.11\.5, AWS ParallelCluster doesn't support the use of S
 ------
 #### [ Slurm ]
 
-From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
+From the list of valid AWS Region identifiers, choose the AWS Region where you want your cluster to run\.
 
 **Note**  
-The list of Regions shown is based on the partition of your account, and only includes Regions that are enabled for your account\. For more information about enabling Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of Regions supported by AWS ParallelCluster, see [Supported Regions](supported-regions.md)\.
+The list of AWS Regions shown is based on the partition of your account, and only includes AWS Regions that are enabled for your account\. For more information about enabling AWS Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only AWS Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of AWS Regions supported by AWS ParallelCluster, see [Supported Regions](supported-regions.md)\.
 
 ```
 Allowed values for the AWS Region ID:
@@ -95,7 +95,7 @@ Master instance type [t2.micro]:
 Compute instance type [t2.micro]:
 ```
 
-The key pair is selected from the key pairs registered with Amazon EC2 in the selected Region\.
+The key pair is selected from the key pairs registered with Amazon EC2 in the selected AWS Region\.
 
 ```
 Allowed values for EC2 Key Pair Name:
@@ -104,7 +104,7 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [prod-uswest1-key]:
 ```
 
-After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your limit on number of VPCs in a Region\. The default limit is five VPCs for each Region\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your limit on number of VPCs in a AWS Region\. The default limit is five VPCs for each AWS Region\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
 If you let AWS ParallelCluster create a VPC, you must decide if all nodes should be in a public subnet\.
 
@@ -148,7 +148,7 @@ Do not leave the terminal until the process has finished
 ------
 #### [ AWS Batch ]
 
-From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
+From the list of valid AWS Region identifiers, choose the AWS Region where you want your cluster to run\.
 
 ```
 Allowed values for AWS Region ID:
@@ -195,7 +195,7 @@ The head node instance type is entered\. When using the `awsbatch` scheduler, th
 Master instance type [t2.micro]: 
 ```
 
-The Amazon EC2 key pair is selected from the key pairs registered with Amazon EC2 in the selected Region\.
+The Amazon EC2 key pair is selected from the key pairs registered with Amazon EC2 in the selected AWS Region\.
 
 ```
 Allowed values for EC2 Key Pair Name:
@@ -204,7 +204,7 @@ Allowed values for EC2 Key Pair Name:
 EC2 Key Pair Name [prod-uswest1-key]:
 ```
 
-Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your limit on number of VPCs in a Region\. The default number of VPCs is five\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your limit on number of VPCs in a AWS Region\. The default number of VPCs is five\. For more information about this limit and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
 **Important**  
 VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.
@@ -249,7 +249,7 @@ Do not leave the terminal until the process has finished
 
 When you have completed the preceding steps, a simple cluster launches into a VPC\. The VPC uses an existing subnet that supports public IP addresses\. The route table for the subnet is `0.0.0.0/0 => igw-xxxxxx`\. Note the following conditions:
 + The VPC must have `DNS Resolution = yes` and `DNS Hostnames = yes`\.
-+ The VPC should also have DHCP options with the correct `domain-name` for the Region\. The default DHCP Option Set already specifies the required AmazonProvidedDNS\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\. When using private subnets, use a NAT gateway or an internal proxy to enable web access for compute nodes\. For more information, see [Network configurations](networking.md)\.
++ The VPC should also have DHCP options with the correct `domain-name` for the AWS Region\. The default DHCP Option Set already specifies the required AmazonProvidedDNS\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\. When using private subnets, use a NAT gateway or an internal proxy to enable web access for compute nodes\. For more information, see [Network configurations](networking.md)\.
 
 When all settings contain valid values, you can launch the cluster by running the create command\.
 

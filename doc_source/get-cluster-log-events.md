@@ -1,6 +1,6 @@
 # getClusterLogEvents<a name="get-cluster-log-events"></a>
 
-Retrieve the events associated with a log stream\.
+Retrieve the events that are associated with a log stream\.
 
 **Topics**
 + [Request syntax](#get-cluster-log-events-request)
@@ -47,18 +47,18 @@ Type: float
 Required: No
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
 **region**  
-The AWS Region that the action corresponds to\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
 **startFromHead**  
-If the value is `true`, the earliest log events are returned first\. If the value is `false`, the latest log events are returned first\. The default is `false`\.  
-Type: bool  
+If set to `true`, the earliest log events are returned first\. If the value is `false`, the latest log events are returned first\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **startTime**  
@@ -94,11 +94,11 @@ The event timestamp\.
 Type: datetime
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 **prevToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="get-cluster-log-events-example"></a>

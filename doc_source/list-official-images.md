@@ -35,7 +35,7 @@ Valid values: `alinux2 | centos7 | ubuntu1804 | ubuntu2004`
 Required: No
 
 **region**  
-The AWS Region official images to list\.  
+The AWS Region that official images are listed in\.  
 Type: string  
 Required: No
 

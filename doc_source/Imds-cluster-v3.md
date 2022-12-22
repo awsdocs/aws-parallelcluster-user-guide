@@ -7,7 +7,7 @@ Imds:
   ImdsSupport: string
 ```
 
-## `Imds` Properties<a name="Imds-cluster-v3.properties"></a>
+## `Imds` properties<a name="Imds-cluster-v3.properties"></a>
 
 `ImdsSupport` \(**Optional**, `String`\)  
 Specifies which IMDS versions are supported in the cluster nodes\. Supported values are `v1.0` and `v2.0`\. The default value is `v1.0`\.  

@@ -1,6 +1,6 @@
 # deleteImage<a name="delete-image"></a>
 
-Initiate the deletion of the custom AWS ParallelCluster image\.
+Initiate deleting the custom AWS ParallelCluster image\.
 
 **Topics**
 + [Request syntax](#delete-image-request)
@@ -27,12 +27,12 @@ Type: string
 Required: Yes
 
 **force**  
-Force deletion in case there are instances using the AMI or in case the AMI is shared\. The default is `false`\.  
-Type: bool  
+If set to `true`, force the AMI delete\. Use this parameter if there are instances using the AMI or if the AMI is shared\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **region**  
-The AWS Region where the image was created\.  
+The AWS Region that the image was created in\.  
 Type: string  
 Required: No
 
@@ -76,10 +76,10 @@ Valid values: `BUILD_IN_PROGRESS | BUILD_FAILED | BUILD_COMPLETE | DELETE_IN_PRO
 The ID of the image\.  
 Type: string  
 **region**  
-The AWS Region where the image is created\.  
+The AWS Region that the image is created in\.  
 Type: string  
 **version**  
-The AWS ParallelCluster version used to build the image\.  
+The AWS ParallelCluster version that's used to build the image\.  
 Type: string
 
 ## Example<a name="delete-image-example"></a>

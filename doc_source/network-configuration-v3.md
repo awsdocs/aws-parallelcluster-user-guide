@@ -236,6 +236,8 @@ Scheduling:
 For clusters created with [`SlurmSettings`](Scheduling-v3.md#Scheduling-v3-SlurmSettings) / [`Dns`](Scheduling-v3.md#Scheduling-v3-SlurmSettings-Dns) / [`DisableManagedDns`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-Dns-DisableManagedDns) and [`UseEc2Hostnames`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-Dns-UseEc2Hostnames) set to `true`, the Slurm `NodeName` isn't resolved by the DNS\. Use the Slurm `NodeHostName` instead\.
 
 **Note**  
+**This note isn't relevant starting with AWS ParallelCluster version 3\.3\.0\.**  
+For AWS ParallelCluster supported versions prior to 3\.3\.0:  
 When `UseEc2Hostnames` is set to `true`, the Slurm configuration file is set with the AWS ParallelCluster `prolog` and `epilog` scripts:  
 `prolog` runs to add nodes info to `/etc/hosts` on compute nodes when each job is allocated\.
 `epilog` runs to clean contents written by `prolog`\.
@@ -296,7 +298,7 @@ Scheduling:
 
   1. Ensure that the NICE DCV client and server are installed on your EC2 instance\.
 
-  1. Attach an AWS ParallelCluster User Policy to the proxy EC2 instance\. For more information, see [AWS ParallelCluster example user policies](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies)\.
+  1. Attach an AWS ParallelCluster User Policy to the proxy EC2 instance\. For more information, see [AWS ParallelCluster example ` pcluster` user policies](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies)\.
 
   1. Install AWS ParallelCluster on the proxy EC2 instance\.
 

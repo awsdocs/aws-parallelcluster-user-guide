@@ -30,7 +30,7 @@ The template used to deploy the API is available at the following URL:
 https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/parallelcluster-api.yaml
 ```
 
-where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.3\.0\)\. 
+where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.4\.0\)\. 
 
 The [Docker](https://aws.amazon.com/docker/) image used to deploy the AWS Lambda function implementing AWS ParallelCluster features is available at:  [https://gallery\.ecr\.aws/parallelcluster/pcluster\-api](https://gallery.ecr.aws/parallelcluster/pcluster-api) 
 
@@ -50,7 +50,7 @@ Run the following commands to deploy the API
 ```
 $ REGION=<region>
 $ API_STACK_NAME=<stack-name>  # This can be any name
-$ VERSION=3.3.0
+$ VERSION=3.4.0
 $ aws cloudformation create-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \
@@ -64,7 +64,7 @@ $ aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME}�
  The API deployment can be customized by using the AWS CloudFormation parameters exposed by the template\. To configure the value of a parameter when deploying through the CLI the following option can be used: `--parameters ParameterKey=KeyName,ParameterValue=Value`\. 
 
  The parameters documented below are all optional\. 
-+ **Region** \- The `Region` parameter can be used to determine whether the API is able to control resources in all AWS Regions \(default\) or in a single AWS Region\. Please set this value to the Region the API is being deployed to in order to restrict access\.
++ **Region** \- The `Region` parameter can be used to determine whether the API is able to control resources in all AWS Regions \(default\) or in a single AWS Region\. Please set this value to the AWS Region the API is being deployed to in order to restrict access\.
 + **ParallelClusterFunctionRole** \- This overrides the IAM role that gets assigned to the AWS Lambda function implementing AWS ParallelCluster features\. The parameter accepts the ARN of a IAM role\. Such role needs to be configured to have AWS Lambda as the IAM principal\. 
 +  **CustomDomainName, CustomDomainCertificate, CustomDomainHostedZoneId** \- These parameters allow to set a custom domain for the Amazon API Gateway endpoint\. `CustomDomainName` is the name of the domain to use, `CustomDomainCertificate` is the ARN of an AWS managed certificate for this domain name and `CustomDomainHostedZoneId` is the ID of the [Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html) hosted zone that you want to create records in\. 
 +  **EnableIamAdminAccess** \- By default the AWS Lambda function executing AWS ParallelCluster API operations is configured with a IAM role that prevents any privileged IAM access \(`EnableIamAdminAccess=false`\)\. This makes the API unable to execute operations that require the creation of IAM roles or policies\. Because of this, the creation of clusters or custom images is successful only when IAM roles are provided as input as part of the resource configuration\. 
@@ -73,7 +73,7 @@ $ aws cloudformation wait stack-create-complete --stack-name ${API_STACK_NAME}�
 **Warning**  
  Setting this to true grants IAM admin privileges to the AWS Lambda function executing AWS ParallelCluster operations\. 
 
-   Please refer to [User Policy to manage IAM resources](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-user-policy-manage-iam) for additional details on the features that can be unlocked when enabling this mode\.
+   Please refer to [AWS ParallelCluster IAM user example policies for managing IAM resources](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-user-policy-manage-iam) for additional details on the features that can be unlocked when enabling this mode\.
 +  **PermissionsBoundaryPolicy** \- This parameter accepts the ARN of a IAM policy and can be used only when `EnableIamAdminAccess` is set to `true`\. When a IAM policy is specified, the IAM permissions granted to the API AWS Lambda function is conditionally restricted to the usage of the given permissions boundary\. 
 
   Please refer to [`PermissionsBoundary` mode](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-permissionsboundary-mode) for additional details on the restrictions imposed by this mode\.
@@ -94,7 +94,7 @@ The `ParallelClusterApiUserRole` has permission to invoke all AWS ParallelClus
 ```
 $ REGION=<region>
 $ API_STACK_NAME=<stack-name>  # This needs to correspond to the existing API stack name
-$ VERSION=3.3.0
+$ VERSION=3.4.0
 $ aws cloudformation update-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \

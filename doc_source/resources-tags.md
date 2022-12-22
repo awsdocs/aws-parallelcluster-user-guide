@@ -25,7 +25,7 @@ The following are examples of AWS ParallelCluster tags applied to a resource\. D
 ```
 
 ```
-"Version"="2.11.8"
+"Version"="2.11.9"
 ```
 
 You can view these tags in the EC2 section of the AWS Management Console\.
@@ -64,7 +64,7 @@ You can view these tags in the EC2 section of the AWS Management Console\.
 |  `aws:cloudformation:stack-name`  |  `parallelcluster-clustername-MasterServerSubstack-ABCD1234EFGH`  | 
 |  `aws:cloudformation:logical-id`  |  `MasterServer`  | 
 |  `aws:cloudformation:stack-id`  |  `arn:aws:cloudformation:region-id:ACCOUNTID:stack/parallelcluster-clustername-MasterServerSubstack-ABCD1234EFGH/1234abcd-12ab-12ab-12ab-1234567890abcdef0`  | 
-|  `Version`  |  `2.11.8`  | 
+|  `Version`  |  `2.11.9`  | 
 
 
 **AWS ParallelCluster head node root volume tags**  
@@ -85,7 +85,7 @@ You can view these tags in the EC2 section of the AWS Management Console\.
 |  `aws:ec2launchtemplate:id`  |  `lt-1234567890abcdef0`  | 
 |  `aws:ec2launchtemplate:version`  |  `1`  | 
 |  `QueueName`  |  `queue-name`  | 
-|  `Version`  |  `2.11.8`  | 
+|  `Version`  |  `2.11.9`  | 
 
 
 **AWS ParallelCluster compute node root volume tags**  
@@ -96,4 +96,4 @@ You can view these tags in the EC2 section of the AWS Management Console\.
 |  `Application`  |  `parallelcluster-clustername`  | 
 |  `aws-parallelcluster-node-type`  |  `Compute`  | 
 |  `QueueName`  |  `queue-name`  | 
-|  `Version`  |  `2.11.8`  | 
+|  `Version`  |  `2.11.9`  | 

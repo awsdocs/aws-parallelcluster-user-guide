@@ -14,6 +14,8 @@ The AWS ParallelCluster community maintains a Wiki page that provides many troub
 + [Troubleshooting custom AMI issues](#troubleshooting-v3-custom-amis)
 + [Troubleshooting a cluster update timeout when `cfn-hup` isn't running](#troubleshooting-v3-cluster-update-timeout)
 + [Network troubleshooting](#troubleshooting-v3-networking)
++ [Use pcluster CLI logs for troubleshooting](#troubleshooting-v3-pc-cli-logs)
++ [Cluster update failed on `onNodeUpdated` custom action](#troubleshooting-v3-on-node-updated)
 + [Additional support](#troubleshooting-v3-additional-support)
 
 ## Retrieving and preserving logs<a name="troubleshooting-v3-get-logs"></a>
@@ -95,7 +97,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
     "region": "eu-west-1",
-    "version": "3.3.0",
+    "version": "3.4.0",
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -267,7 +269,7 @@ $ pcluster create-cluster --cluster-name mycluster --region eu-west-1 \
      "cloudformationStackStatus": "CREATE_IN_PROGRESS",
      "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/mycluster/1bf6e7c0-0f01-11ec-a3b9-024fcc6f3387",
      "region": "eu-west-1",
-     "version": "3.3.0",
+     "version": "3.4.0",
      "clusterStatus": "CREATE_IN_PROGRESS"
    }
  } 
@@ -311,7 +313,7 @@ AWS ParallelCluster creates cluster CloudWatch log streams in log groups\. You c
 + [Troubleshooting node initialization issues](#troubleshooting-v3-node-init)
 + [**Troubleshooting unexpected node replacements and terminations**](#troubleshooting-unexpected-node-replacements-and-terminations)
 + [**Replacing, terminating, or powering down problematic instances and nodes**](#replacing-terminating-or-powering-down-problematic-instances-and-nodes)
-+ [Queue \(partion\) `Inactive` status](#troubleshooting-v3-queues)
++ [Queue \(partition\) `Inactive` status](#troubleshooting-v3-queues)
 + [Troubleshooting other known node and job issues](#troubleshooting-v3-other-node-job-issues)
 
 ### Key logs for debugging<a name="troubleshooting-v3-key-logs"></a>
@@ -418,7 +420,7 @@ This section continues to explore how you can troubleshoot node related issues, 
 + For dynamic nodes failing [`SlurmSettings` Properties](Scheduling-v3.md#Scheduling-v3-SlurmSettings.properties), check in the `SuspendProgram` log to see if `SuspendProgram` was called by `slurmctld` with the specific node as argument\. Note that `SuspendProgram` doesn’t actually perform any action\. Rather, it only logs when it’s called\. All instance termination and `NodeAddr` reset is done by `clustermgtd`\. Slurm puts nodes back into a `POWER_SAVING` state after `SuspendTimeout` automatically\.
 + If compute nodes are failing continuously due to bootstrap failures, verify if they are being launched with [Slurm cluster protected mode](slurm-protected-mode-v3.md) enabled\. If protected mode isn't enabled, modify the protected mode settings to enable protected mode\. Troubleshoot and fix the bootstrap script\.
 
-### Queue \(partion\) `Inactive` status<a name="troubleshooting-v3-queues"></a>
+### Queue \(partition\) `Inactive` status<a name="troubleshooting-v3-queues"></a>
 
 If you run `sinfo` and the output shows queues with `AVAIL` status of `inact`, your cluster might have [Slurm cluster protected mode](slurm-protected-mode-v3.md) enabled and the queue has been set to the `INACTIVE` state for a pre\-defined period of time\.
 
@@ -778,7 +780,7 @@ If you run StarCCM\+ v16 jobs configured to use the embedded IntelMPI, by defaul
 
 Due to a known [Slurm bug](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes username resolution to be wrong, jobs might fail with an error like `error setting up the bootstrap proxies`\. This bug only impacts AWS ParallelCluster versions 3\.1\.1 and 3\.1\.2\.
 
-To prevent this from occurring, force IntelMPI to use Slurm as MPI boostrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
+To prevent this from occurring, force IntelMPI to use Slurm as MPI bootstrap method\. Export the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm` into the job script that launches StarCCM\+, as described in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html)\.
 
 ### Known issues with username resolution<a name="troubleshooting-v3-multi-user-name-resolution"></a>
 
@@ -856,12 +858,12 @@ When you use a custom AMI, you can see the following warnings:
 
 If you're sure that the correct AMI is being used, you can ignore these warnings\.
 
-If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.3\.0"* is the `pcluster` version in use:
+If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.4\.0"* is the `pcluster` version in use:
 
 ```
 $ aws ec2 create-tags \
   --resources ami-yourcustomAmi \
-  --tags Key="parallelcluster:version",Value="3.3.0" Key="parallelcluster:os",Value="my-os"
+  --tags Key="parallelcluster:version",Value="3.4.0" Key="parallelcluster:os",Value="my-os"
 ```
 
 ## Troubleshooting a cluster update timeout when `cfn-hup` isn't running<a name="troubleshooting-v3-cluster-update-timeout"></a>
@@ -872,7 +874,7 @@ Currently the `cfn-hup` daemon is launched by the `supervisord`\. But after laun
 
 **Check and restart `cfn-hup` in case of failures**
 
-1. On the headnode, check if `cfn-hup` is running:
+1. On the head node, check if `cfn-hup` is running:
 
    ```
    $ ps aux | grep cfn-hup
@@ -895,6 +897,18 @@ Check the `cloud-init-output.log` from one of the compute nodes\. If you find so
 ```
 ruby_block[retrieve compute node info] action run[2022-03-11T17:47:11+00:00] INFO: Processing ruby_block[retrieve compute node info] action run (aws-parallelcluster-slurm::init line 31)
 ```
+
+## Use pcluster CLI logs for troubleshooting<a name="troubleshooting-v3-pc-cli-logs"></a>
+
+The `pcluster` CLI writes logs of your commands to `plcuster.log.#` files in `/home/user/.parallelcluster/`\.
+
+For each command, the logs generally include the command with inputs, a copy of the CLI API version used to make the command, the response, and both info and error messages\. For a create and build command, the logs also include the configuration file, configuration file validation operations, the CloudFormation template, and stack commands\.
+
+You can use these logs to verify errors, inputs, versions and `pcluster` CLI commands\. They can also serve as a record of when commands were made\.
+
+## Cluster update failed on `onNodeUpdated` custom action<a name="troubleshooting-v3-on-node-updated"></a>
+
+When a [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeUpdated`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeUpdated) script fails, the update fails and the script is not run at rollback time\. It's your responsibility to manually perform the cleanups needed after the rollback is completed\. For example, if the `OnNodeUpdated` script changes the status of a field in a configuration file \(for example, from `true` to `false`\) and then fails, you need to manually restore that field value to the pre\-update state \(for example, `false` to `true`\)\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.
 
 ## Additional support<a name="troubleshooting-v3-additional-support"></a>
 

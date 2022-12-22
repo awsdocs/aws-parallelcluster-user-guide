@@ -113,12 +113,12 @@ For AWS Graviton\-based instances, only `alinux2`, `ubuntu1804`, or `ubuntu2004`
 **Note**  
 Support for `centos8` was removed in AWS ParallelCluster version 2\.11\.4\. Support for `ubuntu2004` was added and support for `alinux` and `ubuntu1604` was removed in AWS ParallelCluster version 2\.11\.0\. Support for `centos8` was added and support for `centos6` was removed in AWS ParallelCluster version 2\.10\.0\. Support for `alinux2` was added in AWS ParallelCluster version 2\.6\.0\. Support for `ubuntu1804` was added, and support for `ubuntu1404` was removed in AWS ParallelCluster version 2\.5\.0\.
 
-Other than the specific Regions mentioned in the following table that don't support `centos7`\. All other AWS commercial Regions support all of the following operating systems\.
+Other than the specific AWS Regions mentioned in the following table that don't support `centos7`\. All other AWS commercial Regions support all of the following operating systems\.
 
 
-| Partition \(Regions\) | `alinux2` | `centos7` | `ubuntu1804` and `ubuntu2004` | 
+| Partition \(AWS Regions\) | `alinux2` | `centos7` | `ubuntu1804` and `ubuntu2004` | 
 | --- | --- | --- | --- | 
-| Commercial \(All Regions not specifically mentioned\) | True | True | True | 
+| Commercial \(All AWS Regions not specifically mentioned\) | True | True | True | 
 | AWS GovCloud \(US\-East\) \(us\-gov\-east\-1\) | True | False | True | 
 | AWS GovCloud \(US\-West\) \(us\-gov\-west\-1\) | True | False | True | 
 | China \(Beijing\) \(cn\-north\-1\) | True | False | True | 
@@ -217,7 +217,7 @@ compute_root_volume_size = 35
 
 ## `custom_ami`<a name="custom-ami-section"></a>
 
-**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.8/amis.txt)\. For more information, see [Modify an AMI](tutorials_02_ami_customization.md#modify-an-aws-parallelcluster-ami) or [Build a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md#build-a-custom-aws-parallelcluster-ami)\.
+**\(Optional\)** Specifies the ID of a custom AMI to use for the head and compute nodes instead of the default [published AMIs](https://github.com/aws/aws-parallelcluster/blob/v2.11.9/amis.txt)\. For more information, see [Modify an AMI](tutorials_02_ami_customization.md#modify-an-aws-parallelcluster-ami) or [Build a Custom AWS ParallelCluster AMI](tutorials_02_ami_customization.md#build-a-custom-aws-parallelcluster-ami)\.
 
 There is no default value\.
 
@@ -587,14 +587,14 @@ maintain_initial_size = false
 
 **\(Optional\)** Defines the Amazon EC2 instance type that's used for the head node\. The architecture of the instance type must be the same as the architecture used for the [`compute_instance_type`](#compute-instance-type) setting\.
 
-In Regions that have a Free Tier, defaults to the Free Tier instance type \(`t2.micro` or `t3.micro`\)\. In Regions that do not have a Free Tier, defaults to `t3.micro`\. For more information about the AWS Free Tier, see [AWS Free Tier FAQs](http://aws.amazon.com/free/free-tier-faqs/)\.
+In AWS Regions that have a Free Tier, defaults to the Free Tier instance type \(`t2.micro` or `t3.micro`\)\. In AWS Regions that do not have a Free Tier, defaults to `t3.micro`\. For more information about the AWS Free Tier, see [AWS Free Tier FAQs](http://aws.amazon.com/free/free-tier-faqs/)\.
 
 ```
 master_instance_type = t2.micro
 ```
 
 **Note**  
-Before AWS ParallelCluster version 2\.10\.1, defaulted to `t2.micro` in all Regions\. In AWS ParallelCluster version 2\.10\.0, the `p4d.24xlarge` wasn't supported for the head node\. Support for AWS Graviton\-based instances \(such as `A1` and `C6g`\) was added in AWS ParallelCluster version 2\.8\.0\.
+Before AWS ParallelCluster version 2\.10\.1, defaulted to `t2.micro` in all AWS Regions\. In AWS ParallelCluster version 2\.10\.0, the `p4d.24xlarge` wasn't supported for the head node\. Support for AWS Graviton\-based instances \(such as `A1` and `C6g`\) was added in AWS ParallelCluster version 2\.8\.0\.
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update.md#update-policy-fail)
 
@@ -969,7 +969,7 @@ Defaults to `https://aws_region_name-aws-parallelcluster.s3.amazonaws.com/templa
 This is an advanced parameter\. Any change to this setting is done at your own risk\.
 
 ```
-template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.8.cfn.json
+template_url = https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/aws-parallelcluster-2.11.9.cfn.json
 ```
 
 [Update policy: This setting is not analyzed during an update.](using-pcluster-update.md#update-policy-setting-ignored)

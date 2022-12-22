@@ -1,10 +1,10 @@
 # `[efs]` section<a name="efs-section"></a>
 
-Defines configuration settings for the Amazon EFS that's mounted on the head and compute nodes\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the *Amazon EFS API Reference*\.
+Defines the configuration settings for the Amazon EFS that's mounted on the head and compute nodes\. For more information, see [CreateFileSystem](https://docs.aws.amazon.com/efs/latest/ug/API_CreateFileSystem.html) in the *Amazon EFS API Reference*\.
 
-To include Amazon EFS file systems in your cluster definition, see ``[cluster]` section` / ``efs_settings``\.
+To learn how to include Amazon EFS file systems in your cluster definition, see ``[cluster]` section` / ``efs_settings``\.
 
-To use an existing Amazon EFS file system for long term permanent storage that is independent of the cluster life cycle, specify [`efs_fs_id`](#efs-efs-fs-id)\.
+To use an existing Amazon EFS file system for long\-term permanent storage that's independent of the cluster life cycle, specify [`efs_fs_id`](#efs-efs-fs-id)\.
 
 If you don't specify [`efs_fs_id`](#efs-efs-fs-id), AWS ParallelCluster creates the Amazon EFS file system from the `[efs]` settings when it creates the cluster and deletes the file system and data when the cluster is deleted\.
 
@@ -34,11 +34,9 @@ performance_mode = generalPurpose
 
 Specifying this option voids all other Amazon EFS options except for [`shared_dir`](cluster-definition.md#cluster-shared-dir)\.
 
-If you set this option, it only supports file systems:
-+ That don't have a mount target in the stack's Availability Zone
-
-  OR
-+ That do have an existing mount target in the stack's Availability Zone, with inbound and outbound NFS traffic allowed from `0.0.0.0/0`\.
+If you set this option, it only supports the following types of file systems:
++ File systems that don't have a mount target in the stack's Availability Zone\.
++ File systems that have an existing mount target in the stack's Availability Zone with both inbound and outbound NFS traffic allowed from `0.0.0.0/0`\.
 
 The sanity check for validating [`efs_fs_id`](#efs-efs-fs-id) requires the IAM role to have the following permissions:
 + `elasticfilesystem:DescribeMountTargets`
@@ -50,7 +48,7 @@ The sanity check for validating [`efs_fs_id`](#efs-efs-fs-id) requires the IAM r
 To avoid errors, you must add these permissions to your IAM role, or set `sanity_check = false`\.
 
 **Important**  
-When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS recommends that you do *not* create a mount target in the stack's Availability Zone\. Instead, you should let AWS handle this step\. If you still want to have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then add that security group to the mount target, and turn off `sanity_check` to create the cluster\.
+When you set a mount target with inbound and outbound NFS traffic allowed from `0.0.0.0/0`, it exposes the file system to NFS mounting requests from anywhere in the mount target's Availability Zone\. AWS doesn't recommend creating a mount target in the stack's Availability Zone\. Instead, let AWS handle this step\. If you want to have a mount target in the stack's Availability Zone, consider using a custom security group by providing a [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id) option under the [`[vpc]` section](vpc-section.md)\. Then, add that security group to the mount target and turn off `sanity_check` to create the cluster\.
 
 There is no default value\.
 
@@ -96,9 +94,9 @@ Valid options are the following values:
 
 We recommend the `generalPurpose` performance mode for most file systems\.
 
-File systems that use the `maxIO` performance mode can scale to higher levels of aggregate throughput and operations per second\. However, there is a trade\-off of slightly higher latencies for most file operations\.
+File systems that use the `maxIO` performance mode can scale to higher levels of aggregate throughput and operations per second\. However, there's a trade\-off of slightly higher latencies for most file operations\.
 
-This parameter cannot be changed after the file system has been created\.
+After the file system is created, this parameter can't be changed\.
 
 The default value is `generalPurpose`\.
 
@@ -114,7 +112,7 @@ performance_mode = generalPurpose
 
 If you use this parameter, you must set [`throughput_mode`](#efs-throughput-mode) to `provisioned`\.
 
-The limit on throughput is `1024` MiB/s\. To request a limit increase, contact AWS Support\.
+The quota on throughput is `1024` MiB/s\. To request a quota increase, contact AWS Support\.
 
 The minimum value is `0.0` MiB/s\.
 

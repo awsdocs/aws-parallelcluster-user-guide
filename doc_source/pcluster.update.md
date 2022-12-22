@@ -26,7 +26,7 @@ Defaults to `~/.parallelcluster/config`\.
 Enables an update even if one or more settings has a blocking change or if an outstanding action is required \(such as stopping the compute fleet\) before the update can proceed\. This shouldn't be combined with the `--yes` argument\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
+Specifies the AWS Region to use\. Defaults to the AWS Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 `-nr, --norollback`  
 Disables AWS CloudFormation stack rollback on error\.  

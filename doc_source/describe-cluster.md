@@ -26,7 +26,7 @@ Type: string
 Required: Yes
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
@@ -102,19 +102,19 @@ Type: string
 Valid values: `START_REQUESTED | STARTING | RUNNING | PROTECTED | STOP_REQUESTED | STOPPING | STOPPED | UNKNOWN | ENABLED | DISABLED`
 
 **creationTime**  
-Timestamp representing the cluster creation time\.  
+Timestamp for when the cluster was created\.  
 Type: datetime
 
 **lastUpdatedTime**  
-Timestamp representing the last cluster update time\.  
+Timestamp for when the cluster was last updated\.  
 Type: datetime
 
 **region**  
-The AWS Region where the cluster is created\.  
+The AWS Region that the cluster is created in\.  
 Type: string
 
 **tags**  
-The list of tags associated with the cluster\.    
+The list of tags that are associated with the cluster\.    
 **key**  
 Tag name\.  
 Type: string  
@@ -123,11 +123,11 @@ Tag value\.
 Type: string
 
 **version**  
-The AWS ParallelCluster version used to create the cluster\.  
+The AWS ParallelCluster version that's used to create the cluster\.  
 Type: string
 
 **failureReason**  
-The reason for the failure when the stack is in CREATE\_FAILED, UPDATE\_FAILED or DELETE\_FAILED status\.  
+The reason for the failure when the stack is in `CREATE_FAILED`, `UPDATE_FAILED` or `DELETE_FAILED` status\.  
 Type: string
 
 **head\_node**  
@@ -139,7 +139,7 @@ Type: string
 The EC2 instance type\.  
 Type: string  
 **launchTime**  
-The time when the EC2 instance launched\.  
+The time when the EC2 instance was launched\.  
 Type: datetime  
 **privateIpAddress**  
 The cluster private IP address\.  

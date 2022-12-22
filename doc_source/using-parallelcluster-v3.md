@@ -1,7 +1,8 @@
 # Using AWS ParallelCluster<a name="using-parallelcluster-v3"></a>
 
 **Topics**
-+ [AWS Identity and Access Management roles in AWS ParallelCluster 3\.x](iam-roles-in-parallelcluster-v3.md)
++ [AWS Lambda VPC configuration in AWS ParallelCluster](lambda-vpc-v3.md)
++ [AWS Identity and Access Management permissions in AWS ParallelCluster 3\.x](iam-roles-in-parallelcluster-v3.md)
 + [Network configurations](network-configuration-v3.md)
 + [Custom bootstrap actions](custom-bootstrap-actions-v3.md)
 + [Working with Amazon S3](s3_resources-v3.md)

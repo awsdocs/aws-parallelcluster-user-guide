@@ -1,6 +1,6 @@
 # listImageLogStreams<a name="list-image-log-streams"></a>
 
-Retrieve the list of log streams associated with an image\.
+Retrieve the list of log streams that's associated with an image\.
 
 **Topics**
 + [Request syntax](#list-image-log-streams-request)
@@ -27,12 +27,12 @@ Type: string
 Required: Yes
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
 **region**  
-The AWS Region of image\.  
+The AWS Region that the image is in\.  
 Type: string  
 Required: No
 
@@ -60,10 +60,10 @@ Required: No
 **logStreams**  
 A list of log streams\.    
 **creationTime**  
-The creation time of the stream\.  
+The time when the stream was created\.  
 Type: datetime  
 **firstEventTimestamp**  
-The time of the first event of the stream\.  
+The time of the first event in the stream\.  
 Type: datetime  
 **lastEventTimestamp**  
 The time of the last event of the stream\. The lastEventTime value updates on an eventual consistency basis\. It typically updates in less than an hour from ingestion, but in rare situations might take longer\.  
@@ -82,7 +82,7 @@ The sequence token\.
 Type: string
 
 **next\_token**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="list-image-log-streams-example"></a>

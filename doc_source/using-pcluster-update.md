@@ -28,6 +28,9 @@ These settings can be changed, but if the change would reduce the number of stat
 **Update policy: If this setting is changed, the update is not allowed\. Updating this setting cannot be forced\.**  
 These settings can't be changed if the existing cluster hasn't been deleted\. Either the change must be reverted or the cluster must be deleted \(using [`pcluster delete`](pcluster.delete.md)\), and then a new cluster created \(using [`pcluster create`](pluster.create.md)\) in the old cluster's place\.
 
+**Update policy: If AWS ParallelCluster managed Amazon FSx for Lustre file systems aren't specified in the configuration, this setting can be changed during an update\.**  
+This setting can be changed if [`[cluster]`](cluster-definition.md) [`fsx_settings`](cluster-definition.md#fsx-settings) isn't specified or if both `fsx_settings` and [`fsx-fs-id`](fsx-section.md#fsx-fs-id) in [`[fsx fs]`](fsx-section.md) are specified to mount an existing external FSx for Lustre file system\.
+
 This example demonstrates a [`pcluster update`](pcluster.update.md) with some changes that block the update\.
 
 ```

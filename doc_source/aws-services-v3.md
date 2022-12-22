@@ -3,9 +3,11 @@
 The following Amazon Web Services \(AWS\) services are used by AWS ParallelCluster\.
 
 **Topics**
++ [Amazon API Gateway](#aws-api-gateway-v3)
 + [AWS Batch](#aws-batch-v3)
 + [AWS CloudFormation](#aws-services-cloudformation-v3)
 + [Amazon CloudWatch](#amazon-cloudwatch-v3)
++ [Amazon CloudWatch Events](#amazon-cloudwatch-events-v3)
 + [Amazon CloudWatch Logs](#amazon-cloudwatch-logs-v3)
 + [AWS CodeBuild](#aws-codebuild-v3)
 + [Amazon DynamoDB](#amazon-dynamodb-v3)
@@ -18,10 +20,22 @@ The following Amazon Web Services \(AWS\) services are used by AWS ParallelClust
 + [Amazon FSx for OpenZFS](#amazon-fsx-openzfs-v3)
 + [AWS Identity and Access Management](#aws-identity-and-access-management-iam-v3)
 + [AWS Lambda](#aws-lambda-v3)
-+ [NICE DCV](#nice-dcv-v3)
++ [Amazon RDS](#aws-rds-v3)
 + [Amazon Route 53](#amazon-route-53-v3)
++ [Amazon Simple Notification Service](#aws-sns-v3)
 + [Amazon Simple Storage Service](#amazon-s3-v3)
 + [Amazon VPC](#amazon-vpc-v3)
++ [Elastic Fabric Adapter](#aws-efa-v3)
++ [EC2 Image Builder](#aws-image-builder-v3)
++ [NICE DCV](#nice-dcv-v3)
+
+## Amazon API Gateway<a name="aws-api-gateway-v3"></a>
+
+Amazon API Gateway is an AWS service for creating, publishing, maintaining, monitoring, and securing REST, HTTP, and WebSocket APIs at any scale
+
+AWS ParallelCluster uses API Gateway to host the AWS ParallelCluster API\.
+
+For more information about AWS Batch, see [https://aws\.amazon\.com/api\-gateway/](http://aws.amazon.com/api-gateway/) and [https://docs\.aws\.amazon\.com/apigateway/](https://docs.aws.amazon.com/apigateway/)\.
 
 ## AWS Batch<a name="aws-batch-v3"></a>
 
@@ -33,7 +47,7 @@ For more information about AWS Batch, see [https://aws\.amazon\.com/batch/](http
 
 ## AWS CloudFormation<a name="aws-services-cloudformation-v3"></a>
 
-AWS CloudFormation is an infrastructure\-as\-code service that provides a common language to model and provision AWS and third\-party application resources in your cloud environment\. It is the main service used by AWS ParallelCluster\. Each cluster in AWS ParallelCluster is represented as a stack, and all resources required by each cluster are defined within the AWS ParallelCluster AWS CloudFormation template\. In most cases, AWS ParallelCluster CLI commands directly correspond to AWS CloudFormation stack commands, such as create, update, and delete commands\. Instances that are launched within a cluster make HTTPS calls to the AWS CloudFormation endpoint in the Region where the cluster is launched\.
+AWS CloudFormation is an infrastructure\-as\-code service that provides a common language to model and provision AWS and third\-party application resources in your cloud environment\. It is the main service used by AWS ParallelCluster\. Each cluster in AWS ParallelCluster is represented as a stack, and all resources required by each cluster are defined within the AWS ParallelCluster AWS CloudFormation template\. In most cases, AWS ParallelCluster CLI commands directly correspond to AWS CloudFormation stack commands, such as create, update, and delete commands\. Instances that are launched within a cluster make HTTPS calls to the AWS CloudFormation endpoint in the AWS Region where the cluster is launched\.
 
 For more information about AWS CloudFormation, see [https://aws\.amazon\.com/cloudformation/](http://aws.amazon.com/cloudformation/) and [https://docs\.aws\.amazon\.com/cloudformation/](https://docs.aws.amazon.com/cloudformation/)\.
 
@@ -44,6 +58,12 @@ Amazon CloudWatch \(CloudWatch\) is a monitoring and observability service that 
 Before AWS ParallelCluster version 2\.10\.0, CloudWatch was used only with AWS Batch clusters\.
 
 For more information about CloudWatch, see [https://aws\.amazon\.com/cloudwatch/](http://aws.amazon.com/cloudwatch/) and [https://docs\.aws\.amazon\.com/cloudwatch/](https://docs.aws.amazon.com/cloudwatch/)\.
+
+## Amazon CloudWatch Events<a name="amazon-cloudwatch-events-v3"></a>
+
+Amazon CloudWatch Events \(CloudWatch Events\) delivers a near real\-time stream of system events that describe changes in Amazon Web Services \(AWS\) resources\. Using simple rules that you can quickly set up, you can match events and route them to one or more target functions or streams\. In AWS ParallelCluster, CloudWatch Events is used for AWS Batch jobs\.
+
+For more information about CloudWatch Events, see [https://docs\.aws\.amazon\.com/Amazon CloudWatch/latest/events/](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events)\.
 
 ## Amazon CloudWatch Logs<a name="amazon-cloudwatch-logs-v3"></a>
 
@@ -97,19 +117,19 @@ For more information about Amazon EFS, see [https://aws\.amazon\.com/efs/](http:
 
 ## Amazon FSx for Lustre<a name="amazon-fsx-for-lustre-v3"></a>
 
-FSx for Lustre provides a high\-performance file system that uses the open\-source Lustre file system\. FSx for Lustre is used when the [`FsxLustreSettings` Properties](SharedStorage-v3.md#SharedStorage-v3-FsxLustreSettings.properties) are specified\. Support for FSx for Lustre was added in AWS ParallelCluster version 2\.2\.1\.
+FSx for Lustre provides a high\-performance file system that uses the open\-source Lustre file system\. FSx for Lustre is used when the [`FsxLustreSettings` properties](SharedStorage-v3.md#SharedStorage-v3-FsxLustreSettings.properties) are specified\. Support for FSx for Lustre was added in AWS ParallelCluster version 2\.2\.1\.
 
 For more information about FSx for Lustre, see [https://aws\.amazon\.com/fsx/lustre/](http://aws.amazon.com/fsx/lustre/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
 
 ## Amazon FSx for NetApp ONTAP<a name="amazon-fsx-ontap-v3"></a>
 
-FSx for ONTAP provides a fully managed shared storage system built on NetApp's popular ONTAP file system\. FSx for ONTAP is used when [`FsxOntapSettings` Properties](SharedStorage-v3.md#SharedStorage-v3-FsxOntapSettings.properties) are specified\. Support for FSx for ONTAP was added in AWS ParallelCluster version 3\.2\.0\.
+FSx for ONTAP provides a fully managed shared storage system built on NetApp's popular ONTAP file system\. FSx for ONTAP is used when [`FsxOntapSettings` properties](SharedStorage-v3.md#SharedStorage-v3-FsxOntapSettings.properties) are specified\. Support for FSx for ONTAP was added in AWS ParallelCluster version 3\.2\.0\.
 
 For more information about FSx for ONTAP, see [https://aws\.amazon\.com/fsx/netapp\-ontap/](http://aws.amazon.com/fsx/netapp-ontap/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
 
 ## Amazon FSx for OpenZFS<a name="amazon-fsx-openzfs-v3"></a>
 
-FSx for OpenZFS provides a fully managed shared storage system built on the popular OpenZFS file system\. FSx for OpenZFS is used when the [`FsxOpenZfsSettings` Properties](SharedStorage-v3.md#SharedStorage-v3-FsxOpenZfsSettings.properties) are specified\. Support for FSx for OpenZFS was added in AWS ParallelCluster version 3\.2\.0\.
+FSx for OpenZFS provides a fully managed shared storage system built on the popular OpenZFS file system\. FSx for OpenZFS is used when the [`FsxOpenZfsSettings` properties](SharedStorage-v3.md#SharedStorage-v3-FsxOpenZfsSettings.properties) are specified\. Support for FSx for OpenZFS was added in AWS ParallelCluster version 3\.2\.0\.
 
 For more information about FSx for OpenZFS, see [https://aws\.amazon\.com/fsx/openzfs/](http://aws.amazon.com/fsx/openzfs/) and [https://docs\.aws\.amazon\.com/fsx/](https://docs.aws.amazon.com/fsx/)\.
 
@@ -127,11 +147,13 @@ AWS Lambda \(Lambda\) runs the functions that orchestrate the creation of Docker
 
 For more information about Lambda, see [https://aws\.amazon\.com/lambda/](http://aws.amazon.com/lambda/) and [https://docs\.aws\.amazon\.com/lambda/](https://docs.aws.amazon.com/lambda/)\.
 
-## NICE DCV<a name="nice-dcv-v3"></a>
+## Amazon RDS<a name="aws-rds-v3"></a>
 
-NICE DCV is a high\-performance remote display protocol that provides a secure way to deliver remote desktops and application streaming to any device over varying network conditions\. NICE DCV is used when the [`HeadNode` section](HeadNode-v3.md) / [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv) settings are specified\. Support for NICE DCV was added in AWS ParallelCluster version 2\.5\.0\.
+Amazon Relational Database Service \(Amazon RDS\) is a web service that makes it easier to set up, operate, and scale a relational database in the AWS Cloud\.
 
-For more information about NICE DCV, see [https://aws\.amazon\.com/hpc/dcv/](http://aws.amazon.com/hpc/dcv/) and [https://docs\.aws\.amazon\.com/dcv/](https://docs.aws.amazon.com/dcv/)\.
+AWS ParallelCluster uses Amazon RDS for AWS Batch and Slurm\.
+
+For more information about Amazon RDS, see [https://aws\.amazon\.com/rds/](http://aws.amazon.com/rds/) and [https://docs\.aws\.amazon\.com/rds/](https://docs.aws.amazon.com/rds)\.
 
 ## Amazon Route 53<a name="amazon-route-53-v3"></a>
 
@@ -139,9 +161,17 @@ Amazon Route 53 \(Route 53\) is used to create hosted zones with hostnames and
 
 For more information about Route 53, see [https://aws\.amazon\.com/route53/](http://aws.amazon.com/route53/) and [https://docs\.aws\.amazon\.com/route53/](https://docs.aws.amazon.com/route53/)\.
 
+## Amazon Simple Notification Service<a name="aws-sns-v3"></a>
+
+ \(Amazon SNS\) is a managed service that provides message delivery from publishers to subscribers \(also known as producers and consumers\)\.
+
+AWS ParallelCluster uses Amazon SNS for API hosting\.
+
+For more information about Amazon SNS, see [https://aws\.amazon\.com/sns/](http://aws.amazon.com/sns/) and [https://docs\.aws\.amazon\.com/sns/](https://docs.aws.amazon.com/sns/)\.
+
 ## Amazon Simple Storage Service<a name="amazon-s3-v3"></a>
 
-Amazon Simple Storage Service \(Amazon S3\) stores AWS ParallelCluster templates located in each Region\. AWS ParallelCluster can be configured to allow CLI/SDK tools to use Amazon S3\.
+Amazon Simple Storage Service \(Amazon S3\) stores AWS ParallelCluster templates located in each AWS Region\. AWS ParallelCluster can be configured to allow CLI/SDK tools to use Amazon S3\.
 
 When you use AWS Batch cluster, an Amazon S3 bucket in your account is used for storing related data\. For example, the bucket stores artifacts created when a Docker image and scripts are created from submitted jobs\.
 
@@ -152,3 +182,23 @@ For more information, see [https://aws\.amazon\.com/s3/](http://aws.amazon.com/s
 An Amazon VPC defines a network used by the nodes in your cluster\.
 
 For more information about Amazon VPC, see [https://aws\.amazon\.com/vpc/](http://aws.amazon.com/vpc/) and [https://docs\.aws\.amazon\.com/vpc/](https://docs.aws.amazon.com/vpc/)\.
+
+## Elastic Fabric Adapter<a name="aws-efa-v3"></a>
+
+Elastic Fabric Adapter \(EFA\) is a network interface for Amazon EC2 instances that customers can use to run applications requiring high levels of inter\-node communications at scale on AWS\.
+
+For more information about EC2 Image Builder, see [https://aws\.amazon\.com/hpc/efa/](http://aws.amazon.com/hpc/efa/)\.
+
+## EC2 Image Builder<a name="aws-image-builder-v3"></a>
+
+EC2 Image Builder is a fully managed AWS service that helps you to automate the creation, management, and deployment of customized, secure, and up\-to\-date server images\.
+
+AWS ParallelCluster uses Image Builder to create and manage AWS ParallelCluster images\.
+
+For more information about EC2 Image Builder, see [https://aws\.amazon\.com/image\-builder/](http://aws.amazon.com/image-builder/) and [https://docs\.aws\.amazon\.com/imagebuilder/](https://docs.aws.amazon.com/imagebuilder/)\.
+
+## NICE DCV<a name="nice-dcv-v3"></a>
+
+NICE DCV is a high\-performance remote display protocol that provides a secure way to deliver remote desktops and application streaming to any device over varying network conditions\. NICE DCV is used when the [`HeadNode` section](HeadNode-v3.md) / [`Dcv`](HeadNode-v3.md#HeadNode-v3-Dcv) settings are specified\. Support for NICE DCV was added in AWS ParallelCluster version 2\.5\.0\.
+
+For more information about NICE DCV, see [https://aws\.amazon\.com/hpc/dcv/](http://aws.amazon.com/hpc/dcv/) and [https://docs\.aws\.amazon\.com/dcv/](https://docs.aws.amazon.com/dcv/)\.

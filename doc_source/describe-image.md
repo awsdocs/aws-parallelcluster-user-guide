@@ -26,7 +26,7 @@ Type: string
 Required: Yes
 
 **region**  
-The AWS Region where the image was created\.  
+The AWS Region that the image was created in\.  
 Type: string  
 Required: No
 
@@ -74,7 +74,7 @@ Required: No
 ## Response body<a name="describe-image-response-body"></a>
 
 **imageId**  
-ID of the image to retrieve detailed information for\.  
+The ID of the image to retrieve detailed information for\.  
 Type: string
 
 **imageBuildStatus**  
@@ -88,11 +88,11 @@ The URL of the image configuration file\.
 Type: string
 
 **region**  
-The AWS Region where the image is created\.  
+The AWS Region that the image is created in\.  
 Type: string
 
 **version**  
-The AWS ParallelCluster version used to build the image\.  
+The AWS ParallelCluster version that's used to build the image\.  
 Type: string
 
 **cloudformationStackArn**  
@@ -100,7 +100,7 @@ The Amazon Resource Name \(ARN\) of the main CloudFormation stack\.
 Type: string
 
 **cloudformationStackCreationTime**  
-The timestamp representing the CloudFormation stack creation time\.  
+The timestamp for when the CloudFormation stack was created\.  
 Type: datetime
 
 **cloudformationStackStatus**  
@@ -122,7 +122,7 @@ The tag value\.
 Type: string
 
 **creationTime**  
-Timestamp representing the image creation time\.  
+Timestamp for when the image was created\.  
 Type: datetime
 
 **ec2AmiInfo**    

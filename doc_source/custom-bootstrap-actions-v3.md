@@ -1,21 +1,33 @@
 # Custom bootstrap actions<a name="custom-bootstrap-actions-v3"></a>
 
-AWS ParallelCluster can run arbitrary code either right after the node start, for example [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeStart`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeStart), or when the node configuration is correctly completed, for example [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeConfigured`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeConfigured)\. In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as `root` and can be in any script language that's supported by the cluster OS\. Often the code is in *Bash* or *Python*\.
+If you define the [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeStart`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeStart) configuration settings, AWS ParallelCluster runs arbitrary code immediately after the node starts\. If you define the [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeConfigured`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeConfigured) configuration settings, AWS ParallelCluster runs the code after the node configuration is correctly completed\.
+
+Starting with AWS ParallelCluster version 3\.4\.0, the code can be run after the head node update, if you define the [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeUpdated`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeUpdated) configuration settings\.
+
+In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as `root` and can be in any script language that's supported by the cluster OS\. Often the code is in *Bash* or *Python*\.
 
 `OnNodeStart` actions are called before any node deployment bootstrap action is started, such as configuring NAT, Amazon Elastic Block Store \(Amazon EBS\) or the scheduler\. `OnNodeStart` bootstrap actions may include modifying storage, adding extra users, and adding packages\.
 
 `OnNodeConfigured` actions are called after the node bootstrap processes are complete\. `OnNodeConfigured` actions serve the last actions to occur before an instance is considered fully configured and complete\. Some `OnNodeConfigured` actions include changing scheduler settings, modifying storage, and modifying packages\. You can pass argument to scripts by specifying them during configuration\.
 
-If a custom action fails, the instance bootstrap also fails\. Success is signaled with an exit code of zero \(0\)\. Any other exit code indicates the instance bootstrap failed\.
+`OnNodeUpdated` actions are called after the head node update is completed and the scheduler and shared storage are aligned with the latest cluster configuration changes\.
 
- You can specify different scripts for the head node and for each queue, in the [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) configuration sections\.
+When `OnNodeStart` or `OnNodeConfigured` custom actions succeed, success is indicated with exit code zero \(0\)\. Any other exit code indicates the instance bootstrap failed\.
+
+When `OnNodeUpdated` custom actions succeed, success is signaled with exit code zero \(0\)\. Any other exit code indicates the update failed\.
+
+**Note**  
+If you configure [`OnNodeUpdated`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeUpdated), you must manually restore the `OnNodeUpdated` actions to the previous state on update failures\.  
+If an `OnNodeUpdated` custom action fails, the update rolls back to the previous state\. However, the `OnNodeUpdated` action is only run at update time and not at stack rollback time\.
+
+You can specify different scripts for the head node and for each queue, in the [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) configuration sections\. [`OnNodeUpdated`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeUpdated) can only be configured in the `HeadNode` section\.
 
 **Note**  
 Before AWS ParallelCluster version 3\.0, it was not possible to specify different scripts for head and compute nodes\. Please refer to [Moving from AWS ParallelCluster 2\.x to 3\.x](moving-from-v2-to-v3.md)\.
 
 **Configuration**
 
-The following configuration settings are used to define [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeStart`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeStart) & [`OnNodeConfigured`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeConfigured) and [`Scheduling`](Scheduling-v3.md) / [`CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) / [`OnNodeStart`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeStart) & [`OnNodeConfigured`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeConfigured) actions and arguments\.
+The following configuration settings are used to define [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeStart`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeStart) & [`OnNodeConfigured`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeConfigured) & [`OnNodeUpdated`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeUpdated) and [`Scheduling`](Scheduling-v3.md) / [`CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) / [`OnNodeStart`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeStart) & [`OnNodeConfigured`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeConfigured) actions and arguments\.
 
 ```
 HeadNode:
@@ -26,13 +38,16 @@ HeadNode:
       Script: s3://bucket-name/on-node-start.sh
       Args:
         - arg1
-        - arg2
     OnNodeConfigured:
       # Script URL. This is run after all the bootstrap scripts are run
       Script: s3://bucket-name/on-node-configured.sh
       Args:
         - arg1
-        - arg2
+    OnNodeUpdated:
+      # Script URL. This is run after the head node update is completed.
+      Script: s3://bucket-name/on-node-updated.sh
+      Args:
+        - arg1
   # Bucket permissions
   Iam:
     S3Access:
@@ -49,12 +64,10 @@ Scheduling:
           Script: s3://bucket-name/on-node-start.sh
           Args:
             - arg1
-            - arg2
         OnNodeConfigured:
           Script: s3://bucket-name/on-node-configured.sh
           Args:
             - arg1
-            - arg2
       Iam:
         S3Access:
           - BucketName: bucket_name

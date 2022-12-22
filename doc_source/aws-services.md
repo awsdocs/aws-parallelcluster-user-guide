@@ -45,7 +45,7 @@ For more information about AWS Batch, see [https://aws\.amazon\.com/batch/](http
 
 ## AWS CloudFormation<a name="aws-services-cloudformation"></a>
 
-AWS CloudFormation is an infrastructure\-as\-code service that provides a common language to model and provision AWS and third\-party application resources in your cloud environment\. It is the main service used by AWS ParallelCluster\. Each cluster in AWS ParallelCluster is represented as a stack, and all resources required by each cluster are defined within the AWS ParallelCluster AWS CloudFormation template\. In most cases, AWS ParallelCluster CLI commands directly correspond to AWS CloudFormation stack commands, such as create, update, and delete commands\. Instances that are launched within a cluster make HTTPS calls to the AWS CloudFormation endpoint in the Region where the cluster is launched\.
+AWS CloudFormation is an infrastructure\-as\-code service that provides a common language to model and provision AWS and third\-party application resources in your cloud environment\. It is the main service used by AWS ParallelCluster\. Each cluster in AWS ParallelCluster is represented as a stack, and all resources required by each cluster are defined within the AWS ParallelCluster AWS CloudFormation template\. In most cases, AWS ParallelCluster CLI commands directly correspond to AWS CloudFormation stack commands, such as create, update, and delete commands\. Instances that are launched within a cluster make HTTPS calls to the AWS CloudFormation endpoint in the AWS Region where the cluster is launched\.
 
 For more information about AWS CloudFormation, see [https://aws\.amazon\.com/cloudformation/](http://aws.amazon.com/cloudformation/) and [https://docs\.aws\.amazon\.com/cloudformation/](https://docs.aws.amazon.com/cloudformation/)\.
 
@@ -163,7 +163,7 @@ For more information about Amazon SQS, see [https://aws\.amazon\.com/sqs/](http:
 
 ## Amazon Simple Storage Service<a name="amazon-s3"></a>
 
-Amazon Simple Storage Service \(Amazon S3\) stores AWS ParallelCluster templates located in each Region\. AWS ParallelCluster can be configured to allow CLI/SDK tools to use Amazon S3\.
+Amazon Simple Storage Service \(Amazon S3\) stores AWS ParallelCluster templates located in each AWS Region\. AWS ParallelCluster can be configured to allow CLI/SDK tools to use Amazon S3\.
 
 When you use AWS Batch cluster, an Amazon S3 bucket in your account is used for storing related data\. For example, the bucket stores artifacts created when a Docker image and scripts are created from submitted jobs\.
 

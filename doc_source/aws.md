@@ -2,7 +2,7 @@
 
 **\(Optional\)** Used to select the AWS Region\.
 
-Cluster creation uses this priority order to select the Region for a new cluster:
+Cluster creation uses this priority order to select the AWS Region for a new cluster:
 
 1. `-r` or `--region` parameter to [`pcluster create`](pluster.create.md)\.
 

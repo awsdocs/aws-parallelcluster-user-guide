@@ -1,6 +1,6 @@
 # buildImage<a name="build-image"></a>
 
-Create a custom AWS ParallelCluster image in a given AWS Region\.
+Create a custom AWS ParallelCluster image in an AWS Region\.
 
 **Topics**
 + [Request syntax](#build-image-request)
@@ -32,23 +32,23 @@ Type: string
 Required: Yes
 
 **imageId**  
-The ID of the image to be built\.  
+The ID of the image to build\.  
 Type: string  
 Required: Yes
 
 **dryrun**  
-Only perform request validation without creating any resource\. This can be used to validate the image configuration\. The default is `false`\.  
-Type: bool  
+If set to `true`, only perform request validation without creating any resource\. Use this parameter to validate the image configuration\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **region**  
-The AWS Region where the command is given to build the image\.  
+The AWS Region that you run the command to build the image in\.  
 Type: string  
 Required: No
 
 **rollbackOnFailure**  
-When set, it automatically initiates an image stack rollback on failures\. The default is `false`\.  
-Type: bool  
+If set to `true`, image stack rollback occurs if the image fails to create\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **suppressValidators**  
@@ -58,7 +58,7 @@ Format: `(ALL|type:[A-Za-z0-9]+)`
 Required: No
 
 **validationFailureLevel**  
-The minimum validation level that causes the creation to fail\. The default is `ERROR`\.  
+The minimum validation level that causes image build to fail\. The default is `ERROR`\.  
 Type: string  
 Valid values: `INFO | WARNING | ERROR`  
 Required: No
@@ -111,16 +111,16 @@ The image build status\.
 Type: string  
 Valid values: `BUILD_IN_PROGRESS | BUILD_FAILED | BUILD_COMPLETE | DELETE_IN_PROGRESS | DELETE_FAILED | DELETE_COMPLETE`  
 **region**  
-The AWS Region where the image is built\.  
+The AWS Region that the image is built in\.  
 Type: string  
 **version**  
-The AWS ParallelCluster version used to build the image\.  
+The AWS ParallelCluster version that's used to build the image\.  
 Type: string
 
 **validationMessages**  
-A list of messages collected during image configuration validation with a validation level lower than the `validationFailureLevel` set by the user\.    
+A list of messages with a validation level lower than `validationFailureLevel`\. The list of messages is collected during configuration validation\.    
 **id**  
-The ID of the validator\.  
+The validator ID\.  
 Type: string  
 **level**  
 The validation level\.  

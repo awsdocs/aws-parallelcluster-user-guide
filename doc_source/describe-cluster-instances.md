@@ -1,6 +1,6 @@
 # describeClusterInstances<a name="describe-cluster-instances"></a>
 
-Describe the instances belonging to a given cluster\.
+Describe the instances that belong to a cluster\.
 
 **Topics**
 + [Request syntax](#describe-cluster-instances-request)
@@ -29,7 +29,7 @@ Type: string
 Required: Yes
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
@@ -45,7 +45,7 @@ Type: string
 Required: No
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
@@ -90,7 +90,7 @@ Valid values: `HeadNode`, `ComputeNode`
 The cluster public IP address\.  
 Type: string  
 **queueName**  
-The name of the queue where the EC2 instance is backing a node\.  
+The name of the queue that the EC2 instance is backing a node in\.  
 Type: string  
 **state**  
 The node EC2 instance status\.  
@@ -98,7 +98,7 @@ Type: string
 Valid values: `pending | running | shutting-down | terminated | stopping | stopped`
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="describe-cluster-instances-example"></a>

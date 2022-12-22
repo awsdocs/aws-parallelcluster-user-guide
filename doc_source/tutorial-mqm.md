@@ -295,7 +295,7 @@ After logging off of the cluster, you can clean up by running `pcluster delete`\
 
 ```
 $ pcluster list
-multi-queue CREATE_COMPLETE 2.11.8
+multi-queue CREATE_COMPLETE 2.11.9
 $ pcluster delete multi-queue
 Deleting: multi-queue
 ...
@@ -477,7 +477,7 @@ After logging off of the cluster, you can clean up by running ``pcluster delete`
 
 ```
 $ pcluster list
-multi-queue-special CREATE_COMPLETE 2.11.8
+multi-queue-special CREATE_COMPLETE 2.11.9
 $ pcluster delete multi-queue-special
 Deleting: multi-queue-special
 ...

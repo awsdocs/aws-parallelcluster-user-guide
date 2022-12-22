@@ -2,7 +2,7 @@
 
 After you install AWS ParallelCluster, complete the following configuration steps\.
 
-Verify that your AWS Account has a role that includes the permissions needed to run the [`pcluster`](pcluster-v3.md) CLI\. For more information, see [AWS ParallelCluster example user policies](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies)\.
+Verify that your AWS Account has a role that includes the permissions needed to run the [`pcluster`](pcluster-v3.md) CLI\. For more information, see [AWS ParallelCluster example ` pcluster` user policies](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies)\.
 
 Set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI user guide*\.
 
@@ -25,10 +25,10 @@ The configure wizard prompts you for all of the information that's required to c
 ------
 #### [ Slurm ]
 
-From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
+From the list of valid AWS Region identifiers, choose the AWS Region where you want your cluster to run\.
 
 **Note**  
-The list of Regions shown is based on the partition of your account, and only includes Regions that are enabled for your account\. For more information about enabling Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of Regions supported by AWS ParallelCluster, see [Supported Regions for AWS ParallelCluster version 3](supported-regions-v3.md)\.
+The list of AWS Regions shown is based on the partition of your account, and only includes AWS Regions that are enabled for your account\. For more information about enabling AWS Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only AWS Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of AWS Regions supported by AWS ParallelCluster, see [Supported Regions for AWS ParallelCluster version 3](supported-regions-v3.md)\.
 
 ```
 Allowed values for AWS Region ID:
@@ -55,7 +55,7 @@ Allowed values for AWS Region ID:
 AWS Region ID [ap-northeast-1]:
 ```
 
-The key pair is selected from the key pairs that are registered with Amazon EC2 in the selected Region\. Choose the key pair:
+The key pair is selected from the key pairs that are registered with Amazon EC2 in the selected AWS Region\. Choose the key pair:
 
 ```
 Allowed values for EC2 Key Pair Name:
@@ -116,7 +116,7 @@ After the previous steps are completed, decide whether to use an existing VPC or
 
 If you configure your cluster to use instance types that have multiple network interfaces or a network card, see [Network configurations](network-configuration-v3.md) for additional networking requirements\.
 
-It's possible to reach your quota for the number of VPCs allowed in a Region\. The default quota is five VPCs for a Region\. For more information about this quota and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
+It's possible to reach your quota for the number of VPCs allowed in a AWS Region\. The default quota is five VPCs for a AWS Region\. For more information about this quota and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
 
 **Important**  
 VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.
@@ -166,10 +166,10 @@ Do not leave the terminal until the process has finished
 ------
 #### [ AWS Batch ]
 
-From the list of valid AWS Region identifiers, choose the Region where you want your cluster to run\.
+From the list of valid AWS Region identifiers, choose the AWS Region where you want your cluster to run\.
 
 **Note**  
-The list of Regions shown is based on the partition of your account\. It only includes Regions that are enabled for your account\. For more information about enabling Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of Regions supported by AWS ParallelCluster, see [Supported Regions for AWS ParallelCluster version 3](supported-regions-v3.md)\.
+The list of AWS Regions shown is based on the partition of your account\. It only includes AWS Regions that are enabled for your account\. For more information about enabling AWS Regions for your account, see [Managing AWS Regions](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html) in the *AWS General Reference*\. The example shown is from the AWS Global partition\. If your account is in the AWS GovCloud \(US\) partition, only AWS Regions in that partition are listed \(`gov-us-east-1` and `gov-us-west-1`\)\. Similarly, if your account is in the AWS China partition, only `cn-north-1` and `cn-northwest-1` are shown\. For the complete list of AWS Regions supported by AWS ParallelCluster, see [Supported Regions for AWS ParallelCluster version 3](supported-regions-v3.md)\.
 
 ```
 Allowed values for AWS Region ID:
@@ -196,7 +196,7 @@ Allowed values for AWS Region ID:
 AWS Region ID [us-east-1]:
 ```
 
-The key pair is selected from the key pairs registered with Amazon EC2 in the selected Region\. Choose the key pair:
+The key pair is selected from the key pairs registered with Amazon EC2 in the selected AWS Region\. Choose the key pair:
 
 ```
 Allowed values for EC2 Key Pair Name:
@@ -281,7 +281,7 @@ Do not leave the terminal until the process has finished
 
 When you have completed the preceding steps, a simple cluster launches into a VPC\. The VPC uses an existing subnet that supports public IP addresses\. The route table for the subnet is `0.0.0.0/0 => igw-xxxxxx`\. Note the following conditions:
 + The VPC must have `DNS Resolution = yes` and `DNS Hostnames = yes`\.
-+ The VPC must also have DHCP options with the correct `domain-name` for the Region\. The default DHCP Option Set already specifies the required AmazonProvidedDNS\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\. When using private subnets, use a NAT gateway or an internal proxy to enable web access for compute nodes\. For more information, see [Network configurations](network-configuration-v3.md)\.
++ The VPC must also have DHCP options with the correct `domain-name` for the AWS Region\. The default DHCP Option Set already specifies the required AmazonProvidedDNS\. If specifying more than one domain name server, see [DHCP options sets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html) in the *Amazon VPC User Guide*\. When using private subnets, use a NAT gateway or an internal proxy to enable web access for compute nodes\. For more information, see [Network configurations](network-configuration-v3.md)\.
 
 When all settings contain valid values, you can launch the cluster by running the create command\.
 
@@ -293,7 +293,7 @@ $ pcluster create-cluster --cluster-name test-cluster --cluster-configuration cl
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/test-cluster/abcdef0-f678-890a-5abc-021345abcdef",
     "region": "eu-west-1",
-    "version": "3.3.0",
+    "version": "3.4.0",
     "clusterStatus": "CREATE_IN_PROGRESS"
   },
   "validationMessages": []

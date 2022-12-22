@@ -24,7 +24,7 @@ Specifies the alternative configuration file to use\.
 Defaults to `~/.parallelcluster/config`\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. The priority order used to select the Region for a new cluster is as follows:  
+Specifies the AWS Region to use\. The priority order used to select the AWS Region for a new cluster is as follows:  
 
 1. `-r` or `--region` parameter to [`pcluster create`](#pluster.create)\.
 

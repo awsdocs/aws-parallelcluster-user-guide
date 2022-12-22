@@ -25,7 +25,7 @@ Keep the CloudWatch Logs data after deleting the cluster\. The log group remains
 Support for the `--keep-logs` argument was added in AWS ParallelCluster version 2\.6\.0\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
+Specifies the AWS Region to use\. Defaults to the AWS Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 When the command is called and begins polling for the status of that call, it's safe to use "Ctrl\-C" to exit\. You can return to viewing the current status by calling `pcluster status mycluster`\.
 

@@ -1,6 +1,6 @@
 # Using the AWS ParallelCluster API<a name="tutorials_06_API_use"></a>
 
-In this tutorial, you build and test the API with [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) and a AWS ParallelCluster CloudFormation template\. Then you use the example client available on GitHub to use the API\. For more information on using the API, see the [AWS ParallelCluster API](api-reference-v3.md)\.
+In this tutorial, you build and test the API with [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) and an AWS ParallelCluster CloudFormation template\. Then, you use the example client available on GitHub to use the API\. For more information about using the API, see the [AWS ParallelCluster API](api-reference-v3.md)\.
 
 This tutorial was excerpted from the [HPC For Public Sector Customers Workshop](https://catalog.prod.workshops.aws/workshops/e2f40d13-8082-4718-909b-6cdc3155ae41/en-US/examples/pcluster-api)\.
 
@@ -8,7 +8,7 @@ This tutorial was excerpted from the [HPC For Public Sector Customers Workshop](
 + The AWS CLI is [installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and configured in your compute environment\.
 + AWS ParallelCluster is installed in a virtual environment\. For more information, see [Install AWS ParallelCluster in a virtual environment](https://docs.aws.amazon.com/parallelcluster/latest/ug/install-v3-virtual-environment.html)\.
 + You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
-+ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI\.
++ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) that are required to run the [`pcluster`](pcluster-v3.md) CLI\.
 
 
 
@@ -37,7 +37,7 @@ This tutorial was excerpted from the [HPC For Public Sector Customers Workshop](
     echo "export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" |tee -a ~/.bashrc
    ```
 
-1. Run the following commands to deploy the API
+1. Run the following commands to deploy the API\.
 
    ```
    API_STACK_NAME="pc-api-stack"
@@ -61,15 +61,15 @@ This tutorial was excerpted from the [HPC For Public Sector Customers Workshop](
 
 ## Step 2: Test the API in the Amazon API Gateway console<a name="tutorials_06_multi-API-use-step2"></a>
 
-1. Sign in to the AWS Management Console
+1. Sign in to the AWS Management Console\.
 
 1. Navigate to the [Amazon API Gateway console](https://console.aws.amazon.com/apigateway/home)\.
 
 1. Choose your API deployment\.  
-![\[Amazon API Gateway console with list of your gateways you can choose from.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/gateway_choose.png)
+![\[Amazon API Gateway console with list of your gateways that you can choose from.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/gateway_choose.png)
 
 1. Choose **Stages** and select a stage\.  
-![\[A console view of the stages you can choose from. You can also view the URL that API Gateway provides for your API.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/gateway_address.png)
+![\[A console view of the stages that you can choose from. You can also view the URL that API Gateway provides for your API.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/gateway_address.png)
 
 1. Note the URL that API Gateway provides for accessing or invoking your API\. It's highlighted in blue\.
 
@@ -107,7 +107,7 @@ Clone the AWS ParallelCluster source code, `cd` to the `api` directory, and inst
     echo "export PCLUSTER_API_URL=${PCLUSTER_API_URL}" |tee -a ~/.bashrc
    ```
 
-1. Export a cluster name to that the client uses to create a cluster\.
+1. Export a cluster name that the client uses to create a cluster\.
 
    ```
    $ export CLUSTER_NAME="test-api-cluster"
@@ -123,7 +123,7 @@ Clone the AWS ParallelCluster source code, `cd` to the `api` directory, and inst
 
 ## Step 4: Copy client code script and run cluster tests<a name="tutorials_06_multi-API-use-step4"></a>
 
-1. Copy the following example client code to `test_pcluster_client.py` in your home user directory\. The client code makes requests to:
+1. Copy the following example client code to `test_pcluster_client.py` in your home user directory\. The client code makes requests to do the following:
    + Create the cluster\.
    + Describe the cluster\.
    + List the clusters\.
@@ -231,7 +231,7 @@ Clone the AWS ParallelCluster source code, `cd` to the `api` directory, and inst
    $ pcluster configure --config cluster-config.yaml
    ```
 
-1. The API Client library automatically detects configuration details from your environment variables \(i\.e\., AWS\_ACCESS\_KEY\_ID, AWS\_SECRET\_ACCESS\_KEY, AWS\_SESSION\_TOKEN\) or $HOME/\.aws\. The following command will switch your current IAM role to the designated ParallelClusterApiUserRole:
+1. The API Client library automatically detects configuration details from your environment variables \(for example, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, or `AWS_SESSION_TOKEN`\) or `$HOME/.aws`\. The following command switches your current IAM role to the designated ParallelClusterApiUserRole\.
 
    ```
    $  eval $(aws sts assume-role --role-arn ${PCLUSTER_API_USER_ROLE} --role-session-name ApiTestSession | jq -r '.Credentials | "export AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)\nexport AWS_SESSION_TOKEN=\(.SessionToken)\n"')
@@ -239,7 +239,7 @@ Clone the AWS ParallelCluster source code, `cd` to the `api` directory, and inst
 
    **Error to watch for:**
 
-   If you see an error similar to the following, you have already assumed the ParallelClusterApiUserRole and your `AWS_SESSION_TOKEN` has expired\.
+   If you see an error similar to the following, you already assumed the ParallelClusterApiUserRole and your `AWS_SESSION_TOKEN` has expired\.
 
    ```
    An error occurred (AccessDenied) when calling the AssumeRole operation: 
@@ -444,7 +444,7 @@ You can use the AWS Management Console or AWS CLI to delete your API\.
 
 1. Run the following command if using the AWS CLI\.
 
-   Using AWS CloudFormation:
+   Using AWS CloudFormation\.
 
    ```
    $ aws cloudformation delete-stack --stack-name ${API_STACK_NAME}

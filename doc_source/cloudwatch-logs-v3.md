@@ -8,27 +8,21 @@ A log group is created for each cluster with a name `/aws/parallelcluster/cluste
 
 An Amazon CloudWatch dashboard is created when the cluster is created\. This dashboard makes it easy to review the logs stored in CloudWatch Logs\. For more information, see [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
-This list contains the path of the logs and the *logIdentifier* used for those logs\.
-+ `/var/log/cfn-init.log` \(`cfn-init`\)
-+ `/var/log/chef-client.log` \(`chef-client`\)
-+ `/var/log/cloud-init.log` \(`cloud-init`\)
-+ `/var/log/cloud-init-output.log` \(`cloud-init-output`\)
-+ `/var/log/dcv/agent.*.log` \(`dcv-agent`\)
-+ `/var/log/dcv/dcv-xsession.*.log` \(`dcv-xsession`\)
-+ `/var/log/dcv/server.log` \(`dcv-server`\)
-+ `/var/log/dcv/sessionlauncher.log` \(`dcv-session-launcher`\)
-+ `/var/log/dcv/Xdcv.*.log` \(`Xdcv`\)
-+ `/var/log/messages` \(`system-messages`\)
-+ `/var/log/parallelcluster/clustermgtd` \(`clustermgtd`\)
-+ `/var/log/parallelcluster/computemgtd` \(`computemgtd`\)
-+ `/var/log/parallelcluster/pcluster_dcv_authenticator.log` \(`dcv-authenticator`\)
-+ `/var/log/parallelcluster/pcluster_dcv_connect.log` \(`dcv-ext-authenticator`\)
-+ `/var/log/parallelcluster/slurm_resume.log` \(`slurm_resume`\)
-+ `/var/log/parallelcluster/slurm_suspend.log` \(`slurm_suspend`\)
-+ `/var/log/slurmctld.log` \(`slurmctld`\)
-+ `/var/log/slurmd.log` \(`slurmd`\)
-+ `/var/log/supervisord.log` \(`supervisord`\)
-+ `/var/log/syslog` \(`syslog`\)
+This list contains the *logIdentifier* and path for the log streams available for platforms, schedulers, and nodes\.
+
+
+**Log streams available for platforms, schedulers, and nodes**  
+
+| Platforms | Schedulers | Nodes | Log streams | 
+| --- | --- | --- | --- | 
+|  amazon centos ubuntu  |  awsbatch slurm  |  HeadNode  |  dcv\-authenticator: `/var/log/parallelcluster/pcluster_dcv_authenticator.log` dcv\-ext\-authenticator: `/var/log/parallelcluster/pcluster_dcv_connect.log` dcv\-agent: `/var/log/dcv/agent.*.log` dcv\-xsession: `/var/log/dcv/dcv-xsession.*.log` dcv\-server: `/var/log/dcv/server.log` dcv\-session\-launcher: `/var/log/dcv/sessionlauncher.log` Xdcv: `/var/log/dcv/Xdcv.*.log` cfn\-init: `/var/log/cfn-init.log` chef\-client: `/var/log/chef-client.log`  | 
+|  amazon centos ubuntu  |  awsbatch slurm  |  ComputeFleet HeadNode  |  cloud\-init: `/var/log/cloud-init.log` supervisord: `/var/log/supervisord.log`  | 
+|  amazon centos ubuntu  |  slurm  |  HeadNode  |  sssd: `/var/log/sssd/sssd.log` sssd\_domain\_default: `/var/log/sssd/sssd_default.log` pam\_ssh\_key\_generator: `/var/log/parallelcluster/pam_ssh_key_generator.log` clusterstatusmgtd: `/var/log/parallelcluster/clusterstatusmgtd`  | 
+|  amazon centos ubuntu  |  slurm  |  ComputeFleet  |  cloud\-init\-output: `/var/log/cloud-init-output.log`  | 
+|  amazon centos ubuntu  |  slurm  |  HeadNode  |  clustermgtd: `/var/log/parallelcluster/clustermgtd` slurm\_resume: `/var/log/parallelcluster/slurm_resume.log` slurm\_suspend: `/var/log/parallelcluster/slurm_suspend.log` slurmctld: `/var/log/slurmctld.log` slurm\_fleet\_status\_manager: `/var/log/parallelcluster/slurm_fleet_status_manager.log`  | 
+|  amazon centos ubuntu  |  slurm  |  ComputeFleet  |  computemgtd: `/var/log/parallelcluster/computemgtd` slurmd: `/var/log/slurmd.log` slurm\_prolog\_epilog: `/var/log/parallelcluster/slurm_prolog_epilog.log`  | 
+|  amazon centos  |  awsbatch slurm  |  ComputeFleet HeadNode  |  system\-messages: `/var/log/messages`  | 
+|  ubuntu  |  awsbatch slurm  |  ComputeFleet HeadNode  |  syslog: `/var/log/syslog`  | 
 
 Jobs in clusters that use AWS Batch store the output of jobs that reached a `RUNNING`, `SUCCEEDED`, or `FAILED` state in CloudWatch Logs\. The log group is `/aws/batch/job`, and the log stream name format is `jobDefinitionName/default/ecs_task_id`\. By default, these logs are set to never expire, but you can modify the retention period\. For more information, see [Change log data retention in CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/SettingLogRetention.html) in the *Amazon CloudWatch Logs User Guide*\.
 
