@@ -35,13 +35,13 @@ SharedStorage:
     Name: string
     StorageType: Efs
     EfsSettings:
-      ThroughputMode: string
-      ProvisionedThroughput: integer
       Encrypted: boolean
       KmsKeyId: string
       EncryptionInTransit: boolean
       IamAuthorization: boolean
       PerformanceMode: string
+      ThroughputMode: string
+      ProvisionedThroughput: integer
       FileSystemId: string
       DeletionPolicy: string
   - MountDir: string
