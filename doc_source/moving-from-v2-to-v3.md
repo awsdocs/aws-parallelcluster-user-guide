@@ -418,4 +418,4 @@ $ pcluster ssh \
 
 ## IMDS configuration update<a name="imds-update"></a>
 
-Starting with version 3\.0\.0, AWS ParallelCluster introduced support for restricting access to the head node’s IMDS \(and the instance profile credentials\) to a subset of superusers, by default\. For more information, see [`Imds` Properties](HeadNode-v3.md#HeadNode-v3-Imds.properties)\.
+Starting with version 3\.0\.0, AWS ParallelCluster introduced support for restricting access to the head node’s IMDS \(and the instance profile credentials\) to a subset of superusers, by default\. For more information, see [`Imds` properties](HeadNode-v3.md#HeadNode-v3-Imds.properties)\.

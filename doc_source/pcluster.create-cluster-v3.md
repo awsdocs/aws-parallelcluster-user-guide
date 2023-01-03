@@ -24,7 +24,9 @@ Shows the help text for `pcluster create-cluster`\.
 Specifies the YAML cluster configuration file\.
 
 `--cluster-name, -n CLUSTER_NAME`  
-Specifies the name of the cluster to be created\.
+Specifies the name of the cluster to be created\.  
+The name must start with an alphabetical character\. The name can have up to 60 characters\. If Slurm accounting is enabled, the name can have up to 40 characters\.  
+Valid characters: a\-z, A\-Z, 0\-9, and \- \(hyphen\)\.
 
 `--debug`  
 Enables debug logging\.
@@ -36,7 +38,7 @@ When `true`, the command performs validation without creating any resources\. Yo
 Specifies the JMESPath query to perform on the output\.
 
 `--region, -r REGION`  
-Specifies the AWS Region to use\. The Region must be specified, using the [`Region`](cluster-configuration-file-v3.md#yaml-Region) setting in the cluster configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+Specifies the AWS Region to use\. The AWS Region must be specified, using the [`Region`](cluster-configuration-file-v3.md#yaml-Region) setting in the cluster configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--rollback-on-failure ROLLBACK_ON_FAILURE`  
 When `true`, automatically initiates a cluster stack rollback on failures\. \(Defaults to `true`\.\)

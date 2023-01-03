@@ -1,13 +1,13 @@
-# Configuring shared storage encryption with a AWS KMS key<a name="tutorials_04_encrypted_kms_fs-v3"></a>
+# Configuring shared storage encryption with an AWS KMS key<a name="tutorials_04_encrypted_kms_fs-v3"></a>
 
-Learn how to set up a customer managed AWS KMS key to encrypt and protect your data in cluster file storage systems configured for AWS ParallelCluster\.
+Learn how to set up a customer managed AWS KMS key to encrypt and protect your data in the cluster file storage systems that are configured for AWS ParallelCluster\.
 
-AWS ParallelCluster supports the configuration options:
+AWS ParallelCluster supports following shared storage configuration options:
 + [`SharedStorage`](SharedStorage-v3.md) / [`EbsSettings`](SharedStorage-v3.md#SharedStorage-v3-EbsSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-EbsSettings-KmsKeyId)
 + [`SharedStorage`](SharedStorage-v3.md) / [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-EfsSettings-KmsKeyId)
 + [`SharedStorage`](SharedStorage-v3.md) / [`FsxLustreSettings`](SharedStorage-v3.md#SharedStorage-v3-FsxLustreSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-FsxLustreSettings-KmsKeyId)
 
-You can use these options to provide a customer managed AWS KMS key for Amazon EBS, Amazon EFS, and FSx for Lustre shared storage system encryption\. To use them, you must create and configure an IAM policy for:
+You can use these options to provide a customer managed AWS KMS key for Amazon EBS, Amazon EFS, and FSx for Lustre shared storage system encryption\. To use them, you must create and configure an IAM policy for the following:
 + [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalIamPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) / [`Policy`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies-Policy)
 + [`Scheduler`](Scheduling-v3.md#yaml-Scheduling-Scheduler) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalIamPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) / [`Policy`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies-Policy) 
 
@@ -15,7 +15,7 @@ You can use these options to provide a customer managed AWS KMS key for Amazon E
 + AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
 + The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 + You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
-+ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI\.
++ You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) that are required to run the [`pcluster`](pcluster-v3.md) CLI\.
 
 **Topics**
 + [Create the policy](#creating-the-role-v3)
@@ -31,7 +31,7 @@ You can use these options to provide a customer managed AWS KMS key for Amazon E
 
 1. Choose **Create policy**\.
 
-1. Choose the **JSON** tab and paste in the following policy\. Make sure to replace all occurrences of `123456789012` with your AWS account ID and the key Amazon Resource Name \(ARN\) and Region with that of your own\.
+1. Choose the **JSON** tab and paste in the following policy\. Make sure to replace all occurrences of `123456789012` with your AWS account ID and the key Amazon Resource Name \(ARN\) and AWS Region with that of your own\.
 
    ```
    {
@@ -55,7 +55,7 @@ You can use these options to provide a customer managed AWS KMS key for Amazon E
 
 1. For this tutorial, name the policy `ParallelClusterKmsPolicy`, and then choose **Create Policy**\.
 
-1. Make a note of the policy ARN\. You'll need it to configure your cluster\.
+1. Make a note of the policy ARN\. You need it to configure your cluster\.
 
 ## Configure and create the cluster<a name="creating-the-cluster-v3"></a>
 
@@ -98,11 +98,11 @@ SharedStorage:
       KmsKeyId: abcd1234-ef56-gh78-ij90-abcd1234efgh5678
 ```
 
-Replace the items in red text with your own values and create a cluster that uses your AWS KMS key to encrypt your data in Amazon EBS\.
+Replace the items in red text with your own values\. Then, create a cluster that uses your AWS KMS key to encrypt your data in Amazon EBS\.
 
 The configuration is similar for Amazon EFS and FSx for Lustre file systems\.
 
-Amazon EFS `SharedStorage` configuration:
+The Amazon EFS `SharedStorage` configuration is as follows\.
 
 ```
 ...
@@ -115,7 +115,7 @@ SharedStorage:
       KmsKeyId: abcd1234-ef56-gh78-ij90-abcd1234efgh5678
 ```
 
-FSx for Lustre `SharedStorage` configuration:
+The FSx for Lustre `SharedStorage` configuration is as follows\.
 
 ```
 ...

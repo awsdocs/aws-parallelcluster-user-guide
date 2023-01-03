@@ -29,12 +29,12 @@ Valid values: `AVAILABLE | PENDING | FAILED`
 Required: Yes
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
 **region**  
-The AWS Region with the images to list\.  
+The AWS Region that images are in\.  
 Type: string  
 Required: No
 
@@ -82,14 +82,14 @@ Type: string
 The ID of the image\.  
 Type: string  
 **region**  
-The AWS Region where the image is created\.  
+The AWS Region that the image is created in\.  
 Type: string  
 **version**  
-The AWS ParallelCluster version used to build the image\.  
+The AWS ParallelCluster version that's used to build the image\.  
 Type: string
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="list-images-example"></a>

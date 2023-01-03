@@ -26,12 +26,12 @@ Type: string
 Required: Yes
 
 **force**  
-Force the deletion when the cluster with the given name isn't found\. The default is `false`\.  
-Type: bool  
+If set to `true`, force the deletion when the cluster with the given name isn't found\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 

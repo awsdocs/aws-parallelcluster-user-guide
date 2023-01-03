@@ -4,6 +4,8 @@ AWS ParallelCluster uses AWS Identity and Access Management \(IAM\) roles for Am
 
 AWS ParallelCluster uses multiple AWS services to deploy and operate a cluster\. See the complete list in the [AWS Services used in AWS ParallelCluster](aws-services.md) section\.
 
+You can track changes to the example policies in [AWS ParallelCluster documentation on GitHub](https://github.com/awsdocs/aws-parallelcluster-user-guide/blame/main/doc_source/iam.md)\.
+
 **Topics**
 + [Default settings for cluster creation](#defaults)
 + [Using an existing IAM role for Amazon EC2](#using-an-existing-ec2-iam-role)
@@ -510,6 +512,8 @@ The following example sets the `ParallelClusterInstancePolicy` using `awsbatch` 
         {
             "Action": [
                 "logs:CreateLogGroup",
+                "logs:TagResource",
+                "logs:UntagResource",
                 "logs:CreateLogStream"
             ],
             "Resource": [
@@ -811,7 +815,9 @@ To:
                 "logs:DeleteLogGroup",
                 "logs:PutRetentionPolicy",
                 "logs:DescribeLogGroups",
-                "logs:CreateLogGroup"
+                "logs:CreateLogGroup",
+                "logs:TagResource",
+                "logs:UntagResource"
             ],
             "Resource": "*",
             "Effect": "Allow",
@@ -1185,7 +1191,9 @@ To:
                 "logs:DeleteLogGroup",
                 "logs:PutRetentionPolicy",
                 "logs:DescribeLogGroups",
-                "logs:CreateLogGroup"
+                "logs:CreateLogGroup",
+                "logs:TagResource",
+                "logs:UntagResource"
             ],
             "Resource": "*",
             "Effect": "Allow",

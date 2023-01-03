@@ -4,7 +4,7 @@ AWS ParallelCluster version 3 uses separate configuration files to control the d
 
 These objects are used for the AWS ParallelCluster version 3 cluster configuration\.
 
-Current AWS ParallelCluster 3 version: 3\.3\.0\.
+Current AWS ParallelCluster 3 version: 3\.4\.0\.
 
 **Topics**
 + [Cluster configuration file properties](#cluster-configuration-file-v3.properties)
@@ -18,11 +18,12 @@ Current AWS ParallelCluster 3 version: 3\.3\.0\.
 + [`Tags` section](Tags-v3.md)
 + [`AdditionalPackages` section](AdditionalPackages-v3.md)
 + [`DirectoryService` section](DirectoryService-v3.md)
++ [`DeploymentSettings` section](DeploymentSettings-cluster-v3.md)
 
 ## Cluster configuration file properties<a name="cluster-configuration-file-v3.properties"></a>
 
 `Region` \(**Optional**, `String`\)  
-Specifies the Region for the cluster\. For example, `us-east-2`\.  
+Specifies the AWS Region for the cluster\. For example, `us-east-2`\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `CustomS3Bucket` \(**Optional**, `String`\)  

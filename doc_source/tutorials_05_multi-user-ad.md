@@ -1,15 +1,15 @@
 # Integrating Active Directory<a name="tutorials_05_multi-user-ad"></a>
 
-In this tutorial, you create a multiple user environment\. This environment includes an AWS ParallelCluster that's integrated with an AWS Managed Microsoft AD \(Active Directory\) at `corp.pcluster.com`\. It configures an `Admin` user to manage the directory, a `ReadOnly` user to read the directory, and a `user000` user to log into the cluster\. You can use either the automated path or the manual path to create the networking resources, an Active Directory \(AD\), and the EC2 instance you use to configure the AD\. Regardless of the path, the infrastructure that you create is pre\-configured to integrate AWS ParallelCluster using any of the following methods:
+In this tutorial, you create a multiple user environment\. This environment includes an AWS ParallelCluster that's integrated with an AWS Managed Microsoft AD \(Active Directory\) at `corp.pcluster.com`\. You configure an `Admin` user to manage the directory, a `ReadOnly` user to read the directory, and a `user000` user to log into the cluster\. You can use either the automated path or the manual path to create the networking resources, an Active Directory \(AD\), and the EC2 instance that you use to configure the AD\. Regardless of the path, the infrastructure that you create is pre\-configured to integrate AWS ParallelCluster using one of the following methods:
 + LDAPS with certificate verification \(recommended as the most secure option\)
 + LDAPS without certificate verification
 + LDAP
 
 LDAP by itself *doesn't* provide encryption\. To ensure secure transmission of potentially sensitive information, we strongly recommend that you use LDAPS \(LDAP over TLS/SSL\) for clusters integrated with ADs\. For more information, see [Enable server\-side LDAPS using AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_ldap_server_side.html) in the AWS Directory Service *Administration Guide*\.
 
-After you create these resources, you proceed to configure and create your cluster integrated with your AD\. After the cluster is created, you log in as the user you created\. For more information about the configuration that you create in this tutorial, see [Multiple user access to clusters](multi-user-v3.md) and the [`DirectoryService`](DirectoryService-v3.md) configuration section\.
+After you create these resources, proceed to configure and create your cluster integrated with your Active Directory \(AD\)\. After the cluster is created, log in as the user you created\. For more information about the configuration that you create in this tutorial, see [Multiple user access to clusters](multi-user-v3.md) and the [`DirectoryService`](DirectoryService-v3.md) configuration section\.
 
-The focus of this tutorial is the process of how to create an environment that supports multiple user access to clusters\. This tutorial doesn't focus on how you create and use an AWS Directory Service AD itself\. The steps you take to set up an AWS Managed Microsoft AD in this tutorial are provided for testing purposes only\. They *aren't* provided to replace the official documentation and best practices you can find at [AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) and [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) in the *AWS Directory Service Administration Guide*\.
+This tutorial covers how to create an environment that supports multiple user access to clusters\. This tutorial doesn't cover how you create and use an AWS Directory Service AD\. The steps that you take to set up an AWS Managed Microsoft AD in this tutorial are provided for testing purposes only\. They *aren't* provided to replace the official documentation and best practices you can find at [AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) and [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) in the *AWS Directory Service Administration Guide*\.
 
 **Prerequisites**
 + AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
@@ -17,7 +17,7 @@ The focus of this tutorial is the process of how to create an environment that s
 + You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
 + You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run the [`pcluster`](pcluster-v3.md) CLI\.
 
-As you go through the tutorial, replace `inputs highlighted in red`, such as `region-id` and `d-abcdef01234567890`, with your values for names and IDs\. Replace `0123456789012` with your AWS account number\.
+As you go through the tutorial, replace `inputs highlighted in red`, such as `region-id` and `d-abcdef01234567890`, with your own names and IDs\. Replace `0123456789012` with your AWS account number\.
 
 ## Step 1: Create the AD infrastructure<a name="tutorials_05_multi-user-ad-step1"></a>
 
@@ -27,10 +27,10 @@ Choose the *Manual* tab to manually create the AD infrastructure\.
 
 ### Automated<a name="tutorials_05_multi-user-ad-step1-automated"></a>
 
-1. Sign in to the AWS Management Console
+1. Sign in to the AWS Management Console\.
 
-1. Open the link, [CloudFormation Quick Create \(region us\-east\-1\)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=pcluster-ad&templateURL=https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/1-click/ad-integration.yaml), to create the following resources in the CloudFormation console:
-   + A VPC with two subnets and routing for public access \(if no VPC is specified\)\.
+1. Open [CloudFormation Quick Create \(region us\-east\-1\)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=pcluster-ad&templateURL=https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/1-click/ad-integration.yaml) to create the following resources in the CloudFormation console:
+   + A VPC with two subnets and routing for public access, if no VPC is specified\.
    + An AWS Managed Microsoft AD\.
    + An EC2 instance that's joined to the AD that you can use to manage the directory\.
 
@@ -43,11 +43,11 @@ Choose the *Manual* tab to manually create the AD infrastructure\.
 
    Make note of the passwords\. You use them later on in this tutorial\.
 
-1. Acknowledge each of the access capabilities at the bottom of the page by checking the boxes\.
+1. Check the boxes to acknowledge each of the access capabilities at the bottom of the page\.
 
 1. Choose **Create stack**\.
 
-1. After the CloudFormation stack has reached the `CREATE_COMPLETE` state, choose the **Outputs** tab of the stack\. Make a note of the output resource names and IDs because you will need to use them in later steps\. The outputs provide the information that's needed to create the cluster:  
+1. After the CloudFormation stack has reached the `CREATE_COMPLETE` state, choose the **Outputs** tab of the stack\. Make a note of the output resource names and IDs because you need to use them in later steps\. The outputs provide the information that's needed to create the cluster\.  
 ![\[A diagram that shows the created stack outputs in the AWS Management Console.\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/ad-cfn.png)
 
 1. To complete the exercises [\(Optional\) Step 2: Manage AD users and groups](#tutorials_05_multi-user-ad-step2), you need the directory ID\. Choose **Resources** and scroll down to make note of the directory ID\.
@@ -63,9 +63,9 @@ Create a VPC for the directory service with two subnets in different Availabilit
 **Note**  
 The directory and domain name is `corp.pcluster.com`\. The short name is `CORP`\.
 Change the `Admin` password in the script\.
-The AD takes at least 15 minutes to create\.
+The Active Directory \(AD\) takes at least 15 minutes to create\.
 
-Use the following Python script to create the VPC, subnets and AD resources in your local AWS Region\. Save this file as `ad.py` and run it\.
+Use the following Python script to create the VPC, subnets, and AD resources in your local AWS Region\. Save this file as `ad.py` and run it\.
 
 ```
 import boto3
@@ -130,7 +130,7 @@ pprint({"directory_id": directory_id,
         "dns_ip_addrs": dns_ip_addrs})
 ```
 
-The following is example output from python script\.
+The following is example output from the Python script\.
 
 ```
 {
@@ -174,8 +174,8 @@ After the script completes, continue to the next step\.
    ```
 
 1. Create an IAM role with the following policies attached\.
-   + AWS managed policy [AmazonSSMManagedInstanceCore](https://docs.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore)
-   + AWS managed policy [AmazonSSMDirectoryServiceAccess](https://docs.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMDirectoryServiceAccess)
+   + AWS managed policy [AmazonSSMManagedInstanceCore](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore)
+   + AWS managed policy [AmazonSSMDirectoryServiceAccess](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMDirectoryServiceAccess)
    + ResetUserPassword policy
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
@@ -211,50 +211,50 @@ After the script completes, continue to the next step\.
 
 1. If you don't have a role with the policies listed in step 4 attached, open the IAM console at [https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\. Otherwise, skip to step 5\.
 
-1. Create the `ResetUserPassword` policy, replacing the red highlighted content with your AWS Region ID, Account ID, and the directory ID from the output of the script you ran to create the AD\.
+1. Create the `ResetUserPassword` policy\. Replace the red highlighted content with your AWS Region ID, AWS account ID, and the directory ID from the output of the script you ran to create the Active Directory \(AD\)\.
 
    ResetUserPassword
 
    ```
    {
-          "Statement": [
-           {
-               "Action": [
-                   "ds:ResetUserPassword"
-               ],
-               "Resource": "arn:aws:ds:region-id:123456789012:directory/d-abcdef01234567890",
-               "Effect": "Allow"
-           }
-       ]
-   }
+           "Statement": [
+               {
+                   "Action": [
+                       "ds:ResetUserPassword"
+                   ],
+                   "Resource": "arn:aws:ds:region-id:123456789012:directory/d-abcdef01234567890",
+                   "Effect": "Allow"
+               }
+           ]
+        }
    ```
 
 1. Create an IAM role with the following policies attached\.
-   + AWS managed policy [AmazonSSMManagedInstanceCore](https://docs.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore)
-   + AWS managed policy [AmazonSSMDirectoryServiceAccess](https://docs.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMDirectoryServiceAccess)
+   + AWS managed policy [AmazonSSMManagedInstanceCore](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore)
+   + AWS managed policy [AmazonSSMDirectoryServiceAccess](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonSSMDirectoryServiceAccess)
    + ResetUserPassword policy
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the **EC2 Dashboard**, choose **Launch instance**\.
+1. In the **EC2 Dashboard**, choose **Launch Instance**\.
 
-1. In **Choose AMI**, **Select** a recent Amazon Linux 2 AMI\.
+1. In **Application and OS Images**, select a recent Amazon Linux 2 AMI\.
 
-1. For **Instance type**, choose **t2\.micro**\.
+1. For **Instance type**, choose t2\.micro\.
 
-1. Choose **Next: Configure Instance Details**\.
+1. For **Key pair**, choose a key pair\.
 
-1. For **Network**, choose the directory VPC\.
+1. In **Network settings**, choose **Edit**\.
 
-1. For **Domain join directory**, choose the directory\.
+1. In **Network settings**, **VPC**, select the directory VPC\.
 
-1. For **IAM role**, choose the role you created in step 1 or a role with policies listed in step 4 attached\.
+1. Scroll down and select **Advanced details**\.
 
-1. Choose **Review and Launch**, **Launch**\.
+1. In **Advanced details**, **Domain join directory**, choose **corp\.pcluster\.com**\.
 
-1. Select a key pair\.
+1. In **Advanced details**, **Instance profile**, choose the role that you created in step 1 or a role with the policies that are listed in step 4 attached\.
 
-1. Choose **Launch Instances**\.
+1. In **Summary** choose **Launch instance**\.
 
 1. Make note of the Instance ID \(for example, i\-1234567890abcdef0\) and wait for the instance to finish launching\.
 
@@ -266,9 +266,9 @@ After the script completes, continue to the next step\.
 
 1. 
 
-**Connect to your instance and join the AD realm as `admin`**
+**Connect to your instance and join the AD realm as `admin`\.**
 
-   Run the following commands to connect to the instance:
+   Run the following commands to connect to the instance\.
 
    ```
    $ INSTANCE_ID="i-1234567890abcdef0"
@@ -295,7 +295,7 @@ After the script completes, continue to the next step\.
 
 1. 
 
-**Replace the Admin password with your `admin` password:**
+**Replace the admin password with your `admin` password\.**
 
    ```
    $ ADMIN_PW="asdfASDF1234"
@@ -306,7 +306,7 @@ After the script completes, continue to the next step\.
    Password for Admin:
    ```
 
-   If the above has succeeded, you are joined to the realm and can proceed to the next step\.
+   If the preceding has succeeded, you're joined to the realm and can proceed to the next step\.
 
 #### Add users to the AD<a name="tutorials_05_multi-user-ad-step1-manual-join-add-users"></a>
 
@@ -324,9 +324,9 @@ After the script completes, continue to the next step\.
    $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=user000 user000
    ```
 
-1. **Verify the users have been created:**
+1. **Verify the users are created:**
 
-   The directory DNS IP addresses are outputs of the python script\.
+   The directory DNS IP addresses are outputs of the Python script\.
 
    ```
    $ DIRECTORY_IP="192.0.2.254"
@@ -340,7 +340,7 @@ After the script completes, continue to the next step\.
    $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=user000,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
    ```
 
-   When you create a user with the `ad-cli`, the user is disabled by default\.
+   By default, when you create a user with the `ad-cli`, the user is disabled\.
 
 1. 
 
@@ -348,10 +348,10 @@ After the script completes, continue to the next step\.
 
    Log out of your EC2 instance\.
 **Note**  
-`ro-p@ssw0rd` below is the password of `ReadOnlyUser`, retrieved via secrets manager \(explained below\)\.
-`user-p@ssw0rd` is the password of a cluster user, provided when you connect \(`ssh`\) to the cluster\.
+`ro-p@ssw0rd` is the password of `ReadOnlyUser`, retrieved from AWS Secrets Manager\.
+`user-p@ssw0rd` is the password of a cluster user that's provided when you connect \(`ssh`\) to the cluster\.
 
-   The `directory-id` is an output of the python script\.
+   The `directory-id` is an output of the Python script\.
 
    ```
    $ DIRECTORY_ID="d-abcdef01234567890"
@@ -375,9 +375,9 @@ After the script completes, continue to the next step\.
 
 1. **Add the password to a Secrets Manager secret\.**
 
-   Now that you have created a `ReadOnlyUser` and set the password, store it in a secret that AWS ParallelCluster uses for validating logins\.
+   Now that you created a `ReadOnlyUser` and set the password, store it in a secret that AWS ParallelCluster uses for validating logins\.
 
-   Use Secrets Manager to create a new secret to hold the password for the `ReadOnlyUser` as the value\. The secret value format must be text only, not JSON\. Make note of the secret ARN for future steps\.
+   Use Secrets Manager to create a new secret to hold the password for the `ReadOnlyUser` as the value\. The secret value format must be plain text only \(not JSON format\)\. Make note of the secret ARN for future steps\.
 
    ```
    $ aws secretsmanager create-secret --name "ADSecretPassword" \
@@ -390,11 +390,11 @@ After the script completes, continue to the next step\.
 
 #### LDAPS with certificate verification \(recommended\) setup<a name="tutorials_05_multi-user-ad-step1-manual-ldaps"></a>
 
-Make a note of resource IDs\. You'll use them in steps later on\.
+Make a note of resource IDs\. You use them in steps later on\.
 
 1. 
 
-**Generate domain certificate, locally:**
+**Generate domain certificate, locally\.**
 
    ```
    $ PRIVATE_KEY="corp-pcluster-com.key"
@@ -404,7 +404,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Store the certificate to Secrets Manager in order to make it retrievable from within the cluster later on:**
+**Store the certificate to Secrets Manager to make it retrievable from within the cluster later on\.**
 
    ```
    $ aws secretsmanager create-secret --name pcluster-cert \
@@ -417,9 +417,9 @@ Make a note of resource IDs\. You'll use them in steps later on\.
    }
    ```
 
-1. Add the following policy to the IAM role you created to join the EC2 instance to the AD domain\.
+1. Add the following policy to the IAM role that you created to join the EC2 instance to the AD domain\.
 
-   PutDomainCertificateSecrets
+   `PutDomainCertificateSecrets`
 
    ```
    {
@@ -439,7 +439,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Import the certificate to ACM:**
+**Import the certificate to AWS Certificate Manager \(ACM\)\.**
 
    ```
    $ aws acm import-certificate --certificate fileb://$CERTIFICATE \
@@ -452,7 +452,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Create and the Load Balancer that will be put in front of the Active Directory endpoints:**
+**Create and the load balancer that is put in front of the Active Directory endpoints\.**
 
    ```
    $ aws elbv2 create-load-balancer --name CorpPclusterCom-NLB \
@@ -494,7 +494,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Create the Target Group targeting the Active Directory endpoints:**
+**Create the target group that's targeting the Active Directory endpoints\.**
 
    ```
    $ aws elbv2 create-target-group --name CorpPclusterCom-Targets --protocol TCP \
@@ -526,7 +526,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Register the Active Directory endpoints into the Target Group:**
+**Register the Active Directory \(AD\) endpoints into the target group\.**
 
    ```
    $ aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81 \
@@ -536,7 +536,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Create the LB Listener with the certificate:**
+**Create the LB listener with the certificate\.**
 
    ```
    $ aws elbv2 create-listener --load-balancer-arn arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpPclusterCom-NLB/3afe296bf4ba80d4 \
@@ -578,7 +578,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Create the Hosted Zone to make the domain discoverable within the cluster VPC:**
+**Create the hosted zone to make the domain discoverable within the cluster VPC\.**
 
    ```
    $ aws route53 create-hosted-zone --name corp.pcluster.com \
@@ -609,7 +609,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Create a file named `recordset-change.json` with the following content \(pay attention here that `HostedZoneId` is the Canonical Hosted Zone ID of the Load Balancer\):**
+**Create a file that's named `recordset-change.json` with the following content\. `HostedZoneId` is the canonical hosted zone ID of the load balancer\.**
 
    ```
    {
@@ -634,7 +634,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Submit the recordset change to the hosted zone, this time using the hosted zone ID:**
+**Submit the recordset change to the hosted zone, this time using the hosted zone ID\.**
 
    ```
    $ aws route53 change-resource-record-sets --hosted-zone-id Z09020002B5MZQNXMSJUB \
@@ -650,7 +650,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Create a policy document `policy.json` with the following content:**
+**Create a policy document `policy.json` with the following content\.**
 
    ```
    {
@@ -671,7 +671,7 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Create a policy document named `policy.json` with the following content:**
+**Create a policy document that is named `policy.json` with the following content\.**
 
    ```
    $ aws iam create-policy --policy-name ReadCertPcluster \
@@ -694,11 +694,11 @@ Make a note of resource IDs\. You'll use them in steps later on\.
 
 1. 
 
-**Continue at [\(Optional\) Step 2: Manage AD users and groups](#tutorials_05_multi-user-ad-step2) or [Step 3: Create the cluster](#tutorials_05_multi-user-ad-step3)\.**
+**Continue to follow the steps at [\(Optional\) Step 2: Manage AD users and groups](#tutorials_05_multi-user-ad-step2) or [Step 3: Create the cluster](#tutorials_05_multi-user-ad-step3)\.**
 
 ## \(Optional\) Step 2: Manage AD users and groups<a name="tutorials_05_multi-user-ad-step2"></a>
 
-In this step, you manage users and groups from an EC2 Amazon Linux 2 instance that is joined to the AD domain\.
+In this step, you manage users and groups from an EC2 Amazon Linux 2 instance that's joined to the Active Delivery \(AD\) domain\.
 
 If you followed the *automated* path, restart and log in to the AD joined instance that was created as part of the automation\.
 
@@ -712,11 +712,11 @@ In these steps, you use the [adcli](https://www.mankier.com/package/adcli) and [
 
 1. If the instance state is **Stopped**, choose **Instance state** and then **Start instance**\.
 
-1. After the status checks pass, select the instance and choose **Connect** and ssh in to the instance\.
+1. After the status checks pass, select the instance and choose **Connect** and SSH in to the instance\.
 
-**Manage users and groups when logged into an EC2 Amazon Linux 2 instance that is joined the AD**
+**Manage users and groups when logged into an EC2 Amazon Linux 2 instance that's joined the AD**
 
-The `adcli` commands with the ` -U "Admin"` option ask you to enter the AD `Admin` password\. You include the AD `Admin` password as part of the `ldapsearch` commands\.
+When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted to enter the AD `Admin` password\. You include the AD `Admin` password as part of the `ldapsearch` commands\.
 
 1. 
 
@@ -728,7 +728,7 @@ The `adcli` commands with the ` -U "Admin"` option ask you to enter the AD `Admi
 
 1. 
 
-**Set a user password**
+**Set a user password\.**
 
    ```
    $ aws --region "region-id" ds reset-user-password --directory-id "d-abcdef01234567890" --user-name "clusteruser" --new-password "new-p@ssw0rd"
@@ -752,7 +752,7 @@ The `adcli` commands with the ` -U "Admin"` option ask you to enter the AD `Admi
 
 1. 
 
-**Describe users and groups**
+**Describe users and groups\.**
 
    Describe all users\.
 
@@ -800,7 +800,7 @@ The `adcli` commands with the ` -U "Admin"` option ask you to enter the AD `Admi
 
 1. 
 
-**Delete a user**
+**Delete a user\.**
 
    ```
    $ adcli delete-user "clusteruser" --domain "corp.pcluster.com" -U "Admin"
@@ -818,13 +818,13 @@ The `adcli` commands with the ` -U "Admin"` option ask you to enter the AD `Admi
 
 If you haven't exited the EC2 instance, do so now\.
 
-The environment is set up to create a cluster that can authenticate users against the AD\.
+The environment is set up to create a cluster that can authenticate users against the Active Directory \(AD\)\.
 
 Create a simple cluster configuration and provide the settings relevant to connecting to the AD\. For more information, see the [`DirectoryService`](DirectoryService-v3.md) section\.
 
-Choose one of the following cluster configurations and copy it to a file named `ldaps_config.yaml`, `ldaps_nocert_config.yaml`, and `ldap_config.yaml` respectively\.
+Choose one of the following cluster configurations and copy it to a file that's named `ldaps_config.yaml`, `ldaps_nocert_config.yaml`, or `ldap_config.yaml`\.
 
-If you choose the LDAPS configuration with certificate verification \(recommended\) you must also copy bootstrap script to a file named `active-directory.head.post.sh` and locate it in an Amazon S3 bucket as indicated in the configuration file\.
+We recommend that you choose the LDAPS configuration with certificate verification\. If you choose this configuration, you must also copy the bootstrap script to a file that's named `active-directory.head.post.sh`\. And, you must store it in an Amazon S3 bucket as indicated in the configuration file\.
 
 ### LDAPS with certificate verification configuration \(recommended\)<a name="tutorials_05_multi-user-ad-step3-ldaps"></a>
 
@@ -833,10 +833,10 @@ If you choose the LDAPS configuration with certificate verification \(recommende
 `SubnetId / SubnetIds`: One of the subnet IDs provided in the output of the CloudFormation quick create stack \(automated tutorial\) or python script \(manual tutorial\)\.
 `Region`: The Region where you created the AD infrastructure\.
 `DomainAddr`: This IP address is one of the DNS addresses of your AD service\.
-`PasswordSecretArn`: The ARN of the secret that contains the password for the `DomainReadOnlyUser`\.
+`PasswordSecretArn`: The Amazon Resource Name \(ARN\) of the secret that contains the password for the `DomainReadOnlyUser`\.
 `BucketName`: The name of the bucket that holds the bootstrap script\.
-`AdditionalPolicies` / `Policy`: The ARN of the Read Domain Cerfification policy ReadCertPcluster\.
-`CustomActions` / `OnNodeConfigured` / `Args`: The ARN of secret that holds the domain certification policy\.
+`AdditionalPolicies` / `Policy`: The Amazon Resource Name \(ARN\) of the read domain certification policy ReadCertPcluster\.
+`CustomActions` / `OnNodeConfigured` / `Args`: The Amazon Resource Name \(ARN\) of secret that holds the domain certification policy\.
 
 ```
 Region: region-id
@@ -907,10 +907,10 @@ aws secretsmanager get-secret-value --region $REGION --secret-id $CERTIFICATE_SE
 
 **Note**  
 `KeyName`: One of your EC2 keypairs\.
-`SubnetId / SubnetIds`: One of the subnet IDs provided in the output of the CloudFormation quick create stack \(automated tutorial\) or python script \(manual tutorial\)\.
+`SubnetId / SubnetIds`: One of the subnet IDs that's in the output of the CloudFormation quick create stack \(automated tutorial\) or python script \(manual tutorial\)\.
 `Region`: The Region where you created the AD infrastructure\.
 `DomainAddr`: This IP address is one of the DNS addresses of your AD service\.
-`PasswordSecretArn`: The ARN of the secret that contains the password for the `DomainReadOnlyUser`\.
+`PasswordSecretArn`: The Amazon Resource Name \(ARN\) of the secret that contains the password for the `DomainReadOnlyUser`\.
 
 ```
 Region: region-id
@@ -949,7 +949,7 @@ DirectoryService:
 `SubnetId / SubnetIds`: One of the subnet IDs provided in the output of the CloudFormation quick create stack \(automated tutorial\) or python script \(manual tutorial\)\.
 `Region`: The Region where you created the AD infrastructure\.
 `DomainAddr`: This IP address is one of the DNS addresses of your AD service\.
-`PasswordSecretArn`: The ARN of the secret that contains the password for the `DomainReadOnlyUser`\.
+`PasswordSecretArn`: The Amazon Resource Name \(ARN\) of the secret that contains the password for the `DomainReadOnlyUser`\.
 
 ```
 Region: region-id
@@ -982,7 +982,7 @@ DirectoryService:
     ldap_auth_disable_tls_never_use_in_production: True
 ```
 
-Create your cluster with the following command:
+Create your cluster with the following command\.
 
 ```
 $ pcluster create-cluster --cluster-name "ad-cluster" --cluster-configuration "./ldaps_config.yaml"
@@ -992,7 +992,7 @@ $ pcluster create-cluster --cluster-name "ad-cluster" --cluster-configuration ".
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
     "region": "region-id",
-    "version": 3.3.0,
+    "version": 3.4.0,
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -1000,19 +1000,19 @@ $ pcluster create-cluster --cluster-name "ad-cluster" --cluster-configuration ".
 
 ## Step 4: Connect to the cluster as a user<a name="tutorials_05_multi-user-ad-step4"></a>
 
-You can determine the status of the cluster with the following commands:
+You can determine the status of the cluster with the following commands\.
 
 ```
 $ pcluster describe-cluster -n ad-cluster --region "region-id" --query "clusterStatus"
 ```
 
-Output:
+The output is as follows\.
 
 ```
 "CREATE_IN_PROGRESS" / "CREATE_COMPLETE"
 ```
 
-When the status reaches `"CREATE_COMPLETE"`, log in with the created user name and password:
+When the status reaches `"CREATE_COMPLETE"`, log in with the created user name and password\.
 
 ```
 $ HEAD_NODE_IP=$(pcluster describe-cluster -n "ad-cluster" --region "region-id" --query headNode.publicIpAddress | xargs echo)
@@ -1024,7 +1024,7 @@ $ ssh user000@$HEAD_NODE_IP
 
 You can log in without the password by providing the SSH key that was created for the new user at `/home/user000@HEAD_NODE_IP/.ssh/id_rsa`\.
 
-If the `ssh` command succeeded, you have successfully connected to the cluster as a user that is authenticated using AD\.
+If the `ssh` command succeeded, you have successfully connected to the cluster as a user that's authenticated to use the Active Directory \(AD\)\.
 
 ## Step 5: Clean up<a name="tutorials_05_multi-user-ad-step5"></a>
 
@@ -1040,7 +1040,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
        "cloudformationStackStatus": "DELETE_IN_PROGRESS",
        "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
        "region": "region-id",
-       "version": "3.3.0",
+       "version": "3.4.0",
        "clusterStatus": "DELETE_IN_PROGRESS"
      }
    }
@@ -1048,24 +1048,24 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Check the status of the cluster delete\.**
+**Check the progress of the cluster being deleted\.**
 
    ```
    $ pcluster describe-cluster --cluster-name "ad-cluster" --region "region-id" --query "clusterStatus"
    "DELETE_IN_PROGRESS"
    ```
 
-   After the cluster delete is complete, proceed to the next step\.
+   After the cluster is successfully deleted, proceed to the next step\.
 
 ### Automated<a name="tutorials_05_multi-user-ad-step5-automated"></a>
 
 **Delete the Active Directory resources**
 
-1. From [https://console\.aws\.amazon\.com/cloudformation/](https://console.aws.amazon.com/cloudformation/)
+1. From [https://console\.aws\.amazon\.com/cloudformation/](https://console.aws.amazon.com/cloudformation/)\.
 
-1. Choose **Stacks** in the navigation pane\.
+1. In the navigation pane, choose **Stacks**\.
 
-1. From the list of stacks, choose the AD stack, for example `pcluster-ad`\.
+1. From the list of stacks, choose the AD stack \(for example, `pcluster-ad`\)\.
 
 1. Choose **Delete**\.
 
@@ -1079,19 +1079,13 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
    1. From the list of instances, choose the instance that you created to add users to the directory\.
 
-   1. **New EC2 console**:
-
-      Choose **Instance state**, then **Terminate instance**\.
-
-      **Old EC2 console**:
-
-      Choose **Actions**, **Instance State**, then **Terminate**\.
+   1. Choose **Instance state**, then **Terminate instance**\.
 
 1. 
 
-**Delete the Hosted Zone\.**
+**Delete the hosted zone\.**
 
-   1. Create a `recordset-delete.json` with the following content \(pay attention here that HostedZoneId is the Canonical Hosted Zone ID of the Load Balancer\):
+   1. Create a `recordset-delete.json` with the following content\. In this example, HostedZoneId is the canonical hosted zone ID of the load balancer\.
 
       ```
       {
@@ -1114,7 +1108,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
       }
       ```
 
-   1. Submit the recordset change to the hosted zone, this time using the hosted zone ID:
+   1. Submit the recordset change to the hosted zone using the hosted zone ID\.
 
       ```
       $ aws route53 change-resource-record-sets --hosted-zone-id Z09020002B5MZQNXMSJUB \
@@ -1128,7 +1122,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
       }
       ```
 
-   1. Delete the Hosted Zone:
+   1. Delete the hosted zone\.
 
       ```
       $ aws route53 delete-hosted-zone --id Z09020002B5MZQNXMSJUB
@@ -1143,7 +1137,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Delete the LB Listener:**
+**Delete the LB listener\.**
 
    ```
    $ aws elbv2 delete-listener \
@@ -1152,7 +1146,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Delete Target Group:**
+**Delete the target group\.**
 
    ```
    $ aws elbv2 delete-target-group \
@@ -1161,7 +1155,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Delete the Load Balancer:**
+**Delete the load balancer\.**
 
    ```
    $ aws elbv2 delete-load-balancer \
@@ -1170,7 +1164,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Delete the policy used by the cluster to read the certificate from Secrets Manager:**
+**Delete the policy that the cluster uses to read the certificate from Secrets Manager\.**
 
    ```
    $ aws iam delete-policy --policy-arn arn:aws:iam::123456789012:policy/ReadCertPcluster
@@ -1178,7 +1172,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Delete the secret containing the domain certificate:**
+**Delete the secret that contains the domain certificate\.**
 
    ```
    $ aws secretsmanager delete-secret \
@@ -1193,7 +1187,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Delete the certificate from ACM:**
+**Delete the certificate from ACM\.**
 
    ```
    $ aws acm delete-certificate \
@@ -1202,14 +1196,14 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
 1. 
 
-**Delete the Active Directory resources\.**
+**Delete the Active Directory \(AD\) resources\.**
 
    1. Get the following resource IDs from the output of the python script `ad.py`:
       + AD ID
       + AD subnet IDs
       + AD VPC ID
 
-   1. Delete the directory:
+   1. Delete the directory by running the following command\.
 
       ```
       $ aws ds delete-directory --directory-id d-abcdef0123456789 --region region-id
@@ -1218,19 +1212,19 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
       }
       ```
 
-   1. List the Security Groups in the VPC:
+   1. List the security groups in the VPC\.
 
       ```
       $ aws ec2 describe-security-groups --filters '[{"Name":"vpc-id","Values":["vpc-07614ade95ebad1bc"]}]' --region region-id
       ```
 
-   1. Delete the non default Security Group:
+   1. Delete the custom security group\.
 
       ```
       $ aws ec2 delete-security-group --group-id sg-021345abcdef6789 --region region-id
       ```
 
-   1. Delete the subnets:
+   1. Delete the subnets\.
 
       ```
       $ aws ec2 delete-subnet --subnet-id subnet-1234567890abcdef --region region-id
@@ -1240,7 +1234,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
       $ aws ec2 delete-subnet --subnet-id subnet-021345abcdef6789 --region region-id
       ```
 
-   1. Describe Internet Gateway:
+   1. Describe internet gateway\.
 
       ```
       $ aws ec2 describe-internet-gateways \
@@ -1263,7 +1257,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
       }
       ```
 
-   1. Detach Internet Gateway:
+   1. Detach the internet gateway\.
 
       ```
       $ aws ec2 detach-internet-gateway \
@@ -1272,7 +1266,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
         --region region-id
       ```
 
-   1. Delete Internet Gateway:
+   1. Delete the internet gateway\.
 
       ```
       $ aws ec2 delete-internet-gateway \
@@ -1280,7 +1274,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
         --region region-id
       ```
 
-   1. Delete VPC:
+   1. Delete the VPC\.
 
       ```
       $ aws ec2 delete-vpc \
@@ -1288,7 +1282,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
         --region region-id
       ```
 
-   1. Delete the secret containing the ReadOnlyUser password:
+   1. Delete the secret that contains the `ReadOnlyUser` password\.
 
       ```
       $ aws secretsmanager delete-secret \

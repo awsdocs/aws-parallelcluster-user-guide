@@ -43,7 +43,7 @@ Specifies the token to use for paginated requests\.
 Specifies the JMESPath query to perform on the output\.
 
 `--region, -r REGION`  
-Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+Specifies the AWS Region to use\. The AWS Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--start-from-head START_FROM_HEAD`  
 If the value is `true`, the earliest log events are returned first\. If the value is `false`, the most recent log events are returned first\. \(Defaults to `false`\.\)

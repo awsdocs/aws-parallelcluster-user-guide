@@ -4,13 +4,13 @@
 *****Copyright &copy; Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
-Amazon's trademarks and trade dress may not be used in
-connection with any product or service that is not Amazon's,
-in any manner that is likely to cause confusion among customers,
-or in any manner that disparages or discredits Amazon. All other
-trademarks not owned by Amazon are the property of their respective
-owners, who may or may not be affiliated with, connected to, or
-sponsored by Amazon.
+Amazon's trademarks and trade dress may not be used in 
+     connection with any product or service that is not Amazon's, 
+     in any manner that is likely to cause confusion among customers, 
+     or in any manner that disparages or discredits Amazon. All other 
+     trademarks not owned by Amazon are the property of their respective
+     owners, who may or may not be affiliated with, connected to, or 
+     sponsored by Amazon.
 
 -----
 ## Contents
@@ -27,7 +27,8 @@ sponsored by Amazon.
       + [Moving from AWS ParallelCluster 2.x to 3.x](moving-from-v2-to-v3.md)
       + [Supported Regions for AWS ParallelCluster version 3](supported-regions-v3.md)
    + [Using AWS ParallelCluster](using-parallelcluster-v3.md)
-      + [AWS Identity and Access Management roles in AWS ParallelCluster 3.x](iam-roles-in-parallelcluster-v3.md)
+      + [AWS Lambda VPC configuration in AWS ParallelCluster](lambda-vpc-v3.md)
+      + [AWS Identity and Access Management permissions in AWS ParallelCluster 3.x](iam-roles-in-parallelcluster-v3.md)
       + [Network configurations](network-configuration-v3.md)
       + [Custom bootstrap actions](custom-bootstrap-actions-v3.md)
       + [Working with Amazon S3](s3_resources-v3.md)
@@ -49,6 +50,15 @@ sponsored by Amazon.
             + [awsbqueues](awsbatchcli.awsbqueues-v3.md)
             + [awsbhosts](awsbatchcli.awsbhosts-v3.md)
       + [Shared storage](shared-storage-quotas-integration-v3.md)
+         + [Configure shared storage](shared-storage-config-ebs-efs-fsxlustre-v3.md)
+            + [Amazon Elastic Block Store](shared-storage-config-ebs-v3.md)
+            + [Amazon Elastic File System](shared-storage-config-efs-v3.md)
+            + [Amazon FSx for Lustre](shared-storage-config-fsxlustre-v3.md)
+            + [Configure FSx for ONTAP and FSx for OpenZFS shared storage](shared-storage-config-ontap-zfs-v3.md)
+         + [Working with shared storage in AWS ParallelCluster](shared-storage-considerations-v3.md)
+            + [AWS ParallelCluster shared storage considerations](shared-storage-working-considerations-v3.md)
+            + [Convert AWS ParallelCluster managed storage to external storage](shared-storage-conversion-v3.md)
+         + [Quotas for shared storage](shared-storage-quotas-v3.md)
       + [AWS ParallelCluster resources and tagging](resources-tags-v3.md)
       + [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)
       + [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md)
@@ -102,9 +112,11 @@ sponsored by Amazon.
             + [Tags section](Tags-v3.md)
             + [AdditionalPackages section](AdditionalPackages-v3.md)
             + [DirectoryService section](DirectoryService-v3.md)
+            + [DeploymentSettings section](DeploymentSettings-cluster-v3.md)
          + [Build image configuration files](image-builder-configuration-file-v3.md)
             + [Build section](Build-v3.md)
             + [Image section](build-Image-v3.md)
+            + [DeploymentSettings section](DeploymentSettings-build-image-v3.md)
       + [AWS ParallelCluster API reference](api-ref-v3.md)
          + [buildImage](build-image.md)
          + [createCluster](create-cluster.md)
@@ -131,9 +143,9 @@ sponsored by Amazon.
       + [AWS services used by AWS ParallelCluster](aws-services-v3.md)
    + [Tutorials](tutorials-v3.md)
       + [Running your first job on AWS ParallelCluster](tutorials-running-your-first-job-on-version-3.md)
-      + [Building a Custom AWS ParallelCluster AMI](building-custom-ami-v3.md)
+      + [Building a custom AWS ParallelCluster AMI](building-custom-ami-v3.md)
       + [Integrating Active Directory](tutorials_05_multi-user-ad.md)
-      + [Configuring shared storage encryption with a AWS KMS key](tutorials_04_encrypted_kms_fs-v3.md)
+      + [Configuring shared storage encryption with an AWS KMS key](tutorials_04_encrypted_kms_fs-v3.md)
       + [Running jobs in a multiple queue mode cluster](multi-queue-tutorial-v3.md)
       + [Using the AWS ParallelCluster API](tutorials_06_API_use.md)
       + [Creating a cluster with Slurm accounting](tutorials_07_slurm-accounting-v3.md)

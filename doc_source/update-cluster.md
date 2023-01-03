@@ -35,17 +35,17 @@ Type: string
 Required: Yes
 
 **dryrun**  
-Only perform request validation without creating any resource\. May be used to validate the cluster configuration and update requirements\. The default is `false`\.  
-Type: bool  
+If set to `true`, only perform request validation without creating any resource\. Use this parameter to validate the cluster configuration and update requirements\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **forceUpdate**  
-Force update by ignoring the update validation errors\. The default is `false`\.  
-Type: bool  
+If set to `true`, ignore the update validation errors and force the update\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
@@ -57,7 +57,7 @@ Required: No
 Example valid values: `currentValue`, `requestedValue`, `message`
 
 **validationFailureLevel**  
-Minimum validation level that will cause the update to fail\.  
+The minimum validation level to cause the update to fail\.  
 Type: string  
 Valid values: `INFO | WARNING | ERROR`  
 Required: No
@@ -129,7 +129,7 @@ The cluster status\.
 Type: string  
 Valid values: `CREATE_IN_PROGRESS | CREATE_FAILED | CREATE_COMPLETE | DELETE_IN_PROGRESS | DELETE_FAILED | DELETE_COMPLETE | UPDATE_IN_PROGRESS | UPDATE_COMPLETE | UPDATE_FAILED`  
 **region**  
-The AWS Region where the cluster is created\.  
+The AWS Region that the cluster is created in\.  
 Type: string  
 **scheduler**    
 **metadata**  
@@ -145,11 +145,11 @@ The scheduler type\.
 Type: string
 
 **version**  
-AWS ParallelCluster version used to create the cluster\.  
+AWS ParallelCluster version that's used to create the cluster\.  
 Type: string
 
 **validationMessages**  
-A list of messages collected during cluster configuration validation with the validation level lower than the `validationFailureLevel` set by the user\.    
+A list of messages with a validation level lower than `validationFailureLevel`\. The list of messages is collected during configuration validation\.    
 **id**  
 The ID of the validator\.  
 Type: string  

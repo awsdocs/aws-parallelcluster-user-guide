@@ -1,6 +1,6 @@
 # createCluster<a name="create-cluster"></a>
 
-Create a managed cluster in a given AWS Region\.
+Create a managed cluster in an AWS Region\.
 
 **Topics**
 + [Request syntax](#create-cluster-request)
@@ -32,33 +32,34 @@ Type: string
 Required: Yes
 
 **clusterName**  
-The name of the cluster to be created\.  
+The name of the cluster to create\.  
+The name must start with an alphabetical character\. The name can have up to 60 characters\. If Slurm accounting is enabled, the name can have up to 40 characters\.  
 Type: string  
 Required: Yes
 
 **dryrun**  
-Only perform request validation without creating any resource\. This can be used to validate the cluster configuration\. The default is `false`\.  
-Type: bool  
+If set to `true`, only perform request validation without creating any resource\. Use this parameter to validate the cluster configuration\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
 **rollbackOnFailure**  
-When set, it automatically initiates a cluster stack rollback on failures\. The default is `true`\.  
-Type: bool  
+If set to `true`, cluster stack rollback occurs if the cluster fails to create\. The default is `true`\.  
+Type: boolean  
 Required: No
 
 **suppressValidators**  
-Identify one or more config validators to suppress\.  
+Identify one or more configuration validators to suppress\.  
 Type: list of strings  
 Format: `(ALL|type:[A-Za-z0-9]+)`  
 Required: No
 
 **validationFailureLevel**  
-The minimum validation level that causes the creation to fail\. The default is `ERROR`\.  
+The minimum validation level that causes cluster create to fail\. The default is `ERROR`\.  
 Type: string  
 Valid values: `INFO | WARNING | ERROR`  
 Required: No
@@ -112,7 +113,7 @@ Type: string
 Valid values: `CREATE_IN_PROGRESS | CREATE_FAILED | CREATE_COMPLETE | DELETE_IN_PROGRESS | DELETE_FAILED | DELETE_COMPLETE | UPDATE_IN_PROGRESS | UPDATE_COMPLETE | UPDATE_FAILED`
 
 **region**  
-The AWS Region where the cluster is created\.  
+The AWS Region that the cluster is created in\.  
 Type: string
 
 **scheduler**    
@@ -129,11 +130,11 @@ The scheduler type\.
 Type: string
 
 **version**  
-The AWS ParallelCluster version used to create the cluster\.  
+The AWS ParallelCluster version that's used to create the cluster\.  
 Type: string
 
 **validation\_messages**  
-A list of messages collected during cluster configuration validation with a validation level lower than the `validationFailureLevel` set by the user\.    
+A list of messages with a validation level lower than `validationFailureLevel`\. The list of messages is collected during configuration validation\.    
 **id**  
 The ID of the validator\.  
 Type: string  

@@ -8,8 +8,9 @@ These configuration files are used to define how your custom AWS ParallelCluster
 + [Build image configuration file properties](#build-image-v3.properties)
 + [`Build` section](Build-v3.md)
 + [`Image` section](build-Image-v3.md)
++ [`DeploymentSettings` section](DeploymentSettings-build-image-v3.md)
 
 ## Build image configuration file properties<a name="build-image-v3.properties"></a>
 
 `Region` \(**Optional**, `String`\)  
-Specifies the Region for the `build-image` operation\. For example, `us-east-2`\.
+Specifies the AWS Region for the `build-image` operation\. For example, `us-east-2`\.

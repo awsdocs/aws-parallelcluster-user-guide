@@ -10,31 +10,31 @@ Starting with AWS ParallelCluster version 3\.2\.0, clusters run with the fast in
 + `SpotMaxPriceTooLow`: Activated if the Spot request price is lower than the minimum required Spot request fulfillment price\.
 + `Unsupported`: Activated with the use of an instance type that isn't supported in a specific AWS Region\.
 
-In fast insufficient capacity failure\-over mode, if an insufficient capacity error is detected when a job is assigned to a [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`compute resource`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources), AWS ParallelCluster:
+In fast insufficient capacity failure\-over mode, if an insufficient capacity error is detected when a job is assigned to a [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`compute resource`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-ComputeResources), AWS ParallelCluster does the following:
 
-1. Sets the compute resource to a disabled \(`DOWN`\) state for a predefined period of time\.
+1. It sets the compute resource to a disabled \(`DOWN`\) state for a predefined period of time\.
 
-1. Uses `POWER_DOWN_FORCE` to cancel the compute resource failing node jobs and to suspend the failing node\. It sets the failing node to the `IDLE` and `POWER_DOWN (!)` state, and then to `POWERING_DOWN (%)`\.
+1. It uses `POWER_DOWN_FORCE` to cancel the compute resource failing node jobs and to suspend the failing node\. It sets the failing node to the `IDLE` and `POWER_DOWN (!)` state, and then to `POWERING_DOWN (%)`\.
 
-1. Requeues the job to another compute resource\.
+1. It requeues the job to another compute resource\.
 
 The static and powered up nodes of the disabled compute resource aren't impacted\. Jobs can complete on these nodes\.
 
-This cycle repeats until the job is successfully assigned to a compute resource node or nodes\. For information on node states, see the [Slurm guide for multiple queue mode](multiple-queue-mode-slurm-user-guide-v3.md)\.
+This cycle repeats until the job is successfully assigned to a compute resource node or nodes\. For information about node states, see the [Slurm guide for multiple queue mode](multiple-queue-mode-slurm-user-guide-v3.md)\.
 
-If no compute resources are found to run the job, its set to the `PENDING` state until the predefined period of time elapses\. In this case, you can modify the predefined period of time as described in the following section\.
+If no compute resources are found to run the job, the job is set to the `PENDING` state until the predefined period of time elapses\. In this case, you can modify the predefined period of time as described in the following section\.
 
 ## Insufficient capacity timeout parameter<a name="slurm-short-capacity-fail-mode-parameter-v3"></a>
 
 `insufficient_capacity_timeout`
 
-`insufficient_capacity_timeout` specifies the period of time in seconds that the compute resource is kept in the disabled \(`down`\) state when an insufficient capacity error is detected\.
+`insufficient_capacity_timeout` specifies the period of time \(in seconds\) that the compute resource is kept in the disabled \(`down`\) state when an insufficient capacity error is detected\.
 
-`insufficient_capacity_timeout` is enabled by default\.
+By default, `insufficient_capacity_timeout` is enabled\.
 
-The default `insufficient_capacity_timeout` is 600 seconds\.
+The default `insufficient_capacity_timeout` is 600 seconds \(10 minutes\)\.
 
-If `insufficient_capacity_timeout` is less than or equal to zero, fast insufficient capacity failure\-over mode is disabled\.
+If the `insufficient_capacity_timeout` value is less than or equal to zero, fast insufficient capacity failure\-over mode is disabled\.
 
 You can change the `insufficient_capacity_timeout` value by adding the parameter in the `clustermgtd` config file located at `/etc/parallelcluster/slurm_plugin/parallelcluster_clustermgtd.conf` in the `HeadNode`\.
 
@@ -43,16 +43,16 @@ The parameter can be updated at any time without stopping the compute fleet\.
 For example:
 + `insufficient_capacity_timeout=600`:
 
-  If an insufficient capacity error is detected, the compute resource is set to a disabled \(`DOWN`\)\. After 10 minutes it's failed node is set to the `idle~` \(`POWER_SAVING`\) state\.
+  If an insufficient capacity error is detected, the compute resource is set to a disabled \(`DOWN`\)\. After 10 minutes, its failed node is set to the `idle~` \(`POWER_SAVING`\) state\.
 + `insufficient_capacity_timeout=60`:
 
-  If an insufficient capacity error is detected, the compute resource is in a disabled \(`DOWN`\)\. After 1 minute it's failed node is set to the `idle~` state\.
+  If an insufficient capacity error is detected, the compute resource is in a disabled \(`DOWN`\)\. After 1 minute, its failed node is set to the `idle~` state\.
 + `insufficient_capacity_timeout=0`:
 
   Fast insufficient capacity failure\-over mode is disabled\. The compute resource isn't disabled\.
 
 **Note**  
-There might be a delay of up to one minute between the time when nodes fail with insufficient capacity errors and the time when the cluster management daemon detects the node failures\. This is because the cluster management daemon checks for node insufficient capacity failures and sets the compute resources to the `down` state at one minute intervals\.
+There might be a delay of up to one minute between the time when nodes fail with insufficient capacity errors and the time when the cluster management daemon detects the node failures\. This is because the cluster management daemon checks for node insufficient capacity failures and sets the compute resources to the `down` state at one\-minute intervals\.
 
 ## Fast insufficient capacity fail\-over mode status<a name="slurm-short-capacity-fail-mode-status-v3"></a>
 
@@ -60,13 +60,13 @@ When a cluster is in fast insufficient capacity fail\-over mode, you can check i
 
 ### Node states<a name="slurm-short-capacity-fail-mode-nodes-v3"></a>
 
-When a job is submitted to a compute resource dynamic node and a insufficient capacity error is detected, the node is placed in the `down#` state with reason:
+When a job is submitted to a compute resource dynamic node and an insufficient capacity error is detected, the node is placed in the `down#` state with reason\.
 
 ```
 (Code:InsufficientInstanceCapacity)Failure when resuming nodes.
 ```
 
-Then powered off nodes \(nodes in `idle~` state\) are set to `down~` with reason:
+Then powered off nodes \(nodes in `idle~` state\) are set to `down~` with reason\.
 
 ```
 (Code:InsufficientInstanceCapacity)Temporarily disabling node due to insufficient capacity.
@@ -85,7 +85,7 @@ queue1*   up    infinite    30  idle~ queue1-dy-c-1-[1-15],queue1-dy-c-2-[1-15]
 queue2    up    infinite    30  idle~ queue2-dy-c-1-[1-15],queue2-dy-c-2-[1-15]
 ```
 
-We submit a job to queue1 that requires 1 node:
+We submit a job to queue1 that requires one node\.
 
 ```
 $ sinfo
@@ -138,7 +138,7 @@ After the `insufficient_capacity_timeout` elapses and nodes in the compute resou
 Logs related to insufficient capacity errors and fast insufficient capacity fail\-over mode can be found in Slurm's `resume` log and `clustermgtd` log in the head node\.
 
 **Slurm `resume` \(`/var/log/parallelcluster/slurm_resume.log`\)**  
-Error messages when a node fails to launch due to insufficient capacity:  
+Error messages when a node fails to launch because of insufficient capacity\.  
 
 ```
 [slurm_plugin.instance_manager:_launch_ec2_instances] - ERROR - Failed RunInstances request: dcd0c252-90d4-44a7-9c79-ef740f7ecd87
@@ -149,14 +149,14 @@ specifying an Availability Zone in your request or choosing us-west-2a, us-west-
 ```
 
 **Slurm `clustermgtd` \(`/var/log/parallelcluster/clustermgtd`\)**  
-Compute resource c\-1 in queue1 is disabled due to insufficient capacity:  
+Compute resource c\-1 in queue1 is disabled because of insufficient capacity\.  
 
 ```
 [slurm_plugin.clustermgtd:_reset_timeout_expired_compute_resources] - INFO - The following compute resources are in down state 
 due to insufficient capacity: {'queue1': {'c-1': ComputeResourceFailureEvent(timestamp=datetime.datetime(2022, 4, 14, 23, 0, 4, 769380, tzinfo=datetime.timezone.utc), 
 error_code='InsufficientInstanceCapacity')}}, compute resources are reset after insufficient capacity timeout (600 seconds) expired
 ```
-After the insufficient capacity timeout expires, the compute resource is reset, nodes within the compute resources are set to `idle~`:  
+After the insufficient capacity timeout expires, the compute resource is reset, nodes within the compute resources are set to `idle~`\.  
 
 ```
 [root:_reset_insufficient_capacity_timeout_expired_nodes] - INFO - Reset the following compute resources because insufficient capacity 

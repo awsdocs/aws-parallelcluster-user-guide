@@ -47,7 +47,7 @@ Key path of the SSH key to use for the connection\.
 The key must be the one specified at cluster creation time in the [`key_name`](cluster-definition.md#key-name) configuration parameter\. This argument is optional, but if it's not specified, then the key must be available by default for the SSH client\. For example, add it to the `ssh-agent` with `ssh-add`\.
 
 `-r REGION, --region REGION`  
-Specifies the AWS Region to use\. Defaults to the Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
+Specifies the AWS Region to use\. Defaults to the AWS Region specified by using the [`pcluster configure`](pcluster.configure.md) command\.
 
 `-s, --show-url`  
 Displays a one\-time URL for connecting to the NICE DCV session\. The default browser isn't opened when this option is specified\.  

@@ -1,10 +1,10 @@
 # `[ebs]` section<a name="ebs-section"></a>
 
-Defines Amazon EBS volume configuration settings for volumes that are mounted on the head node and shared via NFS to the compute nodes\.
+Defines Amazon EBS volume configuration settings for volumes that are mounted on the head node and shared to the compute nodes through NFS\.
 
-To include Amazon EBS volumes in your cluster definition, see ``[cluster]` section` / ``ebs_settings``\.
+To learn how to include Amazon EBS volumes in your cluster definition, see ``[cluster]` section` / ``ebs_settings``\.
 
-To use an existing Amazon EBS volume for long term permanent storage that is independent of the cluster life cycle, specify [`ebs_volume_id`](#ebs-volume-id)\.
+To use an existing Amazon EBS volume for long\-term permanent storage that's independent of the cluster life cycle, specify [`ebs_volume_id`](#ebs-volume-id)\.
 
 If you don't specify [`ebs_volume_id`](#ebs-volume-id), AWS ParallelCluster creates the EBS volume from the `[ebs]` settings when it creates the cluster and deletes the volume and data when the cluster is deleted\.
 
@@ -44,7 +44,7 @@ shared_dir = vol2
 
 This parameter is required when using multiple Amazon EBS volumes\.
 
-When using one \(1\) Amazon EBS volume, this option overwrites the [`shared_dir`](cluster-definition.md#cluster-shared-dir) that's specified under the [`[cluster]` section](cluster-definition.md)\. In the following example, the volume mounts to `/vol1`\.
+When you use one Amazon EBS volume, this option overwrites the [`shared_dir`](cluster-definition.md#cluster-shared-dir) that's specified under the [`[cluster]` section](cluster-definition.md)\. In the following example, the volume mounts to `/vol1`\.
 
 ```
 shared_dir = vol1
@@ -111,17 +111,17 @@ The default value, supported values, and `volume_iops` to `volume_size` ratio va
 `volume_type` = `io1`  
 Default `volume_iops` = 100  
 Supported values `volume_iops` = 100–64000 †  
-Maximum `volume_iops` to `volume_size` ratio = 50 IOPS per GiB\. 5000 IOPS requires a `volume_size` of at least 100 GiB\.
+Maximum `volume_iops` to `volume_size` ratio = 50 IOPS for each GiB\. 5000 IOPS requires a `volume_size` of at least 100 GiB\.
 
 `volume_type` = `io2`  
 Default `volume_iops` = 100  
 Supported values `volume_iops` = 100–64000 \(256000 for `io2` Block Express volumes\) †  
-Maximum `volume_iops` to `volume_size` ratio = 500 IOPS per GiB\. 5000 IOPS requires a `volume_size` of at least 10 GiB\.
+Maximum `volume_iops` to `volume_size` ratio = 500 IOPS for each GiB\. 5000 IOPS requires a `volume_size` of at least 10 GiB\.
 
 `volume_type` = `gp3`  
 Default `volume_iops` = 3000  
 Supported values `volume_iops` = 3000–16000  
-Maximum `volume_iops` to `volume_size` ratio = 500 IOPS per GiB\. 5000 IOPS requires a `volume_size` of at least 10 GiB\.
+Maximum `volume_iops` to `volume_size` ratio = 500 IOPS for each GiB\. 5000 IOPS requires a `volume_size` of at least 10 GiB\.
 
 ```
 volume_iops = 200
@@ -129,11 +129,11 @@ volume_iops = 200
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update.md#update-policy-setting-supported)
 
-† Maximum IOPS is guaranteed only on [Instances built on the Nitro System](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) provisioned with more than 32,000 IOPS\. Other instances guarantee up to 32,000 IOPS\. Older `io1` volumes might not reach full performance unless you [modify the volume](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modify-volume.html)\. `io2` Block Express volumes support `volume_iops` values up to 256000\. For more information, see [`io2` Block Express volumes \(In preview\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#io2-block-express) in the *Amazon EC2 User Guide for Linux Instances*\.
+† Maximum IOPS is guaranteed only on [Instances built on the Nitro System](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) provisioned with more than 32,000 IOPS\. Other instances guarantee up to 32,000 IOPS\. Unless you [modify the volume](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modify-volume.html), earlier `io1` volumes might not reach full performance\. `io2` Block Express volumes support `volume_iops` values up to 256,000\. For more information, see [`io2` Block Express volumes \(In preview\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#io2-block-express) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## `volume_size`<a name="volume-size"></a>
 
-**\(Optional\)** Specifies the size of the volume to be created, in GiB \(if not using a snapshot\)\.
+**\(Optional\)** Specifies the size of the volume to be created, in GiB \(if you're not using a snapshot\)\.
 
 The default value and supported values varies by [`volume_type`](#volume-type)\.
 

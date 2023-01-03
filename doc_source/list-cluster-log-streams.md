@@ -1,6 +1,6 @@
 # listClusterLogStreams<a name="list-cluster-log-streams"></a>
 
-Retrieve the list of log streams associated with a cluster\.
+Retrieve the list of log streams that are associated with a cluster\.
 
 **Topics**
 + [Request syntax](#list-cluster-log-streams-request)
@@ -37,12 +37,12 @@ Format: `Name=a,Values=1 Name=b,Values=2,3`
 Required: No
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
@@ -70,7 +70,7 @@ Required: No
 **logStreams**  
 A list of log streams\.    
 **creationTime**  
-The creation time of the stream\.  
+The time when the stream was created\.  
 Type: datetime  
 **firstEventTimestamp**  
 The time of the first event of the stream\.  
@@ -92,7 +92,7 @@ The sequence token\.
 Type: string
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="list-cluster-log-streams-example"></a>

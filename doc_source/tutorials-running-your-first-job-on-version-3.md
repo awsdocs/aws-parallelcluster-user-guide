@@ -17,7 +17,7 @@ $ node --version
 v16.8.0
 $ pcluster version
 {
-  "version": "3.3.0"
+  "version": "3.4.0"
 }
 ```
 
@@ -138,6 +138,6 @@ In the cluster you just created, only the home directory is shared among all nod
 To learn more about creating and using clusters, see [Best practices](best-practices-v3.md)\.
 
 If your application requires shared software, libraries, or data, consider the following options:
-+ Build a AWS ParallelCluster enabled custom AMI that includes your software as described in [Building a Custom AWS ParallelCluster AMI](building-custom-ami-v3.md)\.
++ Build a AWS ParallelCluster enabled custom AMI that includes your software as described in [Building a custom AWS ParallelCluster AMI](building-custom-ami-v3.md)\.
 + Use the [StorageSettings](SharedStorage-v3.md) option in the AWS ParallelCluster configuration file to specify a shared filesystem and store your installed software in the specified mount location\.
 + Use [Custom bootstrap actions](custom-bootstrap-actions-v3.md) to automate the bootstrap procedure of each node of your cluster\.

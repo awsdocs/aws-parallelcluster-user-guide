@@ -1,6 +1,6 @@
 # getClusterStackEvents<a name="get-cluster-stack-events"></a>
 
-Retrieve the events associated with the stack for a given cluster\.
+Retrieve the events that are associated with the stack for a cluster\.
 
 **Topics**
 + [Request syntax](#get-cluster-stack-events-request)
@@ -27,12 +27,12 @@ Type: string
 Required: Yes
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
 **region**  
-The AWS Region that the action corresponds to\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
@@ -73,17 +73,17 @@ Type: string
 The logical name of the resource specified in the template\.  
 Type: string  
 **physicalResourceId**  
-The name or unique identifier associated with the physical instance of the resource\.  
+The name or unique identifier that's associated with the physical instance of the resource\.  
 Type: string  
 **resourceProperties**  
-A BLOB of the properties used to create the resource\.  
+A BLOB of the properties that are used to create the resource\.  
 Type: string  
 **resourceStatus**  
 The resource status\.  
 Type: string  
 Valid values: `CREATE_IN_PROGRESS | CREATE_FAILED | CREATE_COMPLETE | DELETE_IN_PROGRESS | DELETE_FAILED | DELETE_COMPLETE | DELETE_SKIPPED | UPDATE_IN_PROGRESS | UPDATE_FAILED | UPDATE_COMPLETE | IMPORT_FAILED | IMPORT_COMPLETE | IMPORT_IN_PROGRESS | IMPORT_ROLLBACK_IN_PROGRESS | IMPORT_ROLLBACK_FAILED | IMPORT_ROLLBACK_COMPLETE`  
 **resourceStatusReason**  
-A success/failure message associated with the resource\.  
+A success or failure message that's associated with the resource\.  
 Type: string  
 **resourceType**  
 The type of resource\.  
@@ -92,14 +92,14 @@ Type: string
 The unique ID name of the instance of the stack\.  
 Type: string  
 **stackName**  
-The name associated with a stack\.  
+The name that's associated with a stack\.  
 Type: string  
 **timestamp**  
 The time when the status was updated\.  
 Type: datetime
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="get-cluster-stack-events-example"></a>

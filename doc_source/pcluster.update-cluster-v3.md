@@ -39,7 +39,7 @@ When `true`, forces the update by ignoring the update validation errors\. \(Defa
 Specifies the JMESPath query to perform on the output\.
 
 `--region, -r REGION`  
-Specifies the AWS Region to use\. The Region must be specified, using the [`Region`](cluster-configuration-file-v3.md#yaml-Region) setting in the cluster configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+Specifies the AWS Region to use\. The AWS Region must be specified, using the [`Region`](cluster-configuration-file-v3.md#yaml-Region) setting in the cluster configuration file, the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 `--suppress-validators SUPPRESS_VALIDATORS [SUPPRESS_VALIDATORS ...]`  
 Identifies one or more config validators to suppress\.  

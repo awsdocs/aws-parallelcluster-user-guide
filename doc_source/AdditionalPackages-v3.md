@@ -21,7 +21,7 @@ IntelSoftware:
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-### `IntelSoftware` Properties<a name="AdditionalPackages-v3-IntelSoftware.properties"></a>
+### `IntelSoftware` properties<a name="AdditionalPackages-v3-IntelSoftware.properties"></a>
 
 `IntelHpcPlatform` \(**Optional**, `Boolean`\)  
 If `true`, indicates that the [End user license agreement](https://software.intel.com/en-us/articles/end-user-license-agreement) for Intel Parallel Studio is accepted\. This causes Intel Parallel Studio to be installed on the head node and shared with the compute nodes\. This adds several minutes to the time it takes the head node to bootstrap\. The `IntelHpcPlatform` setting is only supported on CentOS 7 \.  

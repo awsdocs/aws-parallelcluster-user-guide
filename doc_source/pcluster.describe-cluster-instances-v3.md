@@ -37,7 +37,7 @@ Specifies the JMESPath query to perform on the output\.
 Specifies the name of the queue to list\. If this parameter is not specified, instances in all queues are described\.
 
 `--region, -r REGION`  
-Specifies the AWS Region to use\. The Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
+Specifies the AWS Region to use\. The AWS Region must be specified, using the `AWS_DEFAULT_REGION` environment variable, the `region` setting in the `[default]` section of the `~/.aws/config` file, or the `--region` parameter\.
 
 **Example using AWS ParallelCluster version 3\.1\.4:**
 

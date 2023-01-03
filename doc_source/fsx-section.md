@@ -1,10 +1,10 @@
 # `[fsx]` section<a name="fsx-section"></a>
 
-Defines configuration settings for an attached FSx for Lustre file system\. For more information about FSx for Lustre, see [Amazon FSx CreateFileSystem](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystem.html) in the *Amazon FSx API Reference*\.
+Defines configuration settings for an attached FSx for Lustre file system\. For more information, see [Amazon FSx CreateFileSystem](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystem.html) in the *Amazon FSx API Reference*\.
 
-FSx for Lustre is supported if the [`base_os`](cluster-definition.md#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`\.
+If the [`base_os`](cluster-definition.md#base-os) is `alinux2`, `centos7`, `ubuntu1804`, or `ubuntu2004`, FSx for Lustre is supported\.
 
-When using Amazon Linux, the kernel must be >= `4.14.104-78.84.amzn1.x86_64`\. For detailed instructions, see [Installing the lustre client](https://docs.aws.amazon.com/fsx/latest/LustreGuide/install-lustre-client.html) in the *Amazon FSx for Lustre User Guide*\.
+When using Amazon Linux, the kernel must be `4.14.104-78.84.amzn1.x86_64` or a later version\. For instructions, see [Installing the lustre client](https://docs.aws.amazon.com/fsx/latest/LustreGuide/install-lustre-client.html) in the *Amazon FSx for Lustre User Guide*\.
 
 **Note**  
 FSx for Lustre isn't currently supported when using `awsbatch` as a scheduler\.
@@ -14,7 +14,7 @@ Support for FSx for Lustre on `centos8` was removed in AWS ParallelCluster versi
 
 If using an existing file system, it must be associated to a security group that allows inbound TCP traffic to port `988`\. Setting the source to `0.0.0.0/0` on a security group rule provides client access from all the IP ranges within your VPC security group for the protocol and port range for that rule\. To further limit access to your file systems, we recommend using more restrictive sources for your security group rules\. For example, you can use more specific CIDR ranges, IP addresses, or security group IDs\. This is done automatically when not using [`vpc_security_group_id`](vpc-section.md#vpc-security-group-id)\.
 
-To use an existing Amazon FSx file system for long term permanent storage that is independent of the cluster life cycle, specify [`fsx_fs_id`](#fsx-fs-id)\.
+To use an existing Amazon FSx file system for long\-term permanent storage that's independent of the cluster life cycle, specify [`fsx_fs_id`](#fsx-fs-id)\.
 
 If you don't specify [`fsx_fs_id`](#fsx-fs-id), AWS ParallelCluster creates the FSx for Lustre file system from the `[fsx]` settings when it creates the cluster and deletes the file system and data when the cluster is deleted\.
 
@@ -65,12 +65,12 @@ weekly_maintenance_start_time = 1:00:00
 **\(Optional\)** Specifies the automatic import policy for reflecting changes in the S3 bucket used to create the FSx for Lustre file system\. The possible values are the following:
 
 `NEW`  
-FSx for Lustre automatically imports directory listings of any new objects added to the linked S3 bucket that don't currently exist in the FSx for Lustre file system\. 
+FSx for Lustre automatically imports directory listings of any new objects that are added to the linked S3 bucket that don't currently exist in the FSx for Lustre file system\. 
 
 `NEW_CHANGED`  
-FSx for Lustre automatically imports file and directory listings of any new objects added to the S3 bucket and any existing objects that are changed in the S3 bucket\. 
+FSx for Lustre automatically imports file and directory listings of any new objects that are added to the S3 bucket and any existing objects that are changed in the S3 bucket\. 
 
-This corresponds to the [AutoImportPolicy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-autoimportpolicy) property\. For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *Amazon FSx for Lustre User Guide* When the [`auto_import_policy`](#fsx-auto-import-policy) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\.
+This corresponds to the [AutoImportPolicy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-autoimportpolicy) property\. For more information, see [Automatically import updates from your S3 bucket](https://docs.aws.amazon.com/fsx/latest/LustreGuide/autoimport-data-repo.html) in the *Amazon FSx for Lustre User Guide*\. When the [`auto_import_policy`](#fsx-auto-import-policy) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\.
 
 If the `auto_import_policy` setting isn't specified, automatic imports are disabled\. FSx for Lustre only updates file and directory listings from the linked S3 bucket when the file system is created\.
 
@@ -117,7 +117,7 @@ Support for [`copy_tags_to_backups`](#fsx-copy-tags-to-backups) was added in AWS
 
 **\(Optional\)** Specifies the time of day \(UTC\) to start automatic backups\. This is only valid for use with `PERSISTENT_1` deployment types\. When the [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time) parameter is specified, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days) must be specified with a value greater than 0, and the [`auto_import_policy`](#fsx-auto-import-policy), [`export_path`](#fsx-export-path), [`import_path`](#fsx-import-path), and [`imported_file_chunk_size`](#fsx-imported-file-chunk-size) parameters must not be specified\. This corresponds to the [DailyAutomaticBackupStartTime](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-dailyautomaticbackupstarttime) property\.
 
-The format is `HH:MM`, where `HH` is the zero\-padded hour of the day \(0\-23\), and `MM` is the zero\-padded minute of the hour\. For example, 1:03 A\.M\. UTC would be:
+The format is `HH:MM`, where `HH` is the zero\-padded hour of the day \(0\-23\), and `MM` is the zero\-padded minute of the hour\. For example, 1:03 A\.M\. UTC is the following\.
 
 ```
 daily_automatic_backup_start_time = 01:03
@@ -155,10 +155,10 @@ The valid values are `SCRATCH_1`, `SCRATCH_2`, and `PERSISTENT_1`\.
 The default deployment type for FSx for Lustre\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200, 2400, and any multiple of 3600\. Support for `SCRATCH_1` was added in AWS ParallelCluster version 2\.4\.0\.
 
 `SCRATCH_2`  
-The latest generation of scratch file systems\. It supports up to six times the baseline throughput for spiky workloads\. It also supports in\-transit encryption of data for supported instance types in supported Regions\. For more information, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `SCRATCH_2` was added in AWS ParallelCluster version 2\.6\.0\.
+The latest generation of scratch file systems\. It supports up to six times the baseline throughput for spiky workloads\. It also supports in\-transit encryption of data for supported instance types in supported AWS Regions\. For more information, see [Encrypting data in transit](https://docs.aws.amazon.com/fsx/latest/LustreGuide/encryption-in-transit-fsxl.html) in the *Amazon FSx for Lustre User Guide*\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `SCRATCH_2` was added in AWS ParallelCluster version 2\.6\.0\.
 
 `PERSISTENT_1`  
-Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone, It supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `PERSISTENT_1` was added in AWS ParallelCluster version 2\.6\.0\.
+Designed for longer\-term storage\. The file servers are highly available and the data is replicated within the file systems' AWS Availability Zone\. It supports in\-transit encryption of data for supported instance types\. With this deployment type, the [`storage_capacity`](#fsx-storage-capacity) setting has possible values of 1200 and any multiple of 2400\. Support for `PERSISTENT_1` was added in AWS ParallelCluster version 2\.6\.0\.
 
 The default value is `SCRATCH_1`\.
 
@@ -246,7 +246,7 @@ Support for [`fsx_kms_key_id`](#fsx-kms-key-id) was added in AWS ParallelCluster
 
 **\(Optional\)** Specifies the S3 bucket to load data from into the file system and serve as the export bucket\. For more information, see [`export_path`](#fsx-export-path)\. If you specify the [`import_path`](#fsx-import-path) parameter, the [`automatic_backup_retention_days`](#fsx-automatic-backup-retention-days), [`copy_tags_to_backups`](#fsx-copy-tags-to-backups), [`daily_automatic_backup_start_time`](#fsx-daily-automatic-backup-start-time), and [`fsx_backup_id`](#fsx-backup-id) parameters must not be specified\. This corresponds to the [ImportPath](https://docs.aws.amazon.com/fsx/latest/APIReference/API_CreateFileSystemLustreConfiguration.html#FSx-Type-CreateFileSystemLustreConfiguration-ImportPath) parameter in the *Amazon FSx API Reference*\.
 
-Import occurs on cluster creation\. For more information, see [Importing data from your data repository](https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files.html) in the *Amazon FSx for Lustre User Guide*\. On import, only file metadata \(name, ownership, timestamp, and permissions\) is imported\. File data isn't imported from the S3 bucket until the file is first accessed\. For details on preloading the file contents, see [Preloading files into your file system](https://docs.aws.amazon.com/fsx/latest/LustreGuide/preload-file-contents-hsm-dra.html) in the *Amazon FSx for Lustre User Guide*\.
+Import occurs on cluster creation\. For more information, see [Importing data from your data repository](https://docs.aws.amazon.com/fsx/latest/LustreGuide/importing-files.html) in the *Amazon FSx for Lustre User Guide*\. On import, only file metadata \(name, ownership, timestamp, and permissions\) is imported\. File data isn't imported from the S3 bucket until the file is first accessed\. For information about preloading the file contents, see [Preloading files into your file system](https://docs.aws.amazon.com/fsx/latest/LustreGuide/preload-file-contents-hsm-dra.html) in the *Amazon FSx for Lustre User Guide*\.
 
 If a value isn't provided, the file system is empty\.
 
@@ -386,7 +386,7 @@ Support for the [`storage_type`](#fsx-storage-type) setting was added in AWS Par
 
 **\(Optional\)** Specifies a preferred time to perform weekly maintenance, in the UTC time zone\. This corresponds to the [WeeklyMaintenanceStartTime](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-fsx-filesystem-lustreconfiguration.html#cfn-fsx-filesystem-lustreconfiguration-weeklymaintenancestarttime) property\.
 
-The format is \[day of week\]:\[hour of day\]:\[minute of hour\]\. For example, Monday at Midnight is:
+The format is \[day of week\]:\[hour of day\]:\[minute of hour\]\. For example, Monday at Midnight is as follows\.
 
 ```
 weekly_maintenance_start_time = 1:00:00

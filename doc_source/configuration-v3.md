@@ -2,7 +2,7 @@
 
 AWS ParallelCluster version 3 uses YAML 1\.1 files for configuration parameters\.
 
-Current AWS ParallelCluster 3 version: 3\.3\.0\.
+Current AWS ParallelCluster 3 version: 3\.4\.0\.
 
 **Topics**
 + [Cluster configuration file](cluster-configuration-file-v3.md)

@@ -17,7 +17,7 @@ Monitoring:
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
-## `Monitoring` Properties<a name="Monitoring-v3.properties"></a>
+## `Monitoring` properties<a name="Monitoring-v3.properties"></a>
 
 `DetailedMonitoring` \(**Optional**, `Boolean`\)  
 If `true`, detailed monitoring is enabled for all cluster nodes\. This enables 1 minute monitoring in the Amazon EC2 console\. The default value is `false`\.  

@@ -14,14 +14,14 @@ Image:
       Value: string
 ```
 
-## `Image` Properties<a name="build-Image-v3.properties"></a>
+## `Image` properties<a name="build-Image-v3.properties"></a>
 
 `Name` \(**Optional**, `String`\)  
 Specifies the name of the AMI\. If not specified, the name used when calling the [`pcluster build-image`](pcluster.build-image-v3.md) command is used\.
 
 ### `Tags`<a name="build-Image-v3-Tags"></a>
 
-#### `Tags` Properties<a name="build-Image-v3-Tags.properties"></a>
+#### `Tags` properties<a name="build-Image-v3-Tags.properties"></a>
 
 \(**Optional**\) Specifies key\-value pairs for the image\.
 
@@ -39,7 +39,7 @@ Defines the value of the tag\.
 
 ### `RootVolume`<a name="build-Image-v3-RootVolume"></a>
 
-#### `RootVolume` Properties<a name="build-Image-v3-RootVolume.properties"></a>
+#### `RootVolume` properties<a name="build-Image-v3-RootVolume.properties"></a>
 
 \(**Optional**\) Specifies properties of the root volume for the image\.
 

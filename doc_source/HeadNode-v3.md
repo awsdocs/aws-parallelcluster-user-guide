@@ -10,9 +10,7 @@ HeadNode:
     ElasticIp: string/boolean
     SecurityGroups:
       - string
-      - string
     AdditionalSecurityGroups:
-      - string
       - string
     Proxy:
       HttpProxyAddress: string
@@ -39,11 +37,13 @@ HeadNode:
       Script: string
       Args:
         - string
-        - string
     OnNodeConfigured:
       Script: string
       Args:
         - string
+    OnNodeUpdated:
+      Script: string
+      Args:
         - string
   Iam:
     InstanceRole: string
@@ -65,7 +65,9 @@ HeadNode:
 `InstanceType` \(**Required**, `String`\)  
 Specifies the instance type for the head node\.  
 Specifies the Amazon EC2 instance type that's used for the head node\. The architecture of the instance type must be the same as the architecture used for the AWS Batch [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-AwsBatchQueues-ComputeResources-InstanceTypes) or Slurm [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) setting\.  
-If you define a p4d instance type that has multiple network interfaces or a network interface card, you must set [`ElasticIp`](#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+AWS ParallelCluster doesn't support the following instance types for the `HeadNode` setting\.  
++ hpc6id
+If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`ElasticIp`](#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `DisableSimultaneousMultithreading` \(**Optional**, `Boolean`\)  
@@ -83,9 +85,7 @@ Networking:
   ElasticIp: string/boolean
   SecurityGroups:
     - string
-    - string
   AdditionalSecurityGroups:
-    - string
     - string
   Proxy:
     HttpProxyAddress: string
@@ -136,7 +136,7 @@ Ssh:
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
-### `Ssh` Properties<a name="HeadNode-v3-Ssh.properties"></a>
+### `Ssh` properties<a name="HeadNode-v3-Ssh.properties"></a>
 
 `KeyName` \(**Optional**, `String`\)  
 Names an existing Amazon EC2 key pair to enable SSH access to the head node\.  
@@ -165,7 +165,7 @@ LocalStorage:
 
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
-### `LocalStorage` Properties<a name="HeadNode-v3-LocalStorage.properties"></a>
+### `LocalStorage` properties<a name="HeadNode-v3-LocalStorage.properties"></a>
 
 `RootVolume` \(**Required**\)  
 Specifies the root volume storage for the head node\.  
@@ -271,15 +271,15 @@ CustomActions:
     Script: string
     Args:
       - string
-      - string
   OnNodeConfigured:
     Script: string
     Args:
       - string
-      - string
+   OnNodeUpdated:
+   Script: string
+   Args:
+     - string
 ```
-
-[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 ### `CustomActions` properties<a name="HeadNode-v3-CustomActions.properties"></a>
 
@@ -289,6 +289,7 @@ Specifies a script to run on the head node before any node deployment bootstrap 
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
 List of arguments to pass to the script\.
+[Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `OnNodeConfigured` \(**Optional**, `String`\)  
 Specifies a script to run on the head node after the node bootstrap actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
@@ -296,8 +297,16 @@ Specifies a script to run on the head node after the node bootstrap actions are 
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
 List of arguments to pass to the script\.
-
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
+
+`OnNodeUpdated` \(**Optional**, `String`\)  
+Specifies a script to run on the head node after node update actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
+`Script` \(**Required**, `String`\)  
+Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
+`Args` \(**Optional**, `[String]`\)  
+List of arguments to pass to the script\.
+[Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
+`OnNodeUpdated` is added starting with AWS ParallelCluster 3\.4\.0\.
 
 ## `Iam`<a name="HeadNode-v3-Iam"></a>
 
@@ -378,7 +387,7 @@ Imds:
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-### `Imds` Properties<a name="HeadNode-v3-Imds.properties"></a>
+### `Imds` properties<a name="HeadNode-v3-Imds.properties"></a>
 
 `Secured` \(**Optional**, `Boolean`\)  
 If `true`, restricts access to the head node's IMDS \(and the instance profile credentials\) to a subset of superusers\.  
@@ -413,7 +422,7 @@ Image:
 
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-### `Image` Properties<a name="HeadNode-v3-Image.properties"></a>
+### `Image` properties<a name="HeadNode-v3-Image.properties"></a>
 
 `CustomAmi` \(**Optional**, `String`\)  
 Specifies the ID of a custom AMI to use for the head node instead of the default AMI\. For more information, see [AWS ParallelCluster AMI customization](custom-ami-v3.md)\.  

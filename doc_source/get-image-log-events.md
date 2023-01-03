@@ -1,6 +1,6 @@
 # getImageLogEvents<a name="get-image-log-events"></a>
 
-Retrieve the events associated with an image build\.
+Retrieve the events that are associated with an image build\.
 
 **Topics**
 + [Request syntax](#get-image-log-events-request)
@@ -36,7 +36,7 @@ Type: string
 Required: Yes
 
 **endTime**  
-The end of the time range, expressed in ISO 8601 format\. Events with a timestamp equal to or later than this time are not included\.  
+The end of the time range, expressed in ISO 8601 format\. Events with a timestamp equal to or later than this time aren't included\.  
 Type: datetime  
 Format: `2021-01-01T20:00:00Z`  
 Required: No
@@ -47,18 +47,18 @@ Type: float
 Required: No
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string  
 Required: No
 
 **region**  
-The AWS Region that the action corresponds to\.  
+The AWS Region that the image in\.  
 Type: string  
 Required: No
 
 **startFromHead**  
-If the value is true, return the earliest log events first\. If the value is false, return the latest log events first\. The default is `false`\.  
-Type: bool  
+If set to `true`, return the earliest log events first\. If set to false, return the latest log events first\. The default is `false`\.  
+Type: boolean  
 Required: No
 
 **startTime**  
@@ -94,11 +94,11 @@ The event timestamp\.
 Type: datetime
 
 **nextToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 **prevToken**  
-A token to use for paginated requests\.  
+A token that's used for paginated requests\.  
 Type: string
 
 ## Example<a name="get-image-log-events-example"></a>

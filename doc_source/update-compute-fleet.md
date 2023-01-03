@@ -33,7 +33,7 @@ Valid values: `START_REQUESTED | STOP_REQUESTED | ENABLED | DISABLED`
 Required: Yes
 
 **region**  
-The AWS Region of the cluster\.  
+The AWS Region that the cluster is in\.  
 Type: string  
 Required: No
 
@@ -54,7 +54,7 @@ Type: string
 Valid values: `START_REQUESTED | STARTING | RUNNING | PROTECTED | STOP_REQUESTED | STOPPING | STOPPED | UNKNOWN | ENABLED | DISABLED`
 
 **lastStatusUpdatedTime**  
-The timestamp representing the last status update time\.  
+The timestamp that represents the last status update time\.  
 Type: datetime
 
 ## Example<a name="update-compute-fleet-example"></a>

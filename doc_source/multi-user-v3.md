@@ -6,11 +6,11 @@ In this topic, an AWS ParallelCluster user refers to a system user for compute i
 
 AWS ParallelCluster multi\-user access support is available in all the AWS Regions where AWS ParallelCluster is currently available\. It works with other AWS services, including [Amazon FSx for Lustre](https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html) and [Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html)\.
 
-You can use an [AWS Directory Service for Microsoft Active Directory](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) or [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) to manage cluster access\. Be sure to check [AWS Region availability](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/regions.html) for these services\. To set up a cluster, specify an [AWS ParallelCluster DirectoryService](DirectoryService-v3.md) configuration\. AWS Directory Service directories can be connected to multiple clusters\. This allows for centralized management of identities across multiple environments and a unified login experience\.
+You can use an [AWS Directory Service for Microsoft Active Directory](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) or [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) to manage cluster access\. Make sure to check [AWS Region availability](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/regions.html) for these services\. To set up a cluster, specify an [AWS ParallelCluster DirectoryService](DirectoryService-v3.md) configuration\. AWS Directory Service directories can be connected to multiple clusters\. This allows for centralized management of identities across multiple environments and a unified login experience\.
 
-When you use AWS Directory Service for AWS ParallelCluster multiple access, you can log in to the cluster with user credentials that have been defined in the directory\. These credentials consist of a user name and password\. After you log in to the cluster for the first time, a user SSH key is automatically generated\. You can use it to log in without a password\.
+When you use AWS Directory Service for AWS ParallelCluster multiple user access, you can log in to the cluster with user credentials that are defined in the directory\. These credentials consist of a user name and password\. After you log in to the cluster for the first time, a user SSH key is automatically generated\. You can use it to log in without a password\.
 
-You can create, delete, and modify a cluster’s users or groups after your directory service has been deployed\. With AWS Directory Service, you can do this in the AWS Management Console or by using the *Active Directory Users and Computers* tool\. This tool is accessible from any EC2 instance that's joined to your Active Directory\. For more information, see [Installing the Active Directory administration tools](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_install_ad_tools.html)\.
+You can create, delete, and modify a cluster’s users or groups after your directory service is deployed\. With AWS Directory Service, you can do this in the AWS Management Console or by using the *Active Directory Users and Computers* tool\. This tool is accessible from any EC2 instance that's joined to your Active Directory\. For more information, see [Installing the Active Directory administration tools](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_install_ad_tools.html)\.
 
 If you plan to use AWS ParallelCluster in a single subnet with no internet access, see [AWS ParallelCluster in a single subnet with no internet access](network-configuration-v3.md#aws-parallelcluster-in-a-single-public-subnet-no-internet-v3) for additional requirements\.
 
@@ -33,15 +33,15 @@ AWS ParallelCluster requires every Active Directory user directory to be in the 
 ## Create a cluster with an AD domain<a name="create-addircluster-v3"></a>
 
 **Warning**  
-This introductory section describes how to setup AWS ParallelCluster with a Managed AD server over LDAP\. LDAP is an insecure protocol\. For production systems, we strongly recommended the use of TLS certificates \(LDAPS\) as described in the [Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations](#examples-addir-v3) section that follows\.
+This introductory section describes how to set up AWS ParallelCluster with a Managed Active Delivery \(AD\) server over the Lightweight Directory Access Protocol \(LDAP\)\. LDAP is an insecure protocol\. For production systems, we strongly recommended the use of TLS certificates \(LDAPS\) as described in the [Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations](#examples-addir-v3) section that follows\.
 
 Configure your cluster to integrate with a directory by specifying the relevant information in the `DirectoryService` section of the cluster configuration file\. For more information, see the [`DirectoryService`](DirectoryService-v3.md) configuration section\.
 
-You can use this following example to integrate your cluster with an AWS Managed Microsoft AD over LDAP\.
+You can use this following example to integrate your cluster with an AWS Managed Microsoft AD over the Lightweight Directory Access Protocol \(LDAP\)\.
 
 **Specific definitions that are required for an AWS Managed Microsoft AD over LDAP configuration:**
 + You must set the `ldap_auth_disable_tls_never_use_in_production` parameter to `True` under [`DirectoryService`](DirectoryService-v3.md) / [`AdditionalSssdConfigs`](DirectoryService-v3.md#yaml-DirectoryService-AdditionalSssdConfigs)\.
-+ You can specify either controllers hostnames or IP addresses for [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr)\.
++ You can specify either controller hostnames or IP addresses for [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr)\.
 + [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```
@@ -128,7 +128,7 @@ DirectoryService:
 **Considerations:**
 + We recommend that you use LDAP over TLS/SSL \(or LDAPS\) rather than LDAP alone\. TLS/SSL ensures that the connection is encrypted\.
 + The [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) property value matches the entries in the `DnsIpAddrs` list from the `describe-directories` output\.
-+ We recommend that your cluster use subnets that are located in the same Availability Zone that the [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) points to\. If you use [custom Dynamic Host Configuration Protocol \(DHCP\) configuration](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/dhcp_options_set.html) that's recommended for directory VPCs and your subnets *aren't* located in the [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) Availability Zone, cross traffic among Availability Zones is possible\. The use of custom DHCP configurations *isn't* required to make use of the multi\-user AD integration feature\.
++ We recommend that your cluster use subnets that are located in the same Availability Zone that the [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) points to\. If you use [custom Dynamic Host Configuration Protocol \(DHCP\) configuration](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/dhcp_options_set.html) that's recommended for directory VPCs and your subnets *aren't* located in the [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr) Availability Zone, cross traffic among Availability Zones is possible\. The use of custom DHCP configurations *isn't* required to use the multi\-user AD integration feature\.
 + The [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) property value specifies a user that must be created in the directory\. This user *isn't* created by default\. We recommend that you *don't* give this user permission to modify directory data\.
 + The [`DirectoryService`](DirectoryService-v3.md) / [`PasswordSecretArn`](DirectoryService-v3.md#yaml-DirectoryService-PasswordSecretArn) property value points to an AWS Secrets Manager secret that contains the password of the user that you specified for the [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) property\. If this user’s password changes, update the secret value and update the cluster\. To update the cluster for the new secret value, you must stop the compute fleet with the `pcluster update-compute-fleet` command and then run the following command from within the cluster head node\.
 
@@ -140,13 +140,13 @@ For another example, see also [Integrating Active Directory](tutorials_05_multi-
 
 ## Log in to a cluster integrated with an AD domain<a name="login-addircluster-v3"></a>
 
-If you enabled the AD domain integration feature, authentication by password is enabled on the cluster head node\. The home directory of an AD user is created at the first user login to the head node or the first time a sudo\-user switches to the AD user on the head node\.
+If you enabled the Active Delivery \(AD\) domain integration feature, authentication by password is enabled on the cluster head node\. The home directory of an AD user is created at the first user login to the head node or the first time a sudo\-user switches to the AD user on the head node\.
 
 Password authentication isn't enabled for cluster compute nodes\. AD users must log in to compute nodes with SSH keys\.
 
 By default, SSH keys are set up in the AD user `/${HOME}/.ssh` directory at the first SSH login to the head node\. This behavior can be disabled by setting [`DirectoryService`](DirectoryService-v3.md) / [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) boolean property to `false` in the cluster configuration\. By default, [`DirectoryService`](DirectoryService-v3.md) / [`GenerateSshKeysForUsers`](DirectoryService-v3.md#yaml-DirectoryService-GenerateSshKeysForUsers) is set to `true`\.
 
-If a AWS ParallelCluster application requires password\-less SSH between cluster nodes, make sure that the SSH keys have been correctly set up in the user's home directory\.
+If an AWS ParallelCluster application requires passwordless SSH between cluster nodes, make sure that the SSH keys are correctly set up in the user's home directory\.
 
 AWS Managed Microsoft AD passwords expire after 42 days\. For more information, see [Manage password policies for AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_password_policies.html) in the *AWS Directory Service Administration Guide*\. If your password expires, it must be reset to restore cluster access\. For more information, see [How to reset a user password and expired passwords](troubleshooting-v3.md#troubleshooting-v3-multi-user-reset-passwd)\.
 
@@ -156,7 +156,7 @@ For more information, see [Troubleshooting multi\-user integration with Active D
 
 ## Running MPI jobs<a name="addircluster-MPI-v3"></a>
 
-As suggested in SchedMD, MPI jobs should be bootstrapped by using Slurm as the MPI bootstrapping method\. For more information, refer to the official [Slurm documentation](https://slurm.schedmd.com/mpi_guide.html#intel_mpi) or the official documentation for your MPI library\.
+As suggested in SchedMD, bootstrap MPI jobs using Slurm as the MPI bootstrapping method\. For more information, refer to the official [Slurm documentation](https://slurm.schedmd.com/mpi_guide.html#intel_mpi) or the official documentation for your MPI library\.
 
 For example, in the [IntelMPI official documentation](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/hydra-environment-variables.html), you learn that when running a StarCCM job, you must set Slurm as process orchestrator by exporting the environment variable `I_MPI_HYDRA_BOOTSTRAP=slurm`\.
 
@@ -167,7 +167,7 @@ Either configure your application to use Slurm as the MPI bootstrapping method o
 
 ## Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations<a name="examples-addir-v3"></a>
 
-AWS ParallelCluster supports multiple user access by integrating with an AWS Directory Service over Lightweight Directory Access Protocol \(LDAP\), or LDAP over TLS/SSL \(LDAPS\)\.
+AWS ParallelCluster supports multiple user access by integrating with an AWS Directory Service over the Lightweight Directory Access Protocol \(LDAP\), or LDAP over TLS/SSL \(LDAPS\)\.
 
 The following examples show how to create cluster configurations to integrate with an AWS Managed Microsoft AD over LDAP\(S\)\.
 
@@ -292,7 +292,7 @@ You can use this example to integrate your cluster with an AWS Managed Microsoft
 
 **Specific definitions for an AWS Managed Microsoft AD over LDAPS without certificate verification configuration:**
 + [`DirectoryService`](DirectoryService-v3.md) / [`LdapTlsReqCert`](DirectoryService-v3.md#yaml-DirectoryService-LdapTlsReqCert) must be set to `never`\.
-+ Either controllers hostnames or IP addresses can be specified for [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr)\.
++ Either controller hostnames or IP addresses can be specified for [`DirectoryService`](DirectoryService-v3.md) / [`DomainAddr`](DirectoryService-v3.md#yaml-DirectoryService-DomainAddr)\.
 + [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```

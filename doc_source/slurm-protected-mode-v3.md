@@ -1,18 +1,18 @@
 # Slurm cluster protected mode<a name="slurm-protected-mode-v3"></a>
 
-When a cluster runs with protected mode enabled, AWS ParallelCluster monitors and tracks compute node bootstrap failures as they are launched to detect whether or not the failures are occurring continuously\.
+When a cluster runs with protected mode enabled, AWS ParallelCluster monitors and tracks compute node bootstrap failures as they're launched to detect whether or not the failures are occurring continuously\.
 
-The cluster goes into protected mode if the following is detected:
+If either of the following is detected, the cluster enters protected mode:
 
 1. Consecutive bootstrap failures occur continuously with no successful compute node launches\.
 
 1. The failure count for a queue reaches a pre\-defined threshold\.
 
-After the cluster goes into protected mode, AWS ParallelCluster disables the queue or queues with failures at or above the threshold\.
+After the cluster enters protected mode, AWS ParallelCluster disables the queue or queues with failures at or above the pre\-defined threshold\.
 
 Slurm cluster protected mode was added in AWS ParallelCluster version 3\.0\.0\.
 
-You can use protected mode to reduce the costs of time and resources spent on compute node bootstrap failure cycling\.
+You can use protected mode to reduce the time and resources spent on compute node bootstrap failure cycling\.
 
 ## Protected node parameter<a name="slurm-protected-mode-parameter-v3"></a>
 
@@ -24,9 +24,9 @@ The default `bootstrap_failure_count` is 10 and protected mode is enabled\.
 
 If `bootstrap_failure_count` is less than or equal to zero, protected mode is disabled\.
 
-You can change the `bootstrap_failure_count` value by adding the parameter in the `clustermgtd` config file located at `/etc/parallelcluster/slurm_plugin/parallelcluster_clustermgtd.conf` in the `HeadNode`\.
+You can change the `bootstrap_failure_count` value by adding the parameter in the `clustermgtd` config file that's located at `/etc/parallelcluster/slurm_plugin/parallelcluster_clustermgtd.conf` in the `HeadNode`\.
 
-The parameter can be updated at any time without stopping the compute fleet\. If a launch succeeds in a queue before the failure count reaches `bootstrap_failure_count`, the failure count is reset to zero\.
+You can update this parameter at any time and don't need to stop the compute fleet to do so\. If a launch succeeds in a queue before the failure count reaches `bootstrap_failure_count`, the failure count is reset to zero\.
 
 ## Check cluster status in protected mode<a name="slurm-protected-mode-status-v3"></a>
 
@@ -46,7 +46,7 @@ $ pcluster describe-compute-fleet --cluster-name <cluster-name> --region <region
 
 ### Node status<a name="slurm-protected-mode-nodes-v3"></a>
 
-To learn which queues \(partitions\) have bootstrap failures that have activated protected mode, log into the cluster and run the `sinfo` command\. Partitions with bootstrap failures at or above `bootstrap_failure_count` are in the `INACTIVE state`\. Partitions without bootstrap failures at or above `bootstrap_failure_count` are in the `UP` state and work as expected\.
+To learn which queues \(partitions\) have bootstrap failures that have activated protected mode, log in to the cluster and run the `sinfo` command\. Partitions with bootstrap failures at or above `bootstrap_failure_count` are in the `INACTIVE state`\. Partitions without bootstrap failures at or above `bootstrap_failure_count` are in the `UP` state and work as expected\.
 
 `PROTECTED` status doesn't impact running jobs\. If jobs are running on a partition with bootstrap failures at or above `bootstrap_failure_count`, the partition is set to `INACTIVE` after the running jobs complete\.
 
@@ -60,9 +60,9 @@ queue1* inact infinite 3490 idle~ queue1-dy-c5xlarge-[11-3500]
 queue2 up infinite 10 idle~ queue2-dy-c5xlarge-[1-10]
 ```
 
-Partition `queue1` is `INACTIVE` due to the detection of 10 consecutive continuous bootstrap failures\.
+Partition `queue1` is `INACTIVE` because 10 consecutive continuous bootstrap failures were detected\.
 
-Instances behind nodes `queue1-dy-c5xlarge-[1-10]` launched but failed to join the cluster due to unhealthy status\.
+Instances behind nodes `queue1-dy-c5xlarge-[1-10]` launched but failed to join the cluster because of an unhealthy status\.
 
 The cluster is in protected mode\.
 
@@ -70,7 +70,7 @@ Partition `queue2` isn't impacted by the bootstrap failures in `queue1`\. It's i
 
 ## How to deactivate protected mode<a name="slurm-protected-mode-exit-v3"></a>
 
-After the bootstrap error has been resolved, you can run the following commmand to take the cluster out of protected mode\.
+After the bootstrap error has been resolved, you can run the following command to take the cluster out of protected mode\.
 
 ```
 $ pcluster update-compute-fleet --cluster-name <cluster-name> \
@@ -80,19 +80,19 @@ $ pcluster update-compute-fleet --cluster-name <cluster-name> \
 
 ## Bootstrap failures that activate protected mode<a name="slurm-protected-mode-failures-v3"></a>
 
-Bootstrap errors that activate protected mode can be subdivided into the following three types\. To identify the type and issue, you can [retrieve cluster logs](troubleshooting-v3.md#troubleshooting-v3-get-logs)\.
+Bootstrap errors that activate protected mode are subdivided into the following three types\. To identify the type and issue, you can [retrieve cluster logs](troubleshooting-v3.md#troubleshooting-v3-get-logs)\.
 
 1. **Bootstrap error that causes an instance to self\-terminate**\.
 
-   An instance fails early in the bootstrap process, such as an instance that self\-terminates due to errors in the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) \\ [`CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) \\ [`OnNodeStart`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeStart) \| [`OnNodeConfigured`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeConfigured) script\.
+   An instance fails early in the bootstrap process, such as an instance that self\-terminates because of errors in the [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) \\ [`CustomActions`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-CustomActions) \\ [`OnNodeStart`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeStart) \| [`OnNodeConfigured`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-CustomActions-OnNodeConfigured) script\.
 
-   For dynamic nodes, look for errors similar to:
+   For dynamic nodes, look for errors similar to the following\.
 
    ```
    Node bootstrap error: Node ... is in power up state without valid backing instance
    ```
 
-   For static nodes, look in the `clustermgtd` log \(`/var/log/parallelcluster/clustermgtd`\) for errors similar to:
+   For static nodes, look in the `clustermgtd` log \(`/var/log/parallelcluster/clustermgtd`\) for errors similar to the following\.
 
    ```
    Node bootstrap error: Node ... is in power up state without valid backing instance
@@ -100,15 +100,15 @@ Bootstrap errors that activate protected mode can be subdivided into the followi
 
 1. **Nodes `resume_timeout` or `node_replacement_timeout` expires**\.
 
-   An instance isn't able to join cluster within the `resume_timeout` \(for dynamic nodes\) or `node_replacement_timeout` \(for static nodes\)\. It doesn't self\-terminate before the timeout\. For example, networking isn't setup correctly for the cluster and the node is set to the `DOWN` state by Slurm after the timeout expires\.
+   An instance can't join cluster within the `resume_timeout` \(for dynamic nodes\) or `node_replacement_timeout` \(for static nodes\)\. It doesn't self\-terminate before the timeout\. For example, networking isn't set up correctly for the cluster and the node is set to the `DOWN` state by Slurm after the timeout expires\.
 
-   For dynamic nodes, look for errors similar to:
+   For dynamic nodes, look for errors similar to the following\.
 
    ```
    Node bootstrap error: Resume timeout expires for node
    ```
 
-   For static nodes, look in the `clustermgtd` log \(`/var/log/parallelcluster/clustermgtd`\) for errors similar to:
+   For static nodes, look in the `clustermgtd` log \(`/var/log/parallelcluster/clustermgtd`\) for errors similar to the following\.
 
    ```
    Node bootstrap error: Replacement timeout expires for node ... in replacement.
@@ -118,7 +118,7 @@ Bootstrap errors that activate protected mode can be subdivided into the followi
 
    An instance behind the node fails an EC2 health check or scheduled event health check, and the nodes are treated as bootstrap failure nodes\. In this case, the instance is terminated for a reason outside of AWS ParallelCluster control\.
 
-   Look in the `clustermgtd` log \(`/var/log/parallelcluster/clustermgtd`\) for errors similar to:
+   Look in the `clustermgtd` log \(`/var/log/parallelcluster/clustermgtd`\) for errors similar to the following\.
 
    ```
    Node bootstrap error: Node %s failed during bootstrap when performing health check.
@@ -126,25 +126,25 @@ Bootstrap errors that activate protected mode can be subdivided into the followi
 
 ## How to debug protected mode<a name="slurm-protected-mode-debug-v3"></a>
 
-After you've learned that your cluster is in protected status, you can check the `clustermgtd` log from the `HeadNode` and the `cloud-init-output` log from problematic compute nodes\. For more information on how to retrieve logs, see [Retrieving and preserving logs](troubleshooting-v3.md#troubleshooting-v3-get-logs)\.
+After you learned that your cluster is in protected status, you can check the `clustermgtd` log from the `HeadNode` and the `cloud-init-output` log from problematic compute nodes\. For more information about how to retrieve logs, see [Retrieving and preserving logs](troubleshooting-v3.md#troubleshooting-v3-get-logs)\.
 
 **`clustermgtd` log\(`/var/log/parallelcluster/clustermgtd`\) on the head node**
 
-Log messages show which partitions have bootstrap failures and the corresponding bootstrap failure count:
+Log messages show which partitions have bootstrap failures and the corresponding bootstrap failure count\.
 
 ```
 [slurm_plugin.clustermgtd:_handle_protected_mode_process] - INFO - Partitions  
 bootstrap failure count: {'queue1': 2}, cluster will be set into protected mode if protected failure count reach threshold.
 ```
 
-In the `clustermgtd` log, search for `Found the following bootstrap failure nodes` to find which node failed to bootstrap:
+In the `clustermgtd` log, search for `Found the following bootstrap failure nodes` to find which node failed to bootstrap\.
 
 ```
 [slurm_plugin.clustermgtd:_handle_protected_mode_process] - WARNING - 
 Found the following bootstrap failure nodes: (x2)  ['queue1-st-c5large-1(192.168.110.155)',  'broken-st-c5large-2(192.168.65.215)']
 ```
 
-In the `clustermgtd` log, search for `Node bootstrap error` to find the failure reason:
+In the `clustermgtd` log, search for `Node bootstrap error` to find the failure reason\.
 
 ```
 [slurm_plugin.clustermgtd:_is_node_bootstrap_failure] - WARNING - Node bootstrap error: 
