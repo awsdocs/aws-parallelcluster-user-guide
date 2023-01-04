@@ -429,8 +429,13 @@ If a new subnet value is added, [Update policy: This setting can be changed duri
 If a subnet value is removed, [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
 
 `AssignPublicIp` \(**Optional**, `String`\)  
+<<<<<<< HEAD
+Creates or assigns a public IP address to the nodes in the Slurm queue\. Supported values are `true` and `false`\. The default depends on the subnet specified; a subnet with public IPs will default to assigning public IP addresses\.  
+If you define a p4d, an hpc6id or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. In this case, set `AssignPublicIp` to `false`\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+=======
 Creates or assigns a public IP address to the nodes in the Slurm queue\. Supported values are `true` and `false`\. The subnet that you specify determines the default value\. A subnet with public IPs default to assigning public IP addresses\.  
 If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`HeadNode`](HeadNode-v3.md) / [`Networking`](HeadNode-v3.md#HeadNode-v3-Networking) / [`ElasticIp`](HeadNode-v3.md#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. In this case, set `AssignPublicIp` to `false`\. For more information on IP addresses, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+>>>>>>> main
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `SecurityGroups` \(**Optional**, `[String]`\)  
@@ -567,11 +572,18 @@ The name of the Slurm queue compute environment\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `InstanceType` \(**Required**, `String`\)  
+<<<<<<< HEAD
+The instance type to use in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture, either `x86_64` or `arm64`\.  
+The cluster configuration must define either [InstanceType](#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) or [Instances](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\. AWS ParallelCluster fails if both are defined\.  
+If you define a p4d, an hpc6id or another instance type that has multiple network interfaces or a network interface card, you must launch the compute instances in private subnet as describe in [AWS ParallelCluster using two subnets](network-configuration-v3.md#network-configuration-v3-two-subnets)\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+[Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)\.
+=======
 The instance type that's used in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture\. Instances can use either the `x86_64` or `arm64` architecture\.  
 The cluster configuration must define either [InstanceType](#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) or [Instances](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\. If both are defined, AWS ParallelCluster fails\.  
 When you define `InstanceType`, you can't define multiple subnets\. If you configure only one instance type and want to use multiple subnets, define your instance type in `Instances` rather than in `InstanceType`\. For more information, see [`Networking`](#Scheduling-v3-SlurmQueues-Networking) / [`SubnetIds`](#yaml-Scheduling-SlurmQueues-Networking-SubnetIds)\.  
 If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must launch the compute instances in private subnet as described in [AWS ParallelCluster using two subnets](network-configuration-v3.md#network-configuration-v3-two-subnets)\. AWS public IPs can only be assigned to instances that are launched with a single network interface\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
+>>>>>>> main
 
 `Instances` \(**Required**\)  
 Specifies the list of instance types for a compute resource\. To specify the allocation strategy for the list of instance types, see [`AllocationStrategy`](#yaml-Scheduling-SlurmQueues-AllocationStrategy)\.  
@@ -598,7 +610,11 @@ The instance types that are listed in [`Instances`](#yaml-Scheduling-SlurmQueues
   In this case, the number of network interfaces configured for the compute resource is defined by the instance type with the smallest number of network cards\.
 + Different network bandwidth\.
 + Different instance store size\.
+<<<<<<< HEAD
+If you define a p4d, an hpc6id or another instance type that has multiple network interfaces or a network interface card, you must launch the compute instances in private subnet as describe in [AWS ParallelCluster using two subnets](network-configuration-v3.md#network-configuration-v3-two-subnets)\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+=======
 If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must launch the compute instances in private subnet as described in [AWS ParallelCluster using two subnets](network-configuration-v3.md#network-configuration-v3-two-subnets)\. AWS public IPs can only be assigned to instances launched with a single network interface\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
+>>>>>>> main
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 `Instances` is supported starting with AWS ParallelCluster version 3\.3\.0\.
 
