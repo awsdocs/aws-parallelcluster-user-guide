@@ -66,7 +66,7 @@ HeadNode:
 Specifies the instance type for the head node\.  
 Specifies the Amazon EC2 instance type that's used for the head node\. The architecture of the instance type must be the same as the architecture used for the AWS Batch [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-AwsBatchQueues-ComputeResources-InstanceTypes) or Slurm [`InstanceType`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-InstanceType) setting\.  
 AWS ParallelCluster doesn't support the following instance types for the `HeadNode` setting\.  
-
++ hpc6id
 If you define a p4d instance type or another instance type that has multiple network interfaces or a network interface card, you must set [`ElasticIp`](#yaml-HeadNode-Networking-ElasticIp) to `true` to provide public access\. AWS public IPs can only be assigned to instances launched with a single network interface\. For this case, we recommend that you use a [NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) to provide public access to the cluster compute nodes\. For more information, see [Assign a public IPv4 address during instance launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 

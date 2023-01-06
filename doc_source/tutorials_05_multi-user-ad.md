@@ -11,6 +11,12 @@ After you create these resources, proceed to configure and create your cluster i
 
 This tutorial covers how to create an environment that supports multiple user access to clusters\. This tutorial doesn't cover how you create and use an AWS Directory Service AD\. The steps that you take to set up an AWS Managed Microsoft AD in this tutorial are provided for testing purposes only\. They *aren't* provided to replace the official documentation and best practices you can find at [AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) and [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) in the *AWS Directory Service Administration Guide*\.
 
+**Note**  
+Directory user passwords expire according to the directory password policy property definitions\. For more information see [Supported policy settings](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/supportedpolicysettings)\. To reset directory passwords with AWS ParallelCluster, see [How to reset a user password and expired passwords](troubleshooting-v3.md#troubleshooting-v3-multi-user-reset-passwd)\.
+
+**Note**  
+The directory domain controller IP addresses can change due to domain controller changes and directory maintenance\. If you chose the automated quick create method to create the directory infrastructure, you must manually align the load balancer in front of the directory controllers when the directory IP addresses change\. If you use the quick create method, the directory IP addresses aren't automatically aligned with the load balancers\.
+
 **Prerequisites**
 + AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
 + The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
