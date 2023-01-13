@@ -2,7 +2,7 @@
 
 AWS ParallelCluster uses roles to access your AWS resources and their services\. The instance and user policies that AWS ParallelCluster uses to grant permissions are documented at [AWS Identity and Access Management permissions in AWS ParallelCluster 3\.x](iam-roles-in-parallelcluster-v3.md) \([AWS Identity and Access Management roles in AWS ParallelCluster](iam.md) for AWS ParallelCluster version 2\.x\)\.
 
-The only major difference is how you authenticate when using a standard IAM user and long\-term credentials\. Although an IAM user requires a password to access an AWS service's console, that same IAM user requires an access key pair to perform the same operations using AWS ParallelCluster\. All other short\-term credentials are used in the same way they are used with the console\.
+The only major difference is how you authenticate when using a standard user and long\-term credentials\. Although an user requires a password to access an AWS service's console, that same user requires an access key pair to perform the same operations using AWS ParallelCluster\. All other short\-term credentials are used in the same way they are used with the console\.
 
 The credentials used by AWS ParallelCluster are stored in plaintext files and are ***not*** encrypted\.
 + The `$HOME/.aws/credentials` file stores long\-term credentials required to access your AWS resources\. These include your access key ID and secret access key\. 

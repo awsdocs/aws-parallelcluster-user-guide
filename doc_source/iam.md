@@ -13,7 +13,7 @@ You can track changes to the example policies in [AWS ParallelCluster documentat
 
 ## Default settings for cluster creation<a name="defaults"></a>
 
-When you use the default settings for cluster creation, a default IAM role for Amazon EC2 is created by the cluster\. The user that creates the cluster must have the right level of permissions to create all of the resources required to launch the cluster\. This includes creating an IAM role for Amazon EC2\. Typically, the IAM user must have the permissions of an *AdministratorAccess* managed policy when using the default settings\. For information about managed policies, see [AWS managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies) in the *IAM User Guide*\.
+When you use the default settings for cluster creation, a default IAM role for Amazon EC2 is created by the cluster\. The user that creates the cluster must have the right level of permissions to create all of the resources required to launch the cluster\. This includes creating an IAM role for Amazon EC2\. Typically, the user must have the permissions of an *AdministratorAccess* managed policy when using the default settings\. For information about managed policies, see [AWS managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies) in the *IAM User Guide*\.
 
 ## Using an existing IAM role for Amazon EC2<a name="using-an-existing-ec2-iam-role"></a>
 

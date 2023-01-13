@@ -6,7 +6,7 @@ AWS ParallelCluster uses IAM permissions to control access to resources when cre
 + Permissions that the `pcluster` user requires to invoke the `pcluster` CLI commands for creating and managing clusters\.
 + Permissions that the cluster resources require to perform cluster actions\.
 
-**AWS ParallelCluster uses** an [EC2 instance profile and role](#iam-ec2-instance-role) to provide cluster resource permissions\. To manage cluster resource permissions, AWS ParallelCluster also requires permissions to IAM resources\. For more information, see [AWS ParallelCluster IAM user example policies for managing IAM resources](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam)\.
+**AWS ParallelCluster uses** an [EC2 instance profile and role](#iam-ec2-instance-role) to provide cluster resource permissions\. To manage cluster resource permissions, AWS ParallelCluster also requires permissions to IAM resources\. For more information, see [AWS ParallelCluster user example policies for managing IAM resources](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam)\.
 
 **`pcluster` users require** IAM permissions to use the [`pcluster`](pcluster-v3.md) CLI to create and manage a cluster and its resources\. These permissions are included in IAM policies that can be added to a user or role\. For more information on IAM roles, see [Creating a user role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html) in the *AWS Identity and Access Management User Guide*\.
 
@@ -23,7 +23,7 @@ You can track changes to the example policies in [AWS ParallelCluster documentat
 **Topics**
 + [AWS ParallelCluster EC2 instance roles](#iam-ec2-instance-role)
 + [AWS ParallelCluster example ` pcluster` user policies](#iam-roles-in-parallelcluster-v3-example-user-policies)
-+ [AWS ParallelCluster IAM user example policies for managing IAM resources](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam)
++ [AWS ParallelCluster user example policies for managing IAM resources](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam)
 + [AWS ParallelCluster configuration parameters to manage IAM permissions](#iam-roles-in-parallelcluster-v3-params-for-iam)
 
 ## AWS ParallelCluster EC2 instance roles<a name="iam-ec2-instance-role"></a>
@@ -38,7 +38,7 @@ If your intent is to add extra policies to the default instance role, we recomme
 
 ## AWS ParallelCluster example ` pcluster` user policies<a name="iam-roles-in-parallelcluster-v3-example-user-policies"></a>
 
-The following examples show the IAM user policies required to create and manage AWS ParallelCluster and its resources by using the `pcluster` CLI\. You can attach policies to a user or role\.
+The following examples show the user policies required to create and manage AWS ParallelCluster and its resources by using the `pcluster` CLI\. You can attach policies to a user or role\.
 
 **Topics**
 + [Base AWS ParallelCluster` pcluster` user policy](#iam-roles-in-parallelcluster-v3-base-user-policy)
@@ -622,11 +622,11 @@ Users that intend to create custom EC2 images with AWS ParallelCluster must have
 }
 ```
 
-## AWS ParallelCluster IAM user example policies for managing IAM resources<a name="iam-roles-in-parallelcluster-v3-user-policy-manage-iam"></a>
+## AWS ParallelCluster user example policies for managing IAM resources<a name="iam-roles-in-parallelcluster-v3-user-policy-manage-iam"></a>
 
 When using AWS ParallelCluster to create clusters or custom AMIs, IAM policies must be provided that contain permissions to grant the required set of permissions to AWS ParallelCluster components\. These IAM resources can be either automatically created by AWS ParallelCluster or be provided as input when creating a cluster or a custom image\.
 
-You can use the following modes to provide the AWS ParallelCluster IAM user with the permissions required to access IAM resources by using additional IAM policies in the configuration\.
+You can use the following modes to provide the AWS ParallelCluster user with the permissions required to access IAM resources by using additional IAM policies in the configuration\.
 
 **Topics**
 + [Privileged IAM access mode](#iam-roles-in-parallelcluster-v3-privileged-iam-access)
@@ -637,13 +637,13 @@ You can use the following modes to provide the AWS ParallelCluster IAM user with
 
 With this mode, AWS ParallelCluster automatically creates all necessary IAM resources\. These IAM policies are scoped down to enable access to cluster resources only\.
 
-To enable Privileged IAM access mode, add the following policy to the IAM user role\.
+To enable Privileged IAM access mode, add the following policy to the user role\.
 
 **Note**  
-If you configure [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) or [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) parameters, you must provide the AWS ParallelCluster IAM user with permission to attach and detach role policies for each additional policy as shown in the following policy\. Add the additional policy ARNs to the condition for attaching and detaching role policies\.
+If you configure [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) or [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) parameters, you must provide the AWS ParallelCluster user with permission to attach and detach role policies for each additional policy as shown in the following policy\. Add the additional policy ARNs to the condition for attaching and detaching role policies\.
 
 **Warning**  
-This mode enables the IAM user to have IAM Administrator privileges in the AWS account
+This mode enables the user to have IAM Administrator privileges in the AWS account
 
 ```
 {
@@ -713,7 +713,7 @@ This mode enables the IAM user to have IAM Administrator privileges in the AWS a
 
 ### Restricted IAM access mode<a name="iam-roles-in-parallelcluster-v3-restricted-iam-access"></a>
 
-When no additional IAM policies are granted to the IAM user, IAM roles required by clusters or custom image build need to be manually created by an IAM administrator and passed as part of the cluster configuration\.
+When no additional IAM policies are granted to the user, IAM roles required by clusters or custom image build need to be manually created by an administrator and passed as part of the cluster configuration\.
 
 When creating a cluster the following parameters are required:
 +  [`Iam`](Iam-v3.md) / [`Roles`](Iam-v3.md#yaml-Iam-Roles) / [`LambdaFunctionsRole`](Iam-v3.md#yaml-Iam-Roles-LambdaFunctionsRole)
@@ -724,7 +724,7 @@ When building a custom image the following parameters are required:
 + [`Build`](Build-v3.md) / [`Iam`](Build-v3.md#Build-v3-Iam) / [`InstanceRole`](Build-v3.md#yaml-build-image-Build-Iam-InstanceRole) \| [`InstanceProfile`](Build-v3.md#yaml-build-image-Build-Iam-InstanceProfile) 
 + [`Build`](Build-v3.md) / [`Iam`](Build-v3.md#Build-v3-Iam) / [`CleanupLambdaRole`](Build-v3.md#yaml-build-image-Build-Iam-CleanupLambdaRole)
 
-The IAM roles passed as part of the above listed parameters must be created on the `/parallelcluster/` path prefix\. If this isn't possible, the IAM user policy needs to be updated to grant `iam:PassRole` permission on the specific custom roles, as in the following example\.
+The IAM roles passed as part of the above listed parameters must be created on the `/parallelcluster/` path prefix\. If this isn't possible, the user policy needs to be updated to grant `iam:PassRole` permission on the specific custom roles, as in the following example\.
 
 ```
 {
@@ -758,12 +758,12 @@ Currently this mode does not allow the management of AWS Batch clusters because 
 
 This mode delegates to AWS ParallelCluster the creation of IAM roles that are bound to the configured IAM permissions boundary\. For more information on IAM permissions boundaries, see [Permissions boundaries for IAM entities](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) in the *IAM User Guide*\.
 
-The following policy needs to be added to the IAM user role\.
+The following policy needs to be added to the user role\.
 
 In the policy, replace *<permissions\-boundary\-arn>* with the IAM policy ARN to be enforced as permissions boundary\.
 
 **Warning**  
-If you configure the [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) or [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) parameters, you must grant the IAM user permission to attach and detach role policies for each additional policy as shown in the following policy\. Add the additional policy ARNs to the condition for attaching and detaching role policies\.
+If you configure the [`HeadNode`](HeadNode-v3.md) / [`Iam`](HeadNode-v3.md#HeadNode-v3-Iam) / [`AdditionalPolicies`](HeadNode-v3.md#yaml-HeadNode-Iam-AdditionalIamPolicies) or [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [`Iam`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Iam) / [`AdditionalPolicies`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Iam-AdditionalIamPolicies) parameters, you must grant the user permission to attach and detach role policies for each additional policy as shown in the following policy\. Add the additional policy ARNs to the condition for attaching and detaching role policies\.
 
 ```
 {
@@ -1109,7 +1109,7 @@ Here is the minimal set of policies to be used as part of this role when the sch
 
 In these configuration sections, you can customize the Amazon S3 access by granting additional Amazon S3 policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\. For more information, see the reference documentation for each of the configuration parameter\.
 
-This parameter can be only used when the IAM user is configured with [Privileged IAM access mode](#iam-roles-in-parallelcluster-v3-privileged-iam-access) or [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsboundary-mode)\.
+This parameter can be only used when the user is configured with [Privileged IAM access mode](#iam-roles-in-parallelcluster-v3-privileged-iam-access) or [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsboundary-mode)\.
 
 #### Additional IAM policies<a name="iam-roles-in-parallelcluster-v3-cluster-config-additionaliampolicies"></a>
 
@@ -1118,7 +1118,7 @@ This parameter can be only used when the IAM user is configured with [Privileged
 Use this option to attach additional managed IAM policies to the IAM roles associated with the head node or compute nodes of the cluster when such roles are created by AWS ParallelCluster\.
 
 **Warning**  
-To use this option, make sure the [AWS ParallelCluster IAM user](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam) is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
+To use this option, make sure the [AWS ParallelCluster user](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam) is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
 
 #### AWS Lambda functions role<a name="iam-roles-in-parallelcluster-v3-cluster-config-lambdafunctionsrole"></a>
 
@@ -1224,7 +1224,7 @@ Here is the minimal set of policies to be used as part of this role:
 
 This parameter forces AWS ParallelCluster to attach the given IAM policy as a `PermissionsBoundary` to all IAM roles that are created as part of a cluster deployment\.
 
-See [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsboundary-mode) for the list of policies required by the IAM user when this setting is defined\.
+See [`PermissionsBoundary` mode](#iam-roles-in-parallelcluster-v3-permissionsboundary-mode) for the list of policies required by the user when this setting is defined\.
 
 ### Custom Image configuration<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration"></a>
 
@@ -1377,7 +1377,7 @@ Here is the minimal set of policies to be used as part of this role:
 You use this option to attach additional managed IAM policies to the role associated with the EC2 instance used by EC2 Image Builder to produce the custom AMI\.
 
 **Warning**  
-To use this option, make sure the [AWS ParallelCluster IAM user](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam) is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
+To use this option, make sure the [AWS ParallelClusteruser](#iam-roles-in-parallelcluster-v3-user-policy-manage-iam) is granted `iam:AttachRolePolicy` and `iam:DetachRolePolicy` permissions for the IAM policies that need to be attached\.
 
 #### Permissions boundary<a name="iam-roles-in-parallelcluster-v3-custom-image-configuration-permissionsboundary"></a>
 

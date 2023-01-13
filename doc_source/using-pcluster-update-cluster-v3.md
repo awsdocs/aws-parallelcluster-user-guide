@@ -61,7 +61,7 @@ The compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pclu
       "cloudformationStackStatus": "UPDATE_IN_PROGRESS",
       "cloudformationStackArn": stack_arn,
       "region": "us-east-1",
-      "version": "3.4.0",
+      "version": "3.4.1",
       "clusterStatus": "UPDATE_IN_PROGRESS"
     },
     "changeSet": [
