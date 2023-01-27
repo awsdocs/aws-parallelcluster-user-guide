@@ -95,7 +95,7 @@ If the parameters are correct, you'll find a log entry that contains the followi
 Found RunInstances parameters override. Launching instances with: <parameters_list>
 ```
 
-### Create a cluster with `targeted` On\-Demand Capacity Reservations \(ODCRs\)<a name="odcr-create-cluster"></a>
+### OBSOLETE / NOT RECOMMENDED \- Create a cluster with `targeted` On\-Demand Capacity Reservations \(ODCRs\)<a name="odcr-create-cluster"></a>
 
 **Warning**  
 Starting with AWS ParallelCluster version 3\.3\.0, we don't recommend this method\. This section remains as a reference for implementations using prior versions\.
