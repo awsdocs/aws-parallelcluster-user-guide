@@ -148,11 +148,11 @@ By default, SSH keys are set up in the AD user `/${HOME}/.ssh` directory at the 
 
 If an AWS ParallelCluster application requires passwordless SSH between cluster nodes, make sure that the SSH keys are correctly set up in the user's home directory\.
 
-AWS Managed Microsoft AD passwords expire after 42 days\. For more information, see [Manage password policies for AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_password_policies.html) in the *AWS Directory Service Administration Guide*\. If your password expires, it must be reset to restore cluster access\. For more information, see [How to reset a user password and expired passwords](troubleshooting-v3.md#troubleshooting-v3-multi-user-reset-passwd)\.
+AWS Managed Microsoft AD passwords expire after 42 days\. For more information, see [Manage password policies for AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_password_policies.html) in the *AWS Directory Service Administration Guide*\. If your password expires, it must be reset to restore cluster access\. For more information, see [How to reset a user password and expired passwords](troubleshooting-v3-multi-user.md#troubleshooting-v3-multi-user-reset-passwd)\.
 
 **Note**  
 If the AD integration feature doesn't work as expected, the SSSD logs can provide useful diagnostic information for troubleshooting the issue\. These logs are located in the `/var/log/sssd` directory on cluster nodes\. By default, they're also stored in a cluster’s Amazon CloudWatch log group\.  
-For more information, see [Troubleshooting multi\-user integration with Active Directory](troubleshooting-v3.md#troubleshooting-v3-multi-user)\.
+For more information, see [Troubleshooting multiuser integration with Active Directory](troubleshooting-v3-multi-user.md)\.
 
 ## Running MPI jobs<a name="addircluster-MPI-v3"></a>
 
@@ -163,7 +163,7 @@ For example, in the [IntelMPI official documentation](https://www.intel.com/cont
 **Note**  
 Known issue  
 In the case where your MPI application relies on SSH as mechanism to spawn MPI jobs, it's possible to incur in a [known bug in Slurm](https://bugs.schedmd.com/show_bug.cgi?id=13385) that causes the wrong resolution of the directory user name to "nobody"\.  
-Either configure your application to use Slurm as the MPI bootstrapping method or refer to [Known issues with username resolution](troubleshooting-v3.md#troubleshooting-v3-multi-user-name-resolution) in the Troubleshooting section for further details and possible workarounds\.
+Either configure your application to use Slurm as the MPI bootstrapping method or refer to [Known issues with username resolution](troubleshooting-v3-multi-user.md#troubleshooting-v3-multi-user-name-resolution) in the Troubleshooting section for further details and possible workarounds\.
 
 ## Example AWS Managed Microsoft AD over LDAP\(S\) cluster configurations<a name="examples-addir-v3"></a>
 

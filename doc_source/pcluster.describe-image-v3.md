@@ -106,7 +106,7 @@ $ pcluster describe-image --image-id custom-alinux2-image
         "key": "parallelcluster:pmix_version"
       },
       {
-        "value": "parallelcluster/3.4.1/images/alinux2-image-abcd1234efgh56781234",
+        "value": "parallelcluster/3.5.0/images/alinux2-image-abcd1234efgh56781234",
         "key": "parallelcluster:s3_image_dir"
       },
       {

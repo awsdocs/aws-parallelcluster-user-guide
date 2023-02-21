@@ -61,7 +61,7 @@ Use this command to retrieve image stack events for the stack that Image Builder
 
 Use this command save image logs\.
 
-For more information about AWS ParallelCluster logs and Amazon CloudWatch, see [Amazon CloudWatch Logs Build image logs](cloudwatch-logs-v3.md#cloudwatch-logs-build-images) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
+For more information about AWS ParallelCluster logs and Amazon CloudWatch, see [Amazon CloudWatch Logs build image logs](cloudwatch-logs-v3.md#cloudwatch-logs-build-images) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 
 ## Other considerations<a name="custom-ami-other-v3"></a>
 
@@ -73,4 +73,4 @@ Review the [Custom bootstrap actions](custom-bootstrap-actions-v3.md) section to
 
 **Using custom AMIs**  
 You can specify custom AMIs in the cluster configuration in the [`Image`](Image-v3.md) / [`CustomAmi`](Image-v3.md#yaml-Image-CustomAmi) and [`Scheduling`](Scheduling-v3.md) / [`SlurmQueues`](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / \- [`Name`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Name) / [`Image`](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Image) / [`CustomAmi`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Image-CustomAmi) sections\.  
-To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3.md#troubleshooting-v3-custom-amis)\.
+To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3-custom-amis.md)\.

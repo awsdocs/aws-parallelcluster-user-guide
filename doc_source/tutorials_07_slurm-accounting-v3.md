@@ -2,27 +2,28 @@
 
 Learn how to configure and create a cluster with Slurm accounting\. For more information, see [Slurm accounting with AWS ParallelCluster](slurm-accounting-v3.md)\.
 
-In this tutorial, you use a [CloudFormation quick create template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=pcluster-slurm-db&templateURL=https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/1-click/serverless-database.yaml) to create an [Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html) for MySQL serverless database\. The template instructs CloudFormation to create all the necessary components to deploy an Amazon Aurora serverless database on the same VPC as the cluster\. The template also creates a basic networking and security configuration for the connection between the cluster and the database\.
+In this tutorial, you use a [CloudFormation quick\-create template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=pcluster-slurm-db&templateURL=https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/1-click/serverless-database.yaml) to create an [Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html) for MySQL serverless database\. The template instructs CloudFormation to create all the necessary components to deploy an Amazon Aurora serverless database on the same VPC as the cluster\. The template also creates a basic networking and security configuration for the connection between the cluster and the database\.
 
 **Note**  
 Starting with version 3\.3\.0, AWS ParallelCluster supports Slurm accounting with the cluster configuration parameter [SlurmSettings](Scheduling-v3.md#Scheduling-v3-SlurmSettings) / [Database](Scheduling-v3.md#Scheduling-v3-SlurmSettings-Database)\.
 
 **Note**  
-The quick create template serves as an example\. This template doesn't cover all possible use cases for a Slurm accounting database server\. It's your responsibility to create a database server with the configuration and capacity appropriate for your production workloads\.
+The quick\-create template serves as an example\. This template doesn't cover all possible use cases for a Slurm accounting database server\. It's your responsibility to create a database server with the configuration and capacity appropriate for your production workloads\.
 
 **Prerequisites:**
 + AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
 + The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 + You have an [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
 + You have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) that are required to run the [`pcluster`](pcluster-v3.md) CLI\.
++ The region that you deploy the quick\-create template in supports Amazon Aurora MySQL serverless v2\. For more information, see [Aurora Serverless v2 with Aurora MySQL](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.Aurora_Fea_Regions_DB-eng.Feature.ServerlessV2.html#Concepts.Aurora_Fea_Regions_DB-eng.Feature.ServerlessV2.amy)\.
 
 ## Step 1: Create the VPC and subnets for AWS ParallelCluster<a name="slurm-accounting-vpc-v3"></a>
 
-To use the provided CloudFormation template for the Slurm accounting database, you must have the VPC for the cluster ready\. You can do this manually or as part of the [Configuring AWS ParallelCluster](install-v3-configuring.md) procedure\. If you already used AWS ParallelCluster, you might have a VPC ready for the deployment of the cluster and the database server\.
+To use the provided CloudFormation template for the Slurm accounting database, you must have the VPC for the cluster ready\. You can do this manually or as part of the [Configure and create a cluster with the AWS ParallelCluster command line interface](install-v3-configuring.md) procedure\. If you already used AWS ParallelCluster, you might have a VPC ready for the deployment of the cluster and the database server\.
 
 ## Step 2: Create the database stack<a name="slurm-accounting-db-stack-v3"></a>
 
-Use the [CloudFormation quick create template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=pcluster-slurm-db&templateURL=https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/1-click/serverless-database.yaml) to create a database stack for Slurm accounting\. The template requires following inputs:
+Use the [CloudFormation quick\-create template](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=pcluster-slurm-db&templateURL=https://us-east-1-aws-parallelcluster.s3.amazonaws.com/templates/1-click/serverless-database.yaml) to create a database stack for Slurm accounting\. The template requires following inputs:
 + Database server credentials, specifically the admin user name and password\.
 + Sizing of the Amazon Aurora serverless cluster\. This depends on the expected cluster loading\.
 + Networking parameters, specifically the target VPC and subnets or CIDR blocks for the creation of the subnets\.

@@ -1,6 +1,6 @@
 # `pcluster configure`<a name="pcluster.configure-v3"></a>
 
-Begins an interactive configuration wizard for AWS ParallelCluster version 3\. For more information, see [Configuring AWS ParallelCluster](install-v3-configuring.md)\.
+Begins an interactive configuration wizard for AWS ParallelCluster version 3\. For more information, see [Configure and create a cluster with the AWS ParallelCluster command line interface](install-v3-configuring.md)\.
 
 ```
 pcluster configure [-h]

@@ -1,6 +1,7 @@
 # Using AWS ParallelCluster<a name="using-parallelcluster-v3"></a>
 
 **Topics**
++ [AWS ParallelCluster UI](pcui-using-v3.md)
 + [AWS Lambda VPC configuration in AWS ParallelCluster](lambda-vpc-v3.md)
 + [AWS Identity and Access Management permissions in AWS ParallelCluster 3\.x](iam-roles-in-parallelcluster-v3.md)
 + [Network configurations](network-configuration-v3.md)
@@ -12,6 +13,7 @@
 + [Tagging](resources-tags-v3.md)
 + [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)
 + [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md)
++ [EC2 console output logs](console-logs-v3.md)
 + [Elastic Fabric Adapter](efa-v3.md)
 + [Enable Intel MPI](intelmpi-v3.md)
 + [AWS ParallelCluster API](api-reference-v3.md)

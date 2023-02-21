@@ -4,7 +4,7 @@ In AWS ParallelCluster 3\.x, [`pcluster update-cluster`](pcluster.update-cluster
 
 You can use the [`pcluster update-cluster`](pcluster.update-cluster-v3.md) `--dryrun option` to see the changes before their run\. For more information, see [`pcluster update-cluster` examples](#pcluster-update-cluster-examples)\.
 
-For troubleshooting guidance, see [AWS ParallelCluster Troubleshooting](troubleshooting-v3.md)\.
+For troubleshooting guidance, see [AWS ParallelCluster troubleshooting](troubleshooting-v3.md)\.
 
 ## Update Policy: definitions<a name="pcluster-update-policy-definitions"></a>
 
@@ -61,7 +61,7 @@ The compute fleet must be stopped \(using [`pcluster update-compute-fleet`](pclu
       "cloudformationStackStatus": "UPDATE_IN_PROGRESS",
       "cloudformationStackArn": stack_arn,
       "region": "us-east-1",
-      "version": "3.4.1",
+      "version": "3.5.0",
       "clusterStatus": "UPDATE_IN_PROGRESS"
     },
     "changeSet": [

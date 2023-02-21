@@ -1,0 +1,3 @@
+# Create a key pair<a name="set-up-keypair"></a>
+
+To deploy clusters, AWS ParallelCluster launches EC2 instances to create the cluster head node and compute nodes\. To perform cluster tasks, such as running and monitoring jobs, or managing users, you must be able to access the cluster head node\. To verify you can access the head node instance using SSH, you must use an EC2 key pair\. To learn how to create a key pair, see [Create a key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html#create-a-key-pair) in the *Amazon Elastic Compute Cloud* User Guide for Linux Instances\.

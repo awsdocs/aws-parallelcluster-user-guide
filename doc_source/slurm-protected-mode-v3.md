@@ -80,7 +80,7 @@ $ pcluster update-compute-fleet --cluster-name <cluster-name> \
 
 ## Bootstrap failures that activate protected mode<a name="slurm-protected-mode-failures-v3"></a>
 
-Bootstrap errors that activate protected mode are subdivided into the following three types\. To identify the type and issue, you can [retrieve cluster logs](troubleshooting-v3.md#troubleshooting-v3-get-logs)\.
+Bootstrap errors that activate protected mode are subdivided into the following three types\. To identify the type and issue, you can [retrieve cluster logs](troubleshooting-v3-get-logs.md)\.
 
 1. **Bootstrap error that causes an instance to self\-terminate**\.
 
@@ -126,7 +126,7 @@ Bootstrap errors that activate protected mode are subdivided into the following 
 
 ## How to debug protected mode<a name="slurm-protected-mode-debug-v3"></a>
 
-After you learned that your cluster is in protected status, you can check the `clustermgtd` log from the `HeadNode` and the `cloud-init-output` log from problematic compute nodes\. For more information about how to retrieve logs, see [Retrieving and preserving logs](troubleshooting-v3.md#troubleshooting-v3-get-logs)\.
+After you learned that your cluster is in protected status, you can check the `clustermgtd` log from the `HeadNode` and the `cloud-init-output` log from problematic compute nodes\. For more information about how to retrieve logs, see [Retrieving and preserving logs](troubleshooting-v3-get-logs.md)\.
 
 **`clustermgtd` log\(`/var/log/parallelcluster/clustermgtd`\) on the head node**
 
@@ -153,4 +153,4 @@ Node broken-st-c5large-2(192.168.65.215) is currently in  replacement and no bac
 
 **`cloud-init-output` log\(`/var/log/cloud-init-output.log`\) on the compute nodes**
 
-After obtaining the bootstrap failure node private IP address in the `clustermgtd` log, you can find the corresponding compute node log by either logging into the compute node or by following the guidance in [Retrieving and preserving logs](troubleshooting-v3.md#troubleshooting-v3-get-logs) to retrieve logs\. In most cases, the `/var/log/cloud-init-output` log from the problematic node shows the step that causes the compute node bootstrap failure\.
+After obtaining the bootstrap failure node private IP address in the `clustermgtd` log, you can find the corresponding compute node log by either logging into the compute node or by following the guidance in [Retrieving and preserving logs](troubleshooting-v3-get-logs.md) to retrieve logs\. In most cases, the `/var/log/cloud-init-output` log from the problematic node shows the step that causes the compute node bootstrap failure\.

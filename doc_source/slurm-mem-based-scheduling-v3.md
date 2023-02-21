@@ -2,6 +2,9 @@
 
 Starting with version 3\.2\.0, AWS ParallelCluster supports Slurm memory\-based scheduling with the [`SlurmSettings`](Scheduling-v3.md#Scheduling-v3-SlurmSettings) / [`EnableMemoryBasedScheduling`](Scheduling-v3.md#yaml-Scheduling-SlurmSettings-EnableMemoryBasedScheduling) cluster configuration parameter\.
 
+**Note**  
+`EnableMemoryBasedScheduling` can't be enabled if you configure multiple instance types in [Instances](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\.
+
 With `EnableMemoryBasedScheduling: true`, the Slurm scheduler tracks the amount of memory that each job requires on each node\. Then, the Slurm scheduler uses this information to schedule multiple jobs on the same compute node\. The total amount of memory that jobs require on a node can't be larger than the available node memory\. The scheduler prevents a job from using more memory than what was requested when the job was submitted\.
 
 With `EnableMemoryBasedScheduling: false`, jobs might compete for memory on a shared node and cause job failures and `out-of-memory` events\.

@@ -1,17 +1,17 @@
-# Configuring AWS ParallelCluster<a name="install-v3-configuring"></a>
+# Configure and create a cluster with the AWS ParallelCluster command line interface<a name="install-v3-configuring"></a>
 
 After you install AWS ParallelCluster, complete the following configuration steps\.
 
 Verify that your AWS Account has a role that includes the permissions needed to run the [`pcluster`](pcluster-v3.md) CLI\. For more information, see [AWS ParallelCluster example ` pcluster` user policies](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies)\.
 
-Set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI user guide*\.
+Set up your AWS credentials\. For more information, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in the *AWS CLI User Guide*\.
 
 ```
 $ aws configure
-AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
-AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-Default region name [us-east-1]: us-east-1
-Default output format [None]:
+  AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+  AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  Default region name [us-east-1]: us-east-1
+  Default output format [None]:
 ```
 
 The AWS Region where the cluster is launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -32,56 +32,56 @@ The list of AWS Regions shown is based on the partition of your account, and onl
 
 ```
 Allowed values for AWS Region ID:
-1. af-south-1
-2. ap-east-1
-3. ap-northeast-1
-4. ap-northeast-2
-5. ap-south-1
-6. ap-southeast-1
-7. ap-southeast-2
-8. ca-central-1
-9. eu-central-1
-10. eu-north-1
-11. eu-south-1
-12. eu-west-1
-13. eu-west-2
-14. eu-west-3
-15. me-south-1
-16. sa-east-1
-17. us-east-1
-18. us-east-2
-19. us-west-1
-20. us-west-2
-AWS Region ID [ap-northeast-1]:
+  1. af-south-1
+  2. ap-east-1
+  3. ap-northeast-1
+  4. ap-northeast-2
+  5. ap-south-1
+  6. ap-southeast-1
+  7. ap-southeast-2
+  8. ca-central-1
+  9. eu-central-1
+  10. eu-north-1
+  11. eu-south-1
+  12. eu-west-1
+  13. eu-west-2
+  14. eu-west-3
+  15. me-south-1
+  16. sa-east-1
+  17. us-east-1
+  18. us-east-2
+  19. us-west-1
+  20. us-west-2
+  AWS Region ID [ap-northeast-1]:
 ```
 
 The key pair is selected from the key pairs that are registered with Amazon EC2 in the selected AWS Region\. Choose the key pair:
 
 ```
 Allowed values for EC2 Key Pair Name:
-1. your-key-1
-2. your-key-2
-EC2 Key Pair Name [your-key-1]:
+  1. your-key-1
+  2. your-key-2
+  EC2 Key Pair Name [your-key-1]:
 ```
 
 Choose the scheduler to use with your cluster\.
 
 ```
 Allowed values for Scheduler:
-1. slurm
-2. awsbatch
-Scheduler [slurm]:
+  1. slurm
+  2. awsbatch
+  Scheduler [slurm]:
 ```
 
 Choose the operating system\.
 
 ```
 Allowed values for Operating System:
-1. alinux2
-2. centos7
-3. ubuntu1804
-4. ubuntu2004
-Operating System [alinux2]:
+  1. alinux2
+  2. centos7
+  3. ubuntu1804
+  4. ubuntu2004
+  Operating System [alinux2]:
 ```
 
 Choose head node instance type:
@@ -94,10 +94,10 @@ Choose the queue configuration\. Note: Instance type can't be specified for mult
 
 ```
 Number of queues [1]:
-Name of queue 1 [queue1]:
-Number of compute resources for queue1 [1]: 2
-Compute instance type for compute resource 1 in queue1 [t2.micro]:
-Maximum instance count [10]:
+  Name of queue 1 [queue1]:
+  Number of compute resources for queue1 [1]: 2
+  Compute instance type for compute resource 1 in queue1 [t2.micro]:
+  Maximum instance count [10]:
 ```
 
 Enable EFA to run applications that require high levels of inter\-instance communication at scale on AWS at no additional charge:
@@ -107,9 +107,9 @@ Enable EFA to run applications that require high levels of inter\-instance commu
 
 ```
 Compute instance type for compute resource 2 in queue1 [t2.micro]: c5n.18xlarge
-Enable EFA on c5n.18xlarge (y/n) [y]: y
-Maximum instance count [10]:
-Placement Group name []:
+  Enable EFA on c5n.18xlarge (y/n) [y]: y
+  Maximum instance count [10]:
+  Placement Group name []:
 ```
 
 After the previous steps are completed, decide whether to use an existing VPC or let AWS ParallelCluster create a VPC for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one for you\. It either places both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all compute nodes in a private subnet\. If you let AWS ParallelCluster create a VPC, you must decide if all nodes are to be in a public subnet\. For more information, see [Network configurations](network-configuration-v3.md)\.
@@ -123,19 +123,19 @@ VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC
 
 ```
 Automate VPC creation? (y/n) [n]: y
-Allowed values for Availability Zone:
-1. us-east-1a
-2. us-east-1b
-3. us-east-1c
-4. us-east-1d
-5. us-east-1e
-6. us-east-1f
-Availability Zone [us-east-1a]:
-Allowed values for Network Configuration:
-1. Head node in a public subnet and compute fleet in a private subnet
-2. Head node and compute fleet in the same public subnet
-Network Configuration [Head node in a public subnet and compute fleet in a private subnet]: 1
-Beginning VPC creation. Please do not leave the terminal until the creation is finalized
+  Allowed values for Availability Zone:
+  1. us-east-1a
+  2. us-east-1b
+  3. us-east-1c
+  4. us-east-1d
+  5. us-east-1e
+  6. us-east-1f
+  Availability Zone [us-east-1a]:
+  Allowed values for Network Configuration:
+  1. Head node in a public subnet and compute fleet in a private subnet
+  2. Head node and compute fleet in the same public subnet
+  Network Configuration [Head node in a public subnet and compute fleet in a private subnet]: 1
+  Beginning VPC creation. Please do not leave the terminal until the creation is finalized
 ```
 
 If you don't create a new VPC, you must select an existing VPC\.
@@ -144,12 +144,12 @@ If you choose to have AWS ParallelCluster create the VPC, make a note of the VPC
 
 ```
 Automate VPC creation? (y/n) [n]: n
-Allowed values for VPC ID:
-  #  id                     name                                 number_of_subnets
----  ---------------------  ---------------------------------  -------------------
-  1  vpc-0b4ad9c4678d3c7ad  ParallelClusterVPC-20200118031893                    2
-  2  vpc-0e87c753286f37eef  ParallelClusterVPC-20191118233938                    5
-VPC ID [vpc-0b4ad9c4678d3c7ad]: 1
+  Allowed values for VPC ID:
+    #  id                     name                                 number_of_subnets
+  ---  ---------------------  ---------------------------------  -------------------
+    1  vpc-0b4ad9c4678d3c7ad  ParallelClusterVPC-20200118031893                    2
+    2  vpc-0e87c753286f37eef  ParallelClusterVPC-20191118233938                    5
+  VPC ID [vpc-0b4ad9c4678d3c7ad]: 1
 ```
 
 After the VPC has been selected, decide whether to use existing subnets or create new ones\.
@@ -160,7 +160,7 @@ Automate Subnet creation? (y/n) [y]: y
 
 ```
 Creating CloudFormation stack...
-Do not leave the terminal until the process has finished
+  Do not leave the terminal until the process has finished
 ```
 
 ------
@@ -173,45 +173,45 @@ The list of AWS Regions shown is based on the partition of your account\. It onl
 
 ```
 Allowed values for AWS Region ID:
-1. af-south-1
-2. ap-east-1
-3. ap-northeast-1
-4. ap-northeast-2
-5. ap-south-1
-6. ap-southeast-1
-7. ap-southeast-2
-8. ca-central-1
-9. eu-central-1
-10. eu-north-1
-11. eu-south-1
-12. eu-west-1
-13. eu-west-2
-14. eu-west-3
-15. me-south-1
-16. sa-east-1
-17. us-east-1
-18. us-east-2
-19. us-west-1
-20. us-west-2
-AWS Region ID [us-east-1]:
+  1. af-south-1
+  2. ap-east-1
+  3. ap-northeast-1
+  4. ap-northeast-2
+  5. ap-south-1
+  6. ap-southeast-1
+  7. ap-southeast-2
+  8. ca-central-1
+  9. eu-central-1
+  10. eu-north-1
+  11. eu-south-1
+  12. eu-west-1
+  13. eu-west-2
+  14. eu-west-3
+  15. me-south-1
+  16. sa-east-1
+  17. us-east-1
+  18. us-east-2
+  19. us-west-1
+  20. us-west-2
+  AWS Region ID [us-east-1]:
 ```
 
 The key pair is selected from the key pairs registered with Amazon EC2 in the selected AWS Region\. Choose the key pair:
 
 ```
 Allowed values for EC2 Key Pair Name:
-1. your-key-1
-2. your-key-2
-EC2 Key Pair Name [your-key-1]:
+  1. your-key-1
+  2. your-key-2
+  EC2 Key Pair Name [your-key-1]:
 ```
 
 Choose the scheduler to use with your cluster\.
 
 ```
 Allowed values for Scheduler:
-1. slurm
-2. awsbatch
-Scheduler [slurm]: 2
+  1. slurm
+  2. awsbatch
+  Scheduler [slurm]: 2
 ```
 
 When `awsbatch` is selected as the scheduler, `alinux2` is used as the operating system\. The head node instance type is entered:
@@ -224,8 +224,8 @@ Choose the queue configuration\. The AWS Batch scheduler only contains a single 
 
 ```
 Number of queues [1]:
-Name of queue 1 [queue1]:
-Maximum vCPU [10]:
+  Name of queue 1 [queue1]:
+  Maximum vCPU [10]:
 ```
 
 Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for you\. If you don't have a properly configured VPC, AWS ParallelCluster can create a new one\. It either uses both the head and compute nodes in the same public subnet, or only the head node in a public subnet with all nodes in a private subnet\. It's possible to reach your quota on the number of VPCs allowed in a Region\. The default number of VPCs is five\. For more information about this quota and how to request an increase, see [VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-vpcs-subnets) in the *Amazon VPC User Guide*\.
@@ -237,19 +237,19 @@ If you let AWS ParallelCluster create a VPC, make sure that you decide whether a
 
 ```
 Automate VPC creation? (y/n) [n]: y
-Allowed values for Availability Zone:
-1. us-east-1a
-2. us-east-1b
-3. us-east-1c
-4. us-east-1d
-5. us-east-1e
-6. us-east-1f
-Availability Zone [us-east-1a]:
-Allowed values for Network Configuration:
-1. Head node in a public subnet and compute fleet in a private subnet
-2. Head node and compute fleet in the same public subnet
-Network Configuration [Head node in a public subnet and compute fleet in a private subnet]: *1*
-Beginning VPC creation. Please do not leave the terminal until the creation is finalized
+  Allowed values for Availability Zone:
+  1. us-east-1a
+  2. us-east-1b
+  3. us-east-1c
+  4. us-east-1d
+  5. us-east-1e
+  6. us-east-1f
+  Availability Zone [us-east-1a]:
+  Allowed values for Network Configuration:
+  1. Head node in a public subnet and compute fleet in a private subnet
+  2. Head node and compute fleet in the same public subnet
+  Network Configuration [Head node in a public subnet and compute fleet in a private subnet]: *1*
+  Beginning VPC creation. Please do not leave the terminal until the creation is finalized
 ```
 
 If you don't create a new VPC, you must select an existing VPC\.
@@ -258,12 +258,12 @@ If you choose to have AWS ParallelCluster create the VPC, make a note of the VPC
 
 ```
 Automate VPC creation? (y/n) [n]: n
-Allowed values for VPC ID:
-  #  id                     name                                 number_of_subnets
----  ---------------------  ---------------------------------  -------------------
-  1  vpc-0b4ad9c4678d3c7ad  ParallelClusterVPC-20200118031893                    2
-  2  vpc-0e87c753286f37eef  ParallelClusterVPC-20191118233938                    5
-VPC ID [vpc-0b4ad9c4678d3c7ad]: 1
+  Allowed values for VPC ID:
+    #  id                     name                                 number_of_subnets
+  ---  ---------------------  ---------------------------------  -------------------
+    1  vpc-0b4ad9c4678d3c7ad  ParallelClusterVPC-20200118031893                    2
+    2  vpc-0e87c753286f37eef  ParallelClusterVPC-20191118233938                    5
+  VPC ID [vpc-0b4ad9c4678d3c7ad]: 1
 ```
 
 After the VPC has been selected, make sure that you decide whether to use existing subnets or create new ones\.
@@ -274,7 +274,7 @@ Automate Subnet creation? (y/n) [y]: y
 
 ```
 Creating CloudFormation stack...
-Do not leave the terminal until the process has finished
+  Do not leave the terminal until the process has finished
 ```
 
 ------
@@ -287,17 +287,17 @@ When all settings contain valid values, you can launch the cluster by running th
 
 ```
 $ pcluster create-cluster --cluster-name test-cluster --cluster-configuration cluster-config.yaml
-{
-  "cluster": {
-    "clusterName": "test-cluster",
-    "cloudformationStackStatus": "CREATE_IN_PROGRESS",
-    "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/test-cluster/abcdef0-f678-890a-5abc-021345abcdef",
-    "region": "eu-west-1",
-    "version": "3.4.1",
-    "clusterStatus": "CREATE_IN_PROGRESS"
-  },
-  "validationMessages": []
-}
+  {
+    "cluster": {
+      "clusterName": "test-cluster",
+      "cloudformationStackStatus": "CREATE_IN_PROGRESS",
+      "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/test-cluster/abcdef0-f678-890a-5abc-021345abcdef",
+      "region": "eu-west-1",
+      "version": "3.5.0",
+      "clusterStatus": "CREATE_IN_PROGRESS"
+    },
+    "validationMessages": []
+  }
 ```
 
  Follow cluster progress: 
@@ -328,17 +328,17 @@ After the cluster is deleted, you can delete the network resources in the VPC by
 
 ```
 $ aws --region us-east-1 cloudformation list-stacks \
-   --stack-status-filter "CREATE_COMPLETE" \
-   --query "StackSummaries[].StackName" | \
-   grep -e "parallelclusternetworking-"
-   "parallelclusternetworking-pubpriv-20191029205804"
+     --stack-status-filter "CREATE_COMPLETE" \
+     --query "StackSummaries[].StackName" | \
+     grep -e "parallelclusternetworking-"
+     "parallelclusternetworking-pubpriv-20191029205804"
 ```
 
  The stack can be deleted using the [https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack](https://docs.aws.amazon.com/goto/aws-cli/cloudformation-2010-05-15/DeleteStack) command\.
 
 ```
 $ aws --region us-east-1 cloudformation delete-stack \
-   --stack-name parallelclusternetworking-pubpriv-20191029205804
+     --stack-name parallelclusternetworking-pubpriv-20191029205804
 ```
 
 The VPC that [`pcluster configure`](pcluster.configure-v3.md) creates for you *isn't* created in the CloudFormation networking stack\. You can delete that VPC manually in the console or by using the AWS CLI\.

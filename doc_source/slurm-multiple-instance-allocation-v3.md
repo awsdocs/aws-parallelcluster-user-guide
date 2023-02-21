@@ -8,6 +8,9 @@ You can set [`AllocationStrategy`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-
 
 In [`Instances`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Instances), you can configure a set of instance types\.
 
+**Note**  
+`EnableMemoryBasedScheduling` can't be enabled if you configure multiple instance types in [Instances](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\.
+
 The following examples show how you can query instance types for vCPUs, EFA support, and architecture\.
 
 Query InstanceTypes with 96 vCPUs and x86\_64 architecture\.

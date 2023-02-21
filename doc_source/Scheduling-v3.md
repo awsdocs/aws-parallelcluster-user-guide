@@ -410,12 +410,12 @@ For example, suppose you define subnet\-1 and subnet\-2 for your queue\.
 `subnet-1` can be in AZ\-1 and `subnet-2` can be in AZ\-2\.  
 If you configure only one instance type and want to use multiple subnets, define your instance type in `Instances` rather than `InstanceType`\.  
 For example, define `ComputeResources` / `Instances` / `InstanceType`=`instance.type` instead of `ComputeResources` / `InstanceType`=`instance.type`\.  
+Elastic Fabric Adapter \(EFA\) isn't supported over different availability zones\.
 The use of multiple Availability Zones might cause increases in storage networking latency and added inter\-AZ data transfer costs\. For example, this could occur when an instance accesses file storage that's located in a different AZ\. For more information, see [Data Transfer within the same AWS Region](https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer_within_the_same_AWS_Region)\.  
 
 **Cluster updates to change from the use of a single subnet to multiple subnets:**
 + Suppose the subnet definition of a cluster is defined with a single subnet and an AWS ParallelCluster managed FSx for Lustre file system\. Then, you can't update this cluster with an updated subnet ID definition directly\. To make the cluster update, you must first change the managed file system to an external file system\. For more information, see [Convert AWS ParallelCluster managed storage to external storage](shared-storage-conversion-v3.md)\.
 + Suppose the subnet definition of a cluster is defined with a single subnet and an external Amazon EFS file system if EFS mount targets don't exist for all of the AZs for the multiple subnets defined to be added\. Then, you can't update this cluster with an updated subnet ID definition directly\. To make the cluster update or to create a cluster, you must first create all of the mount targets for all of the AZs for the defined multiple subnets\.
-  
 
 **Availability Zones and cluster capacity reservations defined in [CapacityReservationResourceGroupArn](#yaml-Scheduling-SlurmQueues-CapacityReservationResourceGroupArn):**
 + You can't create a cluster if there is no overlap between the set of instance types and availability zones covered by the defined capacity reservation resource group and the set of instance types and availability zones defined for the queue\.
@@ -528,7 +528,7 @@ For example, if a custom AMI has an encrypted snapshot associated with it, the f
    ]
 }
 ```
-To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3.md#troubleshooting-v3-custom-amis)\.  
+To troubleshoot custom AMI validation warnings, see [Troubleshooting custom AMI issues](troubleshooting-v3-custom-amis.md)\.  
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)
 
 #### `ComputeResources`<a name="Scheduling-v3-SlurmQueues-ComputeResources"></a>
@@ -582,6 +582,7 @@ For more information, see [Multiple instance type allocation with Slurm](slurm-m
 `Instances`:
    - `InstanceType`: string
 ```
+`EnableMemoryBasedScheduling` can't be enabled if you configure multiple instance types in [Instances](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\.
 [Update policy: For this list values setting, a new value can be added during an update or the compute fleet must be stopped when removing an existing value.](using-pcluster-update-cluster-v3.md#update-policy-list-values-v3)    
 `InstanceType` \(**Required**, `String`\)  
 The instance type to use in this Slurm compute resource\. All of the instance types in a cluster must use the same processor architecture, either `x86_64` or `arm64`\.  
@@ -592,7 +593,9 @@ The instance types listed in [`Instances`](#yaml-Scheduling-SlurmQueues-ComputeR
 The instance types that are listed in [`Instances`](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances) can have:  
 + Different amount of memory\.
 
-  In this case, the minimum memory is to be set as a consumable Slurm resource\. [`EnableMemoryBasedScheduling`](#yaml-Scheduling-SlurmSettings-EnableMemoryBasedScheduling) can't be enabled for multiple instance types\.
+  In this case, the minimum memory is to be set as a consumable Slurm resource\.
+
+  If you specify multiple instance types, `EnableMemoryBasedScheduling` can't be enabled\.
 + Different network cards\.
 
   In this case, the number of network interfaces configured for the compute resource is defined by the instance type with the smallest number of network cards\.
@@ -640,6 +643,7 @@ Efa:
 `Enabled` \(**Optional**, `Boolean`\)  
 Specifies that Elastic Fabric Adapter \(EFA\) is enabled\. To view the list of EC2 instances that support EFA, see [Supported instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html#efa-instance-types) in the *Amazon EC2 User Guide for Linux Instances*\. For more information, see [Elastic Fabric Adapter](efa-v3.md)\. We recommend that you use a cluster [`SlurmQueues`](#Scheduling-v3-SlurmQueues) / [`Networking`](#Scheduling-v3-SlurmQueues-Networking) / [`PlacementGroup`](#yaml-Scheduling-SlurmQueues-Networking-PlacementGroup) to minimize latencies between instances\.  
 The default value is `false`\.  
+Elastic Fabric Adapter \(EFA\) isn't supported over different availability zones\. For more information, see [SubnetIds](#yaml-Scheduling-SlurmQueues-Networking-SubnetIds)\.
 If you're defining a custom security group in [SecurityGroups](#yaml-Scheduling-SlurmQueues-Networking-SecurityGroups), make sure that your EFA\-enabled instances are members of a security group that allows all inbound and outbound traffic to itself\.
 [Update policy: The compute fleet must be stopped or QueueUpdateStrategy must be set for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-queue-update-strategy-v3)  
 `GdrSupport` \(**Optional**, `Boolean`\)  
@@ -940,6 +944,7 @@ The default value is `false`\.
 Enabling memory\-based scheduling impacts the way that the Slurm scheduler handles jobs and node allocation\.  
 For more information, see [Slurm memory\-based scheduling](slurm-mem-based-scheduling-v3.md)\.
 `EnableMemoryBasedScheduling` is supported starting with AWS ParallelCluster version 3\.2\.0\.
+`EnableMemoryBasedScheduling` can't be enabled if you configure multiple instance types in [Instances](#yaml-Scheduling-SlurmQueues-ComputeResources-Instances)\.
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
 ### `Database`<a name="Scheduling-v3-SlurmSettings-Database"></a>

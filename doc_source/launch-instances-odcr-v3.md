@@ -38,7 +38,7 @@ If you’re using a CPG ODCR, you must specify the `run-instances` override conf
 
 ### Using Reserved Instances with AWS ParallelCluster<a name="odcr-reserved-instances"></a>
 
-Reserved instances [are different](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html#capacity-reservations-differences) than Capacity Reservations \(ODCR\)\. There are [2 types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/reserved-instances-scope.html) of reserved instances\. A *Regional*Reserved Instance doesn't reserve capacity\. A *zonal* Reserved Instance reserves capacity in the specified Availability Zone\.
+Reserved instances [are different](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html#capacity-reservations-differences) than Capacity Reservations \(ODCR\)\. There are [2 types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/reserved-instances-scope.html) of reserved instances\. A *Regional* Reserved Instance doesn't reserve capacity\. A *zonal* Reserved Instance reserves capacity in the specified Availability Zone\.
 
 If you have Regional Reserved Instances, there's no capacity reservation and you can get Insufficient Capacity Errors\. If you have zonal Reserved Instances, you have capacity reservation, but there are no `run-instances` API parameters that you can use to specify them\.
 

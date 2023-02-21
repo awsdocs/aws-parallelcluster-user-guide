@@ -11,4 +11,7 @@ We recommend that you run your EFA\-enabled instances in a placement group\. Thi
 For more information, see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) in the *Amazon EC2 User Guide for Linux Instances* and [Scale HPC workloads with elastic fabric adapter and AWS ParallelCluster](https://aws.amazon.com/blogs/opensource/scale-hpc-workloads-elastic-fabric-adapter-and-aws-parallelcluster/) in the *AWS Open Source Blog*\.
 
 **Note**  
+Elastic Fabric Adapter \(EFA\) isn't supported over different availability zones\. For more information, see [Scheduling](Scheduling-v3.md) / [SlurmQueues](Scheduling-v3.md#Scheduling-v3-SlurmQueues) / [Networking](Scheduling-v3.md#Scheduling-v3-SlurmQueues-Networking) / [SubnetIds](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-Networking-SubnetIds)\.
+
+**Note**  
 By default, Ubuntu distributions enable ptrace \(process trace\) protection\. ptrace protection is disabled so that Libfabric works properly\. For more information, see [Disable ptrace protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa-start.html#efa-start-ptrace) in the *Amazon EC2 User Guide for Linux Instances*\.

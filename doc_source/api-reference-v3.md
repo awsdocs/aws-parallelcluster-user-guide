@@ -30,12 +30,12 @@ The template used to deploy the API is available at the following URL:
 https://<REGION>-aws-parallelcluster.s3.<REGION>.amazonaws.com/parallelcluster/<VERSION>/api/parallelcluster-api.yaml
 ```
 
-where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.4\.1\)\. 
+where `<REGION>` is the AWS Region where the API needs to be deployed to and `<VERSION>` is the AWS ParallelCluster version \(e\.g\. 3\.5\.0\)\. 
 
 The [Docker](https://aws.amazon.com/docker/) image used to deploy the AWS Lambda function implementing AWS ParallelCluster features is available at:  [https://gallery\.ecr\.aws/parallelcluster/pcluster\-api](https://gallery.ecr.aws/parallelcluster/pcluster-api) 
 
 **Warning**  
-Any user in the AWS account, that has privileged access to AWS Lambda or Amazon API Gateway services, will automatically inherit permissions to administer AWS ParallelCluster API resources\.
+Any user in the AWS account, that has privileged access to AWS Lambda or Amazon API Gateway services, automatically inherits permissions to administer AWS ParallelCluster API resources\.
 
 ## Deploy with AWS CLI<a name="api-reference-deploy-v3"></a>
 
@@ -50,7 +50,7 @@ Run the following commands to deploy the API
 ```
 $ REGION=<region>
 $ API_STACK_NAME=<stack-name>  # This can be any name
-$ VERSION=3.4.1
+$ VERSION=3.5.0
 $ aws cloudformation create-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \
@@ -96,7 +96,7 @@ The `ParallelClusterApiUserRole` has permission to invoke all AWS ParallelClus
 ```
 $ REGION=<region>
 $ API_STACK_NAME=<stack-name>  # This needs to correspond to the existing API stack name
-$ VERSION=3.4.1
+$ VERSION=3.5.0
 $ aws cloudformation update-stack \
     --region ${REGION} \
     --stack-name ${API_STACK_NAME} \

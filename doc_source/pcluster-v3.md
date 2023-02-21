@@ -2,7 +2,7 @@
 
 `pcluster` is the primary AWS ParallelCluster CLI command\. You use `pcluster` to launch and manage HPC clusters in the AWS Cloud\.
 
-`pcluster` writes logs of your commands to `plcuster.log.#` files in `/home/user/.parallelcluster/`\. For more information, see [Use pcluster CLI logs for troubleshooting](troubleshooting-v3.md#troubleshooting-v3-pc-cli-logs)\.
+`pcluster` writes logs of your commands to `pcluster.log.#` files in `/home/user/.parallelcluster/`\. For more information, see [Use pcluster CLI logs for troubleshooting](troubleshooting-v3-pc-cli-logs.md)\.
 
 To use `pcluster`, you must have an IAM role with the [permissions](iam-roles-in-parallelcluster-v3.md#iam-roles-in-parallelcluster-v3-example-user-policies) required to run it\.
 

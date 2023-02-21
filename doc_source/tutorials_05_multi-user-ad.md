@@ -12,7 +12,7 @@ After you create these resources, proceed to configure and create your cluster i
 This tutorial covers how to create an environment that supports multiple user access to clusters\. This tutorial doesn't cover how you create and use an AWS Directory Service AD\. The steps that you take to set up an AWS Managed Microsoft AD in this tutorial are provided for testing purposes only\. They *aren't* provided to replace the official documentation and best practices you can find at [AWS Managed Microsoft AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html) and [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html) in the *AWS Directory Service Administration Guide*\.
 
 **Note**  
-Directory user passwords expire according to the directory password policy property definitions\. For more information see [Supported policy settings](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/supportedpolicysettings)\. To reset directory passwords with AWS ParallelCluster, see [How to reset a user password and expired passwords](troubleshooting-v3.md#troubleshooting-v3-multi-user-reset-passwd)\.
+Directory user passwords expire according to the directory password policy property definitions\. For more information see [Supported policy settings](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/supportedpolicysettings)\. To reset directory passwords with AWS ParallelCluster, see [How to reset a user password and expired passwords](troubleshooting-v3-multi-user.md#troubleshooting-v3-multi-user-reset-passwd)\.
 
 **Note**  
 The directory domain controller IP addresses can change due to domain controller changes and directory maintenance\. If you chose the automated quick create method to create the directory infrastructure, you must manually align the load balancer in front of the directory controllers when the directory IP addresses change\. If you use the quick create method, the directory IP addresses aren't automatically aligned with the load balancers\.
@@ -435,7 +435,7 @@ Make a note of resource IDs\. You use them in steps later on\.
                    "secretsmanager:PutSecretValue"
                ],
                "Resource": [
-                   "arn:aws:secretsmanager:region-id:123456789012:secret:plcuster-cert-123abc",
+                   "arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-123abc",
                ],
                "Effect": "Allow"
            }
@@ -998,7 +998,7 @@ $ pcluster create-cluster --cluster-name "ad-cluster" --cluster-configuration ".
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
     "region": "region-id",
-    "version": 3.4.1,
+    "version": 3.5.0,
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -1046,7 +1046,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
        "cloudformationStackStatus": "DELETE_IN_PROGRESS",
        "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
        "region": "region-id",
-       "version": "3.4.1",
+       "version": "3.5.0",
        "clusterStatus": "DELETE_IN_PROGRESS"
      }
    }
