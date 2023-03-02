@@ -11,7 +11,7 @@ $ pcluster version
 $ pcluster list-official-images
 ```
 
-The AWS ParallelCluster head node is a static instance and you can manually update it to use a patched AMI or a different AWS ParallelCluster AMI for the current version\. Restart and reboot of the head node is fully supported starting with AWS ParallelCluster version 3\.0\.0\.
+The AWS ParallelCluster head node is a static instance and you can manually update it\. Restart and reboot of the head node is fully supported starting with AWS ParallelCluster version 3\.0\.0\.
 
 If your instances have ephemeral instance stores, you must remember to save instance store data before manual updates\. For more information, see the [`HeadNode`](HeadNode-v3.md) / [`LocalStorage`](HeadNode-v3.md#HeadNode-v3-LocalStorage) / [`EphemeralVolume`](HeadNode-v3.md#yaml-HeadNode-LocalStorage-EphemeralVolume) cluster configuration and [Instance types with instance store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) in the *Amazon EC2 User Guide for Linux Instances*\.
 
