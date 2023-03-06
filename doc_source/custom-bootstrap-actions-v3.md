@@ -137,7 +137,7 @@ If the script was edited on Windows, line endings must be changed from CRLF to L
 1. Verify the output\.
 
    ```
-   $ less /var/log/cfn-init.log
+   $ less /var/log/cloud-init-output.log
    2021-09-03 10:43:54,588 [DEBUG] Command run
    postinstall output: The script has 3 arguments
    arg: R
