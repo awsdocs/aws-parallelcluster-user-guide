@@ -127,15 +127,16 @@ If the script was edited on Windows, line endings must be changed from CRLF to L
            - "wget"
    ```
 
-1. Launch the cluster\.
+1. Launch the cluster creation\.
 
    ```
    $ pcluster create-cluster --cluster-name mycluster \
      --region <region> --cluster-configuration config-file.yaml
    ```
 
-1. Verify the output\.
 
+1. Verify the output: if the `CustomActions:` is configured under `HeadNode:`, then the log is available [accessing the node](pcluster.ssh-v3.md) at `/var/log/cfn-init.log`.
+   
    ```
    $ less /var/log/cfn-init.log
    2021-09-03 10:43:54,588 [DEBUG] Command run
@@ -149,3 +150,6 @@ If the script was edited on Windows, line endings must be changed from CRLF to L
    Package wget-1.18-4.29.amzn1.x86_64 already installed and latest version
    Nothing to do
    ```
+   In the case of a compute node defined in a queue, check the `/var/log/cloud-init-output.log` file.
+
+   For more information on the available log files and how to access them via Cloudwatch, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md).
