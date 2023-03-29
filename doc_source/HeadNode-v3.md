@@ -330,18 +330,22 @@ Iam:
 
 `InstanceProfile` \(**Optional**, `String`\)  
 Specifies an instance profile to override the default head node instance profile\. You can't specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:instance-profile/InstanceProfileName`\.  
-If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
+If this is specified, the `S3Access` and `AdditionalIamPolicies` settings can't be specified\.  
+We recommend that you specify one or both of the `S3Access` and `AdditionalIamPolicies` settings because features added to AWS ParallelCluster often require new permissions\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `InstanceRole` \(**Optional**, `String`\)  
 Specifies an instance role to override the default head node instance role\. You can't specify both `InstanceProfile` and `InstanceRole`\. The format is `arn:Partition:iam::Account:role/RoleName`\.  
-If this is specified, the `S3Access` and `AdditionalIamPolicies` settings are ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
+If this is specified, the `S3Access` and `AdditionalIamPolicies` settings can't be specified\.  
+We recommend that you specify one or both of the `S3Access` and `AdditionalIamPolicies` settings because features added to AWS ParallelCluster often require new permissions\.  
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)
 
 ### `S3Access`<a name="HeadNode-v3-Iam-S3Access.properties"></a>
 
 `S3Access` \(**Optional**\)  
-Specifies a bucket\. This is used to generate policies to grant the specified access to the bucket\. If the `InstanceProfile` or `InstanceRole` setting is specified, this setting is ignored\. We recommend that you use `AdditionalIamPolicies` because features added to AWS ParallelCluster often require new permissions\.  
+Specifies a bucket\. This is used to generate policies to grant the specified access to the bucket\.  
+If this is specified, the `InstanceProfile` and `InstanceRole` settings can't be specified\.  
+We recommend that you specify one or both of the `S3Access` and `AdditionalIamPolicies` settings because features added to AWS ParallelCluster often require new permissions\.  
 
 ```
 S3Access:
@@ -364,7 +368,9 @@ Indicates whether write access is enabled for the bucket\. The default value is 
 
 `AdditionalIamPolicies` \(**Optional**\)  
 Specifies a list of Amazon Resource Names \(ARNs\) of IAM policies for Amazon EC2\. This list is attached to the root role used for the head node in addition to the permissions required by AWS ParallelCluster\.  
-An IAM policy name and its ARN are different\. Names can't be used\. If the `InstanceProfile` or `InstanceRole` setting is specified, this setting is ignored\. We recommend that you use `AdditionalIamPolicies` because `AdditionalIamPolicies` are added to the permissions that AWS ParallelCluster requires, and the `InstanceRole` must include all permissions required\. The permissions required often change from release to release as features are added\.  
+An IAM policy name and its ARN are different\. Names can't be used\.  
+If this is specified, the `InstanceProfile` and `InstanceRole` settings can't be specified\.  
+We recommend that you use `AdditionalIamPolicies` because `AdditionalIamPolicies` are added to the permissions that AWS ParallelCluster requires, and the `InstanceRole` must include all permissions required\. The permissions required often change from release to release as features are added\.  
 There is no default value\.  
 
 ```

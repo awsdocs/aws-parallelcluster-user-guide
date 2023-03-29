@@ -16,17 +16,17 @@ You can use protected mode to reduce the time and resources spent on compute nod
 
 ## Protected node parameter<a name="slurm-protected-mode-parameter-v3"></a>
 
-`bootstrap_failure_count`
+`protected_failure_count`
 
-`bootstrap_failure_count` specifies the number of consecutive failures that activate cluster protected node\.
+`protected_failure_count` specifies the number of consecutive failures that activate cluster protected node\.
 
-The default `bootstrap_failure_count` is 10 and protected mode is enabled\.
+The default `protected_failure_count` is 10 and protected mode is enabled\.
 
-If `bootstrap_failure_count` is less than or equal to zero, protected mode is disabled\.
+If `protected_failure_count` is less than or equal to zero, protected mode is disabled\.
 
-You can change the `bootstrap_failure_count` value by adding the parameter in the `clustermgtd` config file that's located at `/etc/parallelcluster/slurm_plugin/parallelcluster_clustermgtd.conf` in the `HeadNode`\.
+You can change the `protected_failure_count` value by adding the parameter in the `clustermgtd` config file that's located at `/etc/parallelcluster/slurm_plugin/parallelcluster_clustermgtd.conf` in the `HeadNode`\.
 
-You can update this parameter at any time and don't need to stop the compute fleet to do so\. If a launch succeeds in a queue before the failure count reaches `bootstrap_failure_count`, the failure count is reset to zero\.
+You can update this parameter at any time and don't need to stop the compute fleet to do so\. If a launch succeeds in a queue before the failure count reaches `protected_failure_count`, the failure count is reset to zero\.
 
 ## Check cluster status in protected mode<a name="slurm-protected-mode-status-v3"></a>
 
@@ -46,9 +46,9 @@ $ pcluster describe-compute-fleet --cluster-name <cluster-name> --region <region
 
 ### Node status<a name="slurm-protected-mode-nodes-v3"></a>
 
-To learn which queues \(partitions\) have bootstrap failures that have activated protected mode, log in to the cluster and run the `sinfo` command\. Partitions with bootstrap failures at or above `bootstrap_failure_count` are in the `INACTIVE state`\. Partitions without bootstrap failures at or above `bootstrap_failure_count` are in the `UP` state and work as expected\.
+To learn which queues \(partitions\) have bootstrap failures that have activated protected mode, log in to the cluster and run the `sinfo` command\. Partitions with bootstrap failures at or above `protected_failure_count` are in the `INACTIVE state`\. Partitions without bootstrap failures at or above `protected_failure_count` are in the `UP` state and work as expected\.
 
-`PROTECTED` status doesn't impact running jobs\. If jobs are running on a partition with bootstrap failures at or above `bootstrap_failure_count`, the partition is set to `INACTIVE` after the running jobs complete\.
+`PROTECTED` status doesn't impact running jobs\. If jobs are running on a partition with bootstrap failures at or above `protected_failure_count`, the partition is set to `INACTIVE` after the running jobs complete\.
 
 Consider the node states shown in the following example\.
 
@@ -80,7 +80,7 @@ $ pcluster update-compute-fleet --cluster-name <cluster-name> \
 
 ## Bootstrap failures that activate protected mode<a name="slurm-protected-mode-failures-v3"></a>
 
-Bootstrap errors that activate protected mode are subdivided into the following three types\. To identify the type and issue, you can [retrieve cluster logs](troubleshooting-v3-get-logs.md)\.
+Bootstrap errors that activate protected mode are subdivided into the following three types\. To identify the type and issue, you can check if AWS ParallelCluster generated logs\. If the logs were generated, you can check them for error details\. For more information, see [Retrieving and preserving cluster logs](troubleshooting-v3-get-logs.md)\.
 
 1. **Bootstrap error that causes an instance to self\-terminate**\.
 
@@ -126,7 +126,7 @@ Bootstrap errors that activate protected mode are subdivided into the following 
 
 ## How to debug protected mode<a name="slurm-protected-mode-debug-v3"></a>
 
-After you learned that your cluster is in protected status, you can check the `clustermgtd` log from the `HeadNode` and the `cloud-init-output` log from problematic compute nodes\. For more information about how to retrieve logs, see [Retrieving and preserving logs](troubleshooting-v3-get-logs.md)\.
+After you learned that your cluster is in protected status, and if AWS ParallelCluster generated `clustermgtd` logs from the `HeadNode` and the `cloud-init-output` logs from problematic compute nodes, you can check the logs for error details\. For more information about how to retrieve logs, see [Retrieving and preserving cluster logs](troubleshooting-v3-get-logs.md)\.
 
 **`clustermgtd` log\(`/var/log/parallelcluster/clustermgtd`\) on the head node**
 
@@ -153,4 +153,4 @@ Node broken-st-c5large-2(192.168.65.215) is currently in  replacement and no bac
 
 **`cloud-init-output` log\(`/var/log/cloud-init-output.log`\) on the compute nodes**
 
-After obtaining the bootstrap failure node private IP address in the `clustermgtd` log, you can find the corresponding compute node log by either logging into the compute node or by following the guidance in [Retrieving and preserving logs](troubleshooting-v3-get-logs.md) to retrieve logs\. In most cases, the `/var/log/cloud-init-output` log from the problematic node shows the step that causes the compute node bootstrap failure\.
+After obtaining the bootstrap failure node private IP address in the `clustermgtd` log, you can find the corresponding compute node log by either logging into the compute node or by following the guidance in [Retrieving and preserving cluster logs](troubleshooting-v3-get-logs.md) to retrieve logs\. In most cases, the `/var/log/cloud-init-output` log from the problematic node shows the step that causes the compute node bootstrap failure\.

@@ -32,6 +32,9 @@ Required: No
 
 ## Response syntax<a name="describe-cluster-response"></a>
 
+**Note**  
+`failureReason` has changed to `failures` starting with AWS ParallelCluster version 3\.5\.0\.
+
 ```
 {
   "clusterName": "string",
@@ -67,7 +70,12 @@ Required: No
     "publicIpAddress": "string",
     "state": "pending"
   },
-  "failureReason": "string"
+  "failures": [
+    {
+      "failureCode": "string",
+      "failureReason": "string"
+    }
+  ]
 }
 ```
 
@@ -126,8 +134,13 @@ Type: string
 The AWS ParallelCluster version that's used to create the cluster\.  
 Type: string
 
+**failures**  
+The list of failures when the cluster stack is in `CREATE_FAILED` status\.    
+**failureCode**  
+The failure code when the cluster stack is in `CREATE_FAILED` status\.  
+Type: string  
 **failureReason**  
-The reason for the failure when the stack is in `CREATE_FAILED`, `UPDATE_FAILED` or `DELETE_FAILED` status\.  
+The reason for the failure when the cluster stack is in `CREATE_FAILED` status\.  
 Type: string
 
 **head\_node**  

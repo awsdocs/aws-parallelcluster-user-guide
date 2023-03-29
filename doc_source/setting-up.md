@@ -1,5 +1,7 @@
 # Setting up an AWS account<a name="setting-up"></a>
 
+Set up an AWS account to use AWS ParallelCluster\.
+
 ## Sign up for an AWS account<a name="sign-up-for-aws"></a>
 
 If you do not have an AWS account, complete the following steps to create one\.

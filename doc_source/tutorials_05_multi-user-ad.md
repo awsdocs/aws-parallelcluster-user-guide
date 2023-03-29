@@ -1,6 +1,6 @@
 # Integrating Active Directory<a name="tutorials_05_multi-user-ad"></a>
 
-In this tutorial, you create a multiple user environment\. This environment includes an AWS ParallelCluster that's integrated with an AWS Managed Microsoft AD \(Active Directory\) at `corp.pcluster.com`\. You configure an `Admin` user to manage the directory, a `ReadOnly` user to read the directory, and a `user000` user to log into the cluster\. You can use either the automated path or the manual path to create the networking resources, an Active Directory \(AD\), and the EC2 instance that you use to configure the AD\. Regardless of the path, the infrastructure that you create is pre\-configured to integrate AWS ParallelCluster using one of the following methods:
+In this tutorial, you create a multiple user environment\. This environment includes an AWS ParallelCluster that's integrated with an AWS Managed Microsoft AD \(Active Directory\) at `corp.example.com`\. You configure an `Admin` user to manage the directory, a `ReadOnly` user to read the directory, and a `user000` user to log into the cluster\. You can use either the automated path or the manual path to create the networking resources, an Active Directory \(AD\), and the EC2 instance that you use to configure the AD\. Regardless of the path, the infrastructure that you create is pre\-configured to integrate AWS ParallelCluster using one of the following methods:
 + LDAPS with certificate verification \(recommended as the most secure option\)
 + LDAPS without certificate verification
 + LDAP
@@ -45,9 +45,11 @@ Choose the *Manual* tab to manually create the AD infrastructure\.
    + **ReadOnlyPassword**
    + **UserPassword**
 
-   For **Keypair**, enter the name of an EC2 key pair\.
-
    Make note of the passwords\. You use them later on in this tutorial\.
+
+1. For **DomainName**, enter **corp\.example\.com**
+
+1. For **Keypair**, enter the name of an EC2 key pair\.
 
 1. Check the boxes to acknowledge each of the access capabilities at the bottom of the page\.
 
@@ -67,7 +69,7 @@ Create a VPC for the directory service with two subnets in different Availabilit
 #### Create the AD<a name="tutorials_05_multi-user-ad-step1-manual-ad"></a>
 
 **Note**  
-The directory and domain name is `corp.pcluster.com`\. The short name is `CORP`\.
+The directory and domain name is `corp.example.com`\. The short name is `CORP`\.
 Change the `Admin` password in the script\.
 The Active Directory \(AD\) takes at least 15 minutes to create\.
 
@@ -79,7 +81,7 @@ import time
 from pprint import pprint
 
 vpc_name = "PclusterVPC"
-ad_domain = "corp.pcluster.com"
+ad_domain = "corp.example.com"
 admin_password = "asdfASDF1234"
 
 ec2 = boto3.client("ec2")
@@ -200,7 +202,7 @@ After the script completes, continue to the next step\.
 
 1. Scroll down and select **Advanced details**\.
 
-1. In **Advanced details**, **Domain join directory**, choose **corp\.pcluster\.com**\.
+1. In **Advanced details**, **Domain join directory**, choose **corp\.example\.com**\.
 
 1. For **IAM Instance profile**, choose the role you created in step 1 or a role with policies listed in step 4 attached\.
 
@@ -256,7 +258,7 @@ After the script completes, continue to the next step\.
 
 1. Scroll down and select **Advanced details**\.
 
-1. In **Advanced details**, **Domain join directory**, choose **corp\.pcluster\.com**\.
+1. In **Advanced details**, **Domain join directory**, choose **corp\.example\.com**\.
 
 1. In **Advanced details**, **Instance profile**, choose the role that you created in step 1 or a role with the policies that are listed in step 4 attached\.
 
@@ -308,7 +310,7 @@ After the script completes, continue to the next step\.
    ```
 
    ```
-   $ echo $ADMIN_PW | sudo realm join -U Admin corp.pcluster.com
+   $ echo $ADMIN_PW | sudo realm join -U Admin corp.example.com
    Password for Admin:
    ```
 
@@ -323,11 +325,11 @@ After the script completes, continue to the next step\.
    In this step, you use [adcli](https://www.mankier.com/package/adcli) and [openldap\-clients](https://www.mankier.com/package/openldap-clients) tools that you installed in a preceding step\.
 
    ```
-   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=ReadOnlyUser ReadOnlyUser
+   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.example.com --display-name=ReadOnlyUser ReadOnlyUser
    ```
 
    ```
-   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.pcluster.com --display-name=user000 user000
+   $ echo $ADMIN_PW | adcli create-user -x -U Admin --domain=corp.example.com --display-name=user000 user000
    ```
 
 1. **Verify the users are created:**
@@ -339,11 +341,11 @@ After the script completes, continue to the next step\.
    ```
 
    ```
-   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
+   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=example,dc=com"
    ```
 
    ```
-   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=user000,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
+   $ ldapsearch -x -h $DIRECTORY_IP -D Admin -w $ADMIN_PW -b "cn=user000,ou=Users,ou=CORP,dc=corp,dc=example,dc=com"
    ```
 
    By default, when you create a user with the `ad-cli`, the user is disabled\.
@@ -403,9 +405,9 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Generate domain certificate, locally\.**
 
    ```
-   $ PRIVATE_KEY="corp-pcluster-com.key"
-   CERTIFICATE="corp-pcluster-com.crt"
-   printf ".\n.\n.\n.\n.\ncorp.pcluster.com\n.\n" | openssl req -x509 -sha256 -nodes -newkey rsa:2048 -keyout $PRIVATE_KEY -days 365 -out $CERTIFICATE
+   $ PRIVATE_KEY="corp-example-com.key"
+   CERTIFICATE="corp-example-com.crt"
+   printf ".\n.\n.\n.\n.\ncorp.example.com\n.\n" | openssl req -x509 -sha256 -nodes -newkey rsa:2048 -keyout $PRIVATE_KEY -days 365 -out $CERTIFICATE
    ```
 
 1. 
@@ -413,12 +415,12 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Store the certificate to Secrets Manager to make it retrievable from within the cluster later on\.**
 
    ```
-   $ aws secretsmanager create-secret --name pcluster-cert \
+   $ aws secretsmanager create-secret --name example-cert \
      --secret-string file://$CERTIFICATE \
      --region region-id
    {
-     "ARN": "arn:aws:secretsmanager:region-id:123456789012:secret:plcuster-cert-123abc",
-     "Name": "pcluster-cert",
+     "ARN": "arn:aws:secretsmanager:region-id:123456789012:secret:example-cert-123abc",
+     "Name": "example-cert",
      "VersionId": "14866070-092a-4d5a-bcdd-9219d0566b9c"
    }
    ```
@@ -435,7 +437,7 @@ Make a note of resource IDs\. You use them in steps later on\.
                    "secretsmanager:PutSecretValue"
                ],
                "Resource": [
-                   "arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-123abc",
+                   "arn:aws:secretsmanager:region-id:123456789012:secret:example-cert-123abc",
                ],
                "Effect": "Allow"
            }
@@ -461,7 +463,7 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Create and the load balancer that is put in front of the Active Directory endpoints\.**
 
    ```
-   $ aws elbv2 create-load-balancer --name CorpPclusterCom-NLB \
+   $ aws elbv2 create-load-balancer --name CorpExampleCom-NLB \
      --type network \
      --scheme internal \
      --subnets subnet-1234567890abcdef0 subnet-021345abcdef6789 \
@@ -469,11 +471,11 @@ Make a note of resource IDs\. You use them in steps later on\.
    {
      "LoadBalancers": [
        {
-         "LoadBalancerArn": "arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpPclusterCom-NLB/3afe296bf4ba80d4",
-         "DNSName": "CorpPclusterCom-NLB-3afe296bf4ba80d4.elb.region-id.amazonaws.com",
+         "LoadBalancerArn": "arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpExampleCom-NLB/3afe296bf4ba80d4",
+         "DNSName": "CorpExampleCom-NLB-3afe296bf4ba80d4.elb.region-id.amazonaws.com",
          "CanonicalHostedZoneId": "Z2IFOLAFXWLO4F",
          "CreatedTime": "2022-05-05T12:56:55.988000+00:00",
-         "LoadBalancerName": "CorpPclusterCom-NLB",
+         "LoadBalancerName": "CorpExampleCom-NLB",
          "Scheme": "internal",
          "VpcId": "vpc-021345abcdef6789",
          "State": {
@@ -503,7 +505,7 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Create the target group that's targeting the Active Directory endpoints\.**
 
    ```
-   $ aws elbv2 create-target-group --name CorpPclusterCom-Targets --protocol TCP \
+   $ aws elbv2 create-target-group --name CorpExampleCom-Targets --protocol TCP \
      --port 389 \
      --target-type ip \
      --vpc-id vpc-021345abcdef6789 \
@@ -511,8 +513,8 @@ Make a note of resource IDs\. You use them in steps later on\.
    {
      "TargetGroups": [
        {
-         "TargetGroupArn": "arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81",
-         "TargetGroupName": "CorpPclusterCom-Targets",
+         "TargetGroupArn": "arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpExampleCom-Targets/44577c583b695e81",
+         "TargetGroupName": "CorpExampleCom-Targets",
          "Protocol": "TCP",
          "Port": 389,
          "VpcId": "vpc-021345abcdef6789",
@@ -535,7 +537,7 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Register the Active Directory \(AD\) endpoints into the target group\.**
 
    ```
-   $ aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81 \
+   $ aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpExampleCom-Targets/44577c583b695e81 \
      --targets Id=192.0.2.254,Port=389 Id=203.0.113.237,Port=389 \
      --region region-id
    ```
@@ -545,17 +547,17 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Create the LB listener with the certificate\.**
 
    ```
-   $ aws elbv2 create-listener --load-balancer-arn arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpPclusterCom-NLB/3afe296bf4ba80d4 \
+   $ aws elbv2 create-listener --load-balancer-arn arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpExampleCom-NLB/3afe296bf4ba80d4 \
      --protocol TLS \
      --port 636 \
-     --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81 \
+     --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpExampleCom-Targets/44577c583b695e81 \
      --ssl-policy ELBSecurityPolicy-TLS-1-2-2017-01 \
      --certificates CertificateArn=arn:aws:acm:region-id:123456789012:certificate/343db133-490f-4077-b8d4-3da5bfd89e72 \
      --region region-id
      "Listeners": [
      {
-       "ListenerArn": "arn:aws:elasticloadbalancing:region-id:123456789012:listener/net/CorpPclusterCom-NLB/3afe296bf4ba80d4/a8f9d97318743d4b",
-       "LoadBalancerArn": "arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpPclusterCom-NLB/3afe296bf4ba80d4",
+       "ListenerArn": "arn:aws:elasticloadbalancing:region-id:123456789012:listener/net/CorpExampleCom-NLB/3afe296bf4ba80d4/a8f9d97318743d4b",
+       "LoadBalancerArn": "arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpExampleCom-NLB/3afe296bf4ba80d4",
        "Port": 636,
        "Protocol": "TLS",
        "Certificates": [
@@ -567,11 +569,11 @@ Make a note of resource IDs\. You use them in steps later on\.
         "DefaultActions": [
           {
             "Type": "forward",
-            "TargetGroupArn": "arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81",
+            "TargetGroupArn": "arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpExampleCom-Targets/44577c583b695e81",
             "ForwardConfig": {
               "TargetGroups": [
                 {
-                   "TargetGroupArn": "arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81"
+                   "TargetGroupArn": "arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpExampleCom-Targets/44577c583b695e81"
                  }
                ]
              }
@@ -587,14 +589,14 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Create the hosted zone to make the domain discoverable within the cluster VPC\.**
 
    ```
-   $ aws route53 create-hosted-zone --name corp.pcluster.com \
+   $ aws route53 create-hosted-zone --name corp.example.com \
      --vpc VPCRegion=region-id,VPCId=vpc-021345abcdef6789 \
      --caller-reference "ParallelCluster AD Tutorial"
    {
      "Location": "https://route53.amazonaws.com/2013-04-01/hostedzone/Z09020002B5MZQNXMSJUB",
      "HostedZone": {
        "Id": "/hostedzone/Z09020002B5MZQNXMSJUB",
-       "Name": "corp.pcluster.com.",
+       "Name": "corp.example.com.",
        "CallerReference": "ParallelCluster AD Tutorial",
        "Config": {
             "PrivateZone": true
@@ -623,13 +625,13 @@ Make a note of resource IDs\. You use them in steps later on\.
        {
          "Action": "CREATE",
          "ResourceRecordSet": {
-           "Name": "corp.pcluster.com",
+           "Name": "corp.example.com",
            "Type": "A",
            "Region": "region-id",
-           "SetIdentifier": "pcluster-active-directory",
+           "SetIdentifier": "example-active-directory",
            "AliasTarget": {
              "HostedZoneId": "Z2IFOLAFXWLO4F",
-             "DNSName": "CorpPclusterCom-NLB-3afe296bf4ba80d4.elb.region-id.amazonaws.com",
+             "DNSName": "CorpExampleCom-NLB-3afe296bf4ba80d4.elb.region-id.amazonaws.com",
              "EvaluateTargetHealth": true
            }
          }
@@ -667,7 +669,7 @@ Make a note of resource IDs\. You use them in steps later on\.
            "secretsmanager:GetSecretValue"
          ],
          "Resource": [
-           "arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-abc123"
+           "arn:aws:secretsmanager:region-id:123456789012:secret:example-cert-abc123"
          ],
          "Effect": "Allow"
        }
@@ -680,13 +682,13 @@ Make a note of resource IDs\. You use them in steps later on\.
 **Create a policy document that is named `policy.json` with the following content\.**
 
    ```
-   $ aws iam create-policy --policy-name ReadCertPcluster \
+   $ aws iam create-policy --policy-name ReadCertExample \
      --policy-document file://policy.json
    {
      "Policy": {
-       "PolicyName": "ReadCertPcluster",
+       "PolicyName": "ReadCertExample",
        "PolicyId": "ANPAUUXUVBC42VZSI4LDY",
-       "Arn": "arn:aws:iam::123456789012:policy/ReadCertPcluster-efg456",
+       "Arn": "arn:aws:iam::123456789012:policy/ReadCertExample-efg456",
        "Path": "/",
        "DefaultVersionId": "v1",
        "AttachmentCount": 0,
@@ -729,7 +731,7 @@ When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted
 **Create a user\.**
 
    ```
-   $ adcli create-user "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   $ adcli create-user "clusteruser" --domain "corp.example.com" -U "Admin"
    ```
 
 1. 
@@ -745,7 +747,7 @@ When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted
 **Create a group\.**
 
    ```
-   $ adcli create-group "clusterteam" --domain "corp.pcluster.com" -U "Admin"
+   $ adcli create-group "clusterteam" --domain "corp.example.com" -U "Admin"
    ```
 
 1. 
@@ -753,7 +755,7 @@ When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted
 **Add a user to a group\.**
 
    ```
-   $ adcli add-member "clusterteam" "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   $ adcli add-member "clusterteam" "clusteruser" --domain "corp.example.com" -U "Admin"
    ```
 
 1. 
@@ -763,37 +765,37 @@ When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted
    Describe all users\.
 
    ```
-   $ ldapsearch "(&(objectClass=user))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   $ ldapsearch "(&(objectClass=user))" -x -h "192.0.2.254" -b "DC=corp,DC=example,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=example,DC=com" -w "p@ssw0rd"
    ```
 
    Describe a specific user\.
 
    ```
-   $ ldapsearch "(&(objectClass=user)(cn=clusteruser))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   $ ldapsearch "(&(objectClass=user)(cn=clusteruser))" -x -h "192.0.2.254" -b "DC=corp,DC=example,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=example,DC=com" -w "p@ssw0rd"
    ```
 
    Describe all users with a name pattern\.
 
    ```
-   $ ldapsearch "(&(objectClass=user)(cn=user*))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   $ ldapsearch "(&(objectClass=user)(cn=user*))" -x -h "192.0.2.254" -b "DC=corp,DC=example,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=example,DC=com" -w "p@ssw0rd"
    ```
 
    Describe all users that are part of a specific group\.
 
    ```
-   $ ldapsearch "(&(objectClass=user)(memberOf=CN=clusterteam,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   $ ldapsearch "(&(objectClass=user)(memberOf=CN=clusterteam,OU=Users,OU=CORP,DC=corp,DC=example,DC=com))" -x -h "192.0.2.254" -b "DC=corp,DC=example,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=example,DC=com" -w "p@ssw0rd"
    ```
 
    Describe all groups
 
    ```
-   $ ldapsearch "objectClass=group" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   $ ldapsearch "objectClass=group" -x -h "192.0.2.254" -b "DC=corp,DC=example,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=example,DC=com" -w "p@ssw0rd"
    ```
 
    Describe a specific group
 
    ```
-   $ ldapsearch "(&(objectClass=group)(cn=clusterteam))" -x -h "192.0.2.254" -b "DC=corp,DC=pcluster,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=pcluster,DC=com" -w "p@ssw0rd"
+   $ ldapsearch "(&(objectClass=group)(cn=clusterteam))" -x -h "192.0.2.254" -b "DC=corp,DC=example,DC=com" -D "CN=Admin,OU=Users,OU=CORP,DC=corp,DC=example,DC=com" -w "p@ssw0rd"
    ```
 
 1. 
@@ -801,7 +803,7 @@ When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted
 **Remove a user from a group\.**
 
    ```
-   $ adcli remove-member "clusterteam" "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   $ adcli remove-member "clusterteam" "clusteruser" --domain "corp.example.com" -U "Admin"
    ```
 
 1. 
@@ -809,7 +811,7 @@ When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted
 **Delete a user\.**
 
    ```
-   $ adcli delete-user "clusteruser" --domain "corp.pcluster.com" -U "Admin"
+   $ adcli delete-user "clusteruser" --domain "corp.example.com" -U "Admin"
    ```
 
 1. 
@@ -817,7 +819,7 @@ When you run the `adcli` commands with the ` -U "Admin"` option, you're prompted
 **Delete a group\.**
 
    ```
-   $ adcli delete-group "clusterteam" --domain "corp.pcluster.com" -U "Admin"
+   $ adcli delete-group "clusterteam" --domain "corp.example.com" -U "Admin"
    ```
 
 ## Step 3: Create the cluster<a name="tutorials_05_multi-user-ad-step3"></a>
@@ -841,7 +843,7 @@ We recommend that you choose the LDAPS configuration with certificate verificati
 `DomainAddr`: This IP address is one of the DNS addresses of your AD service\.
 `PasswordSecretArn`: The Amazon Resource Name \(ARN\) of the secret that contains the password for the `DomainReadOnlyUser`\.
 `BucketName`: The name of the bucket that holds the bootstrap script\.
-`AdditionalPolicies` / `Policy`: The Amazon Resource Name \(ARN\) of the read domain certification policy ReadCertPcluster\.
+`AdditionalPolicies` / `Policy`: The Amazon Resource Name \(ARN\) of the read domain certification policy ReadCertExample\.
 `CustomActions` / `OnNodeConfigured` / `Args`: The Amazon Resource Name \(ARN\) of secret that holds the domain certification policy\.
 
 ```
@@ -856,7 +858,7 @@ HeadNode:
     KeyName: keypair
   Iam:
     AdditionalIamPolicies:
-      - Policy: arn:aws:iam::123456789012:policy/ReadCertPcluster
+      - Policy: arn:aws:iam::123456789012:policy/ReadCertExample
     S3Access:
       - BucketName: my-bucket
         EnableWriteAccess: false
@@ -865,7 +867,7 @@ HeadNode:
     OnNodeConfigured:
       Script: s3://my-bucket/bootstrap/active-directory/active-directory.head.post.sh
       Args:
-        - arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-123abc
+        - arn:aws:secretsmanager:region-id:123456789012:secret:example-cert-123abc
         - /opt/parallelcluster/shared/directory_service/domain-certificate.crt
 Scheduling:
   Scheduler: slurm
@@ -880,10 +882,10 @@ Scheduling:
         SubnetIds:
           - subnet-abcdef01234567890
 DirectoryService:
-  DomainName: corp.pcluster.com
-  DomainAddr: ldaps://corp.pcluster.com
+  DomainName: corp.example.com
+  DomainAddr: ldaps://corp.example.com
   PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-1234
-  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   LdapTlsCaCert: /opt/parallelcluster/shared/directory_service/domain-certificate.crt
   LdapTlsReqCert: hard
 ```
@@ -941,10 +943,10 @@ Scheduling:
         SubnetIds:
           - subnet-abcdef01234567890
 DirectoryService:
-  DomainName: corp.pcluster.com
-  DomainAddr: ldaps://corp.pcluster.com
+  DomainName: corp.example.com
+  DomainAddr: ldaps://corp.example.com
   PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-1234
-  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   LdapTlsReqCert: never
 ```
 
@@ -980,10 +982,10 @@ Scheduling:
         SubnetIds:
           - subnet-abcdef01234567890
 DirectoryService:
-  DomainName: dc=corp,dc=pcluster,dc=com
+  DomainName: dc=corp,dc=example,dc=com
   DomainAddr: ldap://192.0.2.254,ldap://203.0.113.237
   PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:ADSecretPassword-1234
-  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  DomainReadOnlyUser: cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   AdditionalSssdConfigs:
     ldap_auth_disable_tls_never_use_in_production: True
 ```
@@ -998,7 +1000,7 @@ $ pcluster create-cluster --cluster-name "ad-cluster" --cluster-configuration ".
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
     "region": "region-id",
-    "version": 3.5.0,
+    "version": 3.5.1,
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -1046,7 +1048,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
        "cloudformationStackStatus": "DELETE_IN_PROGRESS",
        "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
        "region": "region-id",
-       "version": "3.5.0",
+       "version": "3.5.1",
        "clusterStatus": "DELETE_IN_PROGRESS"
      }
    }
@@ -1099,13 +1101,13 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
           {
             "Action": "DELETE",
             "ResourceRecordSet": {
-              "Name": "corp.pcluster.com",
+              "Name": "corp.example.com",
               "Type": "A",
               "Region": "region-id",
               "SetIdentifier": "pcluster-active-directory",
               "AliasTarget": {
                 "HostedZoneId": "Z2IFOLAFXWLO4F",
-                "DNSName": "CorpPclusterCom-NLB-3afe296bf4ba80d4.elb.region-id.amazonaws.com",
+                "DNSName": "CorpExampleCom-NLB-3afe296bf4ba80d4.elb.region-id.amazonaws.com",
                 "EvaluateTargetHealth": true
               }
             }
@@ -1147,7 +1149,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
    ```
    $ aws elbv2 delete-listener \
-     --listener-arn arn:aws:elasticloadbalancing:region-id:123456789012:listener/net/CorpPclusterCom-NLB/3afe296bf4ba80d4/a8f9d97318743d4b --region region-id
+     --listener-arn arn:aws:elasticloadbalancing:region-id:123456789012:listener/net/CorpExampleCom-NLB/3afe296bf4ba80d4/a8f9d97318743d4b --region region-id
    ```
 
 1. 
@@ -1156,7 +1158,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
    ```
    $ aws elbv2 delete-target-group \
-     --target-group-arn arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpPclusterCom-Targets/44577c583b695e81 --region region-id
+     --target-group-arn arn:aws:elasticloadbalancing:region-id:123456789012:targetgroup/CorpExampleCom-Targets/44577c583b695e81 --region region-id
    ```
 
 1. 
@@ -1165,7 +1167,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
    ```
    $ aws elbv2 delete-load-balancer \
-     --load-balancer-arn arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpPclusterCom-NLB/3afe296bf4ba80d4 --region region-id
+     --load-balancer-arn arn:aws:elasticloadbalancing:region-id:123456789012:loadbalancer/net/CorpExampleCom-NLB/3afe296bf4ba80d4 --region region-id
    ```
 
 1. 
@@ -1173,7 +1175,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 **Delete the policy that the cluster uses to read the certificate from Secrets Manager\.**
 
    ```
-   $ aws iam delete-policy --policy-arn arn:aws:iam::123456789012:policy/ReadCertPcluster
+   $ aws iam delete-policy --policy-arn arn:aws:iam::123456789012:policy/ReadCertExample
    ```
 
 1. 
@@ -1182,11 +1184,11 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
 
    ```
    $ aws secretsmanager delete-secret \
-     --secret-id arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-123abc \
+     --secret-id arn:aws:secretsmanager:region-id:123456789012:secret:example-cert-123abc \
      --region region-id
    {
-    "ARN": "arn:aws:secretsmanager:region-id:123456789012:secret:pcluster-cert-123abc",
-    "Name": "pcluster-cert",
+    "ARN": "arn:aws:secretsmanager:region-id:123456789012:secret:example-cert-123abc",
+    "Name": "example-cert",
     "DeletionDate": "2022-06-04T16:27:36.183000+02:00"
    }
    ```

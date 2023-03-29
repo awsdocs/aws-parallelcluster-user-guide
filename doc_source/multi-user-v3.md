@@ -45,7 +45,7 @@ You can use this following example to integrate your cluster with an AWS Managed
 + [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```
-  cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   ```
 
 **Get your AWS Managed Microsoft AD configuration data:**
@@ -59,7 +59,7 @@ $ aws ds describe-directories --directory-id "d-abcdef01234567890"
     "DirectoryDescriptions": [
         {
             "DirectoryId": "d-abcdef01234567890",
-            "Name": "corp.pcluster.com",
+            "Name": "corp.example.com",
             "DnsIpAddrs": [
                 "203.0.113.225",
                 "192.0.2.254"
@@ -105,10 +105,10 @@ Scheduling:
         SubnetIds:
           - subnet-abcdef01234567890
 DirectoryService:
-  DomainName: dc=corp,dc=pcluster,dc=com
+  DomainName: dc=corp,dc=example,dc=com
   DomainAddr: ldap://203.0.113.225,ldap://192.0.2.254
   PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:MicrosoftAD.Admin.Password-1234
-  DomainReadOnlyUser: cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  DomainReadOnlyUser: cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   AdditionalSssdConfigs:
     ldap_auth_disable_tls_never_use_in_production: True
 ```
@@ -117,10 +117,10 @@ DirectoryService:
 
 ```
 DirectoryService:
-  DomainName: dc=corp,dc=pcluster,dc=com
+  DomainName: dc=corp,dc=example,dc=com
   DomainAddr: ldap://203.0.113.225,ldap://192.0.2.254
   PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:SimpleAD.Admin.Password-1234
-  DomainReadOnlyUser: cn=ReadOnlyUser,cn=Users,dc=corp,dc=pcluster,dc=com
+  DomainReadOnlyUser: cn=ReadOnlyUser,cn=Users,dc=corp,dc=example,dc=com
   AdditionalSssdConfigs:
     ldap_auth_disable_tls_never_use_in_production: True
 ```
@@ -186,7 +186,7 @@ You can use this example to integrate your cluster with an AWS Managed Microsoft
 + [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```
-  cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   ```
 
 **Example cluster configuration file for using AD over LDAPS:**
@@ -226,11 +226,11 @@ Scheduling:
         OnNodeConfigured:
           Script: s3://aws-parallelcluster-pcluster/scripts/pcluster-dub-msad-ldaps.post.sh
 DirectoryService:
-  DomainName: dc=corp,dc=pcluster,dc=com
-  DomainAddr: ldaps://win-abcdef01234567890.corp.pcluster.com,ldaps://win-abcdef01234567890.corp.pcluster.com
+  DomainName: dc=corp,dc=example,dc=com
+  DomainAddr: ldaps://win-abcdef01234567890.corp.example.com,ldaps://win-abcdef01234567890.corp.example.com
   PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:MicrosoftAD.Admin.Password-1234
-  DomainReadOnlyUser: cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
-  LdapTlsCaCert: /etc/openldap/cacerts/corp.pcluster.com.bundleca.cer
+  DomainReadOnlyUser: cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
+  LdapTlsCaCert: /etc/openldap/cacerts/corp.example.com.bundleca.cer
   LdapTlsReqCert: hard
 ```
 
@@ -240,13 +240,13 @@ DirectoryService:
 *#!/bin/bash*
 set -e
 
-AD_CERTIFICATE_S3_URI="s3://corp.pcluster.com/bundle/corp.pcluster.com.bundleca.cer"
-AD_CERTIFICATE_LOCAL="/etc/openldap/cacerts/corp.pcluster.com.bundleca.cer"
+AD_CERTIFICATE_S3_URI="s3://corp.example.com/bundle/corp.example.com.bundleca.cer"
+AD_CERTIFICATE_LOCAL="/etc/openldap/cacerts/corp.example.com.bundleca.cer"
 
-AD_HOSTNAME_1="win-abcdef01234567890.corp.pcluster.com"
+AD_HOSTNAME_1="win-abcdef01234567890.corp.example.com"
 AD_IP_1="192.0.2.254"
 
-AD_HOSTNAME_2="win-abcdef01234567890.corp.pcluster.com"
+AD_HOSTNAME_2="win-abcdef01234567890.corp.example.com"
 AD_IP_2="203.0.113.225"
 
 # Download CA certificate
@@ -268,10 +268,10 @@ $ nslookup 192.0.2.254
 ```
 
 ```
-Server:  corp.pcluster.com
+Server:  corp.example.com
 Address:  192.0.2.254
 
-Name:    win-abcdef01234567890.corp.pcluster.com
+Name:    win-abcdef01234567890.corp.example.com
 Address:  192.0.2.254
 ```
 
@@ -282,8 +282,8 @@ $ nslookup 192.0.2.254
 ```
 
 ```
-192.0.2.254.in-addr.arpa   name = corp.pcluster.com
-192.0.2.254.in-addr.arpa   name = win-abcdef01234567890.corp.pcluster.com
+192.0.2.254.in-addr.arpa   name = corp.example.com
+192.0.2.254.in-addr.arpa   name = win-abcdef01234567890.corp.example.com
 ```
 
 ### AWS Managed Microsoft AD over LDAPS without certificate verification<a name="LDAP-example-2"></a>
@@ -296,7 +296,7 @@ You can use this example to integrate your cluster with an AWS Managed Microsoft
 + [`DirectoryService`](DirectoryService-v3.md) / [`DomainReadOnlyUser`](DirectoryService-v3.md#yaml-DirectoryService-DomainReadOnlyUser) syntax must be as follows:
 
   ```
-  cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   ```
 
 **Example cluster configuration file for using AWS Managed Microsoft AD over LDAPS without certificate verification:**
@@ -324,9 +324,9 @@ Scheduling:
         SubnetIds:
           - subnet-abcdef01234567890
 DirectoryService:
-  DomainName: dc=corp,dc=pcluster,dc=com
+  DomainName: dc=corp,dc=example,dc=com
   DomainAddr: ldaps://203.0.113.225,ldaps://192.0.2.254
   PasswordSecretArn: arn:aws:secretsmanager:region-id:123456789012:secret:MicrosoftAD.Admin.Password-1234
-  DomainReadOnlyUser: cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  DomainReadOnlyUser: cn=ReadOnly,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   LdapTlsReqCert: never
 ```

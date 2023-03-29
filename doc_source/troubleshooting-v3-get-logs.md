@@ -1,4 +1,4 @@
-# Retrieving and preserving logs<a name="troubleshooting-v3-get-logs"></a>
+# Retrieving and preserving cluster logs<a name="troubleshooting-v3-get-logs"></a>
 
 AWS ParallelCluster creates EC2 metrics for HeadNode and Compute instances and storage\. You can view the metrics in the CloudWatch console **Custom Dashboards**\. AWS ParallelCluster also creates cluster CloudWatch log streams in log groups\. You can view these logs in the CloudWatch console **Custom Dashboards** or **Log groups**\. The [Monitoring](Monitoring-v3.md#yaml-Monitoring-Logs-CloudWatch) cluster configuration section describes how you can modify the cluster CloudWatch logs and dashboard\. For more information, see [Integration with Amazon CloudWatch Logs](cloudwatch-logs-v3.md) and [Amazon CloudWatch dashboard](cloudwatch-dashboard-v3.md)\.
 

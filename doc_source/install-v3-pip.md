@@ -34,7 +34,7 @@ If your Node\.js installation isn't working on your platform, you can install an
    ```
    $ pcluster version
    {
-     "version": "3.5.0"
+     "version": "3.5.1"
    }
    ```
 

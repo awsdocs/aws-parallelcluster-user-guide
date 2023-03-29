@@ -6,8 +6,8 @@ The following image shows and example CloudWatch dashboard for a cluster\.
 
  ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/CW-dashboard.png) 
 
-The first section of the dashboard displays graphs of the Head Node EC2 metrics\. If your cluster has shared storage, the next section shows shared storage metrics\. The final section lists Head Node Logs grouped by ParallelCluster's logs, Scheduler's logs, NICE DCV integration logs, and System's logs\.
+The first section of the dashboard displays graphs of the Head Node EC2 metrics\. If your cluster has shared storage, the next section shows shared storage metrics\. The final section lists Head Node Logs grouped by AWS ParallelCluster's logs, Scheduler's logs, NICE DCV integration logs, and System's logs\.
 
 For more information about Amazon CloudWatch dashboards, see [Using Amazon CloudWatch dashboards](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Dashboards.html) in the *Amazon CloudWatch User Guide*\.
 
-If you don’t want to create the Amazon CloudWatch dashboard, disable by setting [`Monitoring`](Monitoring-v3.md) / [`Dashboards`](Monitoring-v3.md#yaml-Monitoring-Dashboards) / [`CloudWatch`](Monitoring-v3.md#yaml-Monitoring-Dashboard-CloudWatch) / [`Enabled`](Scheduling-v3.md#yaml-Scheduling-SlurmQueues-ComputeResources-Efa-Enabled) to `false`\.
+If you don’t want to create the Amazon CloudWatch dashboard, disable by setting [`Monitoring`](Monitoring-v3.md) / [`Dashboards`](Monitoring-v3.md#yaml-Monitoring-Dashboards) / [`CloudWatch`](Monitoring-v3.md#yaml-Monitoring-Dashboard-CloudWatch) / [`Enabled`](Monitoring-v3.md#yaml-Monitoring-Dashboard-CloudWatch-Enabled) to `false`\.

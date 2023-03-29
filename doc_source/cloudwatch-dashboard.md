@@ -10,8 +10,6 @@ The first section of the dashboard displays graphs of the Head Node EC2 metrics\
 
 For more information about Amazon CloudWatch dashboards, see [Using Amazon CloudWatch dashboards](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Dashboards.html) in the *Amazon CloudWatch User Guide*\.
 
-For more information about Amazon CloudWatch dashboards, see [Using Amazon CloudWatch dashboards](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Dashboards.html) in the *Amazon CloudWatch User Guide*\.
-
 If you don’t want to create the Amazon CloudWatch dashboard, you must complete these steps: First, add a [`[dashboard]` section](dashboard-section.md) to your configuration file, and then add the name of that section as the value of the [`dashboard_settings`](cluster-definition.md#dashboard-settings) setting in your [`[cluster]` section](cluster-definition.md)\. In your [`[dashboard]` section](dashboard-section.md), set ``enable` = false`\.
 
 For example, if your [`[dashboard]` section](dashboard-section.md) is named `myDashboard` and your [`[cluster]` section](cluster-definition.md) is named `myCluster`, your changes resemble this\.

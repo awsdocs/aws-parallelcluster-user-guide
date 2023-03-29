@@ -19,10 +19,10 @@ When you use a custom AMI, you can see the following warnings:
 
 If you're sure that the correct AMI is being used, you can ignore these warnings\.
 
-If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.5\.0"* is the `pcluster` version in use:
+If you don't want to see these warnings in the future, tag the custom AMI with the following tags, where *`my-os`* is one of `alinux2`, `ubuntu1804`, `ubuntu2004`, or `centos7` and *"3\.5\.1"* is the `pcluster` version in use:
 
 ```
 $ aws ec2 create-tags \
   --resources ami-yourcustomAmi \
-  --tags Key="parallelcluster:version",Value="3.5.0" Key="parallelcluster:os",Value="my-os"
+  --tags Key="parallelcluster:version",Value="3.5.1" Key="parallelcluster:os",Value="my-os"
 ```

@@ -2,7 +2,7 @@
 
 When using AWS ParallelCluster version 3\.5\.0 and later to create a cluster, and a cluster creation failed with `--rollback-on-failure` set to `false`, use the [`pcluster describe-cluster`](pcluster.describe-cluster-v3.md) CLI command to get status and failure information\. In this case, the expected `clusterStatus` of the `pcluster describe-cluster` output is `CREATE_FAILED`\. Check the `failures` section in the output to find the `failureCode` and `failureReason`\. Then, in the following section, find the matching `failureCode` for additional troubleshooting help\. For more information, see [`pcluster describe-cluster`](pcluster.describe-cluster-v3.md)\.
 
-In the following sections, we recommend that you check the logs on the head node, such as the `/var/log/cfn-init.log` and `/var/log/chef-client.log` files\. For more information about AWS ParallelCluster logs and how to view them, see [Key logs for debugging](troubleshooting-v3-scaling-issues.md#troubleshooting-v3-key-logs) and [Retrieving and preserving logs](troubleshooting-v3-get-logs.md)\.
+In the following sections, we recommend that you check the logs on the head node, such as the `/var/log/cfn-init.log` and `/var/log/chef-client.log` files\. For more information about AWS ParallelCluster logs and how to view them, see [Key logs for debugging](troubleshooting-v3-scaling-issues.md#troubleshooting-v3-key-logs) and [Retrieving and preserving cluster logs](troubleshooting-v3-get-logs.md)\.
 
 If you don't have a `failureCode`, navigate to the AWS CloudFormation console to view the cluster stack\. Check the `Status Reason` for the `HeadNodeWaitCondition` or failures on other resources to find additional failure details\. For more information, see [View AWS CloudFormation events on `CREATE_FAILED`](troubleshooting-v3-cluster-deployment.md#troubleshooting-v3-cluster-deployment-events)\. Check the `/var/log/cfn-init.log` and `/var/log/chef-client.log` files on the head node\.
 
@@ -126,7 +126,7 @@ If you see `RuntimeError` exception `Cluster state has been set to PROTECTED mod
   By default, there is a 30 minute time limit for cluster creation to complete\. If cluster creation hasn't completed within this time frame, the cluster creation fails with a timeout error\. The cluster creation can timeout for different reasons\. For example, timeout failures can be caused by a head node creation failure, a network issue, custom scripts that take too long to run in the head node, an error in a custom script that runs in compute nodes, or long wait times for compute node provisioning\. An immediate cause can't be determined and additional investigation is needed\.
 + **How to resolve?**
 
-  Check the `/var/log/cfn-init.log` and `/var/log/chef-client.log` files for failure details\. For more information about AWS ParallelCluster logs and how to get them, see [Key logs for debugging](troubleshooting-v3-scaling-issues.md#troubleshooting-v3-key-logs) and [Retrieving and preserving logs](troubleshooting-v3-get-logs.md)\.
+  Check the `/var/log/cfn-init.log` and `/var/log/chef-client.log` files for failure details\. For more information about AWS ParallelCluster logs and how to get them, see [Key logs for debugging](troubleshooting-v3-scaling-issues.md#troubleshooting-v3-key-logs) and [Retrieving and preserving cluster logs](troubleshooting-v3-get-logs.md)\.
 
   You might discover the following in these logs\.
   + **Seeing `Waiting for static fleet capacity provisioning` near the end of the `chef-client.log`**

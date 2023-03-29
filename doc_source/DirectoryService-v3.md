@@ -32,8 +32,8 @@ If you plan to use AWS ParallelCluster in a single subnet with no internet acces
 `DomainName` \(**Required**, `String`\)  
 The Active Directory \(AD\) domain that you use for identity information\.  
 `DomainName` accepts both the Fully Qualified Domain Name \(FQDN\) and LDAP Distinguished Name \(DN\) formats\.  
-+ FQDN example: `corp.pcluster.com`
-+ LDAP DN example: `DC=corp,DC=pcluster,DC=com`
++ FQDN example: `corp.example.com`
++ LDAP DN example: `DC=corp,DC=example,DC=com`
 This property corresponds to the sssd\-ldap parameter that's called `ldap_search_base`\.  
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
@@ -44,7 +44,7 @@ Example values:
 ```
 ldap://192.0.2.0,ldap://203.0.113.0          # LDAP
 ldaps://192.0.2.0,ldaps://203.0.113.0        # LDAPS without support for certificate verification
-ldaps://abcdef01234567890.corp.pcluster.com  # LDAPS with support for certificate verification
+ldaps://abcdef01234567890.corp.example.com  # LDAPS with support for certificate verification
 192.0.2.0,203.0.113.0                        # AWS ParallelCluster uses LDAPS by default
 ```
 If you use LDAPS with certificate verification, the URIs must be hostnames\.  
@@ -69,12 +69,12 @@ Specify the identity in the form required by the specific LDAP client that's on 
 + MicrosoftAD:
 
   ```
-  cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com
+  cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=example,dc=com
   ```
 + SimpleAD:
 
   ```
-  cn=ReadOnlyUser,cn=Users,dc=corp,dc=pcluster,dc=com
+  cn=ReadOnlyUser,cn=Users,dc=corp,dc=example,dc=com
   ```
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
@@ -104,7 +104,7 @@ Examples:
 ```
 "!(cn=SomeUser*)"  # denies access to every user with alias starting with "SomeUser"
 "(cn=SomeUser*)"   # allows access to every user with alias starting with "SomeUser"
-"memberOf=cn=TeamOne,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com" # allows access only to users in group "TeamOne".
+"memberOf=cn=TeamOne,ou=Users,ou=CORP,dc=corp,dc=example,dc=com" # allows access only to users in group "TeamOne".
 ```
 [Update policy: The compute fleet must be stopped for this setting to be changed for an update.](using-pcluster-update-cluster-v3.md#update-policy-compute-fleet-v3)
 
@@ -135,7 +135,7 @@ DirectoryService:
   ...
   AdditionalSssdConfigs:
     debug_level: "0xFFF0"
-    ldap_search_base: OU=Users,OU=CORP,DC=corp,DC=myOrg,DC=com
+    ldap_search_base: OU=Users,OU=CORP,DC=corp,DC=example,DC=com
     cache_credentials: False
 ```
 This example specifies the configuration of an SSSD [https://www.mankier.com/5/sssd-simple](https://www.mankier.com/5/sssd-simple) `access_provider`\. Users from the `EngineeringTeam` are provided access to the directory\. [`DirectoryService`](#DirectoryService-v3) / [`LdapAccessFilter`](#yaml-DirectoryService-LdapAccessFilter) must not be set in this case\.  

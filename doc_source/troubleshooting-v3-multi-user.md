@@ -26,7 +26,7 @@ This section is relevant to troubleshooting specific to an Active Directory type
 ### Simple AD<a name="troubleshooting-v3-multi-user-simple-ad"></a>
 + The `DomainReadOnlyUser` value must match the Simple AD directory base search for users:
 
-  `cn=ReadOnlyUser,cn=Users,dc=corp,dc=pcluster,dc=com`
+  `cn=ReadOnlyUser,cn=Users,dc=corp,dc=example,dc=com`
 
   Note `cn` for `Users`\.
 + Default admin user is `Administrator`\.
@@ -36,19 +36,19 @@ This section is relevant to troubleshooting specific to an Active Directory type
 
   ```
   $ ldapsearch -x -D "corp\\Administrator" -w "Password" -H ldap://192.0.2.103 \
-     -b "cn=Users,dc=corp,dc=pcluster,dc=com"
+     -b "cn=Users,dc=corp,dc=example,dc=com"
   ```
 
 ### AWS Managed Microsoft AD<a name="troubleshooting-v3-multi-users-ms-ad"></a>
 + The `DomainReadOnlyUser` value must match the AWS Managed Microsoft AD directory base search for users:
 
-  `cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com`
+  `cn=ReadOnlyUser,ou=Users,ou=CORP,dc=corp,dc=example,dc=com`
 + Default admin user is `Admin`\.
 + `Ldapsearch` syntax must be as follows:
 
   ```
   $ ldapsearch -x -D "Admin" -w "Password" -H ldap://192.0.2.103 \
-     -b "ou=Users,ou=CORP,dc=corp,dc=pcluster,dc=com"
+     -b "ou=Users,ou=CORP,dc=corp,dc=example,dc=com"
   ```
 
 ## Enable debug mode<a name="troubleshooting-v3-multi-user-debug"></a>
@@ -134,10 +134,10 @@ For more information, see [Reset a user password](https://docs.aws.amazon.com/di
 The following command must run from an instance that's joined to the domain, not the head node\.
 
 ```
-$ realm list corp.pcluster.com \
+$ realm list corp.example.com \
   type: kerberos \
-  realm-name: CORP.PCLUSTER.COM \
-  domain-name: corp.pcluster.com \
+  realm-name: CORP.EXAMPLE.COM \
+  domain-name: corp.example.com \
   configured: kerberos-member \
   server-software: active-directory \
   client-software: sssd \

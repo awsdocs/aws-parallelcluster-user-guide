@@ -2,7 +2,7 @@
 
 When AWS ParallelCluster detects that a static compute node instance terminates unexpectedly, it attempts to retrieve the EC2 console output from the terminated node instance after a period of time elapses\. This way, if the compute node was unable to communicate with Amazon CloudWatch, useful troubleshooting information on why the node terminated might still be retrieved from the console output\. This console output is recorded in the `/var/log/parallelcluster/compute_console_output` log on the head node\. For more information about the EC2 console output, see [Instance console output](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html#instance-console-console-output) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-By default, AWS ParallelCluster only retrieves the console output from a sample subset of terminated nodes\. This prevents the cluster head node from being overwhelmed with multiple console outputs requests caused by large numbers of terminations\. By default, AWS ParallelCluster waits 5 minutes between termination detection and console output retrieval to give EC2 time to retrieve the final console output from the nodes\.
+By default, AWS ParallelCluster only retrieves the console output from a sample subset of terminated nodes\. This prevents the cluster head node from being overwhelmed with multiple console output requests caused by large numbers of terminations\. By default, AWS ParallelCluster waits 5 minutes between termination detection and console output retrieval to give EC2 time to retrieve the final console output from the nodes\.
 
 You can edit the sample size and wait time parameter values in the `/etc/parallelcluster/slurm_plugin/parallelcluster_clustermgtd.conf` file on the head node\.
 
