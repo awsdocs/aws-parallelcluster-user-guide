@@ -17,6 +17,10 @@ Directory user passwords expire according to the directory password policy prope
 **Note**  
 The directory domain controller IP addresses can change due to domain controller changes and directory maintenance\. If you chose the automated quick create method to create the directory infrastructure, you must manually align the load balancer in front of the directory controllers when the directory IP addresses change\. If you use the quick create method, the directory IP addresses aren't automatically aligned with the load balancers\.
 
+When using the AWS ParallelCluster command line interface \(CLI\) or API, you only pay for the AWS resources that are created when you create or update AWS ParallelCluster images and clusters\. For more information, see [AWS services used by AWS ParallelCluster](aws-services-v3.md)\.
+
+The AWS ParallelCluster UI is built on a serverless architecture and you can use it within the AWS Free Tier category for most cases\. For more information, see [AWS ParallelCluster UI costs](install-pcui-v3.md#install-pcui-costs-v3)\.
+
 **Prerequisites**
 + AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
 + The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)

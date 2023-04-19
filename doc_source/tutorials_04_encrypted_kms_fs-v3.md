@@ -2,6 +2,10 @@
 
 Learn how to set up a customer managed AWS KMS key to encrypt and protect your data in the cluster file storage systems that are configured for AWS ParallelCluster\.
 
+When using the AWS ParallelCluster command line interface \(CLI\) or API, you only pay for the AWS resources that are created when you create or update AWS ParallelCluster images and clusters\. For more information, see [AWS services used by AWS ParallelCluster](aws-services-v3.md)\.
+
+The AWS ParallelCluster UI is built on a serverless architecture and you can use it within the AWS Free Tier category for most cases\. For more information, see [AWS ParallelCluster UI costs](install-pcui-v3.md#install-pcui-costs-v3)\.
+
 AWS ParallelCluster supports following shared storage configuration options:
 + [`SharedStorage`](SharedStorage-v3.md) / [`EbsSettings`](SharedStorage-v3.md#SharedStorage-v3-EbsSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-EbsSettings-KmsKeyId)
 + [`SharedStorage`](SharedStorage-v3.md) / [`EfsSettings`](SharedStorage-v3.md#SharedStorage-v3-EfsSettings) / [`KmsKeyId`](SharedStorage-v3.md#yaml-SharedStorage-EfsSettings-KmsKeyId)

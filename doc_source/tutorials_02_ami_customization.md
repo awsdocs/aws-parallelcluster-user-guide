@@ -116,11 +116,11 @@ This is the safest and most recommended method\. Because the base AWS ParallelCl
 If you have a customized AMI and software already in place, you can apply the changes needed by AWS ParallelCluster on top of it\.
 
 1. Install the following in your local system, together with the AWS ParallelCluster CLI:
-   + Packer: find the latest version for your OS from the [Packer website](https://www.packer.io/downloads.html), and install it\. The version must be at least 1\.4\.0, but the latest version is recommended\. Verify that the `packer` command is available in your PATH\.
+   + Packer: find the latest version for your OS from the [Packer website](https://developer.hashicorp.com/packer/downloads), and install it\. The version must be at least 1\.4\.0, but the latest version is recommended\. Verify that the `packer` command is available in your PATH\.
 **Note**  
 Before AWS ParallelCluster version 2\.8\.0, [Berkshelf](https://github.com/berkshelf/berkshelf) \(which is installed by using `gem install berkshelf`\) was required to use `pcluster createami`\.
 
-1. Configure your AWS account credentials so that Packer can make calls to AWS API operations on your behalf\. The minimal set of required permissions necessary for Packer to work are documented in the [IAM Task or Instance Role](https://www.packer.io/docs/builders/amazon.html#iam-task-or-instance-role) section of the *Amazon AMI Builder* topic in the Packer documentation\.
+1. Configure your AWS account credentials so that Packer can make calls to AWS API operations on your behalf\. The minimal set of required permissions necessary for Packer to work are documented in the [IAM Task or Instance Role](https://developer.hashicorp.com/packer/plugins/builders/amazon#iam-task-or-instance-role) section of the *Amazon AMI Builder* topic in the Packer documentation\.
 
 1. Use the command `createami` in the AWS ParallelCluster CLI to build an AWS ParallelCluster AMI starting from the one that you provide as base:
 

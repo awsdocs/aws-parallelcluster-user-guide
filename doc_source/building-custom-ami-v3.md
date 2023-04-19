@@ -1,5 +1,9 @@
 # Building a custom AWS ParallelCluster AMI<a name="building-custom-ami-v3"></a>
 
+When using the AWS ParallelCluster command line interface \(CLI\) or API, you only pay for the AWS resources that are created when you create or update AWS ParallelCluster images and clusters\. For more information, see [AWS services used by AWS ParallelCluster](aws-services-v3.md)\.
+
+The AWS ParallelCluster UI is built on a serverless architecture and you can use it within the AWS Free Tier category for most cases\. For more information, see [AWS ParallelCluster UI costs](install-pcui-v3.md#install-pcui-costs-v3)\.
+
 **Important**  
 If you build a custom AMI, you must repeat the steps that you used to create your custom AMI with each new AWS ParallelCluster release\.
 

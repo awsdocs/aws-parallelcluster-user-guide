@@ -4,6 +4,10 @@ In this tutorial, you build and test the API with [Amazon API Gateway](https://d
 
 This tutorial was excerpted from the [HPC For Public Sector Customers Workshop](https://catalog.prod.workshops.aws/workshops/e2f40d13-8082-4718-909b-6cdc3155ae41/en-US/examples/pcluster-api)\.
 
+When using the AWS ParallelCluster command line interface \(CLI\) or API, you only pay for the AWS resources that are created when you create or update AWS ParallelCluster images and clusters\. For more information, see [AWS services used by AWS ParallelCluster](aws-services-v3.md)\.
+
+The AWS ParallelCluster UI is built on a serverless architecture and you can use it within the AWS Free Tier category for most cases\. For more information, see [AWS ParallelCluster UI costs](install-pcui-v3.md#install-pcui-costs-v3)\.
+
 **Prerequisites**
 + The AWS CLI is [installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and configured in your compute environment\.
 + AWS ParallelCluster is installed in a virtual environment\. For more information, see [Install AWS ParallelCluster in a virtual environment](https://docs.aws.amazon.com/parallelcluster/latest/ug/install-v3-virtual-environment.html)\.

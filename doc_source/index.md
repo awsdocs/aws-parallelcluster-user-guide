@@ -157,6 +157,7 @@ sponsored by Amazon.
       + [Running jobs in a multiple queue mode cluster](multi-queue-tutorial-v3.md)
       + [Using the AWS ParallelCluster API](tutorials_06_API_use.md)
       + [Creating a cluster with Slurm accounting](tutorials_07_slurm-accounting-v3.md)
+      + [Reverting to a previous AWS Systems Manager document version](tutorials_08_ssm-document-version-rev-v3.md)
    + [AWS ParallelCluster troubleshooting](troubleshooting-v3.md)
       + [Trying to create a cluster](troubleshooting-fc-v3-create-cluster.md)
       + [Trying to run a job](troubleshooting-fc-v3-run-job.md)

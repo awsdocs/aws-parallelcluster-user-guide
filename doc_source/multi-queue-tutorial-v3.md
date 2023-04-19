@@ -2,6 +2,10 @@
 
 This tutorial covers how to run your first "Hello World" job on AWS ParallelCluster with [multiple queue mode](configuration-of-multiple-queues-v3.md)\.
 
+When using the AWS ParallelCluster command line interface \(CLI\) or API, you only pay for the AWS resources that are created when you create or update AWS ParallelCluster images and clusters\. For more information, see [AWS services used by AWS ParallelCluster](aws-services-v3.md)\.
+
+The AWS ParallelCluster UI is built on a serverless architecture and you can use it within the AWS Free Tier category for most cases\. For more information, see [AWS ParallelCluster UI costs](install-pcui-v3.md#install-pcui-costs-v3)\.
+
 **Prerequisites**
 + AWS ParallelCluster [is installed](install-v3-parallelcluster.md)\.
 + The AWS CLI [is installed and configured\.](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
