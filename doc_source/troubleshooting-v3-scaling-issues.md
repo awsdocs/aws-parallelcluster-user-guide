@@ -29,8 +29,8 @@ AWS ParallelCluster creates cluster CloudWatch log streams in log groups\. You c
 + [Key logs for debugging](#troubleshooting-v3-key-logs)
 + [Seeing `InsufficientInstanceCapacity` error in `slurm_resume.log` when I fail to run a job, or in `clustermgtd.log` when I fail to create a cluster](#compute-node-initialization-ice-failure-v3)
 + [Troubleshooting node initialization issues](#troubleshooting-v3-node-init)
-+ [**Troubleshooting unexpected node replacements and terminations**](#troubleshooting-unexpected-node-replacements-and-terminations)
-+ [**Replacing, terminating, or powering down problematic instances and nodes**](#replacing-terminating-or-powering-down-problematic-instances-and-nodes)
++ [**Troubleshooting unexpected node replacements and terminations**](#troubleshooting-v3-unexpected-node-replacements-and-terminations)
++ [**Replacing, terminating, or powering down problematic instances and nodes**](#replacing-terminating-or-powering-down-problematic-instances-and-nodes-v3)
 + [Queue \(partition\) `Inactive` status](#troubleshooting-v3-queues)
 + [Troubleshooting other known node and job issues](#troubleshooting-v3-other-node-job-issues)
 
@@ -125,7 +125,7 @@ When a cluster is created, the head node must wait for the compute nodes to join
 
   For more information, see [Working with Spot Instances](spot-v3.md) in the AWS ParallelCluster User Guide and [Service\-linked role for Spot Instance requests](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html#service-linked-roles-spot-instance-requests) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## **Troubleshooting unexpected node replacements and terminations**<a name="troubleshooting-unexpected-node-replacements-and-terminations"></a>
+## **Troubleshooting unexpected node replacements and terminations**<a name="troubleshooting-v3-unexpected-node-replacements-and-terminations"></a>
 
 This section continues to explore how you can troubleshoot node related issues, specifically when a node is replaced or terminated unexpectedly\.
 + **Applicable logs:**
@@ -153,7 +153,7 @@ This section continues to explore how you can troubleshoot node related issues, 
     $ aws ec2 get-console-output --instance-id i-1234567890abcdef0 --output text
     ```
 
-## **Replacing, terminating, or powering down problematic instances and nodes**<a name="replacing-terminating-or-powering-down-problematic-instances-and-nodes"></a>
+## **Replacing, terminating, or powering down problematic instances and nodes**<a name="replacing-terminating-or-powering-down-problematic-instances-and-nodes-v3"></a>
 + **Applicable logs:**
   + `/var/log/parallelcluster/clustermgtd` \(head node\)
   + `/var/log/parallelcluster/slurm_suspend.log` \(head node\)

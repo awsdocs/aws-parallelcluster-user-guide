@@ -173,6 +173,8 @@ For more information about Amazon SNS, see [https://aws\.amazon\.com/sns/](http:
 
 Amazon Simple Storage Service \(Amazon S3\) stores AWS ParallelCluster templates located in each AWS Region\. AWS ParallelCluster can be configured to allow CLI/SDK tools to use Amazon S3\.
 
+AWS ParallelCluster also creates an Amazon S3 bucket in your AWS account to store resources that are used by your clusters, such as the cluster configuration file\. AWS ParallelCluster maintains one Amazon S3 bucket in each AWS Region that you create clusters in\.
+
 When you use AWS Batch cluster, an Amazon S3 bucket in your account is used for storing related data\. For example, the bucket stores artifacts created when a Docker image and scripts are created from submitted jobs\.
 
 For more information, see [https://aws\.amazon\.com/s3/](http://aws.amazon.com/s3/) and [https://docs\.aws\.amazon\.com/s3/](https://docs.aws.amazon.com/s3/)\.

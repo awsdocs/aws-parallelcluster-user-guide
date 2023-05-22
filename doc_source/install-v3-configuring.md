@@ -16,11 +16,11 @@ Default output format [None]:
 
 The AWS Region where the cluster is launched must have at least one Amazon EC2 key pair\. For more information, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-```
-$ pcluster configure --config cluster-config.yaml
-```
+When using the AWS ParallelCluster command line interface \(CLI\), you only pay for the AWS resources that are created when you create or update AWS ParallelCluster images and clusters\. For more information, see [AWS services used by AWS ParallelCluster](aws-services-v3.md)\.
 
-The configure wizard prompts you for all of the information that's required to create your cluster\. The details of the sequence differ when using AWS Batch as the scheduler compared to using Slurm\.
+## Configure and create your first cluster<a name="install-v3-configuring-create"></a>
+
+Create your first cluster by using the `pcluster configure` CLI command to initiate a wizard that prompts you for all of the information that's required to configure and create your cluster\. The details of the sequence differ when using AWS Batch as the scheduler compared to using Slurm\.
 
 ------
 #### [ Slurm ]
@@ -81,6 +81,7 @@ Allowed values for Operating System:
 2. centos7
 3. ubuntu1804
 4. ubuntu2004
+5. rhel8
 Operating System [alinux2]:
 ```
 
@@ -120,6 +121,11 @@ It's possible to reach your quota for the number of VPCs allowed in a AWS Region
 
 **Important**  
 VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.
+
+If you let AWS ParallelCluster create a VPC, make sure that you decide whether all nodes are to be in a public subnet\.
+
+**Note**  
+If you choose `1. Head node in a public subnet and compute fleet in a private subnet`, AWS ParallelCluster creates a NAT gateway that results in additional cost, even if you specify free tier resources\.
 
 ```
 Automate VPC creation? (y/n) [n]: y
@@ -235,6 +241,9 @@ VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC
 
 If you let AWS ParallelCluster create a VPC, make sure that you decide whether all nodes are to be in a public subnet\.
 
+**Note**  
+If you choose `1. Head node in a public subnet and compute fleet in a private subnet`, AWS ParallelCluster creates a NAT gateway that results in additional cost, even if you specify free tier resources\.
+
 ```
 Automate VPC creation? (y/n) [n]: y
 Allowed values for Availability Zone:
@@ -293,7 +302,7 @@ $ pcluster create-cluster --cluster-name test-cluster --cluster-configuration cl
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:eu-west-1:xxx:stack/test-cluster/abcdef0-f678-890a-5abc-021345abcdef",
     "region": "eu-west-1",
-    "version": "3.5.1",
+    "version": "3.6.0",
     "clusterStatus": "CREATE_IN_PROGRESS"
   },
   "validationMessages": []

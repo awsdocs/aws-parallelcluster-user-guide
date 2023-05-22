@@ -1,6 +1,6 @@
 # Enable Intel MPI<a name="intelmpi-v3"></a>
 
-Intel MPI is available on the AWS ParallelCluster AMIs for `alinux2`, `centos7`, `ubuntu1804`, and `ubuntu2004` values for the [`Image`](Image-v3.md) / [`Os`](Image-v3.md#yaml-Image-Os) setting\.
+Intel MPI is available on the AWS ParallelCluster AMIs for `alinux2`, `centos7`, `rhel8`, `ubuntu1804`, and `ubuntu2004` values for the [`Image`](Image-v3.md) / [`Os`](Image-v3.md#yaml-Image-Os) setting\.
 
 **Note**  
 To use Intel MPI, you must acknowledge and accept the terms of the [Intel simplified software license](https://software.intel.com/en-us/license/intel-simplified-software-license)\.

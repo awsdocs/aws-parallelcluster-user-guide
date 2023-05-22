@@ -2,6 +2,9 @@
 
 Retrieve the events that are associated with the stack for a cluster\.
 
+**Note**  
+Starting in version 3\.6\.0, AWS ParallelCluster uses nested stacks to create the resources associated with queues and compute resources\. The `GetClusterStackEvents` API and the `pcluster get-cluster-stack-events` command only return the cluster main stack events\. You can view the cluster stack events, including those related to queues and compute resources, in the CloudFormation console\.
+
 **Topics**
 + [Request syntax](#get-cluster-stack-events-request)
 + [Request body](#get-cluster-stack-events-request-body)

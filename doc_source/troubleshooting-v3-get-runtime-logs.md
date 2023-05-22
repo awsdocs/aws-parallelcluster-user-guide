@@ -1,6 +1,6 @@
 # Retrieve AWS ParallelCluster UI and AWS ParallelCluster runtime logs<a name="troubleshooting-v3-get-runtime-logs"></a>
 
-Learn how to retrieve the AWS ParallelCluster UI and AWS ParallelCluster runtime logs for troubleshooting\. To start, find the relevant AWS ParallelCluster UI and AWS ParallelCluster stack names\. Use the stack name to locate the installation log groups\. To finish, export the logs\. These logs are specific to the AWS ParallelCluster runtime\. For cluster logs, see [Retrieving and preserving cluster logs](troubleshooting-v3-get-logs.md)\.
+Learn how to retrieve the AWS ParallelCluster UI and AWS ParallelCluster runtime logs for troubleshooting\. To start, find the relevant AWS ParallelCluster UI and AWS ParallelCluster stack names\. Use the stack name to locate the installation log groups\. To finish, export the logs\. These logs are specific to the AWS ParallelCluster runtime\. For cluster logs, see [Retrieving and preserving logs](troubleshooting-v3-get-logs.md)\.
 
 **Prerequisites**
 + The AWS CLI is installed\.

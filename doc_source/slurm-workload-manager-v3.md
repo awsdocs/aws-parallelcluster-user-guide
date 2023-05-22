@@ -5,7 +5,8 @@ For information about Slurm, see [https://slurm\.schedmd\.com](https://slurm.sch
 
 | AWS ParallelCluster version\(s\) | Supported Slurm version | 
 | --- | --- | 
-|  3\.5\.0  |  22\.05\.8  | 
+|  3\.6\.0  |  23\.02\.2  | 
+|  3\.5\.0, 3\.5\.1  |  22\.05\.8  | 
 |  3\.4\.0, 3\.4\.1  |  22\.05\.7  | 
 |  3\.3\.0, 3\.3\.1  |  22\.05\.5  | 
 |  3\.1\.4, 3\.1\.5, 3\.2\.0, 3\.2\.1  |  21\.08\.8\-2  | 
@@ -21,3 +22,5 @@ For information about Slurm, see [https://slurm\.schedmd\.com](https://slurm.sch
 + [Slurm memory\-based scheduling](slurm-mem-based-scheduling-v3.md)
 + [Multiple instance type allocation with Slurm](slurm-multiple-instance-allocation-v3.md)
 + [Slurm accounting with AWS ParallelCluster](slurm-accounting-v3.md)
++ [Slurm configuration customization](slurm-configuration-settings-v3.md)
++ [Slurm `prolog` and `epilog`](slurm-prolog-epilog-v3.md)

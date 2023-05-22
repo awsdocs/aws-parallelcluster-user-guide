@@ -111,6 +111,9 @@ If you let AWS ParallelCluster create a VPC, you must decide if all nodes should
 **Important**  
 VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.
 
+**Note**  
+If you choose `1. Master in a public subnet and compute fleet in a private subnet`, AWS ParallelCluster creates a NAT gateway that results in additional cost, even if you specify free tier resources\.
+
 ```
 Automate VPC creation? (y/n) [n]: y
 Allowed values for Network Configuration:
@@ -210,6 +213,9 @@ Decide whether to use existing VPCs or let AWS ParallelCluster create VPCs for y
 VPCs created by AWS ParallelCluster do not enable VPC Flow Logs by default\. VPC Flow Logs enable you to capture information about the IP traffic going to and from network interfaces in your VPCs\. For more information, see [VPC Flow Logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) in the *Amazon VPC User Guide*\.
 
 If you let AWS ParallelCluster create a VPC, decide if all nodes should be in a public subnet\.
+
+**Note**  
+If you choose `1. Master in a public subnet and compute fleet in a private subnet`, AWS ParallelCluster creates a NAT gateway that results in additional cost, even if you specify free tier resources\.
 
 ```
 Automate VPC creation? (y/n) [n]: y

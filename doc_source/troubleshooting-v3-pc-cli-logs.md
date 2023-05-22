@@ -1,4 +1,4 @@
-# Use pcluster CLI logs for troubleshooting<a name="troubleshooting-v3-pc-cli-logs"></a>
+# `pcluster` CLI logs<a name="troubleshooting-v3-pc-cli-logs"></a>
 
 The `pcluster` CLI writes logs of your commands to `pcluster.log.#` files in `/home/user/.parallelcluster/`\.
 

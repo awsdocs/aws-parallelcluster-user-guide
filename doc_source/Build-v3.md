@@ -55,12 +55,12 @@ Imds:
 ```
 
 `ImdsSupport` \(**Optional**, `String`\)  
-Specifies which IMDS versions are supported in the EC2 ImageBuilder build and test instances\. Supported values are `v2.0` and `v1.0`\. The default value is `v1.0`\.  
+Specifies which IMDS versions are supported in the EC2 ImageBuilder build and test instances\. Supported values are `v2.0` and `v1.0`\. The default value is `v2.0`\.  
 If `ImdsSupport` is set to `v1.0`, both IMDSv1 and IMDSv2 are supported\.  
 If `ImdsSupport` is set to `v2.0`, only IMDSv2 is supported\.  
 For more information, see [Use IMDSv2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) in the *EC2 User Guide for Linux instances*\.  
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)  
-At a future date, the `ImdsSupport` default value is going to change from `v1.0` to `v2.0`\. We recommend that you set `ImdsSupport` to `v2.0` and replace IMDSv1 with IMDSv2 in your custom actions calls\.  
+Starting with AWS ParallelCluster version 3\.6\.0, the `ImdsSupport` default value is `v2.0`\. We recommend that you set `ImdsSupport` to `v2.0` and replace IMDSv1 with IMDSv2 in your custom actions calls\.  
 Support for [`Imds`](#Build-v3-Imds) / [`ImdsSupport`](#yaml-build-image-Build-Imds-ImdsSupport) is added with AWS ParallelCluster version 3\.3\.0\.
 
 ### `Iam`<a name="Build-v3-Iam"></a>

@@ -1004,7 +1004,7 @@ $ pcluster create-cluster --cluster-name "ad-cluster" --cluster-configuration ".
     "cloudformationStackStatus": "CREATE_IN_PROGRESS",
     "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
     "region": "region-id",
-    "version": 3.5.1,
+    "version": 3.6.0,
     "clusterStatus": "CREATE_IN_PROGRESS"
   }
 }
@@ -1052,7 +1052,7 @@ If the `ssh` command succeeded, you have successfully connected to the cluster a
        "cloudformationStackStatus": "DELETE_IN_PROGRESS",
        "cloudformationStackArn": "arn:aws:cloudformation:region-id:123456789012:stack/ad-cluster/1234567-abcd-0123-def0-abcdef0123456",
        "region": "region-id",
-       "version": "3.5.1",
+       "version": "3.6.0",
        "clusterStatus": "DELETE_IN_PROGRESS"
      }
    }

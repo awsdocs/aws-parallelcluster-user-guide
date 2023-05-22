@@ -113,7 +113,7 @@ Learn how to create a custom domain for the AWS ParallelCluster UI\. The UI is h
 
 ### Step 2: Set up API mappings<a name="tutorials_08_custom_domain-v3-step-2"></a>
 
-1. In [API Gateway](https://console.aws.amazon.com/apigateway/), **Custom domain names**, **your\-domain\-name**, choose **Configure API mappings\.**\.
+1. In [API Gateway](https://console.aws.amazon.com/apigateway/), **Custom domain names**, **your\-domain\-name**, choose **Configure API mappings**\.
 
 1. Choose **Custom domain names**\.
 

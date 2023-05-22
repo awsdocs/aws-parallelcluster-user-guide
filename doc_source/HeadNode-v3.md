@@ -34,14 +34,26 @@ HeadNode:
     AllowedIps: string
   CustomActions:
     OnNodeStart:
+      Sequence:
+        - Script: string
+          Args:
+            - string
       Script: string
       Args:
         - string
     OnNodeConfigured:
+      Sequence:
+        - Script: string
+          Args:
+            - string
       Script: string
       Args:
         - string
     OnNodeUpdated:
+      Sequence:
+        - Script: string
+          Args: 
+            - string
       Script: string
       Args:
         - string
@@ -268,45 +280,77 @@ Specifies the CIDR\-formatted IP range for connections to NICE DCV\. This settin
 ```
 CustomActions:
   OnNodeStart:
+    Sequence:
+      - Script: string
+        Args:
+          - string
     Script: string
     Args:
       - string
   OnNodeConfigured:
+    Sequence:
+      - Script: string
+        Args:
+          - string
     Script: string
     Args:
       - string
-   OnNodeUpdated:
-   Script: string
-   Args:
-     - string
+  OnNodeUpdated:
+    Sequence:
+      - Script: string
+        Args: 
+          - string
+    Script: string
+    Args: 
+      - string
 ```
 
 ### `CustomActions` properties<a name="HeadNode-v3-CustomActions.properties"></a>
 
-`OnNodeStart` \(**Optional**, `String`\)  
-Specifies a script to run on the head node before any node deployment bootstrap action is started\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
+`OnNodeStart` \(**Optional**\)  
+Specifies single script or a sequence of scripts to run on the head node before any node deployment bootstrap action is started\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
+`Sequence` \(**Optional**\)  
+List of scripts to run\. AWS ParallelCluster runs the scripts in the same order as they are listed in the configuration file, starting with the first\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
-List of arguments to pass to the script\.
+List of arguments to pass to the script\.  
+`Script` \(**Required**, `String`\)  
+Specifies the file to use for a single script\. The file path can start with `https://` or `s3://`\.  
+`Args` \(**Optional**, `[String]`\)  
+List of arguments to pass to the single script\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-`OnNodeConfigured` \(**Optional**, `String`\)  
-Specifies a script to run on the head node after the node bootstrap actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
+`OnNodeConfigured` \(**Optional**\)  
+Specifies a single script or a sequence of scripts to run on the head node after the node bootstrap actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
+`Sequence` \(**Optional**\)  
+Specifies the list of scripts to run\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
-List of arguments to pass to the script\.
+List of arguments to pass to the script\.  
+`Script` \(**Required**, `String`\)  
+Specifies the file to use for a single script\. The file path can start with `https://` or `s3://`\.  
+`Args` \(**Optional**, `[String]`\)  
+List of arguments to pass to the single script\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
-`OnNodeUpdated` \(**Optional**, `String`\)  
-Specifies a script to run on the head node after node update actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
+`OnNodeUpdated` \(**Optional**\)  
+Specifies a single script or a sequence of scripts to run on the head node after node update actions are complete\. For more information, see [Custom bootstrap actions](custom-bootstrap-actions-v3.md)\.    
+`Sequence` \(**Optional**\)  
+Specifies the list of scripts to run\.    
 `Script` \(**Required**, `String`\)  
 Specifies the file to use\. The file path can start with `https://` or `s3://`\.  
 `Args` \(**Optional**, `[String]`\)  
-List of arguments to pass to the script\.
+List of arguments to pass to the script\.  
+`Script` \(**Required**, `String`\)  
+Specifies the file to use for the single script\. The file path can start with `https://` or `s3://`\.  
+`Args` \(**Optional**, `[String]`\)  
+List of arguments to pass to the single script\.
 [Update policy: This setting can be changed during an update.](using-pcluster-update-cluster-v3.md#update-policy-setting-supported-v3)  
-`OnNodeUpdated` is added starting with AWS ParallelCluster 3\.4\.0\.
+`OnNodeUpdated` is added starting with AWS ParallelCluster 3\.4\.0\.  
+`Sequence` is added starting with AWS ParallelCluster version 3\.6\.0\. When you specify `Sequence`, you can list multiple scripts for a custom action\. AWS ParallelCluster continues to support configuring a custom action with a single script, without including `Sequence`\.  
+AWS ParallelCluster doesn't support including both a single script and `Sequence` for the same custom action\.
 
 ## `Iam`<a name="HeadNode-v3-Iam"></a>
 
@@ -402,7 +446,7 @@ If `false`, every user in the head node has access to the head node's IMDS\.
 The following users are permitted access to the head node's IMDS:
 + root user
 + cluster administrative user \(`pc-cluster-admin` by default\)
-+ operating system specific default user \(`ec2-user` on Amazon Linux 2, `ubuntu` on Ubuntu 18\.04, `centos` on CentOS 7\)
++ operating system specific default user \(`ec2-user` on Amazon Linux 2 and RedHat, `ubuntu` on Ubuntu 18\.04, `centos` on CentOS 7\)
 The default is `true`\.  
 The `default` users are responsible for ensuring a cluster has the permissions it needs to interact with AWS resources\. If you disable `default` user IMDS access, AWS ParallelCluster can't manage the compute nodes and stops working\. Don't disable `default` user IMDS access\.  
 When a user is granted access to the head node's IMDS, they can use the permissions included in the [head node's instance profile](iam-roles-in-parallelcluster-v3.md)\. For example, they can use these permissions to launch EC2 instances or to read the password for an AD domain that the cluster is configured to use for authentication\.  

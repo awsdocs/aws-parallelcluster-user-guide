@@ -147,7 +147,10 @@ If existing Amazon EFS file systems are the only file systems used in your clust
               "cloudwatch:PutDashboard",
               "cloudwatch:ListDashboards",
               "cloudwatch:DeleteDashboards",
-              "cloudwatch:GetDashboard"
+              "cloudwatch:GetDashboard",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms",
+              "cloudwatch:DescribeAlarms"
           ],
           "Resource": "*",
           "Effect": "Allow",
@@ -265,7 +268,10 @@ If existing Amazon EFS file systems are the only file systems used in your clust
               "logs:GetLogEvents",
               "logs:CreateExportTask",
               "logs:DescribeLogStreams",
-              "logs:DescribeExportTasks"
+              "logs:DescribeExportTasks",
+              "logs:DescribeMetricFilters",
+              "logs:PutMetricFilter",
+              "logs:DeleteMetricFilter"
           ],
           "Resource": "*",
           "Effect": "Allow",

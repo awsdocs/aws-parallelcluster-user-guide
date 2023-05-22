@@ -6,7 +6,16 @@ Starting with AWS ParallelCluster version 3\.4\.0, the code can be run after the
 
 In most cases, this code is stored in Amazon Simple Storage Service \(Amazon S3\) and accessed through an HTTPS connection\. The code is run as `root` and can be in any script language that's supported by the cluster OS\. Often the code is in *Bash* or *Python*\.
 
+**Warning**  
+You are responsible for configuring the custom scripts and arguments as described in the [Shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/)\. Verify that your custom scripts and arguments are from sources that you trust to have full access to your cluster nodes\.
+
+**Warning**  
+AWS ParallelCluster doesn't support the use of internal variables that are provided through the `/etc/parallelcluster/cfnconfig` file\. This file might be removed as part of a future release\.
+
 `OnNodeStart` actions are called before any node deployment bootstrap action is started, such as configuring NAT, Amazon Elastic Block Store \(Amazon EBS\) or the scheduler\. `OnNodeStart` bootstrap actions may include modifying storage, adding extra users, and adding packages\.
+
+**Note**  
+If you configure [`DirectoryService`](DirectoryService-v3.md) and a [`HeadNode`](HeadNode-v3.md) / [`CustomActions`](HeadNode-v3.md#HeadNode-v3-CustomActions) / [`OnNodeStart`](HeadNode-v3.md#yaml-HeadNode-CustomActions-OnNodeStart) script for your cluster, AWS ParallelCluster configures `DirectoryService` and restarts the `sssd`, before it runs the `OnNodeStart` script\.
 
 `OnNodeConfigured` actions are called after the node bootstrap processes are complete\. `OnNodeConfigured` actions serve the last actions to occur before an instance is considered fully configured and complete\. Some `OnNodeConfigured` actions include changing scheduler settings, modifying storage, and modifying packages\. You can pass argument to scripts by specifying them during configuration\.
 
@@ -72,6 +81,103 @@ Scheduling:
         S3Access:
           - BucketName: bucket_name
             EnableWriteAccess: false
+```
+
+Using the `Sequence` setting \(added in AWS ParallelCluster version 3\.6\.0\):
+
+```
+HeadNode:
+  [...]
+  CustomActions:
+    OnNodeStart:
+      # Script URLs. The scripts are run in the same order as listed in the configuration, before any of the bootstrap scripts are run.
+      Sequence:
+        - Script1: s3://bucket-name/on-node-start1.sh
+          Args:
+            - arg1
+        - Script2: s3://bucket-name/on-node-start2.sh
+          Args:
+            - arg1
+        [...]
+    OnNodeConfigured:
+      # Script URLs. The scripts are run in the same order as listed in the configuration, after all the bootstrap scripts are run.
+      Sequence:
+        - Script1: s3://bucket-name/on-node-configured1.sh
+          Args:
+            - arg1
+        - Script2: s3://bucket-name/on-node-configured2.sh
+          Args:
+            - arg1
+        [...]
+    OnNodeUpdated:
+      # Script URLs. The scripts are run in the same order as listed in the configuration, after the head node update is completed.
+      Sequence:
+        - Script1: s3://bucket-name/on-node-updated1.sh
+          Args:
+            - arg1
+        - Script2: s3://bucket-name/on-node-updated2.sh
+          Args:
+            - arg1
+        [...]
+  # Bucket permissions
+  Iam:
+    S3Access:
+      - BucketName: bucket_name
+        EnableWriteAccess: false
+Scheduling:
+  Scheduler: slurm
+   [...]
+  SlurmQueues:
+    - Name: queue1
+      [...]
+      CustomActions:
+        OnNodeStart:
+          # Script URLs. The scripts are run in the same order as listed in the configuration, before any of the bootstrap scripts are run
+          Sequence:
+            - Script1: s3://bucket-name/on-node-start1.sh
+              Args:
+                - arg1
+            - Script2: s3://bucket-name/on-node-start2.sh
+              Args:
+                - arg1
+            [...]
+        OnNodeConfigured:
+          # Script URLs. The scripts are run in the same order as listed in the configuration, after all the bootstrap scripts are run
+          Sequence:
+            - Script1: s3://bucket-name/on-node-configured1.sh
+              Args:
+                - arg1
+            - Script2: s3://bucket-name/on-node-configured2.sh
+              Args:
+                - arg1
+            [...]
+      Iam:
+        S3Access:
+          - BucketName: bucket_name
+            EnableWriteAccess: false
+```
+
+The `Sequence` setting is added starting with AWS ParallelCluster version 3\.6\.0\. When you specify `Sequence`, you can list multiple scripts for a custom action\. AWS ParallelCluster continues to support configuring a custom action with a single script, without including `Sequence`\.
+
+AWS ParallelCluster doesn't support including both a single script and `Sequence` for the same custom action\. For example, AWS ParallelCluster fails if you specify the following configuration\.
+
+```
+[...]
+  CustomActions:
+    OnNodeStart:
+      # Script URL. This is run before any of the bootstrap scripts are run
+      Script: s3://bucket-name/on-node-start.sh
+          Args:
+            - arg1
+      # Script URLs. The scripts are run in the same order as listed in the configuration, before any of the bootstrap scripts are run.
+      Sequence:
+        - Script1: s3://bucket-name/on-node-start1.sh
+          Args:
+            - arg1
+        - Script2: s3://bucket-name/on-node-start2.sh
+          Args:
+            - arg1
+[...]
 ```
 
 **Arguments**

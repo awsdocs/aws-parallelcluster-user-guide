@@ -5,7 +5,7 @@ You can verify that AWS ParallelCluster installed correctly by running [`pcluste
 ```
 $ pcluster version
 {
-"version": "3.5.1"
+"version": "3.6.0"
 }
 ```
 

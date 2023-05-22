@@ -31,7 +31,7 @@ Required: No
 **os**  
 Filter by OS distribution\. The default is no filtering\.  
 Type: string  
-Valid values: `alinux2 | centos7 | ubuntu1804 | ubuntu2004`  
+Valid values: `alinux2 | centos7 | ubuntu1804 | ubuntu2004 | rhel8`  
 Required: No
 
 **region**  

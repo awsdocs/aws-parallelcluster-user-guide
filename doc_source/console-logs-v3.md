@@ -6,7 +6,7 @@ By default, AWS ParallelCluster only retrieves the console output from a sample 
 
 You can edit the sample size and wait time parameter values in the `/etc/parallelcluster/slurm_plugin/parallelcluster_clustermgtd.conf` file on the head node\.
 
-This feature is added in AWS ParallelCluster version 3\.5\.
+This feature is added in AWS ParallelCluster version 3\.5\.0\.
 
 ## EC2 console output parameters<a name="console-logs-parameters-v3"></a>
 

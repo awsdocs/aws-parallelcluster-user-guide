@@ -2,7 +2,7 @@
 
 Starting with AWS ParallelCluster version 2\.10\.0, an Amazon CloudWatch dashboard is created when the cluster is created\. This makes it easier to monitor the nodes in your cluster, and to view the logs stored in Amazon CloudWatch Logs\. The name of the dashboard is `parallelcluster-ClusterName-Region`\. *ClusterName* is the name of your cluster and *Region* is the AWS Region of the cluster\. You can access the dashboard in the console, or by opening `https://console.aws.amazon.com/cloudwatch/home?region=Region#dashboards:name=parallelcluster-ClusterName`\.
 
-The following image shows and example CloudWatch dashboard for a cluster\.
+The following image shows an example CloudWatch dashboard for a cluster\.
 
  ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/parallelcluster/latest/ug/images/CW-dashboard.png) 
 

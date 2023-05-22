@@ -6,8 +6,9 @@ You can access AWS ParallelCluster by using the following methods:
 + [AWS ParallelCluster command line interface \(CLI\)](install-v3-parallelcluster.md)\.
 + [AWS ParallelCluster API](api-ref-v3.md)
 + [AWS ParallelCluster UI](install-pcui-v3.md) \(added with release 3\.5\.0\)
++ [AWS ParallelCluster Python library API](pc-py-library-v3.md) \(added with release 3\.5\.0\)
 
-Current AWS ParallelCluster 3 version: 3\.5\.1\.
+Current AWS ParallelCluster 3 version: 3\.6\.0\.
 
 **Topics**
 + [Setting up AWS ParallelCluster](install-v3.md)

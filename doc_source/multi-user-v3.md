@@ -152,7 +152,7 @@ AWS Managed Microsoft AD passwords expire after 42 days\. For more information, 
 
 **Note**  
 If the AD integration feature doesn't work as expected, the SSSD logs can provide useful diagnostic information for troubleshooting the issue\. These logs are located in the `/var/log/sssd` directory on cluster nodes\. By default, they're also stored in a cluster’s Amazon CloudWatch log group\.  
-For more information, see [Troubleshooting multiuser integration with Active Directory](troubleshooting-v3-multi-user.md)\.
+For more information, see [Troubleshooting multi\-user integration with Active Directory](troubleshooting-v3-multi-user.md)\.
 
 ## Running MPI jobs<a name="addircluster-MPI-v3"></a>
 

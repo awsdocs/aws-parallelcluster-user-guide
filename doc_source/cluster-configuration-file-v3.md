@@ -4,7 +4,7 @@ AWS ParallelCluster version 3 uses separate configuration files to control the d
 
 These objects are used for the AWS ParallelCluster version 3 cluster configuration\.
 
-Current AWS ParallelCluster 3 version: 3\.5\.1\.
+Current AWS ParallelCluster 3 version: 3\.6\.0\.
 
 **Topics**
 + [Cluster configuration file properties](#cluster-configuration-file-v3.properties)
@@ -27,7 +27,7 @@ Specifies the AWS Region for the cluster\. For example, `us-east-2`\.
 [Update policy: If this setting is changed, the update is not allowed.](using-pcluster-update-cluster-v3.md#update-policy-fail-v3)
 
 `CustomS3Bucket` \(**Optional**, `String`\)  
-Specifies the name of an existing Amazon S3 bucket to be used by the cluster\. By default, AWS ParallelCluster will create a new bucket named `parallelcluster-hash-v1-DO-NOT-DELETE`\.  
+Specifies the name of an Amazon S3 bucket that's created in your AWS account to store resources that are used by your clusters, such as the cluster configuration file\. AWS ParallelCluster maintains one Amazon S3 bucket in each AWS Region that you create clusters in\. By default, these Amazon S3 buckets are named `parallelcluster-hash-v1-DO-NOT-DELETE`\.   
 [Update policy: If this setting is changed, the update is not allowed. If you force the update, the new value will be ignored and the old value will be used.](using-pcluster-update-cluster-v3.md#update-policy-read-only-resource-bucket-v3)
 
 `AdditionalResources` \(**Optional**, `String`\)  

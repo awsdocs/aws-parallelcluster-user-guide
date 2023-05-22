@@ -1,5 +1,17 @@
 # Trying to run a job<a name="troubleshooting-fc-v3-run-job"></a>
 
+## `srun` interactive job fails with error `srun: error: fwd_tree_thread: can't find address for <host>, check slurm.conf`<a name="run-job-srun-interactive-fail-v3"></a>
++ **Why did it fail?**
+
+  You ran the `srun` command to submit a job, and then you increased the size of a queue by using the `pcluster update-cluster` command without restarting the Slurm daemons after the update completed\.
+
+  Slurm organizes Slurm daemons in a tree hierarchy to optimize communication\. This hierarchy is only updated when the daemons start\.
+
+  Suppose you use `srun` to launch a job and then run the `pcluster update-cluster` command to increase the size of the queue\. New compute nodes launch as part of the update\. Then, Slurm queues your job to one of the new compute nodes\. In this case, both the Slurm daemons and `srun` don't detect the new compute nodes\. `srun` returns an error because it doesn't detect the new nodes\.
++ **How to resolve?**
+
+  Restart the Slurm daemons on all of the compute nodes, and then use `srun` to submit your job\. You can schedule the Slurm daemons restart by running the `scontrol reboot` command that restarts the compute nodes\. For more information, see [scontrol reboot](https://slurm.schedmd.com/scontrol.html#OPT_reboot) in the Slurm documentation\. You can also manually restart the Slurm daemons on the compute nodes by requesting a restart of the corresponding `systemd` services\.
+
 ## Job is stuck in `CF` state with `squeue` command<a name="run-job-cf-stuck-v3"></a>
 
 This might be an issue with dynamic nodes powering up\. For more information, see [Seeing errors in compute node initializations](troubleshooting-fc-v3-compute-node-initialization-v3.md)\.

@@ -15,3 +15,4 @@ The AWS ParallelCluster UI is built on a serverless architecture and you can use
 + [Using the AWS ParallelCluster API](tutorials_06_API_use.md)
 + [Creating a cluster with Slurm accounting](tutorials_07_slurm-accounting-v3.md)
 + [Reverting to a previous AWS Systems Manager document version](tutorials_08_ssm-document-version-rev-v3.md)
++ [Creating a cluster with AWS CloudFormation](tutorials_09_cfn-custom-resource-v3.md)
